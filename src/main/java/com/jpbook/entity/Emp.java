@@ -1,7 +1,7 @@
 package com.jpbook.entity;
 
 public class Emp {
-	private Integer eid;//昝梦达是SB
+	private Integer eid;
 	private String ename;
 	private String epwd;
 	private String ephone;
