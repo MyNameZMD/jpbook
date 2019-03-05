@@ -1,5 +1,7 @@
 package com.jpbook.txt;
 
 public class k {
-    private Sting name;
+    public static void main(String[] args) {
+        System.out.println("sdfgvhjhnm");
+    }
 }
