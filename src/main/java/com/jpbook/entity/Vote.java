@@ -1,6 +1,6 @@
 package com.jpbook.entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Vote {
 	private Integer voteid;

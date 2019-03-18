@@ -1,6 +1,6 @@
 package com.jpbook.entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Chapter {
 	private Integer chapid;
@@ -11,6 +11,9 @@ public class Chapter {
 	private Date chaptime;
 	private Date updatetime;
 	private String url;
+	private Integer chapcount;
+	private String chapname;
+	private Integer rollid;
 	public Integer getChapid() {
 		return chapid;
 	}
@@ -59,6 +62,25 @@ public class Chapter {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+    public Integer getChapcount() {
+        return chapcount;
+    }
+    public void setChapcount(Integer chapcount) {
+        this.chapcount = chapcount;
+    }
+	public String getChapname() {
+		return chapname;
+	}
+	public void setChapname(String chapname) {
+		this.chapname = chapname;
+	}
+	public Integer getRollid() {
+		return rollid;
+	}
+	public void setRollid(Integer rollid) {
+		this.rollid = rollid;
+	}
+
 	@Override
 	public String toString() {
 		return "Chapter [chapid=" + chapid + ", chapvalue=" + chapvalue

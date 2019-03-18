@@ -1,6 +1,7 @@
 package com.jpbook.entity;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.List;
 
 public class Roll {
 	private Integer rollid;
@@ -9,6 +10,7 @@ public class Roll {
 	private Integer bookid;
 	private Date updatetime;
 	private String url;
+	private List<Chapter> chapterList;
 	public Integer getRollid() {
 		return rollid;
 	}
@@ -45,6 +47,15 @@ public class Roll {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+	public List<Chapter> getChapterList() {
+		return chapterList;
+	}
+
+	public void setChapterList(List<Chapter> chapterList) {
+		this.chapterList = chapterList;
+	}
+
 	@Override
 	public String toString() {
 		return "Roll [rollid=" + rollid + ", rollname=" + rollname
