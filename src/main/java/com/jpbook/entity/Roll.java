@@ -9,6 +9,7 @@ public class Roll {
 	private Integer bookid;
 	private Date updatetime;
 	private String url;
+	private Integer rollmoney;
 	public Integer getRollid() {
 		return rollid;
 	}
@@ -45,11 +46,25 @@ public class Roll {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	public Integer getRollmoney() {
+		return rollmoney;
+	}
+
+	public void setRollmoney(Integer rollmoney) {
+		this.rollmoney = rollmoney;
+	}
+
 	@Override
 	public String toString() {
-		return "Roll [rollid=" + rollid + ", rollname=" + rollname
-				+ ", rollnum=" + rollnum + ", bookid=" + bookid
-				+ ", updatetime=" + updatetime + ", url=" + url + "]";
+		return "Roll{" +
+				"rollid=" + rollid +
+				", rollname='" + rollname + '\'' +
+				", rollnum=" + rollnum +
+				", bookid=" + bookid +
+				", updatetime=" + updatetime +
+				", url='" + url + '\'' +
+				", rollmoney=" + rollmoney +
+				'}';
 	}
-	
+
 }

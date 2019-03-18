@@ -9,13 +9,21 @@ public class Chapter {
 	private Integer chapmoney;
 	private Integer chapstate;
 	private Date chaptime;
+	private Integer rollid;
 	private Date updatetime;
 	private String url;
+	private Integer chapcount;
 	public Integer getChapid() {
 		return chapid;
 	}
 	public void setChapid(Integer chapid) {
 		this.chapid = chapid;
+	}
+	public Integer getRollid() {
+		return rollid;
+	}
+	public void setRollid(Integer rollid) {
+		this.rollid = rollid;
 	}
 	public String getChapvalue() {
 		return chapvalue;
@@ -59,13 +67,28 @@ public class Chapter {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+	public Integer getChapcount() {
+		return chapcount;
+	}
+
+	public void setChapcount(Integer chapcount) {
+		this.chapcount = chapcount;
+	}
+
 	@Override
 	public String toString() {
-		return "Chapter [chapid=" + chapid + ", chapvalue=" + chapvalue
-				+ ", chapnum=" + chapnum + ", chapmoney=" + chapmoney
-				+ ", chapstate=" + chapstate + ", chaptime=" + chaptime
-				+ ", updatetime=" + updatetime + ", url=" + url + "]";
+		return "Chapter{" +
+				"chapid=" + chapid +
+				", chapvalue='" + chapvalue + '\'' +
+				", chapnum=" + chapnum +
+				", chapmoney=" + chapmoney +
+				", chapstate=" + chapstate +
+				", chaptime=" + chaptime +
+				", rollid=" + rollid +
+				", updatetime=" + updatetime +
+				", url='" + url + '\'' +
+				", chapcount=" + chapcount +
+				'}';
 	}
-	
-
 }

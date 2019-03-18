@@ -4,22 +4,25 @@ import java.util.Date;
 
 public class Reviewbook {
 	private Integer revid;
-	private String revtitle;
 	private String revvlue;
 	private Date commenttime;
 	private Integer uuid;
+	private Integer retype;
 	private Integer bookid;
+
+	public Integer getRetype() {
+		return retype;
+	}
+
+	public void setRetype(Integer retype) {
+		this.retype = retype;
+	}
+
 	public Integer getRevid() {
 		return revid;
 	}
 	public void setRevid(Integer revid) {
 		this.revid = revid;
-	}
-	public String getRevtitle() {
-		return revtitle;
-	}
-	public void setRevtitle(String revtitle) {
-		this.revtitle = revtitle;
 	}
 	public String getRevvlue() {
 		return revvlue;
@@ -45,11 +48,28 @@ public class Reviewbook {
 	public void setBookid(Integer bookid) {
 		this.bookid = bookid;
 	}
-	@Override
-	public String toString() {
-		return "Reviewbook [revid=" + revid + ", revtitle=" + revtitle
-				+ ", revvlue=" + revvlue + ", commenttime=" + commenttime
-				+ ", uuid=" + uuid + ", bookid=" + bookid + "]";
+
+	public Reviewbook() {
 	}
 
+	public Reviewbook(Integer revid, String revvlue, Date commenttime, Integer uuid, Integer retype, Integer bookid) {
+		this.revid = revid;
+		this.revvlue = revvlue;
+		this.commenttime = commenttime;
+		this.uuid = uuid;
+		this.retype = retype;
+		this.bookid = bookid;
+	}
+
+	@Override
+	public String toString() {
+		return "Reviewbook{" +
+				"revid=" + revid +
+				", revvlue='" + revvlue + '\'' +
+				", commenttime=" + commenttime +
+				", uuid=" + uuid +
+				", retype=" + retype +
+				", bookid=" + bookid +
+				'}';
+	}
 }
