@@ -7,13 +7,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
 public class BooktypeService {
+
     @Resource
-    BooktypeDao btd;
-    public List<Booktype> queryAll(){
-        return btd.queryAll();
+    BooktypeDao bd;
+
+    public List<Map<String,Object>> queryAll(){
+        return bd.queryAll();
+    }
+    public List<Booktype> query(){
+        return bd.query();
     }
 }
