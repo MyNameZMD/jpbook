@@ -3,6 +3,7 @@ package com.jpbook.dao;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Insert;
 
 import java.util.List;
 import java.util.Map;
@@ -17,4 +18,7 @@ public interface BookrackDao {
     @Delete("delete from bookrack where uuid = #{param1} and  brid in(${brid})")
     public Integer del(Integer uuid,@Param("brid") String brid);
 
+
+    @Insert("INSERT INTO bookrack VALUES(null,#{param1},#{param2})\n")
+    Integer addBookrack(Integer uuid, Integer bookid);
 }

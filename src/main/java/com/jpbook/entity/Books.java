@@ -1,6 +1,6 @@
 package com.jpbook.entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Books {
 	private Integer bookid;
@@ -10,6 +10,9 @@ public class Books {
 	private Integer bookstate;
 	private Date createtime;
 	private String url;
+	private String icon;
+	private Integer sex;
+	private String bookreferral;
 	public Integer getBookid() {
 		return bookid;
 	}
@@ -52,6 +55,29 @@ public class Books {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	public Integer getSex() {
+		return sex;
+	}
+	public void setSex(Integer sex) {
+		this.sex = sex;
+	}
+
+	public String getBookreferral() {
+		return bookreferral;
+	}
+
+	public void setBookreferral(String bookreferral) {
+		this.bookreferral = bookreferral;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
 	@Override
 	public String toString() {
 		return "Books [bookid=" + bookid + ", bookname=" + bookname + ", uuid="

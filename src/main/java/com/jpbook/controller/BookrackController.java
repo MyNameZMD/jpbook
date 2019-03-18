@@ -35,5 +35,8 @@ public class BookrackController {
     public Integer del(String brid, HttpSession session){
         return bs.del(Gs.getsession(session),brid);
     }
-
+    @RequestMapping("add")
+    public Integer add(Integer bookid){
+        return bs.addBookrack(10000, bookid);
+    }
 }

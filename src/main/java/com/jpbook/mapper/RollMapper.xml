@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.jpbook.dao.RollDao">
+    <resultMap id="rollAndChapter" type="com.jpbook.entity.Roll">
+        <id column="rollid" property="rollid"/>
+        <result column="rollname" property="rollname"/>
+        <result column="rollnum" property="rollnum"/>
+        <result column="bookid" property="bookid"/>
+        <result column="updatetime" property="updatetime"/>
+        <result column="url" property="url"/>
+        <collection property="chapterList" ofType="com.jpbook.entity.Chapter" column="rollid" select="queryChapter"/>
+    </resultMap>
+    <select id="queryAllAndChapter" resultMap="rollAndChapter">
+        select * from roll where bookid=#{bookid}
+    </select>
+    <select id="queryChapter" resultType="com.jpbook.entity.Chapter" parameterType="Integer">
+        select * from chapter where rollid=#{rollid} and chapstate=1
+    </select>
+</mapper>
