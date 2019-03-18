@@ -1,6 +1,7 @@
 package com.jpbook.service;
 
 import com.jpbook.dao.BooktypeDao;
+import com.jpbook.entity.Booktype;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,5 +18,8 @@ public class BooktypeService {
 
     public List<Map<String,Object>> queryAll(){
         return bd.queryAll();
+    }
+    public List<Booktype> query(){
+        return bd.query();
     }
 }

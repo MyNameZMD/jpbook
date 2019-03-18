@@ -1,6 +1,6 @@
 package com.jpbook.entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Books {
 	private Integer bookid;
@@ -29,7 +29,7 @@ public class Books {
 	public Integer getSex() {
 		return sex;
 	}
-
+	private String bookreferral;
 	public Integer getBookid() {
 		return bookid;
 	}
@@ -93,8 +93,6 @@ public class Books {
 		this.sex = sex;
 	}
 
-	public Books() {
-	}
 
 	@Override
 	public String toString() {
