@@ -115,7 +115,7 @@ public class PersonalController {
                 e.printStackTrace();
             }
             System.out.println(newFile+"--->"+fileName);
-            //ps.editicon(icon,1);
+            ps.editicon(fileName,Gs.getsession(session));
         }
         return 1;
     }
