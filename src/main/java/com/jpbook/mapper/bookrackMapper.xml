@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jpbook.dao.BookrackDao">
+
+    <select id="read" resultType="map">
+        select a.* from (select c.chapid,c.chapname,br.btime,b.bookid,b.bookname,bt.btname,u.uname,u.uuid from browse br inner join chapter c on br.chapid=c.chapid
+        inner join roll r on c.rollid=r.rollid
+        inner join books b on r.bookid=b.bookid
+        inner join booktype bt on b.btid=bt.btid
+        inner join users u on b.uuid=u.uuid) a where a.chapid in
+        (select b.cid from (select max(c.chapid) cid,b.bookid,b.bookname,bt.btname,u.uname from browse br inner join chapter c on br.chapid=c.chapid
+        inner join roll r on c.rollid=r.rollid
+        inner join books b on r.bookid=b.bookid
+        inner join booktype bt on b.btid=bt.btid
+        inner join users u on b.uuid=u.uuid group by b.bookid,b.bookname,bt.btname,u.uname) b) and a.uuid = #{uuid}
+    </select>
+
+    <select id="rack" resultType="map">
+        select br.brid,bt.btname,b.bookname,b.bookstate,c.chaptime,u.uname,
+        (select count(uuid) from bookrack) num
+        from bookrack br inner join books b
+        on br.bookid = b.bookid inner join booktype bt
+        on bt.btid = b.btid inner join users u
+        on u.uuid = b.uuid inner join roll r
+        on r.bookid = b.bookid inner join chapter c
+        on c.rollid = r.rollid
+        where br.uuid = #{param1}
+        and (b.bookname like concat('%',#{param2},'%') or u.uname like concat('%',#{param2},'%'))
+        group by b.bookid order by c.chaptime desc
+    </select>
+
+
+
+</mapper>

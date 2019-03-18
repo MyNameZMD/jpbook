@@ -4,11 +4,12 @@ import java.util.Date;
 
 public class Reviewbook {
 	private Integer revid;
+	private String revtitle;
 	private String revvlue;
 	private Date commenttime;
 	private Integer uuid;
-	private Integer retype;
 	private Integer bookid;
+	private Integer retype;
 
 	public Integer getRetype() {
 		return retype;
@@ -23,6 +24,12 @@ public class Reviewbook {
 	}
 	public void setRevid(Integer revid) {
 		this.revid = revid;
+	}
+	public String getRevtitle() {
+		return revtitle;
+	}
+	public void setRevtitle(String revtitle) {
+		this.revtitle = revtitle;
 	}
 	public String getRevvlue() {
 		return revvlue;

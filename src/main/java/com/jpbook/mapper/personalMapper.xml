@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jpbook.dao.PersonalDao">
+
+    <select id="fansByeye" resultType="map">
+        select * from (select count(fansid) fans from fans where fanuuid=#{uuid}) f,
+        (select count(brid) shelves from bookrack where uuid = #{uuid}) br,
+        (select walnum w1 from wallet where uuid = #{uuid} and wtid=1) wa1,
+        (select walnum w2 from wallet where uuid = #{uuid} and wtid=2) wa2,
+        (select count(fansid) eye from fans where uuid=#{uuid}) u,users us where us.uuid=#{uuid}
+    </select>
+
+    <select id="guess" resultType="map">
+        select bo.* from
+        (select bs.*,b.sum from books bs,(select b.btid,count(b.btid) sum
+        from books b,roll r,chapter c,browse br
+        where b.bookid=r.bookid and r.rollid=c.rollid
+        and c.chapid=br.chapid and br.uuid=#{uuid}
+        group by b.btid order by sum desc limit 1) b
+        where bs.btid=b.btid
+        and bs.uuid != #{uuid} group by bs.bookid) bo
+        where bo.bookid not in(select bookid from bookrack where uuid=#{uuid})
+    </select>
+
+    <select id="monthlyquery" resultType="map">
+        select v.voteid,v.votetime,b.bookname,v.bookid,d.cbk
+        from vote v left join books b
+        on v.bookid = b.bookid left join writtype w
+        on w.wtid = v.wtid inner join
+        (select count(bookid) cbk,voteid from vote where uuid = #{uuid} and wtid = 2 group by bookid) d
+        where v.uuid = #{uuid} and v.voteid=d.voteid
+    </select>
+
+    <select id="findsigne" resultType="com.jpbook.entity.Signexp">
+        select * from signexp where uuid = #{uuid};
+    </select>
+
+    <insert id="addSignexp" parameterType="com.jpbook.entity.Signexp">
+        insert into signexp(signtime,num,signlong,uuid) value(#{signtime},#{num},#{signlong},#{uuid})
+    </insert>
+
+    <update id="editSignexp" parameterType="com.jpbook.entity.Signexp">
+        update signexp set signtime=#{signtime} ,num=0,signlong=0 where uuid = #{uuid}
+    </update>
+
+    <update id="editexp">
+        update users set grade=(exp+#{param1})/100+1, exp=exp+#{param1} where uuid = #{param2};
+    </update>
+
+    <update id="upnum" parameterType="Integer">
+        update signexp set num=num+1,signlong=0 where uuid = #{uuid}
+    </update>
+
+    <select id="queryusers" resultType="map">
+        select * from users where uuid=#{uuid}
+    </select>
+
+    <update id="editusers" parameterType="com.jpbook.entity.Users">
+        update users set uname=#{uname},sex=#{sex},birthday=#{birthday},self=#{self} where uuid = #{uuid}
+    </update>
+
+    <update id="editicon">
+        update users set icon=#{param1} where uuid=#{param2}
+    </update>
+
+</mapper>
