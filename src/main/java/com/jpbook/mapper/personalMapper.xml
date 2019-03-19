@@ -63,4 +63,12 @@
         update users set icon=#{param1} where uuid=#{param2}
     </update>
 
+    <insert id="buy">
+        insert into recharge values(null,#{param1},#{param2},now(),'书币充值')
+    </insert>
+
+    <update id="editmoney">
+        update users set money=money+#{param1} where uuid=#{param2}
+    </update>
+
 </mapper>

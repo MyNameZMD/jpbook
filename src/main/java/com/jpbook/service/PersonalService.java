@@ -58,4 +58,13 @@ public class PersonalService {
         return pd.editicon(icon,uuid);
     }
 
+    public Integer buy(Integer uuid,Integer money){
+        return pd.buy(uuid,money);
+    }
+
+    public Integer editmoney(Integer money,Integer uuid){
+        return pd.editmoney(money,uuid);
+    }
+
+
 }

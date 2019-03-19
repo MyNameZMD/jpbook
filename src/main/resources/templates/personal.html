@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>首页_个人中心_江派书城</title>
+	<title>首页_个人中心_起点书城</title>
 	
 	<link rel="icon" type="image/x-icon" href="./images/jp_iocn.ico">
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.11.css">
@@ -10,14 +10,14 @@
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.13.css">
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.14.css">
 
-	<link rel="stylesheet" href="./layui/layui.css" media="all">
+	<link rel="stylesheet" href="./js/layui/css/layui.css" media="all">
 
 	<script src="./js/jquery-3.3.1.js"></script>
 
 	<!--<script src="./js/stats.js"></script>
 	<script src="./js/LBF.js"></script>-->
 
-	<script src="./layui/layui.js"></script>
+	<script src="./js/layui/layui.js"></script>
 
 </head>
 
@@ -41,15 +41,12 @@
 					<i class="iconfont icon-msg"></i>
 					<i class="qdp-unread elUnread dn" style="color: white">未读</i>消息中心</a>
 				</li>
-				<!--<li class="header-nav-li">
-					<a class="header-nav-a" target="_blank">
-					<i class="iconfont icon-game"></i>游戏</a>
-				</li>-->
+
 			</ul>
 			<a href="login/emptySession" id="elLoginOut" class="header-log" data-eid="qd_M11" style="color: white">退出</a>
 			<a href="personal.html" id="headerLog" class="header-log" data-eid="qd_M06" data-target="headerDropList" style="color: white"></a>
 			<div class="header-goHome">
-				<a href="index.html" target="_blank" accesskey="5" data-eid="qd_M05" style="color: white">江派首页</a>
+				<a href="index.html" target="_blank" accesskey="5" data-eid="qd_M05" style="color: white">起点首页</a>
 			</div>	
 		</div>
 	
@@ -97,8 +94,8 @@
 		<div class="qdp-content home-content" data-l1="3" id="s1" >
 			<div class="home-user-wrapper qdp-border" data-l2="1">
 				<div class="home-user-avatar" data-l3="1">
-					<a href="https://my.qidian.com/setting?targetTab=tabTarget2" class="user-avatar-a">
-						<img class="user-avatar-img" id="icon" src="./images/default_user.0.2.png" alt="书友2019的头像" data-eid="qd_M24">
+					<a href="personal.html" class="user-avatar-a">
+						<img class="user-avatar-img" id="icon" src="/jpbook/imgicon/default_user.0.2.png" alt="" data-eid="qd_M24">
 					</a> 
 					<a href="https://my.qidian.com/vip" target="_blank" class="home-user-vip icon icon-pt"></a>
 				</div>
@@ -131,7 +128,7 @@
 					<div class="home-msg-data">
 						<a href="https://my.qidian.com/account" data-eid="qd_M30"><b class="home-msg-b" id="money">0</b>起点币</a>
 					</div> 
-					<a class="home-msg-more blue elPayBtn" href="" target="_blank" data-eid="qd_M30">充值</a>
+					<a class="home-msg-more blue elPayBtn" href="topup.html" target="_blank" data-eid="qd_M30">充值</a>
 				</li>
 
 				<li class="home-msg" data-l3="2">
@@ -511,7 +508,7 @@
 							<input type="file" id="fileAvatar" name="photo" class="clip" onchange="checkicon(this)" accept="image/png, image/jpeg, image/gif, image/jpg">
 						</form>
 						<div id="avatarXChoose" class="avatar-x-choose">  <!--//facepic.qidian.com/qd_face/349573/6495553/100-->
-							<img id="usersicon" class="avatar-show" th:src="/img/${session.users[0].icon}" alt="">
+							<img id="usersicon" class="avatar-show" th:src="@{/imgicon/{icon}(icon = ${session.users.get(0).getIcon()})}" alt="">
 							<div class="avatar-text">
 								<p class="gray">支持jpg、gif、png格式图片</p>
 							</div>
@@ -714,7 +711,7 @@
             data: {},
             success: function (data) {
 
-				$("#icon").prop("src","./images/"+data[0].icon);
+				$("#icon").prop("src","/jpbook/imgicon/"+data[0].icon);
 
 				$("#headerLog").text(data[0].uname);
                 $("#uname").text(data[0].uname);
@@ -798,7 +795,8 @@
             success: function (data) {
                 $("#uuid").text(data[0].uuid);
                 $("#uname2").val(data[0].uname);
-                $("#iptBorth").val(data[0].birthday);
+                $("#iptBorth").val(renderTime(data[0].birthday).substring(0,10));
+
                 $("#forIntroArea").val(data[0].self);
                 var sex = data[0].sex;
                 if (sex == 0){
@@ -1217,7 +1215,16 @@
         });
     }
 
-
+    function formatDate(NewDtime){
+		var dt = new Date(parseInt(NewDtime.slice(6, 19)));
+		var year = dt.getFullYear();
+		var month = dt.getMonth() + 1;
+		var date = dt.getDate();
+		var hour = dt.getHours();
+		var minute = dt.getMinutes();
+		var second = dt.getSeconds();
+		return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+    }
 
 </script>
 </html>

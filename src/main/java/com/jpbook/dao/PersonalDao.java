@@ -32,4 +32,8 @@ public interface PersonalDao {
 
     public Integer editicon(String icon,Integer uuid);
 
+    public Integer buy(Integer uuid,Integer money);
+
+    public Integer editmoney(Integer money,Integer uuid);
+
 }
