@@ -75,4 +75,12 @@ public class LoginController {
         session.removeAttribute("users");
         return "redirect:/login";
     }
+    @RequestMapping("quit")
+    @ResponseBody
+    public Integer quit(HttpSession session){
+        Long second = DateUtil.getSubSecond(new Date(),(Date)session.getAttribute("newdate"));
+        ls.editsignlong(second.intValue(), Gs.getsession(session));
+        session.removeAttribute("users");
+        return 1;
+    }
 }

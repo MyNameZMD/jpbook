@@ -511,7 +511,7 @@
 							<input type="file" id="fileAvatar" name="photo" class="clip" onchange="checkicon(this)" accept="image/png, image/jpeg, image/gif, image/jpg">
 						</form>
 						<div id="avatarXChoose" class="avatar-x-choose">  <!--//facepic.qidian.com/qd_face/349573/6495553/100-->
-							<img id="usersicon" class="avatar-show" th:src="/img/${session.users[0].icon}" alt="">
+							<img id="usersicon" class="avatar-show" th:src="|/img/${session.users[0].icon}|" alt="">
 							<div class="avatar-text">
 								<p class="gray">支持jpg、gif、png格式图片</p>
 							</div>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import com.jpbook.entity.Books;
 
@@ -26,6 +27,10 @@ import java.util.Map;
 public class BooksController {
     @Resource
     BooksService bs;
+    @Autowired
+    RollService rs;
+    @Autowired
+    ChapterService cs;
 
     @RequestMapping("query")
     public String query(){
@@ -33,7 +38,12 @@ public class BooksController {
     }
 
     @GetMapping("queryBookById")
-    public String queryBookById(Model m, Integer bookid,Integer uuid){
+    public String queryBookById(Model m, Integer bookid,HttpSession session){
+        List<Users> users = (List<Users>)session.getAttribute("users");
+        Integer uuid = null;
+        if(null != users){
+            uuid = users.get(0).getUuid();
+        }
         m.addAttribute("queryBookById",bs.queryBookById(bookid));
         m.addAttribute("queryUsers",bs.queryUsers(bookid));
         m.addAttribute("queryReviewbook",bs.queryReviewbook(bookid));
@@ -45,7 +55,7 @@ public class BooksController {
     @RequestMapping("userExist")
     @ResponseBody
     public Integer userExist(HttpSession session){
-        Users users = (Users)session.getAttribute("users");
+        List<Users> users = (List<Users>)session.getAttribute("users");
         if(null == users){
             return 0;
         }
@@ -54,10 +64,8 @@ public class BooksController {
     @RequestMapping("zanExist")
     @ResponseBody
     public Integer zanExist(Integer revid,HttpSession session){
-        /*List<Users> user = (List<Users>)session.getAttribute("users");
-        Users u = user.get(0);*/
-        Users u = new Users();
-        u.setUuid(4);
+        List<Users> user = (List<Users>)session.getAttribute("users");
+        Users u = user.get(0);
         List<Zan> zan = bs.zanExist(revid,u.getUuid());
         if(0 != zan.size()){
             if(zan.get(0).getZstate() == 1){
@@ -73,23 +81,30 @@ public class BooksController {
     @RequestMapping("editZan")
     @ResponseBody
     public Integer editZan(Integer revid,Integer zstate,HttpSession session){
-        /*List<Users> users = (List<Users>) session.getAttribute("users");
-        Users u = users.get(0);*/
-        Users u = new Users();
-        u.setUuid(4);
+        List<Users> users = (List<Users>) session.getAttribute("users");
+        Users u = users.get(0);
         return bs.editZan(revid,zstate,u.getUuid());
     }
     @RequestMapping("addZan")
     @ResponseBody
     public Integer addZan(Integer revid,Integer zstate,HttpSession session){
-        Users u = new Users();
-        u.setUuid(4);
+        List<Users> users = (List<Users>) session.getAttribute("users");
+        Users u = users.get(0);
         return bs.addZan(revid,u.getUuid());
     }
-    @Autowired
-    RollService rs;
-    @Autowired
-    ChapterService cs;
+
+    @RequestMapping("queryBookByFatie")
+    public String queryBookByFatie(Model m,HttpSession session,Integer retype,Integer bookid){
+        List<Users> users = (List<Users>) session.getAttribute("users");
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("bookname",bs.queryBookById(bookid).get(0).get("bookname"));
+        map.put("retype",retype);
+        map.put("uuid",users.get(0).getUuid());
+        map.put("bookid",bookid);
+        m.addAttribute("xinxi",map);
+        return "send";
+    }
+
     @RequestMapping("queryByUuid")
     @ResponseBody
     public  List<Map<String, Object>> queryByUuid(){
