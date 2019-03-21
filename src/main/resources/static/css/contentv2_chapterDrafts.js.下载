@@ -186,7 +186,7 @@ _topTip.show(json.info||'操作成功',function(){_cancelTipByExitEdit();if(requ
 function _deleteDraft(chapterId){if(!chapterId){return;}
 if(_isSubmitting||_isJumpingPage){return;}
 _isSubmitting=1;_util.request({url:_ajaxUrls.deleteDraft,type:'post',dataType:'json',data:{'CBID':_params.bookId,'CCID':chapterId},success:function(json){if(!json){_topTip.show('返回数据格式异常，请稍后再试');return;}
-if(json.status){_isJumpingPage=1;_topTip.show(json.info||'删除成功，回收站内可找回',function(){_cancelTipByExitEdit();_jumpPage(_params.chapterTmpUrl);});}else{_topTip.show(json.info||'操作失败，请稍后再试');}},error:function(){_topTip.show('操作失败，请稍后再试');},complete:function(){_isSubmitting=0;}});}
+if(json.status){_isJumpingPage=1;_topTip.show(json.info||'删除成功，回收站内可找回',function(){_cancelTipByExitEdit();_jumpPage(_params.chapterTmpUrl);});}else{_topTip.show(json.info||'操作失败，请稍后再试');}},complete:function(){_isSubmitting=0;}});}
 function _setEditDraftType(type){if(!type){return;}
 $('#typeHidden').val(type);}
 function _getEditDraftType(){return $('#typeHidden').val();}

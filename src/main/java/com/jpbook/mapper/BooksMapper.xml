@@ -53,7 +53,7 @@
         group by b.bookid order by chapcount desc
     </select>
     <select id="queryBookById" parameterType="Integer" resultType="map">
-        select b.bookid,b.bookname,b.icon,u.uname,b.bookreferral,case bookstate when 0 then '连载' when 1 then '完本' end bookstate,bt.btid,bt.btname,ifnull(case CHAR_LENGTH(SUBSTRING(sum(c.chapcount),2))
+        select b.bookid,b.bookname,b.icon,u.uname,u.pen,b.bookreferral,case bookstate when 0 then '连载' when 1 then '完本' end bookstate,bt.btid,bt.btname,ifnull(case CHAR_LENGTH(SUBSTRING(sum(c.chapcount),2))
         when 0 then 0
         when 3 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'千')
         when 2 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'百')

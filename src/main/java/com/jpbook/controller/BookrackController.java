@@ -1,5 +1,6 @@
 package com.jpbook.controller;
 
+import com.jpbook.entity.Users;
 import com.jpbook.service.BookrackService;
 import com.jpbook.util.Gs;
 import org.apache.ibatis.annotations.Param;
@@ -36,7 +37,8 @@ public class BookrackController {
         return bs.del(Gs.getsession(session),brid);
     }
     @RequestMapping("add")
-    public Integer add(Integer bookid){
-        return bs.addBookrack(10000, bookid);
+    public Integer add(Integer bookid,HttpSession session){
+        List<Users> users1 = (List<Users>)session.getAttribute("users");
+        return bs.addBookrack(users1.get(0).getUuid(), bookid);
     }
 }

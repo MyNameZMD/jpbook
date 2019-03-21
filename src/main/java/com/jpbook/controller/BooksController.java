@@ -92,9 +92,10 @@ public class BooksController {
     ChapterService cs;
     @RequestMapping("queryByUuid")
     @ResponseBody
-    public  List<Map<String, Object>> queryByUuid(){
+    public  List<Map<String, Object>> queryByUuid(HttpSession session){
+        List<Users> users1 = (List<Users>)session.getAttribute("users");
         Users u=new Users();
-        u.setUuid(10000);
+        u.setUuid(users1.get(0).getUuid());
         List<Map<String, Object>> bks = bs.queryByUuid(u);
         System.out.println(bks);
         return bks;
@@ -102,13 +103,14 @@ public class BooksController {
     @RequestMapping("add")
     @ResponseBody
     public int add(Books books, HttpSession session){
+        List<Users> users1 = (List<Users>)session.getAttribute("users");
         int i = bs.queryByBookname(books.getBookname()).size();
         if (i>0){
             return 0;
         }
         FileUtil.File(books.getBookname()+"\\第一卷");
         books.setUrl(books.getBookname());
-        books.setUuid(10000);
+        books.setUuid(users1.get(0).getUuid());
         String image = FileUtil.createImage(books.getBookname());
         books.setIcon(image);
         bs.add(books);

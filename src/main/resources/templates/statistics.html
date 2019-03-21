@@ -50,8 +50,7 @@
 
                                     <span><em style="width:70%">0/0</em></span></p>
                             </dd>
-                            <dd class="link"><a href="https://write.qq.com/authors/person.html"><i>完整度75%</i>作家资料</a></dd>
-                            <dd class="link"><a id="openModifyPwdPopupBtn" href="javascript:">更改密码</a></dd>
+                            <dd class="link"><a href="writerdata.html">作家资料</a></dd>
                             <dd class="link end"><a href="https://write.qq.com/public/logout.html">退出登录</a></dd>
                         </dl>
                     </li>
@@ -112,15 +111,6 @@
                         <a href="income"><span class="income"></span>稿酬收入</a>
                     </li>
                     <li>
-                        <a href="https://write.qq.com/labor.html"><span class="labour"></span>劳务收入</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/authors/authorconsultlist.html"><span class="counsel"></span>作家咨询</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/integral_exchange/exchange.html"><span class="exchange"></span>积分兑换</a>
-                    </li>
-                    <li>
                         <a href="https://write.qq.com/interactivechapter/index.html"><span class="active"></span>互动管理</a>
                     </li>                                    </ul>
             </div>
@@ -148,21 +138,6 @@
                         <a class="expand" href="income">稿酬收入</a>
                     </li>
                     <li>
-                        <a class="min-link" href="https://write.qq.com/labor.html"><span class="icon labour"></span></a>
-                        <a class="expand" href="https://write.qq.com/labor.html">劳务收入</a>
-                    </li>
-
-
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/authors/authorconsultlist.html"><span class="icon counsel"></span></a>
-                        <a class="expand" href="https://write.qq.com/authors/authorconsultlist.html">作家咨询</a>
-                    </li>
-
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/integral_exchange/exchange.html"><span class="icon exchange"></span></a>
-                        <a class="expand" href="https://write.qq.com/integral_exchange/exchange.html">积分兑换</a>
-                    </li>
-                    <li>
                         <a class="min-link" href="https://write.qq.com/interactivechapter/index.html"><span class="icon active"></span></a>
                         <a class="expand" href="https://write.qq.com/interactivechapter/index.html">互动管理</a>
                     </li>
@@ -186,7 +161,7 @@
             </select>
 
 
-            <a id="searchTakeList" class="button" href="javascript:">查看</a>
+            <a id="searchTakeList" class="button" href="javascript:" style="width: 80px;height: 35px">查看</a>
         </div>
         <input type="hidden" id="bookid" name="bookid">
         <div class="incomeWrap">
@@ -217,7 +192,7 @@
                         str+="</select>\n" +
                             "            \n" +
                             "\n" +
-                            "            <a class=\"button\" href=\"javascript:void(0)\" onclick='queryStatistics()'>查看</a></div>";
+                            "            <a class=\"button\" href=\"javascript:void(0)\" onclick='queryStatistics()' style=\"width: 80px;height: 35px\">查看</a></div>";
                         $("#sehui").html(str);
                         queryStatistics();
                     }
@@ -248,13 +223,11 @@
             </div>
             <script type="text/javascript">
                 function queryStatistics() {
-                    alert($("#CBID").val());
                     if($("#CBID").val()==""){return;}
                     $.ajax({
                         url:"buyrecord/queryStatistics",
                         data:{"bookid":$("#CBID").val()},
                         success:function (data) {
-                            alert(JSON.stringify(data));
                             if(data==""){
                                 $("#Totalsubscription").html(0);
                                 $("#yesterdaysubscription").html(0);

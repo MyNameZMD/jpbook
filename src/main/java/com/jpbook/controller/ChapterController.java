@@ -3,6 +3,7 @@ package com.jpbook.controller;
 import com.jpbook.entity.Books;
 import com.jpbook.entity.Booktype;
 import com.jpbook.entity.Chapter;
+import com.jpbook.entity.Users;
 import com.jpbook.service.BooksService;
 import com.jpbook.service.BuyrecordService;
 import com.jpbook.service.ChapterService;
@@ -169,8 +170,11 @@ public class ChapterController {
         return obs;
     }
     @RequestMapping("getInformationByChapid")
-    public String  getInformationByChapid(Integer chapid, Model model){
-        List<Map<String, Object>> informationByChapid = cs.getInformationByChapid(2, 10000);
+    public String  getInformationByChapid(Integer chapid, Model model,HttpSession session){
+        List<Users> users1 = (List<Users>)session.getAttribute("users");
+        System.out.println("chapid:"+chapid);
+        List<Map<String, Object>> informationByChapid = cs.getInformationByChapid(chapid, users1.get(0).getUuid());
+        System.out.println("informationByChapid"+informationByChapid);
         model.addAttribute("ibc",informationByChapid);
         return "lookBook";
     }

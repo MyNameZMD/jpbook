@@ -119,53 +119,9 @@
                     <li class="site" data-l2="1">
                         <a class="pin-logo" href="https://www.qidian.com/" target="_blank" data-eid="qd_R01"><span></span></a>
                         <div class="dropdown">
-                            <a href="https://www.qdmm.com/" target="_blank" data-eid="qd_R02">起点女生网</a>
-                            <a href="http://chuangshi.qq.com/" target="_blank" data-eid="qd_R03">创世中文网</a>
-                            <a href="http://yunqi.qq.com/" target="_blank" data-eid="qd_R04">云起书院</a>
-                        </div>
-                    </li>
-                    <li class="app" data-l2="2">
-                        <cite>手机阅读</cite>
-                        <div class="dropdown scan-app hidden">
-                            <div class="box">
-                                <h3>扫描下载起点读书客户端</h3>
-                                <img src="../css/qd_qrcode.f4f94.png">
-                                <a href="https://itunes.apple.com/cn/app/id534174796?mt=8" target="_blank" data-eid="qd_R05"><em class="iconfont"></em>App store 下载</a>
-                                <a href="http://download.qidian.com/apknew/source/QDReader.apk" target="_blank" data-eid="qd_R06"><em class="iconfont"></em>Android 下载</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li id="j_nearRead" data-l2="3">
-                        <cite>最近阅读</cite>
-                    </li>
-                    <li class="quick-nav" data-l2="4">
-                        <cite><i class="iconfont"></i>快速导航</cite>
-                        <div class="dropdown type-list">
-                            <div class="type-box">
-                                <h3>分类频道</h3>
-                                <a href="https://www.qidian.com/xuanhuan" data-eid="qd_R13" target="_blank">玄幻</a>
-                                <a href="https://www.qidian.com/qihuan" data-eid="qd_R14" target="_blank">奇幻</a>
-                                <a href="https://www.qidian.com/wuxia" data-eid="qd_R15" target="_blank">武侠</a>
-                                <a href="https://www.qidian.com/xianxia" data-eid="qd_R16" target="_blank">仙侠</a>
-                                <a href="https://www.qidian.com/dushi" data-eid="qd_R17" target="_blank">都市</a>
-                                <a href="https://www.qidian.com/xianshi" data-eid="qd_R18" target="_blank">现实</a>
-                                <a href="https://www.qidian.com/lishi" data-eid="qd_R20" target="_blank">历史</a>
-                                <a href="https://www.qidian.com/junshi" data-eid="qd_R19" target="_blank">军事</a>
-                                <a href="https://www.qidian.com/youxi" data-eid="qd_R21" target="_blank">游戏</a>
-                                <a href="https://www.qidian.com/tiyu" data-eid="qd_R22" target="_blank">体育</a>
-                                <a href="https://www.qidian.com/kehuan" data-eid="qd_R23" target="_blank">科幻</a>
-                                <a href="https://www.qidian.com/lingyi" data-eid="qd_R24" target="_blank">悬疑灵异</a>
-                                <a href="https://www.qidian.com/2cy" class="ecy" data-eid="qd_R26" target="_blank">二次元</a>
-                                <a href="https://www.qidian.com/finish" data-eid="qd_R27" target="_blank">完本</a>
-                                <a href="https://www.qdmm.com/" data-eid="qd_R25" target="_blank">女生</a>
-                                <a href="https://www.qidian.com/book/sanjiang" data-eid="qd_R28" target="_blank">三江</a>
-                            </div>
-                            <div class="type-box">
-                                <h3>其它</h3>
-                                <a href="https://write.qq.com/college" data-eid="qd_R29" target="_blank">投稿</a>
-                                <a href="https://wwwploy.qidian.com/HelpCenter/default.aspx?type=0&amp;categoryid=58&amp;parentid=53" data-eid="qd_R30" target="_blank">签约</a>
-                                <a href="https://wwwploy.qidian.com/ploy/20150520qdsp/theme1.htm" data-eid="qd_R31" target="_blank">福利</a>
-                            </div>
+                            <a href="javascript:void(0)" target="_blank" data-eid="qd_R02">起点女生网</a>
+                            <a href="javascript:void(0)" target="_blank" data-eid="qd_R03">创世中文网</a>
+                            <a href="javascript:void(0)" target="_blank" data-eid="qd_R04">云起书院</a>
                         </div>
                     </li>
                 </ul>
@@ -180,12 +136,13 @@
                         </form>
                     </li>
                     <li class="line"></li>
-                    <li class="sign-out hidden" data-l2="6">
+
+                    <li th:class="${session.loginuser==null?'sign-out':'sign-out hidden'}" data-l2="6">
                         <a id="pin-login" href="javascript:" data-eid="qd_R33">登录</a>
                         <a class="reg" href="https://passport.qidian.com/reg.html?appid=10&amp;areaid=1&amp;target=iframe&amp;ticket=1&amp;auto=1&amp;autotime=30&amp;returnUrl=http%3A%2F%2Fwww.qidian.com" target="_blank" data-eid="qd_R34">注册</a>
                     </li>
-                    <li class="sign-in" data-l2="6">
-                        <a href="https://me.qidian.com/Index.aspx" target="_blank" data-eid="qd_R36"><i id="nav-user-name">书友20180218153427385</i><span></span></a>
+                    <li th:class="${session.loginuser==null?'sign-in hidden':'sign-in'}" data-l2="6">
+                        <a href="personal.html" target="_blank" data-eid="qd_R36"><i id="nav-user-name">书友20180218153427385</i><span></span></a>
                         <div class="dropdown">
                             <a href="https://me.qidian.com/profile/info.aspx" target="_blank" data-eid="qd_R37">账户设置</a>
                             <a href="https://me.qidian.com/account/info.aspx" target="_blank" data-eid="qd_R38">账务中心</a>
@@ -311,8 +268,6 @@
             url:"/jpbook/chapter/getChapContent",
             data:{"chapid":chapid},
             success:function (data) {
-                alert(JSON.stringify(data));
-                alert(JSON.stringify(data[0]));
                 $("#j_textWrap").css("display",data[0].afterchapid==-1?"block":"none");
                 $("#j_chapterPrev").prop("href",data[0].afterchapid==-1?"javascript:void(0)":"javascript:read("+data[0].afterchapid+")");
                 $("#j_chapterNext").prop("href",data[0].nextchapid==-1?"javascript:void(0)":"javascript:read("+data[0].nextchapid+")");
@@ -323,23 +278,17 @@
                 for (var i=0;i<data[1].length;i++){
                     str+="<p>　　"+data[1][i]+"</p>";
                 }
-                alert(str);
                 $("#bookcontent").html(str);
                 $("#j_floatWrap").find("dd").find(".catalog").css("display","none");
                 $("#j_floatWrap").find("dd").css("background-color","");
                 $("#j_floatWrap").find("dd").prop("class","");
+                scroll(0,0);
             }
         })
     }
-    function jsonDateFormat(jsonDate) {//json日期格式转换为正常格式
-
-        var year = jsonDate.year+1900;
-        var month = jsonDate.month+1;
-        var day = jsonDate.date;
-        month=(month>9)?(""+month):("0"+month);  //如果得到的数字小于9要在前面加'0'
-        day=(day>9)?(""+day):("0"+day);
-        return year + "-" + month + "-" + day;
-
+    function jsonDateFormat(date) {//json日期格式转换为正常格式
+        var dateee = new Date(date).toJSON();
+        return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
     }
 </script>
 <div class="float-wrap" id="j_floatWrap" data-l1="2">
@@ -395,7 +344,6 @@
                         url: "/jpbook/roll/queryAllCatalog",
                         data:{"bookid":$("#bookid").val()},
                         success: function (data) {
-                            alert(JSON.stringify(data));
                             var str="";
                             for(var i=0;i<data.length;i++){
                                 str+="<h3 class=\"cur\"><i><cite>"+data[i].rollname+"</cite></i></h3>";
@@ -432,7 +380,7 @@
                             <ul>
                                 <li class="theme-list" id="j_themeList">
                                     <i>背景颜色</i>
-
+                                    <input type="hidden" id="setcolor">
                                     <span data-eid="white" title="默认"  style="background-color: white" data-stc="0" data-st="0"><em class="iconfont"></em></span>
 
                                     <span data-eid="#b29a60" title="牛皮纸"  style="background-color: #b29a60" class="act" data-stc="8" data-st="1"><em class="iconfont"></em></span>
@@ -445,6 +393,7 @@
                                         $("#j_themeList").find("span").prop("class","");
                                         $(this).prop("class","act");
                                         $("#j_chapterBox").css("background-color",$(this).css("background-color"));
+                                        $("#setcolor").val($(this).attr("data-eid"));
                                         if($(this).css("background-color")=="rgb(0, 0, 0)"){
                                             $("#j_chapterBox").css("color","white");
                                         }else{
@@ -453,7 +402,7 @@
                                     })
                                 </script>
                                 <li class="font-family" id="j_fontFamily"><i>正文字体</i>
-
+                                    <input type="hidden" id="setfont">
                                     <span data-st="0" class="yahei act" data-eid="YaHei">雅黑</span>
 
                                     <span data-st="1" class="yahei" data-eid="SimSun">宋体</span>
@@ -466,7 +415,7 @@
                                         $("#j_fontFamily").find("span").prop("class","yahei");
                                         $(this).prop("class","yahei act");
                                         $("#bookcontent").css("font-family",$(this).attr("data-eid"));
-
+                                        $("#setfont").val($(this).attr("data-eid"));
                                     })
                                 </script>
                                 <li class="font-size" id="j_fontSize"><i>字体大小</i>
@@ -493,9 +442,26 @@
                                 </script>
                             </ul>
                             <div class="btn-wrap dib-wrap">
-                                <a class="red-btn" id="j_setSave" href="javascript:">保存</a>
-                                <a class="grey-btn" id="j_setCancel" href="javascript:">取消</a>
+                                <a class="red-btn" id="j_setSave" href="javascript:upSetting()">保存</a>
+                                <a class="grey-btn" id="j_setCancel" href="javascript:callSetting()">取消</a>
                             </div>
+                            <script type="text/javascript">
+                                function upSetting() {
+                                    $.ajax({
+                                        url:"/jpbook/setting/upSetting",
+                                        data:{"setcolor":$("#setcolor").val(),
+                                            "setfont":$("#setfont").val(),
+                                            "setfontsize":$("#j_fontSize").find(".lang").html()},
+                                        success:function (data) {
+                                            navigation($("#j_navSettingBtn").find("a"));
+                                        }
+                                    })
+                                }
+                                function callSetting() {
+                                    navigation($("#j_navSettingBtn").find("a"));
+                                    getSetting();
+                                }
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -527,35 +493,42 @@
                     }
                 </script>
                 <script type="text/javascript">
-                    $.ajax({
-                        url:"/jpbook/setting/getSetting",
-                        success:function (data) {
-                            $("#j_chapterBox").css("background-color",data.setcolor);
-                            if($("#j_chapterBox").css("color")=="rgb(0, 0, 0)"){
-                                $("#j_chapterBox").css("color","white");
-                            }else{
-                                $("#j_chapterBox").css("color","black");
-                            }
-                            $("#j_themeList").find("span").prop("class","");
-                            var spans=$("#j_themeList").find("span");
-                            for (var i=0;i<spans.length;i++){
-                                if($(spans[i]).attr("data-eid")==data.setcolor){
-                                    $(spans[i]).prop("class","act");
-                                }
-                            }
-                            $("#j_fontFamily").find("span").prop("class","yahei");
-                            spans=$("#j_fontFamily").find("span");
-                            for (var i=0;i<spans.length;i++){
-                                alert($(spans[i]).attr("data-eid"));
-                                if($(spans[i]).attr("data-eid")==data.setfont){
-                                    $(spans[i]).prop("class","yahei act");
-                                }
-                            }
-                            $("#bookcontent").css("font-family",data.setfont);
-                            $("#j_fontSize").find(".lang").html(data.setfontsize);
-                            $("#bookcontent").css("font-size",data.setfontsize+"px");
-                        }
+                    $(function () {
+                        getSetting();
                     })
+                    function getSetting() {
+                        $.ajax({
+                            url:"/jpbook/setting/getSetting",
+                            success:function (data) {
+                                $("#j_chapterBox").css("background-color",data.setcolor);
+                                $("#setcolor").val(data.setcolor);
+                                if($("#j_chapterBox").css("background-color")=="rgb(0, 0, 0)"){
+                                    $("#j_chapterBox").css("color","white");
+                                }else{
+                                    $("#j_chapterBox").css("color","black");
+                                }
+                                $("#j_themeList").find("span").prop("class","");
+                                var spans=$("#j_themeList").find("span");
+                                for (var i=0;i<spans.length;i++){
+                                    if($(spans[i]).attr("data-eid")==data.setcolor){
+                                        $(spans[i]).prop("class","act");
+                                    }
+                                }
+                                $("#j_fontFamily").find("span").prop("class","yahei");
+                                spans=$("#j_fontFamily").find("span");
+                                for (var i=0;i<spans.length;i++){
+                                    if($(spans[i]).attr("data-eid")==data.setfont){
+                                        $(spans[i]).prop("class","yahei act");
+                                    }
+                                }
+                                $("#setfont").val(data.setfont);
+                                $("#bookcontent").css("font-family",data.setfont);
+                                $("#j_fontSize").find(".lang").html(data.setfontsize);
+                                $("#bookcontent").css("font-size",data.setfontsize+"px");
+                            }
+                        })
+                    }
+
                 </script>
             </dd>
             <dd data-eid="qd_R85">
@@ -726,6 +699,14 @@
     });
 </script>
 
-
+<script type="text/javascript">
+    $("body").keydown(function(e) {
+        if(e.which==37){
+            document.getElementById("j_chapterPrev").click();
+        }else if(e.which==39){
+            document.getElementById("j_chapterNext").click();
+        }
+    });
+</script>
 
 </body></html>

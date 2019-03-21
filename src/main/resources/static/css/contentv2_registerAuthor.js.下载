@@ -40,7 +40,7 @@ return data;}});$.extend($.expr[":"],{blank:function(a){return!$.trim(""+$(a).va
 if(arguments.length>2&&params.constructor!==Array){params=$.makeArray(arguments).slice(1);}
 if(params.constructor!==Array){params=[params];}
 $.each(params,function(i,n){source=source.replace(new RegExp("\\{"+i+"\\}","g"),function(){return n;});});return source;};$.extend($.validator,{defaults:{messages:{},groups:{},rules:{},errorClass:"errorInput",validClass:"valid",errorElement:"label",focusInvalid:true,errorContainer:$([]),errorLabelContainer:$([]),onsubmit:true,ignore:":hidden",ignoreTitle:false,onfocusin:function(element){this.lastActive=element;if(this.settings.focusCleanup&&!this.blockFocusCleanup){if(this.settings.unhighlight){this.settings.unhighlight.call(this,element,this.settings.errorClass,this.settings.validClass);}
-this.hideThese(this.errorsFor(element));}},onfocusout:function(element){if(!this.checkable(element)&&(element.name in this.submitted||!this.optional(element))){this.element(element);}},onkeyup:function(element,event){if(event.which===9&&this.elementValue(element)===""){return;}else if(element.name in this.submitted||element===this.lastElement){this.element(element);}},onclick:function(element){if(element.name in this.submitted){this.element(element);}else if(element.parentNode.name in this.submitted){this.element(element.parentNode);}},highlight:function(element,errorClass,validClass){if(element.type==="radio"){this.findByName(element.name).addClass(errorClass).removeClass(validClass);}else{$(element).addClass(errorClass).removeClass(validClass);}},unhighlight:function(element,errorClass,validClass){if(element.type==="radio"){this.findByName(element.name).removeClass(errorClass).addClass(validClass);}else{$(element).removeClass(errorClass).addClass(validClass);}}},setDefaults:function(settings){$.extend($.validator.defaults,settings);},messages:{required:"This field is required.",remote:"Please fix this field.",email:"Please enter a valid email address.",url:"Please enter a valid URL.",date:"Please enter a valid date.",dateISO:"Please enter a valid date ( ISO ).",number:"Please enter a valid number.",digits:"Please enter only digits.",creditcard:"Please enter a valid credit card number.",equalTo:"Please enter the same value again.",maxlength:$.validator.format("Please enter no more than {0} characters."),minlength:$.validator.format("Please enter at least {0} characters."),rangelength:$.validator.format("Please enter a value between {0} and {1} characters long."),range:$.validator.format("Please enter a value between {0} and {1}."),max:$.validator.format("Please enter a value less than or equal to {0}."),min:$.validator.format("Please enter a value greater than or equal to {0}.")},autoCreateRanges:false,prototype:{init:function(){this.labelContainer=$(this.settings.errorLabelContainer);this.errorContext=this.labelContainer.length&&this.labelContainer||$(this.currentForm);this.containers=$(this.settings.errorContainer).add(this.settings.errorLabelContainer);this.submitted={};this.valueCache={};this.pendingRequest=0;this.pending={};this.invalid={};this.reset();var groups=(this.groups={}),rules;$.each(this.settings.groups,function(key,value){if(typeof value==="string"){value=value.split(/\s/);}
+this.hideThese(this.errorsFor(element));}},onfocusout:function(element){if(!this.checkable(element)&&(element.name in this.submitted||!this.optional(element))){this.element(element);}},onkeyup:function(element,event){if(event.which===9&&this.elementValue(element)===""){return;}else if(element.name in this.submitted||element===this.lastElement){this.element(element);}},onclick:function(element){if(element.name in this.submitted){this.element(element);}else if(element.parentNode.name in this.submitted){this.element(element.parentNode);}},highlight:function(element,errorClass,validClass){if(element.type==="radio"){this.findByName(element.name).addClass(errorClass).removeClass(validClass);}else{$(element).addClass(errorClass).removeClass(validClass);}},unhighlight:function(element,errorClass,validClass){if(element.type==="radio"){this.findByName(element.name).removeClass(errorClass).addClass(validClass);}else{$(element).removeClass(errorClass).addClass(validClass);}}},setDefaults:function(settings){$.extend($.validator.defaults,settings);},messages:{required:"此字段是必需的。",remote:"Please fix this field.",email:"Please enter a valid email address.",url:"Please enter a valid URL.",date:"Please enter a valid date.",dateISO:"Please enter a valid date ( ISO ).",number:"Please enter a valid number.",digits:"Please enter only digits.",creditcard:"Please enter a valid credit card number.",equalTo:"Please enter the same value again.",maxlength:$.validator.format("Please enter no more than {0} characters."),minlength:$.validator.format("Please enter at least {0} characters."),rangelength:$.validator.format("Please enter a value between {0} and {1} characters long."),range:$.validator.format("Please enter a value between {0} and {1}."),max:$.validator.format("Please enter a value less than or equal to {0}."),min:$.validator.format("Please enter a value greater than or equal to {0}.")},autoCreateRanges:false,prototype:{init:function(){this.labelContainer=$(this.settings.errorLabelContainer);this.errorContext=this.labelContainer.length&&this.labelContainer||$(this.currentForm);this.containers=$(this.settings.errorContainer).add(this.settings.errorLabelContainer);this.submitted={};this.valueCache={};this.pendingRequest=0;this.pending={};this.invalid={};this.reset();var groups=(this.groups={}),rules;$.each(this.settings.groups,function(key,value){if(typeof value==="string"){value=value.split(/\s/);}
 $.each(value,function(index,name){groups[name]=key;});});rules=this.settings.rules;$.each(rules,function(key,value){rules[key]=$.validator.normalizeRule(value);});function delegate(event){var validator=$.data(this[0].form,"validator"),eventType="on"+event.type.replace(/^validate/,""),settings=validator.settings;if(settings[eventType]&&!this.is(settings.ignore)){settings[eventType].call(validator,this[0],event);}}
 $(this.currentForm).validateDelegate(":text, [type='password'], [type='file'], select, textarea, "+"[type='number'], [type='search'] ,[type='tel'], [type='url'], "+"[type='email'], [type='datetime'], [type='date'], [type='month'], "+"[type='week'], [type='time'], [type='datetime-local'], "+"[type='range'], [type='color'], [type='radio'], [type='checkbox']","focusin focusout keyup",delegate).validateDelegate("select, option, [type='radio'], [type='checkbox']","click",delegate);if(this.settings.invalidHandler){$(this.currentForm).bind("invalid-form.validate",this.settings.invalidHandler);}
 $(this.currentForm).find("[required], [data-rule-required], .required").attr("aria-required","true");},form:function(){this.checkForm();$.extend(this.submitted,this.errorMap);this.invalid=$.extend({},this.errorMap);if(!this.valid()){$(this.currentForm).triggerHandler("invalid-form",[this]);}
@@ -118,238 +118,46 @@ return this.optional(element)||(length>=param[0]&&length<=param[1]);},$.validato
 {var mobile=/^1[0-9]{10}$/;}
 else
 {var mobile=/^[0-9]{1,20}$/;}
-return this.optional(element)||mobile.test(value);},"请输入正确的手机号码");
-/* Copyright (c) 2011 Piotr Rochala (http://rocha.la)
- * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
- * and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
- *
- * Version: 1.3.3
- *
- */
-(function(e){e.fn.extend({slimScroll:function(g){var a=e.extend({width:"auto",height:"250px",size:"7px",color:"#ccc",position:"right",distance:"1px",start:"top",opacity:1,alwaysVisible:!1,disableFadeOut:!1,railVisible:!1,railColor:"#EEE",railOpacity:1,railDraggable:!0,railClass:"slimScrollRail",barClass:"slimScrollBar",wrapperClass:"slimScrollDiv",allowPageScroll:!1,wheelStep:20,touchScrollStep:200,borderRadius:"7px",railBorderRadius:"7px"},g);this.each(function(){function u(d){if(r){d=d||window.event;var c=0;d.wheelDelta&&(c=-d.wheelDelta/120);d.detail&&(c=d.detail/3);e(d.target||d.srcTarget||d.srcElement).closest("."+a.wrapperClass).is(b.parent())&&m(c,!0);d.preventDefault&&!k&&d.preventDefault();k||(d.returnValue=!1)}}function m(d,e,g){k=!1;var f=d,h=b.outerHeight()-c.outerHeight();e&&(f=parseInt(c.css("top"))+d*parseInt(a.wheelStep)/100*c.outerHeight(),f=Math.min(Math.max(f,0),h),f=0<d?Math.ceil(f):Math.floor(f),c.css({top:f+"px"}));l=parseInt(c.css("top"))/(b.outerHeight()-c.outerHeight());f=l*(b[0].scrollHeight-b.outerHeight());g&&(f=d,d=f/b[0].scrollHeight*b.outerHeight(),d=Math.min(Math.max(d,0),h),c.css({top:d+"px"}));b.scrollTop(f);b.trigger("slimscrolling",~~f);v();p()}function C(){window.addEventListener?(this.addEventListener("DOMMouseScroll",u,!1),this.addEventListener("mousewheel",u,!1)):document.attachEvent("onmousewheel",u)}function w(){s=Math.max(b.outerHeight()/b[0].scrollHeight*b.outerHeight(),30);c.css({height:s+"px"});var a=s==b.outerHeight()?"none":"block";c.css({display:a})}
-function v(){w();clearTimeout(A);l==~~l?(k=a.allowPageScroll,B!=l&&b.trigger("slimscroll",0==~~l?"top":"bottom")):k=!1;B=l;s>=b.outerHeight()?k=!0:(c.stop(!0,!0).fadeIn("fast"),a.railVisible&&h.stop(!0,!0).fadeIn("fast"))}function p(){a.alwaysVisible||(A=setTimeout(function(){a.disableFadeOut&&r||x||y||(c.fadeOut("slow"),h.fadeOut("slow"))},1E3))}var r,x,y,A,z,s,l,B,k=!1,b=e(this);if(b.parent().hasClass(a.wrapperClass)){var n=b.scrollTop(),c=b.parent().find("."+a.barClass),h=b.parent().find("."+a.railClass);w();if(e.isPlainObject(g)){if("height"in g&&"auto"==g.height){b.parent().css("height","auto");b.css("height","auto");var q=b.parent().parent().height();b.parent().css("height",q);b.css("height",q)}if("scrollTo"in g)n=parseInt(a.scrollTo);else if("scrollBy"in g)n+=parseInt(a.scrollBy);else if("destroy"in g){c.remove();h.remove();b.unwrap();return}m(n,!1,!0)}}else if(!(e.isPlainObject(g)&&"destroy"in g)){a.height="auto"==a.height?b.parent().height():a.height;n=e("<div></div>").addClass(a.wrapperClass).css({position:"relative",overflow:"hidden",width:a.width,height:a.height});b.css({overflow:"hidden",width:a.width,height:a.height});var h=e("<div></div>").addClass(a.railClass).css({width:a.size,height:"100%",position:"absolute",top:0,display:a.alwaysVisible&&a.railVisible?"block":"none","border-radius":a.railBorderRadius,background:a.railColor,opacity:a.railOpacity,zIndex:90}),c=e("<div></div>").addClass(a.barClass).css({background:a.color,width:a.size,position:"absolute",top:0,opacity:a.opacity,display:a.alwaysVisible?"block":"none","border-radius":a.borderRadius,BorderRadius:a.borderRadius,MozBorderRadius:a.borderRadius,WebkitBorderRadius:a.borderRadius,zIndex:99}),q="right"==a.position?{right:a.distance}:{left:a.distance};h.css(q);c.css(q);b.wrap(n);b.parent().append(c);b.parent().append(h);a.railDraggable&&c.bind("mousedown",function(a){var b=e(document);y=!0;t=parseFloat(c.css("top"));pageY=a.pageY;b.bind("mousemove.slimscroll",function(a){currTop=t+a.pageY-pageY;c.css("top",currTop);m(0,c.position().top,!1)});b.bind("mouseup.slimscroll",function(a){y=!1;p();b.unbind(".slimscroll")});return!1}).bind("selectstart.slimscroll",function(a){a.stopPropagation();a.preventDefault();return!1});h.hover(function(){v()},function(){p()});c.hover(function(){x=!0},function(){x=!1});b.hover(function(){r=!0;v();p()},function(){r=!1;p()});b.bind("touchstart",function(a,b){a.originalEvent.touches.length&&(z=a.originalEvent.touches[0].pageY)});b.bind("touchmove",function(b){k||b.originalEvent.preventDefault();b.originalEvent.touches.length&&(m((z-b.originalEvent.touches[0].pageY)/a.touchScrollStep,!0),z=b.originalEvent.touches[0].pageY)});w();"bottom"===a.start?(c.css({top:b.outerHeight()-c.outerHeight()}),m(0,!0)):"top"!==a.start&&(m(e(a.start).position().top,null,!0),a.alwaysVisible||c.hide());C()}});return this}});e.fn.extend({slimscroll:e.fn.slimScroll})})(jQuery);(function($){var _util=CS.util,_dialog=CS.dialog;function show($fileBtn,$previewImg,configs){if(!$fileBtn||$fileBtn.length===0||!$previewImg||$previewImg.length===0){return false;}
-var defaults={'supportFileTypes':'jpg','fileTypeErrorTips':'这个图片的格式一定要是JPG','imgMaxSize':5120,'imgMaxSizeTips':'您上传的图片大于5MB'},options=$.extend(true,{},defaults,configs);var fileBtn=$fileBtn.get(0),reg=new RegExp('\\.('+options.supportFileTypes+')$','i');if(!reg.test($fileBtn.val())){_dialog.alert(options.fileTypeErrorTips);$fileBtn.focus();return false;}
-if(fileBtn.files&&fileBtn.files.length>0){var file=fileBtn.files[0];if(file.size>=options.imgMaxSize*1024){_dialog.alert(options.imgMaxSizeTips);$fileBtn.focus();return false;}
-var fileReader=new FileReader();fileReader.onload=function(e){$previewImg.attr('src',e.target.result).show();};fileReader.readAsDataURL(file);}
-return true;}
-function showv2($fileBtn,$previewImg,configs){if(!$fileBtn||$fileBtn.length===0||!$previewImg||$previewImg.length===0||$fileBtn.val()==''){return false;}
-var defaults={'supportFileTypes':'jpg','fileTypeErrorTips':'这个图片的格式一定要是JPG','imgMaxSize':5120,'imgMaxSizeTips':'您上传的图片大于5MB'},options=$.extend(true,{},defaults,configs);var fileBtn=$fileBtn.get(0),reg=new RegExp('\\.('+options.supportFileTypes+')$','i');if(!reg.test($fileBtn.val())){_dialog.alert(options.fileTypeErrorTips);$fileBtn.focus();return false;}
-if(fileBtn.files&&fileBtn.files.length>0){var file=fileBtn.files[0];if(file.size>=options.imgMaxSize*1024){_dialog.alert(options.imgMaxSizeTips);$fileBtn.focus();return false;}
-var fileReader=new FileReader();fileReader.onload=function(e){$previewImg.attr('src',e.target.result).show();};fileReader.readAsDataURL(file);}
-return true;}
-_util.initNameSpace("CS");CS.localImg={'show':show,'showv2':showv2};})(jQuery);(function($){var _util=CS.util;var _nodes={},_autoHideTime=1000,_autoHideTimeout=null;var _boxTpl=['<div id="topTipBox" class="top-tipbox hidden">','<p data-node="content"></p>','</div>'].join('');function show(content,closeCallback){if(!content){return;}
-if(_autoHideTimeout){clearTimeout(_autoHideTimeout);}
-_nodes.$box=$('#topTipBox');if(!_nodes.$box||_nodes.$box.length===0){$(document.body).append(_boxTpl);$(window).on('resize',function(){_util.throttle(setPosition);});_nodes.$box=$('#topTipBox');}
-_nodes.$content=_nodes.$box.find('[data-node="content"]');_nodes.$content.text(content);setPosition();_nodes.$box.fadeIn('fast');_autoHideTimeout=setTimeout(function(){hide(closeCallback);},_autoHideTime);}
-function hide(closeCallback){if(_autoHideTimeout){clearTimeout(_autoHideTimeout);}
-_nodes.$box.fadeOut('slow',function(){if(typeof closeCallback==='function'){closeCallback();}});}
-function setPosition(){var left=($(window).width()-_nodes.$box.width())/2;_nodes.$box.css('left',left+'px');}
-_util.initNameSpace("CS");CS.topTip={'show':show,'hide':hide,'setPosition':setPosition};})(jQuery);(function($){var _util=CS.util,_uiBinder=CS.uiBinder,_mask=CS.mask,_dialog=CS.dialog,_topTip=CS.topTip,_localImg=CS.localImg;var _params={},_nodes={},_maskByNovelTagPopup=null,_isRequesting=0,_isSubmitting=0,_searchBookTimeout=null,_maskuploadfile=null,_recommendBookMaxCount=10,_boyHtml="",_girlHtml="";var _ajaxUrls={'searchBook':"/Contentv2/Booknovels/ajaxsearchbook.html",'recommendBook':"/Contentv2/Booknovels/ajaxAddTuiJian.html",'checkBookTitleExist':"/Contentv2/Booknovels/isMayEditBookname.html",'cancelRecommendBook':"/Contentv2/Booknovels/ajaxDelTuiJian.html",'recommendList':"/Contentv2/Booknovels/ajaxGetRecList"};var _tagItemTpl='<a data-tagid="$tagId$" title="$tagName$" href="javascript:;">$tagName$<i></i></a>';var _searchBookListTpl=['<dl>','<%each bookList as book index%>','<dd>','<a data-bid="<%= book.BID %>" href="javascript:;"><%= book.title %></a>','</dd>','<%/each%>','</dl>'].join('');var _recommendBookItemTpl='<a data-bid="$bid$" href="javascript:;">$title$<cite data-node="del" class="icon"></cite></a>';function init(CBID,novelssortsman,novelssortslady,site,authorization,isshow,salesleads,categoryid,subcategoryid,taglist,tagshow){_params.novelssortsman=novelssortsman||'';_params.novelssortslady=novelssortslady||'';_params.CBID=CBID||'';_params.site=site||'';_params.authorization=authorization||'';_params.isshow=isshow||'';_params.saletype=salesleads||'';_params.categoryid=categoryid||'';_params.subcategoryid=subcategoryid||'';_params.taglist=taglist||'';_params.tagshow=tagshow||'';_nodes.$form=$('#formModifyBook');_nodes.$selectedNovelTagList=$('#selectedNovelTagList');oldTagList=$('#selectedNovelTagList').html();oriTagList=$('#tagIdListHidden').val();_tagListPlate();_setFormValidate(_params.site);_bindEvent();_bindEventByBookTag();_bindEventByRecommendBook();}
-function _gettuijianBook(site){_util.request({url:_ajaxUrls.recommendList,data:{'CBID':_params.CBID,'site':site},type:'POST',dataType:"json",success:function(json){if(!json){return;}
-if(json.status){var html='';$.each(json.list,function(key,val){html+="<a data-bid=\""+val['BID']+"\" href=\"javascript:\">"+val['title']+"";html+="<cite data-node=\"del\" class=\"icon\"></cite></a>";});$('#recommendBookList').html(html);}},error:function(){return;}});}
-function _tagListPlate(){var boyLength=_params.taglist['boy'].length;var girlLength=_params.taglist['girl'].length;$.each(_params.taglist['boy'],function(key,val){_boyHtml+="<li> <span>"+val['tagName']+"</span>";_boyHtml+="<div class=\"tagFilter\">";$.each(val['sonSet'],function(key1,val1){_boyHtml+="<a data-tagid=\""+val1['id']+"\" title=\""+val1['tagName']+"\" href=\"javascript:\">"+val1['tagName']+"</a>";});_boyHtml+="</div>";_boyHtml+="</li>";});$.each(_params.taglist['girl'],function(key,val){_girlHtml+="<li> <span>"+val['tagName']+"</span>";_girlHtml+="<div class=\"tagFilter\">";$.each(val['sonSet'],function(key1,val1){_girlHtml+="<a data-tagid=\""+val1['id']+"\" title=\""+val1['tagName']+"\" href=\"javascript:\">"+val1['tagName']+"</a>";});_girlHtml+="</div>";_girlHtml+="</li>";});var $cur_site=$("input[name='site']").val();if($cur_site==1||$cur_site==5){$('#tagCount').html(boyLength);$('#novelTagPopup_tagList').html(_boyHtml);}else{$('#novelTagPopup_tagList').html(_girlHtml);$('#tagCount').html(girlLength);}
-if(_params.site==1||_params.site==2)
-{$('#commendlist_id').show();}}
-function _siteChangeTagList(site){var boyLength=_params.taglist['boy'].length;var girlLength=_params.taglist['girl'].length;if(site==1||site==5){$('#novelTagPopup_tagList').html(_boyHtml);$('#tagCount').html(boyLength);}else{$('#novelTagPopup_tagList').html(_girlHtml);$('#tagCount').html(girlLength);}}
-function _bindEvent(){var $bookWrap=$('#bookWrap');$('#selectBookCoverBtn').on('click',function(){_maskuploadfile=new _mask($('#J-dialog1'));if(_maskuploadfile)
-{_maskuploadfile.open();}});$('#img_file_btn_1,#img_file_btn_2').on('click',function(){$('#bookpic').click();$('.close-btn').click();});$('#bookpic').on('change',function(){_localImg.show($(this),$('#previewImg'),{'imgMaxSize':5120,'imgMaxSizeTips':'您上传的图片大于5M'});});$('.close-btn').on('click',function(){if(_maskuploadfile)
-{_maskuploadfile.close();}});
-$('#switchModifyModeBtn').on('click',function(){
-alert(1);$bookWrap.find('.modify').show();$bookWrap.find('.saved').hide();$bookWrap.find('#novelMainCategorySelect').show();return;if(_params.isshow=='yes'){$("select[name='sites']").val(_params.site);$("select[name='authorization']").val(_params.authorization);_addsalesLeadsAndRecommendwords(_params.site,_params.categoryid);_NovelSubCategorySelector(_params.site);}
-return false;});if(_params.isshow=='yes'){$("select[name='sites']").on('change',function(){var site=$("select[name='sites']").val();_setFormValidate(site);if($(this).val()!=_params.site){$("#selectedNovelTagList").html('');$('#tagIdListHidden').val('');}else{$("#selectedNovelTagList").html(oldTagList);$('#tagIdListHidden').val(oriTagList);}
-_siteChangeTagList($(this).val());_NovelSubCategorySelector($(this).val());_addsalesLeadsAndRecommendwords($(this).val(),$('#parentClass').val());_gettuijianBook($(this).val());if($(this).val()==1||$(this).val()==2)
-{$('#commendlist_id').show();}else
-{$('#commendlist_id').hide();}});}
-$('#cancelBookSettingBtn').on('click',function(){$('#selectedNovelTagList').html(oldTagList);$('#tagIdListHidden').val(oriTagList);if(_params.isshow=='yes'){$(".novelssort").remove();}
-$bookWrap.find('.modify').hide();$bookWrap.find('.saved').show();});$('#saveBookSettingBtn').on('click',function(){_submitForm();return false;});$("#pagemessage").click(function(){var obj=$("#pagemessage");var pageMsg=obj.attr('data-p');if(!pageMsg){return;}
-if((obj.val()!=pageMsg)&&obj.val()){return;}
-obj.val(pageMsg);});$('#bookautocoverId').on('click',function(){var val=$(this).attr('data-val');var href=$(this).attr('data-href');if(val==1)
-{window.location.href=href;}else
-{_topTip.show("仅支持首次设计");}})}
-function _addsalesLeadsAndRecommendwords(siteType,categoryid){if(siteType==2||((siteType==21||siteType==23||siteType==24)&&categoryid>30000)){var html='';html+="<em>销售意向：</em>";html+="<p class='select-level'><select name='salesleads'><option value=\"2\">包月</option>";html+="<option value=\"1\">单订</option></select></p>";$('#salesLeads').html(html).show();if(siteType==2)
-{html='';html+="<em>推荐语：</em>";html+="<input class='midInput recTagInput valid' tupe='text' name='recommendwords' value='"+$('#rec').val()+"'>";html+="<p data-node=\"ok\" style=\"display:none;\">"
-html+="<cite class=\"icon ok\"></cite><span class=\"f12 c999\" data-node=\"text\" style=\"padding-left:5px;\"></span></p>"
-html+="<p data-node=\"error\" class=\"error\" style=\"display:none;\"></p>";$('#recommendwords').css('min-height',"30px");$('#recommendwords').html(html).show();}else
-{$('#recommendwords').css('min-height',"0px");$('#recommendwords').html('').hide();}
-$("select[name='salesleads']").css('visibility','visible').show();$("select[name='salesleads'] option[value="+_params.saletype+"]").attr("selected","selected");}else{$('#salesLeads').html('').hide();$('#recommendwords').html('').hide();}
-if(_params.site==2){$("select[name='salesleads']").val(_params.saletype);}}
-function _ParentNovelChange(){var changeSite=$("select[name='sites']").val();$('#parentClass').on('change',function(){$('#subcategory').html('');var cateId=$(this).val();var novelParentCate,novelSubCate;if(changeSite==5||changeSite==1||(_params.site==21&&_params.categoryid<30000))
-novelParentCate=_params.novelssortsman;else
-novelParentCate=_params.novelssortslady;for(var item in novelParentCate){if(novelParentCate[item]['categoryid']==cateId){novelSubCate=novelParentCate[item];break;}}
-var arrnovels=[];for(var itemsub in novelSubCate['son'])
-{arrnovels.push('<option value="'+novelSubCate['son'][itemsub].subcategoryid+'">'+novelSubCate['son'][itemsub].subcategoryname+'</option>');}
-$('#subcategory').html(arrnovels);});}
-function _NovelSubCategorySelector($site){var subcate;$(".novelssort").remove();var arrnovels="";arrnovels+="<select id='parentClass' name='parentClass' class='modify hidden showselect novelssort'>";if($site==5||$site==1||(($site==21||$site==23||$site==24)&&_params.categoryid<30000&&$site==_params.site)){for(var item in _params.novelssortsman){if(item==_params.categoryid)
-subcate=_params.novelssortsman[item]['son'];arrnovels+='<option value="'+_params.novelssortsman[item].categoryid+'">'+_params.novelssortsman[item].categoryname+'</option>';}
-arrnovels+="</select>";arrnovels+="<select style=\"visibility: visible\" id='subcategory' name= 'subcategory' class='modify hidden showselect novelssort'>";if(subcate==undefined)
-subcate=_params.novelssortsman['20001']['son'];for(var itemsub in subcate){arrnovels+='<option value="'+subcate[itemsub].subcategoryid+'">'+subcate[itemsub].subcategoryname+'</option>';}}else{for(var item in _params.novelssortslady){if(item==_params.categoryid)
-subcate=_params.novelssortslady[item]['son'];arrnovels+='<option value="'+_params.novelssortslady[item].categoryid+'">'+_params.novelssortslady[item].categoryname+'</option>';}
-arrnovels+="</select>";arrnovels+="<select style=\"visibility: visible\" id='subcategory' name='subcategory' class='modify hidden showselect novelssort'>";if(subcate==undefined)
-subcate=_params.novelssortslady['30001']['son'];for(var itemsub in subcate){arrnovels+='<option value="'+subcate[itemsub].subcategoryid+'">'+subcate[itemsub].subcategoryname+'</option>';}}
-arrnovels+="</select>";$('#classificationWorks').append(arrnovels);$('.showselect').css('visibility','visible').show();_ParentNovelChange();$("select[name='parentClass']").val(_params.categoryid);$("select[name='subcategory']").val(_params.subcategoryid);}
-function _bindEventByBookTag(){var $novelTagPopup=$('#novelTagPopup'),$tagList=$('#novelTagPopup_tagList'),selectedTags=_getSelectedTags();$tagList.slimScroll({height:'328px',disableFadeOut:true,railVisible:true});if(selectedTags&&selectedTags.length>0){$.each(selectedTags,function(index,tagid){$tagList.find('[data-tagid="'+tagid+'"]').addClass('act');});}
-_nodes.$selectedNovelTagList.on('click','a',function(){if(_params.tagshow=='disabled'){return false;}
-var val=$(this).attr('data-tagid');_deleteNovelTag(val);return false;});_nodes.$selectedNovelTagList.on('click',function(event){if(_params.tagshow=='disabled'){return false;}
-selectedTags=_getSelectedTags();if(selectedTags&&selectedTags.length>0){$.each(selectedTags,function(index,tagid){$tagList.find('[data-tagid="'+tagid+'"]').addClass('act');});}
-event.preventDefault();if(!_maskByNovelTagPopup){_maskByNovelTagPopup=new _mask($novelTagPopup);}
-if(_maskByNovelTagPopup){_maskByNovelTagPopup.open();}});$('#novelTagPopup_closeBtn').on('click',function(event){event.preventDefault();_closeNovelTagPopup();});$('#novelTagPopup_tagList').on('click','a',function(event){event.preventDefault();$(this).addClass('act').siblings('a').removeClass('act');});$('#novelTagPopup_confirmBtn').on('click',function(event){event.preventDefault();_selectNovelTag();});}
-function _bindEventByRecommendBook(){var $searchBookInput=$("#searchBookInput"),$searchBookResultList=$('#searchBookResultList'),$recommendBookList=$('#recommendBookList');$searchBookInput.on('keyup',function(){if(_searchBookTimeout){clearTimeout(_searchBookTimeout);}
-_searchBookTimeout=setTimeout(function(){_searchRecommendBook($searchBookInput.val());},200);});$recommendBookList.on("click",'[data-node="del"]',function(){var bid=$(this).parent().attr('data-bid');_cancelRecommendBook(bid);return false;});$searchBookResultList.on('click','a',function(){var bid=$(this).attr("data-bid"),title=$(this).text();$searchBookInput.val(title).attr('data-bid',bid);$searchBookResultList.hide().empty();});$('#recommendBookBtn').on("click",function(){var bid=$searchBookInput.attr('data-bid'),bookTitle=$searchBookInput.val();_recommendBook(bid,bookTitle);return false;});$(document).on("click",function(e){var target=$(e.target);if(target.closest($searchBookInput).length===0){$searchBookResultList.fadeOut(200);}});}
-function _setFormValidate(site){var $bookNameInput=$('#bookNameInput');if(site==''||site=='undefined')
-{site=$("input[name='site']").val();}
-if(site==1||site==5){jQuery.validator.addMethod("bookNameCheck",function(value,element){return this.optional(element)||/^[A-Za-z0-9\u4E00-\u9fa5——，]{1,15}$/.test(value);},'作品名15字以内，特殊字符仅允许中文标点逗号、破折号');}else{jQuery.validator.addMethod("bookNameCheck",function(value,element){return this.optional(element)||/^[A-Za-z0-9\u4E00-\u9fa5：！——，]{1,15}$/.test(value);},"作品名15字以内，特殊字符仅允许中文标点逗号、冒号、感叹号、破折号");}
-_nodes.$form.validate({'rules':{'bookname':{bookNameCheck:true,required:true,byteRangeLengthByOne:[1,15],remote:{url:_ajaxUrls.checkBookTitleExist,type:"post",data:{bookTitle:function(){return $bookNameInput.val();},CBID:function(){return _params.CBID;},def:function(){return $bookNameInput.attr('data-def');}}}},'intro':{required:true,byteRangeLengthByOne:[20,300]},'recommendwords':{required:true,byteRangeLengthByOne:[1,16]},'parentClass':{required:true,},'pagemessage':{byteRangeLengthByOne:[0,32]}},'messages':{'bookname':{required:"书名不能为空",byteRangeLengthByOne:'请输入15字以内的作品名',remote:"这本大作已经有人写过了，再想个名字吧！"},'intro':{required:"请输入作品介绍",byteRangeLengthByOne:"请输入20-300字介绍您的作品"},'recommendwords':{required:"推荐语不能为空",byteRangeLengthByOne:"推荐语必须在16个字内"},'parentClass':{required:'请选择作品类型',},'pagemessage':{byteRangeLengthByOne:"请输入32个字以内的内容",}},errorElement:'span',errorPlacement:function(error,element){var $error=element.nextAll('[data-node="error"]');$error.html(error);element.nextAll('[data-node="ok"]').hide();element.nextAll('[data-node="tip"]').hide();if(element.attr('id')==='bookNameInput'){$error.css('display','inline-block');}else{$error.show();}},success:function(error){var $errorBox=error.parent(),$ok=$errorBox.prevAll('[data-node="ok"]');if($errorBox.parent().hasClass('cf')){if(_params.isshow!='yes')
-{$ok.find('[data-node="text"]').text('书名修改后需提交审核，2个工作日内完成');}}else{$ok.show();}
-$ok.css('display','inline-block');$errorBox.prevAll('[data-node="tip"]').show();$errorBox.hide();error.remove();}});}
-function _submitForm(){if(!_nodes.$form.valid()){return;}
-if(_isSubmitting){return;}
-_isSubmitting=1;_util.ajaxSubmitForm(_nodes.$form,{type:"POST",data:{},dataType:"json",success:function(json){if(!json){_topTip.show('返回的数据格式异常，请稍候再试');return;}
-if(json.status){_topTip.show(json.info||'修改成功',function(){_refreshCurrentPage();});}else{_topTip.show(json.info||'操作失败，请稍候再试');}},error:function(){_topTip.show('操作失败，请稍候再试');},complete:function(){_isSubmitting=0;}});}
-function _getSelectedTags(){var arrTag=[];_nodes.$selectedNovelTagList.find('[data-tagid]').each(function(index,el){var tagid=$(el).attr('data-tagid');if(tagid){arrTag.push(tagid);}});return arrTag;}
-function _selectNovelTag(){var $selectedTag=$('#novelTagPopup_tagList').find('a.act'),tpl='',frag=document.createDocumentFragment();_nodes.$selectedNovelTagList.empty();$selectedTag.each(function(index,el){var $el=$(el),tagId=$el.attr('data-tagid'),tagName=$el.text();tpl=_util.replaceTpl(_tagItemTpl,{'tagId':tagId,'tagName':tagName});frag.appendChild($(tpl).get(0));});_nodes.$selectedNovelTagList.append(frag);_saveNovelTag();_closeNovelTagPopup();}
-function _deleteNovelTag(tagId){_nodes.$selectedNovelTagList.find('a').each(function(){var $this=$(this);if($this.attr("data-tagid")==tagId){$this.remove();return false;}});$('#novelTagPopup_tagList').find('[data-tagid="'+tagId+'"]').removeClass('act');_saveNovelTag();}
-function _saveNovelTag(){var arrTag=_getSelectedTags();$("#tagIdListHidden").val(arrTag.join(','));}
-function _closeNovelTagPopup(){if(_maskByNovelTagPopup){_maskByNovelTagPopup.close();}}
-function _searchRecommendBook(inputText){var $list=$('#searchBookResultList');$list.hide().empty();if(/^[A-Za-z0-9\u4E00-\u9fa5：，]{1,15}$/.test(inputText)){_util.request({url:_ajaxUrls.searchBook,data:{'Booktitle':inputText,'CBID':_params.CBID,'site':$("select[name='sites']").val()},type:'post',dataType:"json",success:function(json){if(json&&json.status){if(json.data&&json.data.list&&json.data.count>0){var tpl=_uiBinder.bindData(_searchBookListTpl,{'bookList':json.data.list});$list.html(tpl).show();}}}});}}
-function _recommendBook(bid,bookTitle){if(!bid||!bookTitle){_dialog.alert('请先点选下拉框中的书名，然后点击推荐按钮确认。');return;}
-var hasRecommended=0,$recommendBookList=$('#recommendBookList'),$recommendedBook=$recommendBookList.find('a');if($recommendedBook.length>=_recommendBookMaxCount){_dialog.alert('最多可以推荐'+_recommendBookMaxCount+'本作品');return;}
-$recommendedBook.each(function(){if($(this).attr('data-bid')===bid){hasRecommended=1;return false;}});if(hasRecommended){_dialog.alert('该作品已在您的推荐作品列表中');return;}
-_util.request({url:_ajaxUrls.recommendBook,data:{'bid':bid,'CBID':_params.CBID,'site':$("select[name='sites']").val()},type:'POST',dataType:"json",success:function(json){if(!json){return;}
-if(json.info){_topTip.show(json.info);}
-if(json.status){var tpl=_util.replaceTpl(_recommendBookItemTpl,{'bid':bid,'title':bookTitle});$recommendBookList.append(tpl);}},error:function(){_topTip.show('操作失败，请稍候再试');}});}
-function _cancelRecommendBook(bid){if(!bid){_dialog.alert('作品id未获取到');return;}
-_util.request({url:_ajaxUrls.cancelRecommendBook,data:{'bid':bid,'CBID':_params.CBID,'site':$("select[name='sites']").val()},type:'POST',dataType:"json",success:function(json){if(!json){return;}
-if(json.info){_topTip.show(json.info);}
-if(json.status){$('#recommendBookList').find('a[data-bid="'+bid+'"]').remove();}},error:function(){_topTip.show('操作失败，请稍候再试');}});}
-function _refreshCurrentPage(){location.href=location.href;}
-_util.initNameSpace("CS.page.bookManage");CS.page.bookManage.bookModify={'init':init};})(jQuery);(function($){var _util=CS.util,_uiBinder=CS.uiBinder,_mask=CS.mask,_topTip=CS.topTip,_dialog=CS.dialog,_localImg=CS.localImg,_volume=null,_createChapter=null;var _params={},_nodes={},_isSubmitting=0,_maskCreateRolePopup=null,_maskRoleManagePopup=null,_maskRoleDeletePopup=null,_countRoleDeletePopup=0,_countRoleManagePopup=0,_countCreateRolePopup=0,_countBirthday=0;var _ajaxUrls={'ajaxGetRoleNum':'/Contentv2/Rolemanage/ajaxGetRoleNum.html','ajaxAddRole':'/Contentv2/Rolemanage/ajaxAddRole.html','ajaxUpdateRole':'/Contentv2/Rolemanage/ajaxUpdateRole.html','ajaxDelRole':'/Contentv2/Rolemanage/ajaxDelRole.html','ajaxListRole':'/Contentv2/Rolemanage/ajaxListRole.html','ajaxGetRoleInfo':'/Contentv2/Rolemanage/ajaxGetRoleInfo.html','ajaxGetConstellation':'/Contentv2/Rolemanage/ajaxGetConstellation.html'};var _roleManageTpl=['<li>','<div class="content">','<div class="avatar"><img src="<%=roleInfo.cfmportrait%>"></div>','<div class="info">','<div class="text">','<h3><%=roleInfo.nickname%><span><%=roleInfo.nametype%></span></h3>','<p><%=roleInfo.cfmremark%></p>','</div>','<i></i>','</div>','<div class="btn-box">','<input type="hidden" value="<%=roleInfo.CRID%>">','<a class="editRole" href="javascript:">编辑</a>','<a class="delRole" href="javascript:">删除</a>','</div>','</div>','</li>'].join('');function init(CBID){_params.CBID=CBID;_params.jmoreBtn_click_num=0;_nodes.$createRolePopup=$('#createRolePopup');_nodes.$roleManagePopup=$('#roleManagePopup');_nodes.$roleDeletePopup=$('#roleDeletePopup');_nodes.$jcharacterList=$('#j-characterList');_nodes.$jinsertStart=$('#j-insertStart');_nodes.$insertEnd=$('#insertEnd');_nodes.$roleId=$('#roleId');_bindEventDialog();_bindDialogLoad();_allCharacterListShow();_jcharacterListSroll()
-_jAllCharacterList();_changeMonth();_changeDate();}
-function _bindEventDialog(){_bindFileImg('acUpload','roleImg');$("#createRole,.add-character").on('click',function(){$("#createRolePopup .popup-title").find('h3').html("创建角色");$("#createRolePopup").find('label[for="acUpload"]').html("上传头像");$("#roleImg").attr("src",default_photo);$("#zsjs").parent(".radio").addClass('on');$("#zsjs").attr("checked","checked");$("#ycjs").removeAttr('checked');$("#ycjs").parent(".radio").removeClass('on');$(".create-character-wrap .combo-input").val('请选择角色类型');$("#roletype").val(0)
-_params.class_name=$(this).attr("class");_showCreateRolePopup();_setMonthDate(0,0);});$("#bookrolemanage").on('click',function(){_showRoleManagePopup();});$("#roleDeleteConfirm").on('click',function(){_roleDeleteSubmit();});$("#roleCreateConfirm").on('click',function(){_roleCreateSubmit();});_nodes.$createRolePopup.find('[data-node-do-role="close"]').click(function(event){event.preventDefault();_closeCreateRolePopup();return false;})
-_nodes.$roleDeletePopup.find('[data-node-del-role="close"]').click(function(event){event.preventDefault();_closeRoleDelPopup();return false;})
-_nodes.$roleManagePopup.find('[data-node-man-role="close"]').click(function(event){event.preventDefault();_closeRoleManagePopup();return false;});}
-function _bindDialogLoad()
-{$(document).on("click",'.editRole',function(event){event.preventDefault();_params.class_name=$(this).attr("class");_params.CRID=$(this).siblings("input").val();_nodes.$roleContent=$(this).parent('.btn-box').parent('.content');_showCreateRolePopup();});$(document).on("click",'.delRole',function(event){event.preventDefault();_params.CRID=$(this).siblings("input").val();_nodes.$deleteLi=$(this).parent('.btn-box').parent('.content').parent();_showRoleDelPopup();});}
-function _bindFileImg(fileid,imgid){if($('#'+fileid).length!==0){$('#'+fileid).on('change',function(){var isSelectedImg=_localImg.showv2($(this),$('#'+imgid),{'imgMaxSize':2048*5,'imgMaxSizeTips':'检测到上传照片超过2MB，请重新上传。','supportFileTypes':'jpg|png','fileTypeErrorTips':'图片格式一定要是JPG，PNG中的一种'});if(!isSelectedImg){$('#'+fileid).val('');}});}}
-function _allCharacterListShow()
-{var $moreBtn=$('#j-moreBtn'),$characterList=$('#j-AllCharacterList');$moreBtn.on('click',function(){$characterList.fadeIn(200);});$(document).on('click',function(e){var target=$(e.target);if(target.attr('id')=='j-moreBtn'||target.closest('#j-AllCharacterList').length>0||target.hasClass('more')){return;}else{$characterList.fadeOut(200);}})}
-function _showCreateRolePopup()
-{var requestData={'CBID':_params.CBID,'CRID':_params.CRID||0};if(_isSubmitting==1){return;}
-_isSubmitting=1;_util.request({url:(_params.class_name=='editRole')?_ajaxUrls.ajaxGetRoleInfo:_ajaxUrls.ajaxGetRoleNum,data:requestData,type:'post',success:function(json){if(!json){_dialog.alert('返回数据格式异常，请稍后再试');return;}
-if(json.status==false){_dialog.alert(json.info);return;}else{if(!_maskCreateRolePopup)
-{_maskCreateRolePopup=new _mask(_nodes.$createRolePopup);}
-if(!_maskCreateRolePopup)
-{return;}
-if(_params.class_name=='editRole'){$("#createRolePopup .popup-title").find('h3').html("编辑角色");$("#createRolePopup").find('label[for="acUpload"]').html("修改头像");$("#roleName").val(json.nickname);$("#roleDesc").val(json.cfmremark);if(json.roleshow_status==-1){$("#roleshowstatus").prop("checked","checked");}else
-{$("#roleshowstatus").removeAttr("checked");}
-$("#roleImg").attr('src',json.cfmportrait);$("#roletype").val(json.role).change();$("#height").val(json.height);$("#weight").val(json.weight);$("#age").val(json.age);var md=json.birthday.split('/');if(md.length==2)
-{month=md[0];date=md[1];$("#birMonth_em").text(month);$("#birDay_em").text(date);$("#constellation_i").text(json.constellation);$("#birthday_select").hide();$("#birthday_text").show();}else
-{_setMonthDate(0,0);$("#birthday_select").show();$("#birthday_text").hide();}
-$(".create-character-wrap .combo-input").val(json.nametype);}else{$("#createRolePopup .popup-title").find('h3').html("创建角色");}
-_maskCreateRolePopup.open();_isSubmitting=0;}},complete:function(){_isSubmitting=0;}});}
-function _closeCreateRolePopup(){if(_maskCreateRolePopup){_maskCreateRolePopup.close();$("#acUpload").val('');$("#roleName").val('');$("#roleDesc").val('');$("#roletype").val("0").change();$("#height").val('');$("#weight").val('');$("#age").val('');$("#roleshowstatus").removeAttr("checked");$("#birMonth").val(0);$("#birDay").val(0);$("#birthday_select").show();$("#birthday_text").hide();_countBirthday=0;}}
-function _showRoleManagePopup()
-{var requestData={'CBID':_params.CBID};if(_countRoleManagePopup>0){return;}
-_countRoleManagePopup=1;_util.request({url:_ajaxUrls.ajaxListRole,data:requestData,type:'post',success:function(json){if(!json){_dialog.alert('返回数据格式异常，请稍后再试');return;}
-if(json.length==0){_roleEmpty();}else{_nodes.$jcharacterList.find("ul li").remove();for(i=0;i<json.length;i++)
-{tpl=_uiBinder.bindData(_roleManageTpl,{'roleInfo':json[i]});_nodes.$jcharacterList.find("ul").append(tpl);}
-_bindDialogLoad();return false;}},complete:function(){_countRoleManagePopup=0;}});if(!_maskRoleManagePopup)
-{_maskRoleManagePopup=new _mask(_nodes.$roleManagePopup);}
-if(!_maskRoleManagePopup)
-{return;}
-_maskRoleManagePopup.open();_countRoleManagePopup=0;}
-function _closeRoleManagePopup(){if(_maskRoleManagePopup){_maskRoleManagePopup.close();_countRoleManagePopup=0;}}
-function _showRoleDelPopup(){if(_countRoleDeletePopup>0)
-{return;}
-if(!_maskRoleDeletePopup)
-{_maskRoleDeletePopup=new _mask(_nodes.$roleDeletePopup);}
-if(!_maskRoleDeletePopup)
-{return;}
-_maskRoleDeletePopup.open();_countRoleDeletePopup=1;}
-function _closeRoleDelPopup(){if(_maskRoleDeletePopup){_maskRoleDeletePopup.close();_countRoleDeletePopup=0;}}
-function _roleDeleteSubmit()
-{var requestData={'CBID':_params.CBID,'CRID':_params.CRID};_util.request({url:_ajaxUrls.ajaxDelRole,data:requestData,type:'post',success:function(json){if(!json){_dialog.alert('返回数据格式异常，请稍后再试');return;}
-if(json.status==false){_dialog.alert(json.info);return;}else{_topTip.show(json.info);_nodes.$deleteLi.remove();_delSelectCharacter(_params.CRID);_delAllCharacterList(_params.CRID);_closeRoleDelPopup();}}});}
-function _roleCreateSubmit()
-{if(_countBirthday==1)
-{_dialog.confirm("角色生日一旦填写则不允许修改，是否确认？",function()
-{_roleCreateSubmitSon();});}
-else
-{_roleCreateSubmitSon();}}
-function _roleCreateSubmitSon()
-{var roleName=$("#roleName").val();var roleDesc=$("#roleDesc").val();var roletype=$("#roletype").val();var height=$("#height").val();var weight=$("#weight").val();var age=$("#age").val();var birthday=_getBirthday();var roleshowStatus=$("#roleshowstatus:checked").val();if(roleName.length<1||roleName.length>10){alert('昵称至少一个字，最多不超过10个汉字');return;}
-if(roleDesc.length>50){alert('描述至多50个汉字');return;}
-if(roletype<1){alert('请选择角色类型');return;}
-if(height.length>10)
-{alert('身高不超过10个字');return;}
-if(weight.length>10)
-{alert('体重不超过10个字');return;}
-if(age.length>10)
-{alert('年龄不超过10个字');return;}
-if(!_isValidMonthDate())
-{alert('角色生日请填写完整的日期');return;}
-var formData=new FormData();formData.append("myfile",$("#acUpload")[0].files[0]);formData.append("roleName",roleName);formData.append("roleDesc",roleDesc);formData.append("roletype",roletype);formData.append("roleshowStatus",roleshowStatus);formData.append("CBID",_params.CBID);formData.append("height",height);formData.append("weight",weight);formData.append("age",age);formData.append("birthday",birthday);if(_params.class_name=='editRole'){formData.append("CRID",_params.CRID);}
-_util.request({url:(_params.class_name=='editRole')?_ajaxUrls.ajaxUpdateRole:_ajaxUrls.ajaxAddRole,data:formData,type:'post',processData:false,contentType:false,cache:false,success:function(json){if(!json){_dialog.alert('返回数据格式异常，请稍后再试');return;}
-if(json.status==false){_dialog.alert(json.info);return;}else{_topTip.show(json.info);if(_params.class_name=='editRole'){_nodes.$roleContent.find('.text h3').html(json.data.nickname+'<span>'+json.data.nametype+'</span>');_nodes.$roleContent.find('.text p').html(json.data.remark);_nodes.$roleContent.find('.avatar img').attr('src',json.data.cfmportrait);_updateAllCharacterList(json.data.CRID,json.data.nickname,json.data.cfmportrait);}else{tpl=_uiBinder.bindData(_roleManageTpl,{'roleInfo':json.data});$("#noData").hide();_nodes.$jcharacterList.find("ul").append(tpl);}
-_closeCreateRolePopup();return false;}}});}
-function _delSelectCharacter(CRID)
-{if(!CRID)
-{return;}
-var currentInput=$('#j-selectCharacter input[value="'+CRID+'"]');if(currentInput.length==0)
-{return;}
-currentInput.parent().remove();}
-function _delAllCharacterList(CRID)
-{if(!CRID)
-{return;}
-var currentLi=$('#j-AllCharacterList').find('ul li[crid="'+CRID+'"]');if(currentLi.length==0)
-{return;}
-currentLi.remove();_doInsertEnd();}
-function _updateAllCharacterList(CRID,nickname,cfmportrait)
-{if(!CRID||!nickname||!cfmportrait)
-{return;}
-var currentLi=$('#j-AllCharacterList').find('ul li[crid="'+CRID+'"]');if(currentLi.length==0)
-{return;}
-currentLi.find('img').attr('src',cfmportrait);currentLi.find('cite').html(nickname);}
-function _jcharacterListSroll()
-{$('#j-characterList').slimScroll({height:'528px',railVisible:true,size:'8px',wheelStep:8,borderRadius:0,railBorderRadius:0,disableFadeOut:true,allowPageScroll:false,alwaysVisible:false,distance:'-1px'});}
-function _jAllCharacterList()
-{$('#j-AllCharacterList ul').slimScroll({height:'247px',railVisible:true,size:'6px',wheelStep:2,borderRadius:0,railBorderRadius:0,disableFadeOut:true,allowPageScroll:false,alwaysVisible:true,distance:'-1px'});}
-function _roleEmpty(){var emptytpl='<div class="no-data" id="noData"> <div class="no-icon"></div> <p>暂无数据</p> </div>';$("#j-characterList").append(emptytpl);}
-function _getDates(month)
-{return new Date(2016,month,0).getDate();}
-function _getDateOptions(month,date)
-{var dates=_getDates(month);var options='<option value="0"></option>';var selected='';for(var i=1;i<=dates;i++)
-{if(date==i)
-{selected="selected";}
-tmp=i;if(tmp<10)
-{tmp='0'+i;}
-options+=" <option value='"+tmp+"' "+selected+">"+tmp+"</option>";selected='';}
-return options;}
-function _getMonthOptions(month)
-{var options='<option value="0"></option>';var selected='';var tmp='';for(var i=1;i<=12;i++)
-{if(month==i)
-{selected="selected";}
-tmp=i;if(tmp<10)
-{tmp='0'+i;}
-options+=" <option value='"+tmp+"' "+selected+">"+tmp+"</option>";selected='';}
-return options;}
-function _setMonthDate(month,date)
-{var monthOptions=_getMonthOptions(month);var dateOptions=_getDateOptions(month,date);$('#birMonth').html(monthOptions);$('#birMonth').comboSelect();$('#birDay').html(dateOptions);$('#birDay').comboSelect();$('#birDay').change();}
-function _changeMonth()
-{$('#birMonth').on('change',function(){var month=$('#birMonth').val();var dateOptions=_getDateOptions(month,0);$('#birDay').html(dateOptions);$('#birDay').comboSelect();$('#birDay').change();});}
-function _changeDate()
-{$('#birDay').on('change',function(){_getConstellation();});}
-function _getConstellation()
-{var birthday=_getBirthday();if(birthday.length!=5)
-{return;}
-_countBirthday=1;var requestData={'CBID':_params.CBID,'birthday':birthday};_util.request({url:_ajaxUrls.ajaxGetConstellation,data:requestData,type:'post',success:function(json){if(!json){_dialog.alert('返回数据格式异常，请稍后再试');return;}
-if(json.status==false){_dialog.alert(json.info);return;}else{$("#constellation").text(json.data);}}});}
-function _getBirthday()
-{var month=$('#birMonth').val();var day=$('#birDay').val();if(month==0||day==0||month==null||day==0)
-{return'';}
-return month+'/'+day;}
-function _isValidMonthDate()
-{var month=$('#birMonth').val();var day=$('#birDay').val();if((month!=0&&day==0)||(month==0&&day!=0))
-{return false;}
-return true;}
-_util.initNameSpace("CS.page.bookManage");CS.page.bookManage.roleMange={'init':init};})(jQuery);
+return this.optional(element)||mobile.test(value);},"请输入正确的手机号码");(function($){var _util=CS.util;function regionalLinkage(areaarr){var $citySelect=$('#citySelect');var $areaSelect=$('#areaSelect');$('#provinceSelect').on('change',function(){var provinceName=$(this).val(),cityNameList=areaarr[provinceName];if(cityNameList){var arrCityTpl=[];$.each(cityNameList,function(index,item){arrCityTpl.push('<option value="'+index+'">'+index+'</option>');});$citySelect.html(arrCityTpl.join(''));var arrCityTpl=[];$.each(cityNameList[$('#citySelect').val()],function(index,item){arrCityTpl.push('<option value="'+item+'">'+item+'</option>');});$areaSelect.html(arrCityTpl.join(''));}});$('#citySelect').change(function(){var cityName=$(this).val(),provinceName=$('#provinceSelect').val(),cityNameList=areaarr[provinceName];if(cityNameList){var arrCityTpl=[];$.each(cityNameList[$('#citySelect').val()],function(index,item){arrCityTpl.push('<option value="'+item+'">'+item+'</option>');});$areaSelect.html(arrCityTpl.join(''));}});}
+_util.initNameSpace("CS");CS.citySelection={'regionalLinkage':regionalLinkage};})(jQuery);(function($){var _util=CS.util,_dialog=CS.dialog,_areaLinkage=CS.citySelection;var _params={},_nodes={},_isSubmitting=0;var _ajaxUrls={'checkAuthorName':'/jpbook/users/getUsersByPen'};var str="请填写街道名称，门牌号码，楼层和房间号",_grayColor='color:rgb(192,192,192)',_blackColor="color:rgb(51,51,51)",$address=$("input[name='address']");function init(cityList){showDefaultCopy();_params.cityList=cityList||{};_nodes.$registerAuthorForm=$('#formRegisterAuthor');_nodes.$baseInfoForm=$('#baseInfoForm');_nodes.$stepTabBox=$('#stepTabBox');_setBaseInfoFormValidate();_setRegisterAuthorFormValidate();_bindEvent();_areaLinkage.regionalLinkage(_params.cityList);refresh_selected();}
+function refresh_selected(){$(function(){$('#provinceSelect').val('北京市');});}
+function showDefaultCopy(){$('#submitBtn').click(function(){
+if($address.val()==str)
+{$address.attr('style',_blackColor).val('');return false;}
+});$address.blur(function(){if($address.val()==''){$address.val(str).attr('style',_grayColor);}else{$address.attr('style','').attr('style',_blackColor);}});$address.click(function(){if($address.val()==str){$address.val('').attr('style',_blackColor);}});}
+function _bindEventBySelector(){var $citySelect=$('#citySelect');var $areaSelect=$('#areaSelect');$('#provinceSelect').on('change',function(){var provinceName=$(this).val(),cityNameList=_params.cityList[provinceName];if(cityNameList){var arrCityTpl=[];$.each(cityNameList,function(index,item){arrCityTpl.push('<option value="'+index+'">'+index+'</option>');});$citySelect.html(arrCityTpl.join(''));var arrCityTpl=[];$.each(cityNameList[$('#citySelect').val()],function(index,item){arrCityTpl.push('<option value="'+item+'">'+item+'</option>');});$areaSelect.html(arrCityTpl.join(''));}
+$('#citySelect').change(function(){var cityName=$(this).val(),provinceName=$('#provinceSelect').val(),cityNameList=_params.cityList[provinceName];if(cityNameList){var arrCityTpl=[];$.each(cityNameList[$('#citySelect').val()],function(index,item){arrCityTpl.push('<option value="'+item+'">'+item+'</option>');});$areaSelect.html(arrCityTpl.join(''));}});});}
+function _bindEvent(){var $baseInfoBox=$('#baseInfoBox'),$registerAuthorBox=$('#registerAuthorBox'),$baseInfoHiddenBox=$('#baseInfoHiddenBox');$('#agreenBox').on('click',function(){var $checkbox=$(this).find('input');if($(this).hasClass('on_check')){$(this).removeClass('on_check');$checkbox.removeAttr('checked');}else{$(this).addClass('on_check');$checkbox.prop('checked','checked');}});
+$("#nextStepBtn").on('click',function(){
+
+    if(_nodes.$baseInfoForm.valid()){
+    _nodes.$baseInfoForm.find('input').each(function(index,el){
+        var dataName=$(el).attr('name'),dataValue=$(el).val();
+        $baseInfoHiddenBox.find('input[name="'+dataName+'"]').val(dataValue);});
+        _switchStepTab(1);
+        $baseInfoBox.hide();
+        $registerAuthorBox.show();
+        }
+
+    return false;
+    });
+    $('#preStepBtn').on('click',function(){_switchStepTab(0);$registerAuthorBox.hide();$baseInfoBox.show();return false;});$("#submitBtn").on('click',function(){if(_nodes.$registerAuthorForm.valid()){_submitRegister();}
+return false;});}
+function _submitRegister(){if(_isSubmitting){return;}
+_isSubmitting=1;$.ajax({
+                                                     url:"/jpbook/users/upWriter",
+                                                     data:$("#formRegisterAuthor").serialize(),
+                                                     type:"post",
+                                                     success:function (data) {
+                                                        _switchStepTab(2);
+                                                         $("#registerAuthorBox").hide();
+                                                         $("#successBox").show();
+                                                     }
+                                                 });return;
+}
+function _getBaseInfoRule(){return{'rules':{pen:{required:true,authorNameCheck:true,remote:{url:_ajaxUrls.checkAuthorName,type:"post",data:{penn:$("#authorNameInput").val()}}},newPassword:{required:true,passwordCheck:true},repeatPassword:{required:true,passwordCheck:true,equalTo:"#newPasswordInput"},email:{required:true,isEmail:true},qqid:{required:true,isQQ:true}},'messages':{pen:{required:"笔名不能为空",remote:'笔名已经存在，换个别的吧'},newPassword:{required:"密码不能为空",passwordCheck:"6-16位英文、数字或特殊字符组成，当您发布VIP章节时需要输入"},repeatPassword:{required:"请再次输入VIP管理密码",passwordCheck:"6-16位英文、数字或特殊字符组成，当您发布VIP章节时需要输入",equalTo:"两次密码输入不相同"},email:{required:"电子邮箱不能为空",isEmail:"请输入正确的电子邮箱信息"},QQ:{required:"QQ号码可以帮助我们的编辑快速联系到您，请真实填写",isQQ:"请输入正确的QQ号码"}}};}
+function _setBaseInfoFormValidate(){jQuery.validator.addMethod("authorNameCheck",function(value,element){return this.optional(element)||/^[A-Za-z0-9\u4E00-\u9FFF.·\u4dae]{2,6}$/.test(value);},"2-6个汉字、数字或英文字母组成");var config=_getBaseInfoRule();_nodes.$baseInfoForm.validate({rules:config.rules,messages:config.messages,errorElement:'span',errorPlacement:function(error,element){element.nextAll('[data-node="error"]').html(error).show();element.nextAll('[data-node="ok"]').hide();element.nextAll('[data-node="tip"]').hide();},success:function(error){var $errorBox=error.parent();$errorBox.prevAll('[data-node="ok"]').show();$errorBox.prevAll('[data-node="tip"]').show();$errorBox.hide();error.remove();}});}
+function _setRegisterAuthorFormValidate(){jQuery.validator.addMethod("RealnameCheck",function(value,element){return this.optional(element)||/^[A-Za-z\u4E00-\u9FFF·\u4dae]{2,10}$/.test(value);},"2-10个汉字、数字或英文字母组成");jQuery.validator.addMethod("stringCheck",function(value,element){return this.optional(element)||/^[\u0391-\uFFE5·\u4dae\w]+$/.test(value);},"只能包括中文字、英文字母、数字和下划线");var registerRules={realname:{required:true,RealnameCheck:true},idcard:{required:true,isIDCardV2:true,isIDCardV3:"#cardtype"},tel:{required:true,phoneCheck:"#tel_pre"},address:{required:true,stringCheck:true,byteRangeLength:[10,128]},agree:{required:true}},registerMessages={realName:{required:"真实姓名不能为空",RealnameCheck:"真实姓名请使用2-10位汉字或英文"},cardId:{required:"请输入您的证件号码",isIDCardV2:"证件号码为8位以上并且不能超过18位。",isIDCardV3:"身份证号只支持18位"},tel:{required:"请输入手机号码",phoneCheck:"请输入正确的手机号码"},address:{required:'请输入联系地址',stringCheck:"地址只能包括中文字、英文字母、数字和下划线",byteRangeLength:"地址必须在5-64个字之内"},agree:{required:"必选"}};_nodes.$registerAuthorForm.validate({rules:registerRules,messages:registerMessages,errorElement:'span',errorPlacement:function(error,element){var $target=element;if($target.attr('name')==='agree'){$target=element.parent();}
+$target.nextAll('[data-node="error"]').html(error).show();$target.nextAll('[data-node="ok"]').hide();$target.nextAll('[data-node="tip"]').hide();},success:function(error){var $errorBox=error.parent();$errorBox.prevAll('[data-node="ok"]').show();$errorBox.prevAll('[data-node="tip"]').show();$errorBox.hide();error.remove();}});}
+function _switchStepTab(index){var $span=_nodes.$stepTabBox.find('span'),$em=_nodes.$stepTabBox.find('em');$span.removeClass('act');$em.removeClass('actText');$span.eq(index).addClass('act');$em.eq(index).addClass('actText');}
+_util.initNameSpace("CS.page.index");CS.page.index.registerAuthor={'init':init};})(jQuery);

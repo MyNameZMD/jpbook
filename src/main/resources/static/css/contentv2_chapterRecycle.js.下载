@@ -48,7 +48,7 @@ var $chapterContainer=$('#chapterContainer'),$viewChapterBox=$('#viewChapterBox'
 function _deleteChapter(CCID){console.log(CCID);if(!CCID){return;}
 if(_isSubmitting){return;}
 _isSubmitting=1;_util.request({url:_ajaxUrls.deleteChapter,type:'post',dataType:'json',data:{'CBID':_params.CBID,'CCID':CCID},success:function(json){if(!json){_topTip.show('返回数据格式异常，请稍后再试');return;}
-if(json.status){_topTip.show(json.info||'删除成功',function(){_refreshCurrentPage();});}else{_topTip.show(json.info||'操作失败，请稍后再试');}},error:function(){_topTip.show('操作失败，请稍后再试');},complete:function(){_isSubmitting=0;}});}
+if(json.status){_topTip.show(json.info||'删除成功',function(){_refreshCurrentPage();});}else{_topTip.show(json.info||'操作失败，请稍后再试');}},complete:function(){_isSubmitting=0;}});}
 function _recycleChapter(CCID){if(!CCID){return;}
 if(_isSubmitting){return;}
 _isSubmitting=1;_util.request({url:_ajaxUrls.recycleChapter,type:'post',dataType:'json',data:{'CBID':_params.CBID,'CCID':CCID},success:function(json){if(!json){_topTip.show('返回数据格式异常，请稍后再试');return;}

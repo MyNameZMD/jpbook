@@ -116,7 +116,6 @@
 			});
 		}
 		function faties(bname,bid){
-            alert(1);
 			/*$.ajax({
 				url:'./userExist',
 				type:'post',
@@ -261,7 +260,7 @@
 							<img  src="../images/0.jpg"/>
 						</th:block>
 						<th:block th:if="${queryBookById[0].icon} neq ''">
-							<img th:src="${queryBookById[0].icon}"/>
+							<img th:src="@{/img/{filename}(filename=${queryBookById[0].icon})}"/>
 						</th:block>
 					</a>
 				</div>
@@ -272,7 +271,7 @@
 						<em th:text="${queryBookById[0].bookname}">人皇在上</em>
 						<span>
 							<a class="writer" href="https://me.qidian.com/authorIndex.aspx?id=4242192"
-							target="_blank" th:text="${queryBookById[0].uname}">九州方圆</a> 著</span>
+							target="_blank" th:text="${queryBookById[0].pen}">九州方圆</a> 著</span>
 
 					</h1>
 					<p class="tag">
@@ -307,9 +306,10 @@
 
 					<p>
 						<a class="red-btn J-getJumpUrl "
-							href="https://read.qidian.com/chapter/80fNSWhNN9G-s-AXkdiqBQ2/MyzqB4YXKQlOBDFlr9quQA2"
+							th:href="@{/chapter/getInformationByChapid?chapid={filename}(filename=1)}"
 							id="readBtn" data-eid="qd_G03" data-bid="1013432619"
-							data-firstchapterjumpurl="//read.qidian.com/chapter/80fNSWhNN9G-s-AXkdiqBQ2/MyzqB4YXKQlOBDFlr9quQA2">免费试读</a><a
+							data-firstchapterjumpurl="//read.qidian.com/chapter/80fNSWhNN9G-s-AXkdiqBQ2/MyzqB4YXKQlOBDFlr9quQA2">免费试读</a>
+						<a
 							class="blue-btn add-book" id="addBookBtn" href="javascript:"
 							data-eid="qd_G05" data-bookid="1013432619" data-bid="1013432619">加入书架</a>
 

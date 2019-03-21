@@ -48,8 +48,7 @@
 
                                     <span><em style="width:70%">0/0</em></span></p>
                             </dd>
-                            <dd class="link"><a href="https://write.qq.com/authors/person.html"><i>完整度75%</i>作家资料</a></dd>
-                            <dd class="link"><a id="openModifyPwdPopupBtn" href="javascript:">更改密码</a></dd>
+                            <dd class="link"><a href="writerdata.html">作家资料</a></dd>
                             <dd class="link end"><a href="https://write.qq.com/public/logout.html">退出登录</a></dd>
                         </dl>
                     </li>
@@ -110,15 +109,6 @@
                         <a href="income"><span class="income"></span>稿酬收入</a>
                     </li>
                     <li>
-                        <a href="https://write.qq.com/labor.html"><span class="labour"></span>劳务收入</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/authors/authorconsultlist.html"><span class="counsel"></span>作家咨询</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/integral_exchange/exchange.html"><span class="exchange"></span>积分兑换</a>
-                    </li>
-                    <li>
                         <a href="https://write.qq.com/interactivechapter/index.html"><span class="active"></span>互动管理</a>
                     </li>                                    </ul>
             </div>
@@ -144,21 +134,6 @@
                     <li>
                         <a class="min-link" href="income"><span class="icon income"></span></a>
                         <a class="expand" href="income">稿酬收入</a>
-                    </li>
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/labor.html"><span class="icon labour"></span></a>
-                        <a class="expand" href="https://write.qq.com/labor.html">劳务收入</a>
-                    </li>
-
-
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/authors/authorconsultlist.html"><span class="icon counsel"></span></a>
-                        <a class="expand" href="https://write.qq.com/authors/authorconsultlist.html">作家咨询</a>
-                    </li>
-
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/integral_exchange/exchange.html"><span class="icon exchange"></span></a>
-                        <a class="expand" href="https://write.qq.com/integral_exchange/exchange.html">积分兑换</a>
                     </li>
                     <li>
                         <a class="min-link" href="https://write.qq.com/interactivechapter/index.html"><span class="icon active"></span></a>
@@ -210,7 +185,6 @@
                     $.ajax({
                         url: "roll/queryAllAndChapter",
                         success: function (data) {
-                            alert(JSON.stringify(data));
                             var str="";
                             var sum=0;
                             for(var i=0;i<data.length;i++){
@@ -340,13 +314,11 @@
                         read();
                     }
                     function read() {
-                        alert($("#chapid").val());
                         if($("#chapid").val()==""){return;}
                         $.ajax({
                             url:"chapter/read",
                             data:{"chapid":$("#chapid").val()},
                             success:function (data) {
-                                alert(JSON.stringify(data));
                                 $("#chapterContent").val(data);
                             }
                         })
@@ -387,7 +359,6 @@
                             url:"chapter/sentupdel",
                             data:{"chapid":$("#chapid").val()},
                             success:function (data) {
-                                alert(data);
                                 if (data==0){
                                     alert("此章节已被购买，无法删除");
                                 }else {
