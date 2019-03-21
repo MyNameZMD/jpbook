@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jpbook.dao.BooktypeDao">
+    <!--查询所有的书籍类型-->
+    <select id = "queryAll" resultType="map">
+        select bt.btid,bt.btname,bt.btico,count(b.bookid) count from booktype bt left join books b on bt.btid = b.btid
+        group by bt.btid,bt.btname,bt.btico order by btid
+    </select>
+
+</mapper>

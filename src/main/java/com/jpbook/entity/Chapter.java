@@ -83,11 +83,17 @@ public class Chapter {
 
 	@Override
 	public String toString() {
-		return "Chapter [chapid=" + chapid + ", chapvalue=" + chapvalue
-				+ ", chapnum=" + chapnum + ", chapmoney=" + chapmoney
-				+ ", chapstate=" + chapstate + ", chaptime=" + chaptime
-				+ ", updatetime=" + updatetime + ", url=" + url + "]";
+		return "Chapter{" +
+				"chapid=" + chapid +
+				", chapvalue='" + chapvalue + '\'' +
+				", chapnum=" + chapnum +
+				", chapmoney=" + chapmoney +
+				", chapstate=" + chapstate +
+				", chaptime=" + chaptime +
+				", rollid=" + rollid +
+				", updatetime=" + updatetime +
+				", url='" + url + '\'' +
+				", chapcount=" + chapcount +
+				'}';
 	}
-	
-
 }

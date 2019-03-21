@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="../css/iconfont.css">
+</head>
+<body>
+    <!--<table>
+        <tr>
+            <th>PID</th>
+            <th>PNAME</th>
+        </tr>
+        <tr  th:each="provice,status : ${list}">
+            &lt;!&ndash;<td th:switch="1" th:case="${provice.pid}" th:text="1"></td>
+            <td th:switch="2" th:case="${provice.pid}" th:text="${provice.pname}"></td>
+            <td th:switch="3" th:case="${provice.pid}" th:text="3"></td>&ndash;&gt;
+            <td th:text="${status.index}"></td>
+            <td th:text="${provice.pid}">1</td>
+            <td th:text="${provice.pname}">海</td>
+        </tr>
+    </table>-->
+    <th:block th:each="l,status : ${list}">
+
+        <th:block th:if="${status.index} gt 2 and ${status.index} lt 5" >
+            <span th:text="${l.pid}" style="border:1px solid gray;width:50px;height:50px;">
+            </span>
+        </th:block>
+
+
+    </th:block>
+    <i class = "iconfont icon-jiesuo"></i>
+</body>
+</html>

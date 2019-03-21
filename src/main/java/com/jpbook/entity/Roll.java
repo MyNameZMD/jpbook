@@ -11,6 +11,7 @@ public class Roll {
 	private Date updatetime;
 	private String url;
 	private List<Chapter> chapterList;
+	private Integer rollmoney;
 	public Integer getRollid() {
 		return rollid;
 	}
@@ -53,14 +54,26 @@ public class Roll {
 	}
 
 	public void setChapterList(List<Chapter> chapterList) {
-		this.chapterList = chapterList;
+		this.chapterList = chapterList;}
+	public Integer getRollmoney() {
+		return rollmoney;
+	}
+
+	public void setRollmoney(Integer rollmoney) {
+		this.rollmoney = rollmoney;
 	}
 
 	@Override
 	public String toString() {
-		return "Roll [rollid=" + rollid + ", rollname=" + rollname
-				+ ", rollnum=" + rollnum + ", bookid=" + bookid
-				+ ", updatetime=" + updatetime + ", url=" + url + "]";
+		return "Roll{" +
+				"rollid=" + rollid +
+				", rollname='" + rollname + '\'' +
+				", rollnum=" + rollnum +
+				", bookid=" + bookid +
+				", updatetime=" + updatetime +
+				", url='" + url + '\'' +
+				", rollmoney=" + rollmoney +
+				'}';
 	}
-	
+
 }
