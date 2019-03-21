@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jpbook.dao.ReviewbookDao">
+
+    <insert id="add" parameterType="com.jpbook.entity.Reviewbook">
+        insert into reviewbook values(null,#{revvlue},now(),#{uuid},#{retype},#{bookid})
+    </insert>
+
+</mapper>

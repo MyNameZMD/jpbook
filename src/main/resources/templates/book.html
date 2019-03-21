@@ -14,10 +14,7 @@
 
 <link data-ignore="true" rel="shortcut icon" type="image/x-icon" href="https://qidian.gtimg.com/qd/favicon/qd_icon.c443c.ico">
 <link data-ignore="true" rel="Bookmark" type="image/x-icon" href="https://qidian.gtimg.com/qd/favicon/qd_icon.c443c.ico">
-
 <link rel="stylesheet" data-ignore="true" href="../css/emoji.c4e81.css">
-
-
 <link data-ignore="true" rel="stylesheet" href="../css/module.e710a.css">
 <link data-ignore="true" rel="stylesheet" href="../css/layout.5de0f.css">
 <link data-ignore="true" rel="stylesheet" href="../css/book_details.1baf2.css">
@@ -115,20 +112,40 @@
 				}
 			});
 		}
-		function faties(bname,bid){
-			/*$.ajax({
+		function faties(bookid){
+			jQuery.ajax({
 				url:'./userExist',
-				type:'post',
-				datatype:'text',
 				success:function(data){
-				    if(1 == data){
-				        alert('请先登录！');
+				    if(0 == data){
+                        window.location.href = "../login.html";
 					}else{
-                        window.location.replace("http://www.baidu.com");
+
+				        window.close();
+                        window.open("/jpbook/books/queryBookByFatie?retype=1"+"&bookid="+bookid);
 					}
 				}
-			});*/
+			});
 		}
+        $(document).ready(function () {
+            $(".sign-in").mouseover(function () {
+                $(this).addClass("sign-in act");
+            });
+            $(".sign-in").mouseout(function () {
+                $(this).removeClass("act");
+            });
+            $(".site").mouseover(function () {
+                $(this).addClass("site act");
+            });
+            $(".site").mouseout(function () {
+                $(this).removeClass("act");
+            });
+			$(".site").nextAll().mouseover(function(){
+                $(this).addClass("act");
+			});
+            $(".site").nextAll().mouseout(function () {
+                $(this).removeClass("act");
+            });
+        });
     </script>
 
 
@@ -144,45 +161,31 @@
 				<div class="nav-list site-nav fl">
 					<ul>
 						<li class="site"><a class="pin-logo"
-							href="https://www.qidian.com/" data-eid="qd_A43"><span></span></a>
+							href="booktype/queryAll" style = "font-size: 18px;font-family: 'Courier New', Courier, monospace">江派中文网</a>
+						</li>
+						<li><a href="https://www.qidian.com/xuanhuan" target="">玄幻</a></li>
+						<li><a href="https://www.qidian.com/dushi" target="">都市</a></li>
+						<li><a href="https://www.qidian.com/xianxia" target="">仙侠</a></li>
+						<li><a href="https://www.qidian.com/kehuan" target="">科幻</a></li>
+						<li><a href="https://www.qidian.com/youxi" target="">游戏</a></li>
+						<li><a href="https://www.qidian.com/lishi" target="">历史</a></li>
+						<li><a href="https://www.qidian.com/rank" target="_blank">排行</a></li>
+						<li class="more">
+							<a href="javascript:" id="top-nav-more" target="">
+								更多<span></span>
+							</a>
 							<div class="dropdown">
-								<a href="https://www.qdmm.com/" target="" data-eid="qd_A44">起点女生网</a>
-								<a href="http://chuangshi.qq.com/" target="" data-eid="qd_A45">创世中文网</a>
-								<a href="http://yunqi.qq.com/" target="" data-eid="qd_A46">云起书院</a>
-							</div></li>
-						<li><a href="https://www.qidian.com/xuanhuan" target=""
-							data-eid="qd_A47">玄幻</a></li>
-						<li><a href="https://www.qidian.com/dushi" target=""
-							data-eid="qd_A48">都市</a></li>
-						<li><a href="https://www.qidian.com/xianxia" target=""
-							data-eid="qd_A49">仙侠</a></li>
-						<li><a href="https://www.qidian.com/kehuan" target=""
-							data-eid="qd_A50">科幻</a></li>
-						<li><a href="https://www.qidian.com/youxi" target=""
-							data-eid="qd_A56">游戏</a></li>
-						<li><a href="https://www.qidian.com/lishi" target=""
-							data-eid="qd_A52">历史</a></li>
-						<li><a href="https://www.qidian.com/rank" target="_blank"
-							data-eid="qd_A53">排行</a></li>
-						<li class="more"><a href="javascript:" id="top-nav-more"
-							target="" data-eid="qd_A54">更多<span></span></a>
-							<div class="dropdown">
-								<a href="https://www.qidian.com/all" target="_blank"
-									data-eid="qd_A169">全部作品</a> <a
-									href="https://www.qidian.com/2cy" target="" data-eid="qd_A55">二次元</a>
-								<a href="https://www.qidian.com/qihuan" target=""
-									data-eid="qd_A51">奇幻</a> <a href="https://www.qidian.com/wuxia"
-									target="" data-eid="qd_A57">武侠</a> <a
-									href="https://www.qidian.com/lingyi" target=""
-									data-eid="qd_A58">悬疑灵异</a> <a
-									href="https://www.qidian.com/junshi" target=""
-									data-eid="qd_A59">军事</a> <a
-									href="https://www.qidian.com/xianshi" target=""
-									data-eid="qd_A60">现实</a> <a href="https://www.qidian.com/tiyu"
-									target="" data-eid="qd_A61">体育</a> <a
-									href="https://www.qidian.com/duanpian" target=""
-									data-eid="qd_A196">短篇</a>
-							</div></li>
+								<a href="https://www.qidian.com/all" target="_blank">全部作品</a>
+								<a href="https://www.qidian.com/2cy" target="">二次元</a>
+								<a href="https://www.qidian.com/qihuan" target="">奇幻</a>
+								<a href="https://www.qidian.com/wuxia" target="">武侠</a>
+								<a href="https://www.qidian.com/lingyi" target="">悬疑灵异</a>
+								<a href="https://www.qidian.com/junshi" target="">军事</a>
+								<a href="https://www.qidian.com/xianshi" target="">现实</a>
+								<a href="https://www.qidian.com/tiyu" target="">体育</a>
+								<a href="https://www.qidian.com/duanpian" target="">短篇</a>
+							</div>
+						</li>
 					</ul>
 				</div>
 				<div class="nav-list min-user fr">
@@ -197,29 +200,38 @@
 							</form>
 						</li>
 						<li class="line"></li>
-						<li class="sign-out"><a id="pin-login" href="javascript:"
-							data-eid="qd_A64">登录</a> <a class="reg"
-							href="https://passport.qidian.com/reg.html?appid=10&amp;areaid=1&amp;target=iframe&amp;ticket=1&amp;auto=1&amp;autotime=30&amp;returnUrl=https%3A%2F%2Fwww.qidian.com"
-							target="_blank">注册</a></li>
-						<li class="sign-in hidden"><a
-							href="https://me.qidian.com/Index.aspx" target="_blank"
-							data-eid="qd_A65"><i id="nav-user-name"></i><span></span></a>
-							<div class="dropdown">
-								<a href="https://me.qidian.com/msg/lists.aspx?page=1"
-									target="_blank" data-eid="qd_A66">消息(<i id="top-msg">0</i>)
-								</a> <a href="https://www.qidian.com/charge/meRedirect"
-									target="_blank" data-eid="qd_A67">充值</a> <a
-									href="https://me.qidian.com/Index.aspx" target="_blank"
-									data-eid="qd_A68">个人中心</a> <a
-									href="https://www.qidian.com/help/kf" target="_blank"
-									data-eid="qd_A69">客服中心</a> <a id="exit" href="javascript:"
-									data-eid="qd_A70">退出</a>
-							</div></li>
+						<li th:class="${session.users} ? 'sign-out hidden' : 'sign-out'">
+							<a id="pin-login" href="../login.html">登录</a>
+							<a class="reg" href="../register.html" target="_blank">注册</a>
+						</li>
+						<th:block th:if="${session}">
+							<th:block th:if="${session.users}">
+								<li th:class="${session.users[0] } ? 'sign-in' : 'sign-in hidden'">
+									<a href="../personal.html" target="_blank">
+										<span id = "uuid" style="display: none" th:text="${session.users[0].uuid}"></span>
+										<i id="nav-user-name" th:text="${session.users[0].uname}"></i>
+										<span></span>
+									</a>
+									<div class="dropdown">
+										<a href="https://me.qidian.com/msg/lists.aspx?page=1" target="_blank" data-eid="qd_A66">
+											消息(<i id="top-msg">0</i>)
+										</a>
+										<a href="https://www.qidian.com/charge/meRedirect" target="_blank">充值</a>
+										<a href="../personal.html" target="_blank">个人中心</a>
+										<a href="https://www.qidian.com/help/kf" target="_blank">客服中心</a>
+										<a id="exit" href="javascript:void(0);" onclick="removeu()">退出</a>
+									</div>
+								</li>
+							</th:block>
+						</th:block>
+
 						<li class="line"></li>
-						<li class="book-shelf" id="top-book-shelf"><a
-							href="https://me.qidian.com/bookCase/bookCase.aspx"
-							target="_blank" data-eid="qd_A63"><em class = "iconfont icon-book_icon"></em><i>我的书架
-							</i></a></li>
+						<li class="book-shelf" id="top-book-shelf">
+							<a href="https://me.qidian.com/bookCase/bookCase.aspx" target="_blank">
+								<em class = "iconfont icon-book_icon"></em>
+								<i>我的书架</i>
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -260,7 +272,7 @@
 							<img  src="../images/0.jpg"/>
 						</th:block>
 						<th:block th:if="${queryBookById[0].icon} neq ''">
-							<img th:src="@{/img/{filename}(filename=${queryBookById[0].icon})}"/>
+							<img th:src="${queryBookById[0].icon}"/>
 						</th:block>
 					</a>
 				</div>
@@ -271,7 +283,7 @@
 						<em th:text="${queryBookById[0].bookname}">人皇在上</em>
 						<span>
 							<a class="writer" href="https://me.qidian.com/authorIndex.aspx?id=4242192"
-							target="_blank" th:text="${queryBookById[0].pen}">九州方圆</a> 著</span>
+							target="_blank" th:text="${queryBookById[0].uname}">九州方圆</a> 著</span>
 
 					</h1>
 					<p class="tag">
@@ -406,7 +418,7 @@
 									<h3 >
 										<!--<a class="subscri j_subscribe" href="javascript:" target="_blank">
                                             <em class="btn"><b class="iconfont"></b>订阅本卷</em></a>-->
-										<i th:utext="|${qr.rollname}<i>·</i>共${qr.sumchap}章|"></i>
+										<i th:text="|${qr.rollname}<i></i>共${qr.sumchap}章|"></i>
 										<span th:class="${qr.rollstate}" th:text="${qr.rollmoney} eq 1 ? '免费' : 'VIP'">VIP</span>
 										<em class="count" th:utext="|本卷共<cite>${qr.chapcounts}</cite>字 |">
 
