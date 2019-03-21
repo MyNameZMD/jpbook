@@ -19,4 +19,8 @@
         update signexp set signlong=signlong+#{param1} where uuid = #{param2}
     </update>
 
+    <update id="editwallet">
+        update wallet set walnum=#{param1},waltime=SYSDATE() where waltime!=left(SYSDATE(),10) and uuid=#{param2} and wtid = 1
+    </update>
+
 </mapper>

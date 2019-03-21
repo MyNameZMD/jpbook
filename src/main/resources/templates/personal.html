@@ -9,6 +9,7 @@
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.12.css">
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.13.css">
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.14.css">
+	<link rel="stylesheet" data-ignore="true" href="./css/index.0.16.css">
 
 	<link rel="stylesheet" href="./js/layui/css/layui.css" media="all">
 
@@ -33,7 +34,7 @@
 					<i class="iconfont icon-home" ></i>我的首页</a>
 				</li>
 				<li class="header-nav-li" id="h2">
-					<a href="javascript:;" class="header-nav-a " style="color: white">
+					<a href="javascript:h2();" class="header-nav-a " style="color: white">
 					<i class="iconfont icon-book"></i>我的书架</a>
 				</li>
 				<li class="header-nav-li" id="h3">
@@ -58,34 +59,30 @@
 				<li class="active" id="u1">
 					<a href="javascript:init()" class="sideBar-list-a"><i class="iconfont icon-home"></i>首页</a>
 				</li>
-				<li class="" id="u2">
+				<!--<li class="" id="u2">
 					<a class="sideBar-list-a"><i class="iconfont icon-home"></i>好友</a>
+				</li>-->
+				<li id="u6" onclick="u6()">
+					<a class="sideBar-list-a" data-eid="qd_M12"><i class="iconfont  icon-finance"></i>账务中心</a>
 				</li>
-
-				<li class="" id="u3">
-					<a class="sideBar-list-a" data-eid="qd_M15"><i class="iconfont icon-comment"></i>我的书评</a>
-				</li>
-				<li class="" id="u4">
+				<li id="u4" onclick="u4()">
 					<a  class="sideBar-list-a" data-eid="qd_M13"><i class="iconfont  icon-piaojia"></i>我的票夹</a>
 				</li>
-				<li id="u5">
-					<a class="sideBar-list-a" target="_blank" data-eid="qd_M21"><i class="iconfont icon-author"></i>作家专区</a>
-				</li >
+				<li id="u3">
+					<a class="sideBar-list-a" data-eid="qd_M15"><i class="iconfont icon-comment"></i>我的书评</a>
+				</li>
 
 			</ul>
 			<ul class="sideBar-group">
 				<li id="u10" onclick="u10()">
 					<a class="sideBar-list-a" data-eid="qd_M16"><i class="iconfont icon-level"></i>经验值等级</a>
 				</li>
-				<li class="" id="u6">
-					<a class="sideBar-list-a" data-eid="qd_M12"><i class="iconfont  icon-finance"></i>账务中心</a>
-				</li>
-				<li id="u7">
-					<a class="sideBar-list-a" target="_blank" data-eid="qd_M19"><i class="iconfont icon-vip"></i>会员中心</a>
-				</li>
 				<li id="u8" onclick="u8()">
 					<a class="sideBar-list-a" target="_blank" data-eid="qd_M20"><i class="iconfont icon-safety"></i>个人设置</a>
 				</li>
+				<li id="u5">
+					<a href="javascript:;" class="sideBar-list-a" target="_blank" data-eid="qd_M21"><i class="iconfont icon-author"></i>作家专区</a>
+				</li >
 			</ul>
 
 		</div>
@@ -94,21 +91,20 @@
 		<div class="qdp-content home-content" data-l1="3" id="s1" >
 			<div class="home-user-wrapper qdp-border" data-l2="1">
 				<div class="home-user-avatar" data-l3="1">
-					<a href="personal.html" class="user-avatar-a">
+					<a href="javascript:u8()" class="user-avatar-a">
 						<img class="user-avatar-img" id="icon" src="/jpbook/imgicon/default_user.0.2.png" alt="" data-eid="qd_M24">
-					</a> 
-					<a href="https://my.qidian.com/vip" target="_blank" class="home-user-vip icon icon-pt"></a>
+					</a>
 				</div>
 				<div class="home-user" data-l3="1">
 					<div class="qdp-button">
 						<a href="https://my.qidian.com/user/328696517" class="qdp-button-a mlr4" target="_blank" data-eid="qd_M23">个人主页</a>
-						<a href="https://my.qidian.com/setting" class="qdp-button-a qdp-button-icon ml12" data-eid="qd_M22">
+						<a href="javascript:u8()" class="qdp-button-a qdp-button-icon ml12" data-eid="qd_M22">
 							<i class="iconfont icon-gear"></i>
 						</a>
 					</div>
 					<h3>
-						<a href="https://my.qidian.com/setting" data-eid="qd_M25" id="uname" style="color: white"></a>
-						<a href="https://my.qidian.com/level" class="home-user-level" data-eid="qd_M26" id="grade">Lv0</a>
+						<a href="javascript:u8()" data-eid="qd_M25" id="uname" style="color: white"></a>
+						<a href="javascript:u10()" class="home-user-level" data-eid="qd_M26" id="grade">Lv0</a>
 					</h3>
 
 					<div class="home-user-data">
@@ -126,7 +122,7 @@
 						<i class="iconfont icon-price yellow"></i><b>账户余额</b>
 					</div>
 					<div class="home-msg-data">
-						<a href="https://my.qidian.com/account" data-eid="qd_M30"><b class="home-msg-b" id="money">0</b>起点币</a>
+						<a href="javascript:u6()" data-eid="qd_M30"><b class="home-msg-b" id="money">0</b>起点币</a>
 					</div> 
 					<a class="home-msg-more blue elPayBtn" href="topup.html" target="_blank" data-eid="qd_M30">充值</a>
 				</li>
@@ -136,9 +132,9 @@
 						<i class="iconfont icon-book blue"></i><b>我的书架</b>
 					</div>
 					<div class="home-msg-data">
-						<a href="https://my.qidian.com/bookcase" data-eid="qd_M32"><b class="home-msg-b" id="shelves">0</b>本藏书</a>
+						<a href="javascript:h2()" data-eid="qd_M32"><b class="home-msg-b" id="shelves">0</b>本藏书</a>
 					</div> 
-					<a class="home-msg-more blue" href="https://my.qidian.com/bookcase" data-eid="qd_M32">立即查看</a>
+					<a class="home-msg-more blue" href="javascript:h2()" data-eid="qd_M32">立即查看</a>
 				</li>
 
 				<li class="home-msg" data-l3="2">
@@ -146,18 +142,18 @@
 						<i class="iconfont icon-piaojia green"></i><b>我的月票</b>
 					</div>
 					<div class="home-msg-data">
-						<a href="https://my.qidian.com/ticketbox" data-eid="qd_M31"><b class="home-msg-b home-msg-num" id="w1">0</b>月票</a>
+						<a href="javascript:u4()" data-eid="qd_M31"><b class="home-msg-b home-msg-num" id="w2">0</b>月票</a>
 					</div>
-					<a class="home-msg-more blue" href="https://my.qidian.com/ticketbox" data-eid="qd_M31">立即查看</a>
+					<a class="home-msg-more blue" href="javascript:u4()" data-eid="qd_M31">立即查看</a>
 				</li>
 				<li class="home-msg" data-l3="2">
 					<div class="home-msg-title">
 						<i class="iconfont icon-piaojia green"></i><b>我的推荐票</b>
 					</div>
 					<div class="home-msg-data">
-						<a href="https://my.qidian.com/ticketbox" data-eid="qd_M31"><b class="home-msg-b home-msg-num" id="w2">0</b>推荐票</a>
+						<a href="javascript:u4()" data-eid="qd_M31"><b class="home-msg-b home-msg-num" id="w1">0</b>推荐票</a>
 					</div>
-					<a class="home-msg-more blue" href="https://my.qidian.com/ticketbox" data-eid="qd_M31">立即查看</a>
+					<a class="home-msg-more blue" href="javascript:u4()" data-eid="qd_M31">立即查看</a>
 				</li>
 
 			</ul>
@@ -249,94 +245,116 @@
 		<!--我的票夹-->
 		<div class="qdp-content" data-l1="3" style="display: none" id="s4">
 			<h2 class="qdp-title">我的票夹</h2>
-			<div class="piaojia-month" data-l2="3">
-				<h3 class="month-ticket">月票</h3>
-				<div class="month-wrapper">
-					<div class="piaojia-title">月票</div>
-					<div>您尚未达到<a href="//www.qidian.com/help/index/10" class="blue" target="_blank">获得月票条件</a></div>
-				</div>
-				<div class="piaojia-tips">
-					<p>为喜爱的作品投月票，可支持其在<a href="//r.qidian.com/yuepiao?style=1" target="_blank"><span class="blue">月票榜</span></a>上获得名次。升级<a href="/vip" target="_blank"><span class="blue">成为会员</span></a>，可通过订阅或打赏获赠月票。</p>
-				</div>
-			</div>
-
 			<div class="piaojia-recom" data-l2="3">
 				<h3 class="recom-ticket">推荐票</h3>
 				<div class="recom-boy">
-					<div class="piaojia-title">男生站</div>
-					<div>本日已获得推荐票<span class="piaojia-count font-archive">0</span>已使用<span class="piaojia-count font-archive">0</span>可用<span class="piaojia-aval font-archive">0</span></div>
+					<div class="piaojia-title">推荐票</div>
+					<div>本日已获得推荐票<span class="piaojia-count font-archive" id="wtid1">0</span>已使用<span class="piaojia-count font-archive" id="wtid2">0</span>可用<span class="piaojia-aval font-archive" id="wtid3">0</span></div>
 				</div>
+				<h3 class="month-ticket">月票</h3>
 				<div class="recom-girl">
-					<div class="piaojia-title">女生站</div>
-					<div>本日已获得推荐票<span class="piaojia-count font-archive">0</span>已使用<span class="piaojia-count font-archive">0</span>可用<span class="piaojia-aval font-archive">0</span></div>
+					<div class="piaojia-title">月票</div>
+					<div>获得月票总数<span class="piaojia-count font-archive" id="wtid4">0</span>已使用<span class="piaojia-count font-archive" id="wtid5">0</span>可用<span class="piaojia-aval font-archive" id="wtid6">0</span></div>
 				</div>
 				<div class="piaojia-tips">
-					<p>推荐票是根据你的起点经验值等级，由系统每天赠送，根据你的用户类型和当前经验值，有不同的投票资格，具体规则请查看<a href="//www.qidian.com/help/index/12" class="piaojia-rule blue" target="_blank">推荐票规则»</a></p>
+					<p>推荐票是根据你的起点经验值等级，由系统每天赠送，月票可通过订阅或打赏获得，具体规则请查看<a href="//www.qidian.com/help/index/12" class="piaojia-rule blue" target="_blank">获票规则»</a></p></p>
 				</div>
 			</div>
 
 
 			<div class="qdp-record piaojia-record" data-l2="3">
 				<div id="tabView5" class="ui-tab-tabs">
-					<a href="javascript:;" class="checked" data-rel="tabTarget1" data-eid="qd_M62">投月票记录</a>
-					<a href="javascript:;" class="" data-rel="tabTarget2" data-eid="qd_M63">投推荐票记录</a>
+					<a href="javascript:jp_M61();" class="checked" data-rel="tabTarget1" id="jp_M61">投月票记录</a>
+					<a href="javascript:;" class="" data-rel="tabTarget2" id="jp_M62">投推荐票记录</a>
 				</div>
 				<div class="ui-tab-contents">
 					<div id="tabTarget15" class="ui-tab-content checked" data-l3="9">
-
-						<div class="table-msg">本月累计投出月票<b class="table-outstd">0</b>次</div>
-
+						<div class="table-msg">本月累计投出月票<b class="table-outstd" id="outstd1">0</b>次</div>
 						<div id="tableTarget15" class="table-x piaojia-month-table">
-							<div class="table-size" style="height: 341px; transition: height 200ms ease 0s;">
-								<table class="ui-table">
-									<thead>
-									<tr>
-										<th scope="col" width="180">投票时间</th>
-										<th scope="col" width="100">票数</th>
-										<th scope="col" width="150">投票小说</th>
-										<th scope="col">月票类型</th>
-									</tr>
-									</thead>
-									<tbody>
+							<table class="ui-table">
+								<thead>
+								<tr>
+									<th scope="col" width="200">投票时间</th>
+									<th scope="col" width="100">票数</th>
+									<th scope="col" width="200">投票小说</th>
+								</tr>
+								</thead>
+								<tbody id="tbody1">
 
-									</tbody>
-								</table>
-								<div class="table-null-x dn" style="display: block;">目前暂无月票投票记录</div>
-								<div class="ui-loading" style="top: 0px; display: none;"><i class="ui-loading-icon"></i></div>
-							</div>
-							<div class="table-page-x elTablePage dn">
-								<div class="table-page" data-eid="qd_M65"><div class="ui-page-x"><span class="ui-page ui-page-prev"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path d="M85.876,100.5l49.537-50.526c4.089-4.215,4.089-11.049,0-15.262 c-4.089-4.218-10.719-4.218-14.808,0L63.586,92.868c-4.089,4.215-4.089,11.049,0,15.264l57.018,58.156 c4.089,4.215,10.719,4.215,14.808,0c4.089-4.215,4.089-11.049,0-15.262L85.876,100.5z"></path></svg></span><span class="ui-page ui-page-current">1</span><span class="ui-page ui-page-next"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path d="M85.876,100.5l49.537-50.526c4.089-4.215,4.089-11.049,0-15.262 c-4.089-4.218-10.719-4.218-14.808,0L63.586,92.868c-4.089,4.215-4.089,11.049,0,15.264l57.018,58.156 c4.089,4.215,10.719,4.215,14.808,0c4.089-4.215,4.089-11.049,0-15.262L85.876,100.5z"></path></svg></span></div></div>
-							</div>
+								</tbody>
+							</table>
+							<div class="table-null-x dn" style="display: none;" id="tnx1">目前暂无月票投票记录</div>
 						</div>
 					</div>
 					<div id="tabTarget25" class="ui-tab-content" data-l3="10">
-						<div class="table-msg">最近30天累计投出推荐票<b class="table-outstd">0</b>次</div>
+						<div class="table-msg">最近30天累计投出推荐票<b class="table-outstd" id="outstd2">0</b>次</div>
 						<div id="tableTarget25" class="table-x piaojia-rcm-table">
-							<div class="table-size ui-loading-animation" style="height: 341px; transition: height 200ms ease 0s;">
-								<table class="ui-table">
-									<thead>
-									<tr>
-										<th scope="col" width="200">投票时间</th>
-										<th scope="col" width="100">票数</th>
-										<th scope="col" width="200">投票小说</th>
-									</tr>
-									</thead>
-									<tbody>
+							<table class="ui-table">
+								<thead>
+								<tr>
+									<th scope="col" width="200">投票时间</th>
+									<th scope="col" width="100">票数</th>
+									<th scope="col" width="200">投票小说</th>
+								</tr>
+								</thead>
+								<tbody id="tbody2">
 
-									</tbody>
-								</table>
-								<div class="table-null-x dn" style="display: block;">目前暂无推荐票投票记录</div>
-								<div class="ui-loading" style="top: 0px; display: none;"><i class="ui-loading-icon"></i></div>
-							</div>
-							<div class="table-page-x elTablePage dn">
-								<div class="table-page" data-eid="qd_M65"><div class="ui-page-x"><span class="ui-page ui-page-prev"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path d="M85.876,100.5l49.537-50.526c4.089-4.215,4.089-11.049,0-15.262 c-4.089-4.218-10.719-4.218-14.808,0L63.586,92.868c-4.089,4.215-4.089,11.049,0,15.264l57.018,58.156 c4.089,4.215,10.719,4.215,14.808,0c4.089-4.215,4.089-11.049,0-15.262L85.876,100.5z"></path></svg></span><span class="ui-page ui-page-current">1</span><span class="ui-page ui-page-next"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path d="M85.876,100.5l49.537-50.526c4.089-4.215,4.089-11.049,0-15.262 c-4.089-4.218-10.719-4.218-14.808,0L63.586,92.868c-4.089,4.215-4.089,11.049,0,15.264l57.018,58.156 c4.089,4.215,10.719,4.215,14.808,0c4.089-4.215,4.089-11.049,0-15.262L85.876,100.5z"></path></svg></span></div></div>
-							</div>
+								</tbody>
+							</table>
+							<div class="table-null-x dn" style="display: none;" id="tnx2">目前暂无推荐票投票记录</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
+		<!--我的书评-->
+		<div class="qdp-content" data-l1="3" style="display: none;" id="s3">
+			<h2 class="qdp-title">我的书评</h2>
+			<div class="review-record qdp-record" data-l2="5">
+				<div id="tabView1" class="ui-tab-tabs">
+					<a href="javascript:jp_M71();" class="checked" data-rel="tabTarget1" id="jp_M71">发表的书评</a>
+					<a href="javascript:;" class="" data-rel="tabTarget2"  id="jp_M72">回复的书评</a>
+				</div>
+				<div class="ui-tab-contents">
+					<div id="tabTarget12" class="ui-tab-content checked" data-l3="13">
+						<div id="tableTarget12" class="table-x">
+							<table class="ui-table">
+								<thead>
+								<tr>
+									<th scope="col" width="250">书评</th>
+									<th scope="col" width="150">回复时间</th>
+									<th scope="col">所在书评区</th>
+								</tr>
+								</thead>
+								<tbody id="tbom1">
+
+								</tbody>
+							</table>
+							<div class="table-null-x dn" style="display: none;" id="tnullx1">目前暂无发表的书评</div>
+						</div>
+					</div>
+					<div id="tabTarget21" class="ui-tab-content" data-l3="14">
+						<div id="tableTarget21" class="table-x">
+							<table class="ui-table">
+								<thead>
+								<tr>
+									<th scope="col" width="230">书评</th>
+									<th scope="col" width="230">回复内容</th>
+									<th scope="col">所在书评区</th>
+								</tr>
+								</thead>
+								<tbody id="tbom2">
+
+								</tbody>
+							</table>
+							<div class="table-null-x dn" style="display: none;" id="tnullx2">目前暂无回复的书评</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
 
 		<!--经验值等级-->
 		<div class="qdp-content" data-l1="3" style="display:none;" id="s10" >
@@ -353,7 +371,7 @@
 				</div>
 				<div class="exp-level" data-l3="17">
 					<div class="exp-level-title">当前特权</div>
-					<div><span class="mr12">暂无</span><a href="//www.qidian.com/help/index/14" class="blue ml12" target="_blank">了解经验等级特权»</a></div>
+					<div><span class="mr12" id="mr12">暂无</span><a href="//www.qidian.com/help/index/14" class="blue ml12" target="_blank">了解经验等级特权»</a></div>
 				</div>
 			</div>
 			<div class="qdp-border bg-white mt20" data-l2="6" >
@@ -430,6 +448,92 @@
 				</div>
 			</div>
 
+		</div>
+
+		<!--财务中心-->
+		<div class="qdp-content" data-l1="3" style="display: none" id="s6">
+			<h2 class="qdp-title">我的资产</h2>
+
+			<div class="finance-asset" data-l2="2">
+				<h3 class="asset-title">账户余额（起点币）</h3>
+				<div class="asset-count">
+					<span id="balance">0</span>
+					<br><br>
+				</div>
+				<div class="asset-recharge-wrapper">
+					<a href="" class="asset-rebate blue" target="_blank" data-eid="qd_M43" data-l3="5"></a>
+					<a href="topup.html" class="recharge-button ui-button elPayBtn1" target="_blank" data-eid="qd_M44" data-l3="6">充值</a>
+				</div>
+			</div>
+
+			<h2 class="qdp-title">交易记录<span class="qdp-explain">交易记录可能存在延时，仅供参考，请以实际金额变化为准</span></h2>
+			<div class="finance-record qdp-record">
+				<div id="tabView6" class="ui-tab-tabs" data-l2="2">
+					<a href="javascript:record1();" class="checked" data-rel="tabTarget2" id="record1">充值记录</a>
+					<a href="javascript:;" class="" data-rel="tabTarget1" id="record2">打赏记录</a>
+					<a href="javascript:;" class="" data-rel="tabTarget3" id="record3">订阅记录</a>
+				</div>
+				<div class="ui-tab-contents" data-l2="2">
+
+					<div id="tabTarget16" class="ui-tab-content checked">
+						<div id="tableTarget26" class="table-x piaojia-rcm-table">
+							<div class="table-size">
+								<table class="ui-table">
+									<thead>
+									<tr>
+										<th scope="col" width="150">充值金额</th>
+										<th scope="col" width="150">充值时间</th>
+										<th scope="col" width="150">备注</th>
+									</tr>
+									</thead>
+									<tbody id="tab1">
+
+									</tbody>
+								</table>
+								<div class="table-null-x dn" style="display:none;" id="tnd1">目前暂无充值记录</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="tabTarget26" class="ui-tab-content">
+						<div id="tableTarget16" class="table-x piaojia-month-table">
+							<div class="table-size">
+								<table class="ui-table" style="border-spacing: 0.0141561px;">
+									<thead>
+									<tr>
+										<th scope="col" width="150">打赏书币</th>
+										<th scope="col" width="150">打赏时间</th>
+										<th scope="col" width="150">书名</th>
+									</tr>
+									</thead>
+									<tbody id="tab2">
+
+									</tbody>
+								</table>
+								<div class="table-null-x dn" style="display: none;" id="tnd2">目前暂无打赏记录</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="tabTarget36" class="ui-tab-content ">
+						<div id="tableTarget36" class="table-x piaojia-rcm-table">
+							<div class="table-size">
+								<table class="ui-table">
+									<thead>
+									<tr>
+										<th scope="col" width="150">订阅书籍</th>
+										<th scope="col" width="150">订阅总章数</th>
+										<th scope="col" width="150">订阅总书币</th>
+									</tr>
+									</thead>
+									<tbody id="tab3"></tbody>
+								</table>
+								<div class="table-null-x dn" style="display: none" id="tnd3">目前暂无订阅记录</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 
@@ -540,11 +644,11 @@
 					<a href="javascript:m2();" class="sideBar-list-a" title="我的书架" data-eid="qd_M186" >我的书架</a>
 				</li>
 			</ul>
-			<ul class="sideBar-group">
+			<!--<ul class="sideBar-group">
 				<li class="" id="m3">
 					<a href="javascript:;" class="sideBar-list-a" title="自动订阅" data-eid="qd_M188" >自动订阅</a>
 				</li>
-			</ul>
+			</ul>-->
 		</div>
 
 		<!--最近阅读-->
@@ -679,14 +783,14 @@
         $("#n3").hide();
 
     })
-    $("#h2").click(function () {
+    function h2() {
         $(".header-nav-a").prop("class","");
         $("#h2 a").prop("class","header-nav-a active");
         $("#n1").hide();
         $("#n2").show();
         $("#n3").hide();
         m2();
-    })
+    }
     $("#h3").click(function () {
         $(".header-nav-a").prop("class","");
         $("#h3 a").prop("class","header-nav-a active");
@@ -748,6 +852,16 @@
             }
         });
     }
+    //获取地址栏传来的值
+    function GetQueryString(name){
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return unescape(r[2]); return null;
+    };
+    var myurl=GetQueryString("key");
+    if (myurl == "i"){
+        h2();
+	}
 
     $("#u2").click(function () {
         for (var i=1; i<=10 ;i++){
@@ -761,7 +875,68 @@
 
     })
 
-    $("#u4").click(function () {
+    $("#u3").click(function () {
+        for (var i=1; i<=10 ;i++){
+            $("#u"+i).prop("class","");
+        }
+        $("#u3").prop("class","active");
+        for (var i=1; i<=10 ;i++){
+            $("#s"+i).hide();
+        }
+        $("#s3").show();
+        jp_M71();
+    })
+
+    function jp_M71(){
+        $("#jp_M72").prop("class","");
+        $("#jp_M71").prop("class","checked");
+        $("#tabTarget21").prop("class","ui-tab-content");
+        $("#tabTarget12").prop("class","ui-tab-content checked");
+        $.ajax({
+            url: "per/reviewquery",
+            success: function (data) {
+                var tbom1="";
+                if(data.length>0){
+                    for (var i=0; i<data.length; i++){
+                        tbom1 += "<tr>"+
+                        "<td class='col1 wbba'><a href='' class='blue' target='_blank' data-eid='qd_M76'>"+data[i].revvlue.substring(0,10)+"</a></td>"+
+                        "<td class='col4'>"+renderTime(data[i].commenttime).substring(0,10)+"</td>"+
+                        "<td class='col5 wbba'><a href='' class='blue' target='_blank' data-eid='qd_M77'>"+data[i].bookname+"</a></td>"+
+                        "</tr>";
+					}
+					$("#tbom1").html(tbom1);
+				}else {
+                    $("#tnullx1").show();
+				}
+            }
+        });
+	}
+	$("#jp_M72").click(function () {
+        $("#jp_M71").prop("class","");
+        $("#jp_M72").prop("class","checked");
+        $("#tabTarget12").prop("class","ui-tab-content");
+        $("#tabTarget21").prop("class","ui-tab-content checked");
+        $.ajax({
+            url: "per/replyquery",
+            success: function (data) {
+                var tbom2="";
+                if(data.length>0){
+                    for (var i=0; i<data.length; i++){
+                        tbom2 += "<tr>"+
+                            "<td class='col1 wbba'><a href='' class='blue' target='_blank' data-eid='qd_M76'>"+data[i].revvlue.substring(0,10)+"</a></td>"+
+                            "<td class='col2 wbba'>"+data[i].repcontent.substring(0,10)+"</td>"+
+                            "<td class='col3 wbba'><a href='' class='blue' target='_blank' data-eid='qd_M77'>"+data[i].bookname+"</a></td>"+
+                            "</tr>";
+                    }
+                    $("#tbom2").html(tbom2);
+                }else {
+                    $("#tnullx2").show();
+                }
+            }
+        });
+    })
+
+    function u4() {
         for (var i=1; i<=10 ;i++){
             $("#u"+i).prop("class","");
         }
@@ -771,14 +946,216 @@
         }
         $("#s4").show();
 
+        var grade;
         $.ajax({
-			url:"per/monthlyquery",
-			success:function (data) {
-				alert(JSON.stringify(data));
+            url: "per/queryusers",
+            success: function (data) {
+                grade = data[0].grade;
             }
-		});
+        });
 
-    });
+        $.ajax({
+            url:"per/wtid1",
+            success:function (data) {
+                if (grade >= 3 && grade < 13){
+					$("#wtid1").text(1);
+					if(data == 0){
+                        $("#wtid2").text(1);
+					}else {
+                        $("#wtid3").text(1);
+					}
+                }else if(grade >= 13 && grade < 23) {
+                    $("#wtid1").text(2);
+                    if(data == 0){
+                        $("#wtid2").text(2);
+                    }else if (data == 1){
+                        $("#wtid2").text(1);
+                        $("#wtid3").text(1);
+                    }else if(data == 2){
+                        $("#wtid3").text(2);
+					}
+                }else if(grade >=23) {
+                    $("#wtid1").text(3);
+                    if(data == 0){
+                        $("#wtid2").text(3);
+                    }else if (data == 1){
+                        $("#wtid2").text(2);
+                        $("#wtid3").text(1);
+                    }else if(data == 2){
+                        $("#wtid2").text(1);
+                        $("#wtid3").text(2);
+                    } else if(data == 3){
+                        $("#wtid3").text(3);
+                    }
+                }
+
+            }
+        });
+
+        $.ajax({
+            url: "per/wtid2",
+            success: function (data) {
+				$("#wtid4").text(data.walnum+data.employ);
+                $("#wtid5").text(data.employ);
+                $("#wtid6").text(data.walnum);
+            }
+        });
+
+        jp_M61();
+    }
+
+    function jp_M61(){
+        $("#jp_M62").prop("class","");
+	    $("#jp_M61").prop("class","checked");
+        $("#tabTarget25").prop("class","ui-tab-content");
+        $("#tabTarget15").prop("class","ui-tab-content checked");
+        $.ajax({
+            url:"per/monthlyquery",
+            success:function (data) {
+                var tbody1 = "";
+                if (data.length>0){
+                    $("#outstd1").text(data[0].num);
+                    for (var i=0; i<data.length; i++){
+                        tbody1 += "<tr><td class='col1'>"+renderTime(data[i].votetime).substring(0,10)+"</td><td class='col2'>"+data[i].votenum+"</td>"+
+                            "<td class='col3 wbba'><a href='books/queryBookById?bookid="+data[i].bookid+"' class='blue' target='_blank'>"+data[i].bookname+"</a></td>"+
+                            "</tr>";
+                    }
+                    $("#tbody1").html(tbody1);
+                }else {
+                    $("#tnx1").show();
+                }
+            }
+        });
+	}
+	$("#jp_M62").click(function () {
+        $("#jp_M61").prop("class","");
+        $("#jp_M62").prop("class","checked");
+        $("#tabTarget15").prop("class","ui-tab-content");
+        $("#tabTarget25").prop("class","ui-tab-content checked");
+
+        $.ajax({
+           url:"per/recquery",
+           success:function (data) {
+               var tbody2 = "";
+               if (data.length>0){
+					$("#outstd2").text(data[0].num);
+					for (var i=0; i<data.length; i++){
+                    	tbody2 += "<tr><td class='col1'>"+renderTime(data[i].votetime).substring(0,10)+"</td><td class='col2'>"+data[i].votenum+"</td>"+
+                        "<td class='col3 wbba'><a href='books/queryBookById?bookid="+data[i].bookid+"' class='blue' target='_blank'>"+data[i].bookname+"</a></td>"+
+                        "</tr>";
+					}
+                   $("#tbody2").html(tbody2);
+			   }else {
+					$("#tnx2").show();
+			   }
+           }
+       });
+
+    })
+    
+    function u6() {
+        for (var i = 1; i <= 10; i++) {
+            $("#u" + i).prop("class", "");
+        }
+        $("#u6").prop("class", "active");
+        for (var i = 1; i <= 10; i++) {
+            $("#s" + i).hide();
+        }
+        $("#s6").show();
+
+        $.ajax({
+            url: "per/queryusers",
+            success: function (data) {
+				$("#balance").text(data[0].money);
+            }
+        });
+        record1();
+    }
+
+    function record1() {
+        $("#tabTarget26").prop("class","ui-tab-content");
+        $("#record2").prop("class","");
+        $("#tabTarget36").prop("class","ui-tab-content");
+        $("#record3").prop("class","");
+        $("#tabTarget16").prop("class","ui-tab-content checked");
+        $("#record1").prop("class","checked");
+
+        $.ajax({
+            url: "per/record1",
+            success: function (data) {
+               var record1=""
+               if (data.length>0){
+                   for (var i = 0; i<data.length; i++){
+                       record1 += "<tr class='qdp-operate-wrapper'><td class='col1'>"+
+                           "<span class='shelf-table-author font12'>"+data[i].money+"元</span> </td>"+
+                           "<td class='col1'><span class='shelf-table-author font12'>"+renderTime(data[i].topuptime).substring(0,10)+"</span></td>"+
+                           "<td class='col1'><span class='shelf-table-author font12'>书币充值</span></td></tr>";
+				   }
+                  $("#tab1").html(record1);
+			   }else {
+                   $("#tnd1").show();
+			   }
+			   
+            }
+        });
+    }
+    
+    $("#record2").click(function () {
+        $("#tabTarget16").prop("class","ui-tab-content");
+        $("#record1").prop("class","");
+        $("#tabTarget36").prop("class","ui-tab-content");
+        $("#record3").prop("class","");
+        $("#tabTarget26").prop("class","ui-tab-content checked");
+        $("#record2").prop("class","checked");
+
+        $.ajax({
+            url: "per/record2",
+            success: function (data) {
+                var record2=""
+                if (data.length>0){
+                    for (var i = 0; i<data.length; i++){
+                        record2 += "<tr class='qdp-operate-wrapper'><td class='col1'>"+
+                            "<span class='shelf-table-author font12'>"+data[i].rewanum+"书币</span> </td>"+
+                            "<td class='col1'><span class='shelf-table-author font12'>"+renderTime(data[i].rewatime).substring(0,10)+"</span></td>"+
+                            "<td class='col1'><span class='shelf-table-author font12'>"+data[i].bookname+"</span></td></tr>";
+                    }
+                    $("#tab2").html(record2);
+                }else {
+                    $("#tnd2").show();
+                }
+
+            }
+        });
+		
+    })
+
+    $("#record3").click(function () {
+        $("#tabTarget16").prop("class","ui-tab-content");
+        $("#record1").prop("class","");
+        $("#tabTarget26").prop("class","ui-tab-content");
+        $("#record2").prop("class","");
+        $("#tabTarget36").prop("class","ui-tab-content checked");
+        $("#record3").prop("class","checked");
+
+        $.ajax({
+            url: "per/record3",
+            success: function (data) {
+                var record3=""
+                if (data.length>0){
+                    for (var i = 0; i<data.length; i++){
+                        record3 += "<tr class='qdp-operate-wrapper'><td class='col1'>"+
+                            "<span class='shelf-table-author font12'>"+data[i].bookname+"</span> </td>"+
+                            "<td class='col1'><span class='shelf-table-author font12'>"+data[i].count+"</span></td>"+
+                            "<td class='col1'><span class='shelf-table-author font12'>"+data[i].sum+"书币</span></td></tr>";
+                    }
+                    $("#tab3").html(record3);
+                }else {
+                    $("#tnd3").show();
+                }
+
+            }
+        });
+    })
 
     function u8() {
         for (var i = 1; i <= 10; i++) {
@@ -942,6 +1319,16 @@
 				$("#grade2").text(data[0].grade);
 				$("#exp2").text(data[0].exp);
 				$("#expnext").text(100 - data[0].exp%100 == 100 ? 100:100 - data[0].exp%100);
+				if (data[0].grade >= 3 && data[0].grade < 13){
+                    $("#mr12").text("每日赠送推荐票 1张");
+				}else if(data[0].grade >= 13 && data[0].grade < 23) {
+                    $("#mr12").text("每日赠送推荐票 2张");
+				}else if(data[0].grade >=23) {
+                    $("#mr12").text("每日赠送推荐票 3张");
+                }else {
+                    $("#mr12").text("暂无");
+				}
+
             }
         })
 
@@ -1063,9 +1450,8 @@
             --indexSecond;
             $("#showa"+shownum).removeAttr("href");
         } else{
-
-            $("#showa"+shownum).prop("href","javascript:addexp("+shownum+")");
-            $("#showa"+shownum).text("领取");
+			$("#showa"+shownum).prop("href","javascript:addexp("+shownum+")");
+			$("#showa"+shownum).text("领取");
         }
     }
     setInterval("CountDown()", 1000);

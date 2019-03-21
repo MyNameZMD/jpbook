@@ -33,6 +33,10 @@ public class LoginService {
         ld.addUser(u);
     }
 
+    public Integer editwallet(Integer walnum,Integer uuid){
+        return ld.editwallet(walnum,uuid);
+    }
+
     public String phongMessage(String Phone){
         Random ran = new Random();
         String StochasticNum = "";
@@ -46,4 +50,5 @@ public class LoginService {
         PhoneDemo.getRequest2(Phone,StochasticNum);
         return StochasticNum;
     }
+
 }
