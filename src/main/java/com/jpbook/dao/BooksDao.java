@@ -131,4 +131,8 @@ public interface BooksDao {
     List<Map<String,Object>> geturl(Integer bookid);
     @Update("update books set bookname=#{bookname},btid=#{btid},bookreferral=#{bookreferral},url=#{url} where bookid=#{bookid}")
     Integer up(Books books);
+    /**
+     * 条件查询书籍
+     */
+    List<Map<String,Object>> queryBookByState(Integer startIndex,Integer endIndex,Integer btid,Integer bookstate,Integer rollmoney,Integer updatetime,Integer startSum,Integer endSum);
 }

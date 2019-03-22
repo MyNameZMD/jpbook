@@ -16,6 +16,8 @@
     <link rel="stylesheet" type="text/css" id="u0" href="./css/skin.min.css">
     <script src="./js/jquery.form.js"></script>
     <script src="./js/jquery-3.3.1.js.js"></script>
+    <script src="./js/sweet-alert.js"></script>
+    <link rel="stylesheet" href="./css/sweet-alert.css">
 </head>
 <body style="">
 <div class="wrap">
@@ -299,7 +301,7 @@
                 </div>
                 <script>
                     function wordcount() {
-                        alert("字数统计:"+$("#chapterContentInput").val().length);
+                        swal("", "字数统计:"+$("#chapterContentInput").val().length);
                     }
                     $(function () {
                         read();
@@ -331,7 +333,7 @@
                                 type:'post',
                                 async :true,
                                 success:function(data){
-                                    alert("保存成功");
+                                    swal("保存成功", "已保存至草稿箱", "success");
                                     $("#chapterTitle").val($("#chapterTitleInput").html());
                                     $("#chapterContent").val($("#chapterContentInput").val());
                                     $("#viewChapterBox").css("display","block");
@@ -343,12 +345,12 @@
                     }
                     function verify() {
                         if($("#chapterTitleInput").val()=="此处输入章节号与章节名。示例：“第十章 天降奇缘”"){
-                            alert("请输入章节名称");
+                            swal("操作失败!", "章节名不能为空", "warning");
                             $("#chapterTitleInput").focus;
                             return false;
                         }
                         if($("#chapterContentInput").val()=="请输入正文。"){
-                            alert("请输入内容");
+                            swal("操作失败!", "内容不能为空", "warning");
                             $("#chapterContentInput").focus;
                             return false;
                         }
@@ -360,9 +362,9 @@
                             data:{"chapid":$("#chapid").val()},
                             success:function (data) {
                                 if (data==0){
-                                    alert("此章节已被购买，无法删除");
+                                    swal("删除失败!", "此章节已被购买，无法删除", "warning");
                                 }else {
-                                    alert("删除成功，请到回收站查看");
+                                    swal("删除成功", "请到回收站查看", "success");
                                     $("#chapterContent").val("");
                                     $("#chapid").val("");
                                     window.location.reload();

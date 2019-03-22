@@ -18,7 +18,8 @@
 	<script src="./js/LBF.js"></script>-->
 
 	<script src="./layui/layui.js"></script>
-
+	<script src="./js/sweet-alert.js"></script>
+	<link rel="stylesheet" href="./css/sweet-alert.css">
 </head>
 
 <body class="homepage" style="zoom: 1;">
@@ -829,7 +830,7 @@
             data:{"uname":uname,"birthday":birthday,"self":self,"sex":sex},
             success:function (data) {
 				u8();
-                alert("保存信息成功")
+                swal("保存信息成功", "", "success");
             }
         })
 
@@ -875,7 +876,7 @@
         var ext = file.value.substring(file.value.lastIndexOf(".") + 1).toLowerCase();
         // gif在IE浏览器暂时无法显示
         if (ext != 'png' && ext != 'jpg' && ext != 'jpeg') {
-            alert("图片的格式必须为png或者jpg或者jpeg格式！");
+            swal("", "图片的格式必须为png或者jpg或者jpeg格式", "error");
             return;
         }
         var isIE = navigator.userAgent.match(/MSIE/) != null,
@@ -917,6 +918,7 @@
 				async :true,
 				success:function(data){
 					console.log(data);
+                    swal("操作成功", "头像修改成功", "success");
 				}
 			};
 			form.ajaxSubmit(options);

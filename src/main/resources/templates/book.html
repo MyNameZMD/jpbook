@@ -272,7 +272,7 @@
 							<img  src="../images/0.jpg"/>
 						</th:block>
 						<th:block th:if="${queryBookById[0].icon} neq ''">
-							<img th:src="${queryBookById[0].icon}"/>
+							<img th:src="@{/img/{filename}(filename=${queryBookById[0].icon})}"/>
 						</th:block>
 					</a>
 				</div>
@@ -418,7 +418,7 @@
 									<h3 >
 										<!--<a class="subscri j_subscribe" href="javascript:" target="_blank">
                                             <em class="btn"><b class="iconfont"></b>订阅本卷</em></a>-->
-										<i th:text="|${qr.rollname}<i></i>共${qr.sumchap}章|"></i>
+										<i th:utext="|${qr.rollname}<i>·</i>共${qr.sumchap}章|"></i>
 										<span th:class="${qr.rollstate}" th:text="${qr.rollmoney} eq 1 ? '免费' : 'VIP'">VIP</span>
 										<em class="count" th:utext="|本卷共<cite>${qr.chapcounts}</cite>字 |">
 
@@ -1323,7 +1323,7 @@
 								<div class="author-photo" id="authorId" data-authorid="4242192">
 									<a href="https://my.qidian.com/author/4242192" target="_blank"
 										data-eid="qd_G38">
-										<img th:src="${queryUsers[0].icon}">
+										<img th:src="|/img/${queryUsers[0].icon}|">
 									</a>
 									<span class="lv">Lv.1</span>
 								</div>

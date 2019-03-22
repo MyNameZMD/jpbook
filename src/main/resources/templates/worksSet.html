@@ -14,6 +14,8 @@
     <script type="text/javascript" src="./css/aq_common.js.下载"></script>
     <meta name="__hash__" content="059c385e596a69a6d3fa9c21ae59499b_3eafdd42897a2f972cf22b454227e502">
     <script src="./js/jquery.form.js"></script>
+    <script src="./js/sweet-alert.js"></script>
+    <link rel="stylesheet" href="./css/sweet-alert.css">
 </head>
 <body>
 <div class="wrap">
@@ -278,9 +280,9 @@
                     async :true,
                     success:function(data){
                         if(data==0){
-                            alert("小说名重复");
+                            swal("小说名重复!", "请修改小说名", "warning");
                         }else{
-                            alert("修改成功");
+                            swal("修改成功", "小说名成功修改", "success");
                             window.location.reload();
                         }
                     }

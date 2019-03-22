@@ -14,6 +14,9 @@
     <script type="text/javascript" src="./css/aq_common.js.下载"></script>
     <meta name="__hash__" content="392c8dc771a8bb85cb23b4cfda7279f9_f0817b9cdc1612470db34b9d8f8d0d69">
     <script src="./js/jquery.form.js"></script>
+    <script src="./js/sweet-alert.js"></script>
+    <link rel="stylesheet" href="./css/sweet-alert.css">
+
 </head>
 <body>
 <div class="wrap">
@@ -403,13 +406,13 @@
             async :true,
             success:function(data){
                 if(data==0){
-                    alert("小说名已存在");
+                    swal("小说名已存在!", "请更换小说名称", "warning");
                 }else{
                     $("#two").css("display","none");
                     $("#three").css("display","block");
                     $("#top").find("span").prop("class","act");
                     $("#top").find("em").prop("class","act");
-                    alert("创建成功");
+                    swal("创建成功", "您可以开始写作了", "success");
                 }
             }
         };

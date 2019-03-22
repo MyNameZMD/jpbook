@@ -12,7 +12,10 @@
     <title>回收站-阅文作家专区</title>
     <link rel="stylesheet" type="text/css" href="./css/contentv2_base.css"><script src="./css/stats.js.下载" name="MTAH5" sid="500659219"></script><script type="text/javascript" src="./css/contentv2_base.js.下载"></script>    <!-- prevent dom xss -->
     <script type="text/javascript" src="./css/aq_common.js.下载"></script>
-    <meta name="__hash__" content="726acbf2203ebbeca78a83c514adcaae_4637a1f152dc90b0dcef8b265da1b39d"></head>
+    <meta name="__hash__" content="726acbf2203ebbeca78a83c514adcaae_4637a1f152dc90b0dcef8b265da1b39d">
+    <script src="./js/sweet-alert.js"></script>
+    <link rel="stylesheet" href="./css/sweet-alert.css">
+</head>
 <body style="">
 <div class="wrap">
     <div class="header">
@@ -317,7 +320,7 @@
             url:"chapter/updrafts",
             data:{"chapid":$("#chapid").val()},
             success:function (data) {
-                alert("恢复成功，请到草稿箱查看");
+                swal("恢复成功", "请到草稿箱查看", "success");
                 $("#chapterContentInput").val("");
                 window.location.reload();
             }
@@ -330,7 +333,7 @@
                 url:"chapter/del",
                 data:{"chapid":$("#chapid").val()},
                 success:function (data) {
-                    alert("删除成功");
+                    swal("删除成功!", "此章节已彻底删除", "success");
                     $("#chapterContentInput").val("");
                     window.location.reload();
                 }

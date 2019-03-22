@@ -155,44 +155,12 @@
                     </ul>
                     <br>
                     <p class="confirm">
-                        <a id="submitBtn" class="button" href="javascript:/*upusers()*/">提交申请</a>
+                        <a id="submitBtn" class="button" href="javascript:">提交申请</a>
                         <a id="preStepBtn" class="back" href="javascript:">返回上一步</a>
                     </p>
                     <input type="hidden" name="__hash__" value="13e101baf03beea5e40581051cbd4e2e_e168cd5f2c560072b9b4b8c6a27b8448">
                 </form>
-                <script type="text/javascript">
-                    function upusers() {
-                        var realname=$("#realName").val();
-                        if(realname==""||realname.length<2||realname.length>10){
-                            alert("输入正确的姓名");
-                            $("#realName").focus();
-                            return;
-                        }
-                        var idcard=$("#cardId").val();
-                        var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-                        if(idcard==""){
-                            alert("请输入身份证号");
-                            $("#idcard").focus();
-                            return;
-                        }
-                        if (!reg.test(idcard)){
-                            alert("请输入正确的身份证号");
-                            $("#idcard").focus();
-                            return;
-                        }
-                        if(!$("#agreeCheckbox")[0].checked){
-                            alert("协议必选");
-                            return;
-                        }
-                        $.ajax({
-                            url:"/jpbook/users/upWriter",
-                            data:$("#formRegisterAuthor").serialize(),
-                            type:"post",
-                            success:function (data) {
-                            }
-                        })
-                    }
-                </script>
+
             </div>
             <!-- 成功提示 -->
             <div id="successBox" class="applyForm" style="display:none;">

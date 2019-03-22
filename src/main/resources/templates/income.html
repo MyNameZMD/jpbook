@@ -15,6 +15,8 @@
     <meta name="__hash__" content="a456e0e2d67950aa08444c630ef906e9_f48777b92183314fbbc574cc4a37ff19">
 
     <link rel="stylesheet" href="./js/bootstrap/css/bootstrap.css">
+    <script src="./js/sweet-alert.js"></script>
+    <link rel="stylesheet" href="./css/sweet-alert.css">
 </head>
 <body>
 <div class="wrap">
@@ -242,18 +244,27 @@
                         function withdraw() {
                             var money=$("#incomesum").html();
                             if(money<=0){
-                                alert("无收入，无法提现！");
+                                swal("操作失败!", "无收入，无法提现！", "warning");
                             }else{
-                                if(confirm("你确定提现吗？")){
+                                swal({
+                                    title: "确定操作吗？",
+                                    text: "你确定要把所有收入提现吗？",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    cancelButtonText:'取消',
+                                    confirmButtonColor: '#DD6B55',
+                                    confirmButtonText: '确定'
+                                },
+                                function(){
                                     $.ajax({
                                         url:"/jpbook/users/withdraw",
                                         data:{"money":money},
                                         success:function (data) {
                                             $("#incomesum").html(0);
-                                            alert("提现成功")
+                                            swal("提现成功!", "请注意查收！", "success");
                                         }
                                     })
-                                }
+                                });
                             }
                         }
                     </script>

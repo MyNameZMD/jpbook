@@ -162,5 +162,11 @@ public class BooksController {
         session.setAttribute("bookpresent",newbookpresent);
         return 1;
     }
-
+    @RequestMapping("queryBookByState")
+    @ResponseBody
+    public List<Map<String,Object>> queryBookByState(Integer Index,Integer btid,Integer bookstate,Integer rollmoney,Integer updatetime,Integer startSum,Integer endSum){
+        Integer startIndex=(Index-1)*8;
+        System.out.println(startIndex+" "+btid+" "+bookstate+" "+rollmoney+" "+updatetime+" "+startSum+" "+endSum);
+        return bs.queryBookByState(startIndex,8,btid,bookstate,rollmoney,updatetime,startSum,endSum);
+    }
 }

@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/sunburst.css">
     <link rel="stylesheet" href="../css/style.css" />
+    <script src="./js/sweet-alert.js"></script>
+    <link rel="stylesheet" href="./css/sweet-alert.css">
     <script>
         // 获取cookie
         function getCookie(name) {
@@ -487,7 +489,7 @@
                             success: function (data) {
                                 $(".add-book").prop("href","javascript:void(0)");
                                 $("#bookrackset").html("已在书架");
-                                alert("加入成功！");
+                                swal("加入成功", "已加入书架", "success");
                             }
                         })
                     }

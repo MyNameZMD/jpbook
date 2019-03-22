@@ -1337,12 +1337,6 @@ h3.wrap-title {
   height: 14px;
   background: url(/qd/images/common/op_tag.e4c83.png) no-repeat
 }
-.share-img {
-  overflow: hidden;
-  width: 0;
-  height: 0;
-  margin: 0 auto
-}
 embed.embed-fix {
   position: absolute;
   z-index: 2;
@@ -4668,6 +4662,16 @@ span.rank-tag.no3 cite {
 }
 .footer .box-center {
   background: #fafafa
+}
+.footer .footer-text {
+  padding: 20px 26px 0
+}
+.footer .footer-text p {
+  font-family: PingFangSC-Regular,'-apple-system',Simsun;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: left;
+  color: #1a1a1a
 }
 .footer .friend-link {
   font-size: 0;
