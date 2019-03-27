@@ -176,7 +176,7 @@
                 <div class="fmBox fl">
                     <div class="fm">
                         <img id="previewImg"  th:src="@{/img/{filename}(filename=${session.bookpresent.get('icon')})}" width="114" height="152">
-                        <a class="blue" href="https://write.qq.com/Booksubmit/downloadlogo/site/5.html">站点logo下载</a>                       <div class="modify hidden" style="display: none;">
+                                              <div class="modify hidden" style="display: none;">
                         <span id="selectBookCoverBtn">上传新封面</span>
                         <input class="hidden" type="file" id="bookpic" name="bookpic">
                     </div>
@@ -187,8 +187,9 @@
                     <ul>
                         <li><em>作品名称：</em>
                             <p class="saved" style="display: block;" th:text="${session.bookpresent.get('bookname')}">                        </p>
+                            <input type="hidden" name="oldBookname" th:value="${session.bookpresent.get('bookname')}">
                             <div class="modify hidden cf" style="display: none;">
-                                <input id="bookNameInput" name="bookname" autocomplete="off" class="midInput recTagInput" value="少年杨帅波" data-def="少年杨帅波" type="text">
+                                <input id="bookNameInput" name="bookname" autocomplete="off" class="midInput recTagInput" th:value="${session.bookpresent.get('bookname')}" data-def="少年杨帅波" type="text">
                                 <p data-node="ok" style="display:none;">
                                     <cite class="icon ok"></cite><span class="f12 c999" data-node="text" style="padding-left:5px;"></span>
                                 </p>
@@ -200,9 +201,9 @@
                             <em>书号：</em><b th:text="${session.bookpresent.get('bookid')}"></b></li>
                         <li><em>作品类型：</em>
                             <input type="hidden" id="btid" th:value="${session.bookpresent.get('btid')}">
-                            <b id="classificationWorks" class="select-category">
+                            <b id="classificationWorks" class="select-category ">
                                 <span class="saved" style="display: inline;" id="btname"></span>
-                                <select id="novelMainCategorySelect" style="visibility: visible; display: none; " name="btid">
+                                <select id="novelMainCategorySelect" class="modify" style="visibility: visible; display: none; " name="btid">
 
                                 </select>
                             </b>
@@ -230,19 +231,12 @@
                         <em>编辑分组：</em>
                         <p id="btypename">体育编辑组</p>
                     </li>
+                        <li>
                         <em>作品状态：</em>
                             <!-- start 点击修改后saved隐藏 modify显示-->
-                            <p class="saved" style="display: block;">
-                                <td  th:switch="${session.bookpresent.get('bookstate')}">
-                                    <span th:case="0">连载中</span>
-                                    <span th:case="1">已完结</span>
-                                </td>
+                            <p class="saved" th:text="${session.bookpresent.get('bookstate')==0?'连载中':'已完结'}">
                             </p>
-                            <p class="modify hidden cf" style="display: none;">
-                                <td  th:switch="${session.bookpresent.get('bookstate')}">
-                                    <span th:case="0">连载中</span>
-                                    <span th:case="1">已完结</span>
-                                </td>
+                            <p class="modify hidden cf" style="display: none;"  th:text="${session.bookpresent.get('bookstate')==0?'连载中':'已完结'}">
                             </p>
 
                             <!-- end 点击修改后saved隐藏 modify显示-->

@@ -26,4 +26,8 @@ public interface UsersDao {
     Users getUsersByPen(String pen);
     @Update("UPDATE users set withdrawmoney=withdrawmoney+#{param1} where uuid=#{param2}\n")
     Integer withdraw(Double money,Integer uuid);
+    @Select("select money from users where uuid=#{uuid}\n")
+    Integer getNewMoney(Integer uuid);
+    @Update("update users set money=money-#{param2} where uuid=#{param1}\n")
+    Integer rewardNew(Integer uuid,Integer money);
 }

@@ -108,7 +108,7 @@
     </insert>
     <select id="queryBookByState" resultType="Map">
         select * from (
-        select bs.bookid,bs.icon,bs.bookname,bs.uuid,u.pen,r.rollmoney,max(c.updatetime) updatetime,bt.btid,bs.bookstate,(case when bs.bookstate=0 then '连载中' else '完结' end) bookstatename,bs.bookreferral,bt.btname,IFNULL(sum(c.chapcount),0) sum from
+        select bs.bookid,bs.icon,bs.bookname,bs.uuid,u.pen,r.rollmoney,max(c.updatetime) updatetime,bt.btid,bs.bookstate,(case when bs.bookstate=0 then '连载中' else '完结' end) bookstatename,IFNULL(bs.bookreferral,'暂无简介') bookreferral,bt.btname,IFNULL(sum(c.chapcount),0) sum from
         books bs LEFT JOIN users u on bs.uuid=u.uuid left join booktype bt on bs.btid=bt.btid LEFT JOIN roll r on bs.bookid=r.bookid LEFT JOIN chapter c on r.rollid =c.rollid
         GROUP BY bs.bookid) s
         <where>
@@ -131,6 +131,7 @@
                 and s.sum&lt;#{param8}
             </if>
         </where>
+        ORDER BY ${param9}
         LIMIT #{param1},#{param2}
     </select>
 </mapper>

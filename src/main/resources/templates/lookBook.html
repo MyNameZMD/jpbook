@@ -22,8 +22,8 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/sunburst.css">
     <link rel="stylesheet" href="../css/style.css" />
-    <script src="./js/sweet-alert.js"></script>
-    <link rel="stylesheet" href="./css/sweet-alert.css">
+    <script src="../js/sweet-alert.js"></script>
+    <link rel="stylesheet" href="../css/sweet-alert.css">
     <script>
         // 获取cookie
         function getCookie(name) {
@@ -237,7 +237,7 @@
                     <div class="admire-wrap">
                         <a class="report-btn j_reportBtn" href="javascript:" data-eid="qd_R106"><em class="iconfont"></em>举报</a>
                         <div class="read-btn-box">
-                            <a class="admire lang j_admireBtn" href="javascript:" data-showtype="3" data-eid="qd_R105">赞赏<span class="j_admireNum"></span></a>
+                            <a class="admire lang j_admireBtn" href="javascript:rewardClick()" data-showtype="3" data-eid="qd_R105">赞赏<span class="j_admireNum"></span></a>
                         </div>
                         <dl class="user-active cf">
                         </dl></div>
@@ -487,9 +487,14 @@
                             url: "/jpbook/bookrack/add",
                             data:{"bookid":$("#bookid").val()},
                             success: function (data) {
-                                $(".add-book").prop("href","javascript:void(0)");
-                                $("#bookrackset").html("已在书架");
-                                swal("加入成功", "已加入书架", "success");
+                                if (data==-1){
+                                    window.location.href="/jpbook/login";
+                                }else{
+                                    $(".add-book").prop("href","javascript:void(0)");
+                                    $("#bookrackset").html("已在书架");
+                                    swal("加入成功", "已加入书架", "success");
+                                }
+
                             }
                         })
                     }
@@ -554,14 +559,14 @@
     <div class="right-bar-list" id="j_rightBarList" style="bottom: 0px;">
         <dl>
             <dd id="navReward" data-showtype="3" data-aid="qd_R87">
-                <a href="javascript:"><i><em class="iconfont"></em><span>打赏</span></i></a>
+                <a href="javascript:rewardClick()"><i><em class="iconfont"></em><span>打赏</span></i></a>
                 <div class="guide-box">
                     <cite></cite>
                     打赏
                 </div>
             </dd>
             <dd id="navTicket" data-showtype="2" data-aid="qd_R88">
-                <a href="javascript:"><i><em class="iconfont"></em><span>投票</span></i></a>
+                <a href="javascript:recClick()"><i><em class="iconfont"></em><span>投票</span></i></a>
                 <div class="guide-box">
                     <cite></cite>
                     投票
@@ -588,6 +593,565 @@
 <div id="userLevel" class="hidden">0</div>
 <div id="authorId" data-authorid="7322536" class="hidden"></div>
 
+<!--投票投票弹框-->
+<script type="text/javascript">
+    function closePanel() {
+        $(".lbf-panel").css("display", "none");
+        $(".lbf-overlay").css("display", "none");
+    }
+</script>
+<!--投票投币弹框-->
+<script type="text/javascript">
+    function closePanel() {
+        $(".lbf-panel").css("display", "none");
+        $(".lbf-overlay").css("display", "none");
+    }
+</script>
+<!--投票投币弹框-->
+<div class="lbf-panel"
+     style="position:fixed;z-index: 62780; width: 520px; top: 65px; left: 432px;display: none;"><a
+        href="javascript:closePanel();"
+        class="lbf-panel-close lbf-icon lbf-icon-close"></a>
+    <div class="lbf-panel-head" style="display: none;">提示</div>
+    <div class="lbf-panel-body">
+        <div class="vote-popup" id="votePopup" data-l1="15">
+            <!-- start 弹窗切换tab-->
+            <div class="popup-tab" id="popupTab">
+                <!-- EJS注释，如果作品是非VIP，看不到投月票Tab -->
+
+                <a class="lang" href="javascript:monthClick()" id="monthTab">投月票<em></em></a>
+
+                <a class="lang act" href="javascript:recClick()" id="recTab">投推荐票<em></em></a>
+
+                <a class="lang" href="javascript:rewardClick()" id="rewardTab">打赏</a>
+
+            </div>
+            <!-- end 弹窗切换tab-->
+            <script type="text/javascript">
+                function voteTab(obj, id) {
+                    $("#popupTab").find("a").removeClass("act");
+                    $("#" + obj).addClass("act");
+                    $("#voteWrap").find(".hidde").css("display", "none");
+                    $("#" + id).css("display", "block");
+                }
+            </script>
+            <!-- start 弹窗互动内容 -->
+            <div class="vote-popup-wrap" id="voteWrap">
+                <!-- start 投月票 -->
+                <!-- EJS注释，如果作品是非VIP，看不到投月票的弹窗 -->
+
+                <div class="popup-content month hidde" id="monthPopup" data-l2="1">
+                    <div class="limit-wrap" style="display:none;">
+                        <div class="null no-ticket"></div>
+                        <h3>无投票资格</h3>
+                        <!-- <h4><a class="blue" href="http://vip.qidian.com/My.php" target="_blank">提升会员等级</a>可获得投票资格</h4> -->
+                        <h4>消费书币可获得月票</h4>
+                        <p class="bottom"><a
+                                href="http://wwwploy.qidian.com/HelpCenter/default.aspx?type=0&amp;categoryid=46&amp;parentid=21"
+                                target="_blank">投月票规则</a></p>
+                    </div>
+                    <div class="no-limit-wrap" style="display: none">
+                        <h3>剩余月票数<span>1</span>张<i>·</i>当前最多能投<span id="monthSurplus">1</span>张</h3>
+                        <div class="vote-form-wrap">
+                            <h4>投票数量</h4>
+                            <div class="vote-wrap mb160 cf">
+
+                                <a class="subtract disabled" id="subMonth" href="javascript:monthAlter('sub')"
+                                   data-eid="qd_G110"><span></span></a>
+                                <div class="ticket-num fl"> <span class="month-ticket" id="monthTicket">
+
+
+
+                    <b></b></span><input id="monthNum" maxlength="3" value="1"></div>
+                                <a class="add" id="addMonth" href="javascript:monthAlter('add')"
+                                   data-eid="qd_G111"><span><em></em></span></a>
+                            </div>
+                            <script type="text/javascript">
+                                $("#monthNum").change(function () {
+                                    if($("#monthNum").val()>$("#monthPopup").find(".no-limit-wrap").find("h3").find("span").html()){
+                                        $("#monthNum").val($("#monthPopup").find(".no-limit-wrap").find("h3").find("span").html());
+                                    }
+                                    var str="";
+                                    for(var i=0;i<$("#monthNum").val();i++){
+                                        str+="<b></b>";
+                                    }
+                                    $("#monthTicket").html(str);
+                                })
+                                function monthAlter(obj) {
+                                    if(obj=="add"){
+                                        $("#monthNum").val($("#monthNum").val()-1+2);
+                                    }else{
+                                        $("#monthNum").val($("#monthNum").val()-1);
+                                    }
+                                    $("#addMonth").removeClass("disabled");
+                                    $("#subMonth").removeClass("disabled");
+                                    if($("#monthNum").val()<=1){
+                                        $("#subMonth").addClass("disabled");
+                                    }
+                                    if($("#monthNum").val()==$("#monthPopup").find(".no-limit-wrap").find("h3").find("span").html()){
+                                        $("#addMonth").addClass("disabled");
+                                    }
+                                    if($("#monthNum").val()>$("#monthPopup").find(".no-limit-wrap").find("h3").find("span").html()){
+                                        $("#monthNum").val($("#monthPopup").find(".no-limit-wrap").find("h3").find("span").html());
+                                    }
+                                    var str="";
+                                    for(var i=0;i<$("#monthNum").val();i++){
+                                        str+="<b></b>";
+                                    }
+                                    $("#monthTicket").html(str);
+                                }
+                            </script>
+                            <!--<h4>留言鼓励</h4>
+                            <div class="message-wrap">
+                                <textarea id="recMsgText">这本书太棒了，犒劳一下，希望后续更加精彩！</textarea>
+                            </div>-->
+                        </div>
+                        <div class="popup-btn">
+                            <a class="red-btn" id="voteMonth" href="javascript:voteMonth()" data-eid="qd_G58">立即投票</a>
+                        </div>
+                    </div>
+                    <div class="vote-complete">
+                        <div class="complete-img month-img"></div>
+                        <h3 class="mb50">已投出<span class="post-num"></span>张月票</h3>
+                        <div class="popup-btn">
+                            <a class="red-btn closeBtn" href="javascript:closePanel()" data-eid="">关闭</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- end 投月票 -->
+                <script type="text/javascript">
+                    function voteMonth() {
+                        $.ajax({
+                            url:"/jpbook/vote/voteMonth",
+                            data:{
+                                "bookid":$("#bookid").val(),
+                                "votenum":$("#monthNum").val()
+                            },
+                            success:function (data) {
+                                $("#monthPopup > div").css("display","none");
+                                $("#monthPopup").find(".vote-complete").css("display","block");
+                                $("#monthPopup").find(".vote-complete > h3 > span").html($("#monthNum").val());
+                                
+                            }
+                        })
+
+                    }
+                    function monthClick() {
+                        $.ajax({
+                            url: "/jpbook/users/ckSession",
+                            data: {"name": 'users'},
+                            type: "post",
+                            success: function (data) {
+                                if (data == 0) {
+                                    window.location.href = "/jpbook/login";
+                                } else {
+                                    $(".lbf-panel").css("display", "block");
+                                    $(".lbf-overlay").css("display", "block");
+                                    $.ajax({
+                                        url: "/jpbook/wallet/getSurplusMonth",
+                                        success: function (data) {
+                                            $("#monthPopup > div").css("display", "none");
+                                            if (data > 0) {
+                                                $("#monthPopup").find(".no-limit-wrap").css("display", "block");
+                                                $("#monthPopup").find(".no-limit-wrap").find("h3").find("span").html(data);
+                                                if(data==1){
+                                                    $("#addMonth").addClass("disabled");
+                                                }
+                                            } else {
+                                                $("#monthPopup").find(".limit-wrap").css("display", "block");
+                                            }
+                                            $("#monthNum").val(1);
+                                            voteTab('monthTab', 'monthPopup');
+                                        }
+                                    })
+                                }
+                            }
+                        })
+
+                    }
+                </script>
+                <!-- start 投推荐票 -->
+                <div class="popup-content rec hidde" id="recPopup" data-l2="2" style="display: none;">
+                    <!--投票-->
+                    <div class="no-limit-wrap" style="display: none">
+                        <h3>剩余推荐票数<span>1</span>张<i>·</i>当前最多能投<span id="recSurplus">1</span>张</h3>
+                        <div class="vote-form-wrap">
+                            <h4>投票数量</h4>
+                            <div class="vote-wrap mb160 cf">
+
+                                <a class="subtract disabled" id="subRec" href="javascript:recAlter('sub')" data-eid="qd_G110"><span></span></a>
+                                <div class="ticket-num fl"> <span class="rec-ticket" id="recTicket">
+
+
+
+                            <b></b></span><input id="recNum" maxlength="3" value="1"></div>
+                                <a class="add" id="addRec" href="javascript:recAlter('add')"
+                                   data-eid="qd_G111"><span><em></em></span></a>
+                            </div>
+                            <script type="text/javascript">
+                                $("#recNum").change(function () {
+                                    if($("#recNum").val()>$("#recPopup").find(".no-limit-wrap").find("h3").find("span").html()){
+                                        $("#recNum").val($("#recPopup").find(".no-limit-wrap").find("h3").find("span").html());
+                                    }
+                                    var str="";
+                                    for(var i=0;i<$("#recNum").val();i++){
+                                        str+="<b></b>";
+                                    }
+                                    $("#recTicket").html(str);
+                                })
+                                function recAlter(obj) {
+                                    if(obj=="add"){
+                                        $("#recNum").val($("#recNum").val()-1+2);
+                                    }else{
+                                        $("#recNum").val($("#recNum").val()-1);
+                                    }
+                                    $("#addRec").removeClass("disabled");
+                                    $("#subRec").removeClass("disabled");
+                                    if($("#recNum").val()<=1){
+                                        $("#subRec").addClass("disabled");
+                                    }
+                                    if($("#recNum").val()==$("#recPopup").find(".no-limit-wrap").find("h3").find("span").html()){
+                                        $("#addRec").addClass("disabled");
+                                    }
+                                    if($("#recNum").val()>$("#recPopup").find(".no-limit-wrap").find("h3").find("span").html()){
+                                        $("#recNum").val($("#recPopup").find(".no-limit-wrap").find("h3").find("span").html());
+                                    }
+                                    var str="";
+                                    for(var i=0;i<$("#recNum").val();i++){
+                                        str+="<b></b>";
+                                    }
+                                    $("#recTicket").html(str);
+                                }
+                                function voteRec() {
+                                    $.ajax({
+                                        url:"/jpbook/vote/voteRec",
+                                        data:{
+                                            "bookid":$("#bookid").val(),
+                                            "votenum":$("#recNum").val()
+                                        },
+                                        success:function (data) {
+                                            $("#recPopup > div").css("display","none");
+                                            $("#recPopup").find(".vote-complete").css("display","block");
+                                            $("#recPopup").find(".vote-complete > h3 > span").html($("#recNum").val());
+                                            
+                                        }
+                                    })
+                                }
+                            </script>
+                            <!--<h4>留言鼓励</h4>
+                            <div class="message-wrap">
+                                <textarea id="recMsgText">这本书太棒了，犒劳一下，希望后续更加精彩！</textarea>
+                            </div>-->
+                        </div>
+                        <div class="popup-btn">
+                            <a class="red-btn" id="voteRec" href="javascript:voteRec()" data-eid="qd_G58">立即投票</a>
+                        </div>
+                    </div>
+                    <!-- start 无投票资格 -->
+                    <div class="limit-wrap">
+                        <div class="null no-ticket"></div>
+                        <h3>无投票资格</h3>
+                        <h4><a class="blue"
+                               href="http://wwwploy.qidian.com/HelpCenter/default.aspx?type=0&amp;categoryid=114&amp;parentid=20"
+                               target="_blank">增加经验值可获得投票资格</a></h4>
+                        <p class="bottom"><a
+                                href="http://wwwploy.qidian.com/HelpCenter/default.aspx?type=0&amp;categoryid=35&amp;parentid=20"
+                                target="_blank">投推荐票规则</a></p>
+                    </div>
+                    <!-- end 无投票资格 -->
+
+                    <!-- start 无投票资格 -->
+                    <div class="limit-wrap hidde" id="noPrivilege">
+                        <div class="null no-ticket"></div>
+                        <h3>无投票资格</h3>
+                        <h4><a class="blue"
+                               href="http://wwwploy.qidian.com/HelpCenter/default.aspx?type=0&amp;categoryid=114&amp;parentid=20"
+                               target="_blank">增加经验值可获得投票资格</a></h4>
+                        <p class="bottom"><a
+                                href="http://wwwploy.qidian.com/HelpCenter/default.aspx?type=0&amp;categoryid=35&amp;parentid=20"
+                                target="_blank">投推荐票规则</a></p>
+                    </div>
+                    <!-- end 无投票资格 -->
+
+                    <!-- start post后判断限额用完 -->
+                    <div class="limit-wrap hidde" id="outOfRecLimit">
+                        <div class="null no-ticket"></div>
+                        <h3>今日<span></span>张限额已用完</h3>
+                        <p class="bottom"><a
+                                href="http://wwwploy.qidian.com/HelpCenter/default.aspx?type=0&amp;categoryid=35&amp;parentid=20"
+                                target="_blank">投推荐票规则</a></p>
+                    </div>
+                    <!-- end post后判断限额用完 -->
+
+                    <!-- start 投完推荐票显示的动态 -->
+                    <div class="vote-complete">
+                        <div class="complete-img rec-img"></div>
+                        <h3 class="mb50">已投出<span class="post-num"></span>张推荐票</h3>
+                        <div class="popup-btn">
+                            <a class="red-btn closeBtn" href="javascript:closePanel()" data-eid="">关闭</a>
+                        </div>
+                    </div>
+                    <!-- end 投完推荐票显示的动态 -->
+
+                    <!-- start 通用错误 -->
+                    <div class="limit-wrap hidde" id="commonError">
+                        <div class="null no-ticket"></div>
+                        <h3></h3>
+                    </div>
+                    <!-- end 通用错误 --></div>
+                <!-- end 投推荐票 -->
+                <script type="text/javascript">
+                    function recClick() {
+                        $.ajax({
+                            url: "/jpbook/users/ckSession",
+                            data: {"name": 'users'},
+                            type: "post",
+                            success: function (data) {
+                                if (data == 0) {
+                                    window.location.href = "/jpbook/login";
+                                } else {
+                                    $(".lbf-panel").css("display", "block");
+                                    $(".lbf-overlay").css("display", "block");
+                                    $.ajax({
+                                        url: "/jpbook/wallet/getSurplusRec",
+                                        success: function (data) {
+                                            $("#recPopup > div").css("display", "none");
+                                            if (data > 0) {
+                                                $("#recPopup").find(".no-limit-wrap").css("display", "block");
+                                                $("#recPopup").find(".no-limit-wrap").find("h3").find("span").html(data);
+                                                if(data==1){
+                                                    $("#addRec").addClass("disabled");
+                                                }
+                                            } else {
+                                                $("#recPopup").find(".limit-wrap").css("display", "block");
+                                            }
+                                            $("#recNum").val(1);
+                                            voteTab('recTab', 'recPopup');
+                                        }
+                                    })
+                                }
+                            }
+                        })
+                    }
+                </script>
+
+                <!-- EJS注释，如果作品是非签约作品，看不到投打赏的弹窗 -->
+
+                <!-- start 打赏 -->
+                <div class="popup-content reward hidde" id="rewardPopup" data-l2="3"><!-- start 有限制不可以打赏 余额不足 -->
+                    <div class="limit-wrap hidde" id="noMoney">
+                        <div class="null no-money"></div>
+                        <h3>账户余额不足</h3>
+                        <h4>本次打赏<em class="calcReward">500</em>起点币</h4>
+                        <h5>账户余额 <span id="balance"></span> 起点币<i>·</i>还差<em class="f14" id="differ"></em>起点币</h5>
+                        <p class="popup-btn"><a class="red-btn j_quickPay" href="javascript:"
+                                                data-eid="qd_G61">快捷支付打赏</a><a class="blue-btn j_charge"
+                                                                               href="javascript:" target="_blank"
+                                                                               data-eid="qd_G62">去充值</a></p>
+                    </div>
+                    <!-- end 有限制不可以打赏 余额不足 -->
+
+                    <!-- start 有限制不可以打赏 禁消费 -->
+                    <div class="limit-wrap hidde" id="rewardBan">
+                        <div class="null no-money"></div>
+                        <h3>当前账户存在异常，暂时禁止消费，请联系 <a class="blue" href="http://kf.qidian.com/Default.aspx"
+                                                   target="_blank">客服</a> 处理</h3>
+                    </div>
+                    <!-- end 有限制不可以打赏 禁消费 -->
+
+
+                    <!-- start 无限制可以打赏 -->
+                    <div class="no-limit-wrap">
+                        <div class="vote-form-wrap">
+                            <div class="reward-list cf" id="rewardList">
+                                <ul>
+                                    <li data-reward="100">
+                                        <div class="price">
+                                            <p class="lang">100点</p>
+                                        </div>
+                                        <i></i>
+                                        <cite></cite>
+                                    </li>
+                                    <li class="act" data-reward="500" id="defaultreward">
+                                        <div class="price">
+                                            <p class="lang">500点</p>
+                                        </div>
+                                        <i></i>
+                                        <cite></cite>
+                                    </li>
+                                    <li data-reward="1000">
+                                        <div class="price">
+                                            <p class="lang">1000点</p>
+                                        </div>
+                                        <i></i>
+                                        <cite></cite>
+                                    </li>
+                                    <li data-reward="2000">
+                                        <div class="price">
+                                            <p class="lang">2000点</p>
+                                        </div>
+                                        <i></i>
+                                        <cite></cite>
+                                    </li>
+                                    <li data-reward="10000">
+                                        <div class="price">
+                                            <p class="lang">1万点</p>
+                                            <span class="">赠1张月票</span>
+                                        </div>
+                                        <i></i>
+                                        <cite></cite>
+                                    </li>
+                                    <li data-reward="50000">
+                                        <div class="price">
+                                            <p class="lang">5万点</p>
+                                            <span class="">赠5张月票</span>
+                                        </div>
+                                        <i></i>
+                                        <cite></cite>
+                                    </li>
+                                    <li data-reward="100000">
+                                        <div class="price">
+                                            <p class="lang">10万点</p>
+                                            <span class="">赠10张月票</span>
+                                        </div>
+                                        <i></i>
+                                        <cite></cite>
+                                    </li>
+                                    <li data-reward="1000000">
+                                        <div class="price">
+                                            <p class="lang">100万点</p>
+                                            <span class="">赠100张月票</span>
+                                        </div>
+                                        <i></i>
+                                        <cite></cite>
+                                    </li>
+                                    <li data-reward="10000000">
+                                        <div class="price">
+                                            <p class="lang">1000万点</p>
+                                            <span class="">赠1000张月票</span>
+                                        </div>
+                                        <i></i>
+                                        <cite></cite>
+                                    </li>
+                                </ul>
+                                <script type="text/javascript">
+                                    $("#rewardList").find("li").click(function () {
+                                        $(".calcReward").html($(this).attr("data-reward"));
+                                        $("#rewardList").find("li").removeClass("act");
+                                        $(this).addClass("act");
+                                    })
+
+                                    function rewardClick() {
+                                        $.ajax({
+                                            url: "/jpbook/users/ckSession",
+                                            data: {"name": 'users'},
+                                            type: "post",
+                                            success: function (data) {
+                                                if (data == 0) {
+                                                    window.location.href = "/jpbook/login";
+                                                } else {
+                                                    $(".lbf-panel").css("display", "block");
+                                                    $(".lbf-overlay").css("display", "block");
+                                                    $.ajax({
+                                                        url: "/jpbook/users/getNewMoney",
+                                                        success: function (data) {
+                                                            if (data > 0) {
+                                                                $("#rewardPopup").find(".no-limit-wrap").find("h4 > em").html(data);
+                                                            } else {
+                                                                $("#rewardPopup").find(".no-limit-wrap").find("h4 > em").html(0);
+                                                            }
+                                                            $(".calcReward").html(500);
+                                                            $("#rewardPopup").find(".no-limit-wrap").css("display","block");
+                                                            voteTab('rewardTab', 'rewardPopup');
+                                                        }
+                                                    })
+                                                }
+                                            }
+                                        })
+                                    }
+
+                                    function ckSession(name) {
+                                        $.ajax({
+                                            url: "/jpbook/users/ckSession",
+                                            data: {"name": name},
+                                            type: "post",
+                                            success: function (data) {
+                                                if (data == 0) {
+                                                    window.location.href = "/jpbook/login";
+                                                    return false;
+                                                } else {
+                                                    return true;
+                                                }
+                                            }
+                                        })
+                                    }
+                                </script>
+                            </div>
+                            <h4>账户余额<em
+                                    th:text="${session.users==null?0:session.users.get(0).getMoney()}"></em>起点币<i>·</i>本次打赏<em
+                                    class="calcReward">500</em>起点币</h4>
+                        </div>
+                        <div class="popup-btn">
+                            <a class="red-btn" id="voteReward" href="javascript:reward()" data-eid="qd_G59">确认打赏</a>
+                        </div>
+                    </div>
+                    <!-- end 无限制可以打赏 -->
+
+                    <!-- start 打赏后显示的动态 -->
+                    <div class="vote-complete hidde">
+                        <div class="complete-img reward-img"></div>
+                        <h3>已打赏<span class="post-num"></span>起点币</h3>
+                        <p><span class="gift"></span> 粉丝值 +<em class="fans-value"></em></p>
+                        <div class="popup-btn">
+                            <a class="red-btn closeBtn" href="javascript:closePanel()" data-eid="">关闭</a>
+                        </div>
+
+                    </div>
+                    <!-- end 打赏后显示的动态 --></div>
+                <!-- end 打赏 -->
+
+                <script type="text/javascript">
+                    function reward() {
+                        $("#rewardPopup > .no-limit-wrap").css("display","none");
+                        var money=$("#rewardPopup").find(".no-limit-wrap").find("h4 > em").html();
+                        var reward=$(".calcReward").html();
+                        $("#rewardList").find("li").removeClass("act");
+                        $("#rewardList").find("#defaultreward").addClass("act");
+                        if(parseInt(money)<parseInt(reward)){
+                            $("#balance").html(parseInt(money));
+                            $("#differ").html(parseInt(reward)-parseInt(money));
+                            $("#noMoney").css("display","block");
+                        }else{
+                            $.ajax({
+                                url:"/jpbook/reward/rewardNew",
+                                data:{
+                                    "bookid":$("#bookid").val(),
+                                    "rewanum":reward
+                                },
+                                success:function (data) {
+                                    $("#rewardPopup > .vote-complete").css("display","block");
+                                    $("#rewardPopup > .vote-complete > h3 > span").html($(".calcReward").html());
+                                    
+                                }
+                            })
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="lbf-panel-foot" style="display: none;">
+        <div class="lbf-panel-foot-l"></div>
+        <div class="lbf-panel-foot-r"><a href="javascript:;"
+                                         class="lbf-button lbf-button-primary lbf-button-default lbf-button-normal">确定</a><a
+                href="javascript:;" class="lbf-button lbf-button-default lbf-button-normal">否定</a><a href="javascript:;"
+                                                                                                     class="lbf-button lbf-button-default lbf-button-normal">取消</a>
+        </div>
+    </div>
+</div>
+<div class="lbf-overlay"
+     style="display:none;background-color: black; opacity: 0.3; z-index: 62779; width: 1350px; height: 3256px;"></div>
 
 <script>
     //全局的通用数据都放g_data变量里

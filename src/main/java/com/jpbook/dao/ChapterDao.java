@@ -58,7 +58,7 @@ public interface ChapterDao {
             "LEFT JOIN \n" +
             "(\n" +
             "select r.rollid,c.chapid,r.bookid from chapter c,roll r where c.chapnum>(\n" +
-            "select chapnum from chapter where chapid=2) \n" +
+            "select chapnum from chapter where chapid=#{param1}) \n" +
             "and c.rollid=r.rollid and chapstate=1\n" +
             "and r.bookid =(select r.bookid from roll r,chapter c where r.rollid=c.rollid and c.chapid=#{param1}) \n" +
             "ORDER BY chapnum  LIMIT 1) ss2 \n" +
@@ -67,7 +67,27 @@ public interface ChapterDao {
             "select chapnum from chapter where chapid=#{param1}) \n" +
             "and c.rollid=r.rollid \n" +
             "and chapstate=1 and r.bookid =\n" +
-            "(select r.bookid from roll r,chapter c where r.rollid=c.rollid and c.chapid=2) ORDER BY  chapnum desc LIMIT 1) ss3\n" +
+            "(select r.bookid from roll r,chapter c where r.rollid=c.rollid and c.chapid=#{param1}) ORDER BY  chapnum desc LIMIT 1) ss3\n" +
             " on ss3.bookid=ss2.bookid")
     List<Map<String,Object>> getInformationByChapid(Integer chapid,Integer uuid);
+    @Select("select ss1.*,(CASE WHEN ss2.chapid is null then -1 else ss2.chapid end)  nextchapid,(CASE WHEN ss3.chapid is null then -1 else ss3.chapid end)  afterchapid ,(-1) brid from \n" +
+            "(select s1.*,(CASE WHEN s2.count>100000 then s2.count||'万' else s2.count end) count from (\n" +
+            "select b.*,u.pen,bt.btname,r.rollid,r.rollmoney,c.chapid,c.chapname,c.chapcount,c.chaptime from books b,users u,booktype bt,roll r,chapter c where r.bookid=b.bookid and r.rollid=c.rollid and b.btid=bt.btid and b.uuid=u.uuid and  c.chapid=#{chapid}) s1,(\n" +
+            "select b.bookid,sum(chapcount) count from chapter c,roll r,books b where c.rollid=r.rollid and r.bookid=b.bookid and b.bookid=(select bookid from roll r,chapter c where r.rollid=c.rollid and c.chapid=#{chapid})) s2\n" +
+            "where s1.bookid=s2.bookid) ss1\n" +
+            "LEFT JOIN \n" +
+            "(\n" +
+            "select r.rollid,c.chapid,r.bookid from chapter c,roll r where c.chapnum>(\n" +
+            "select chapnum from chapter where chapid=#{chapid}) \n" +
+            "and c.rollid=r.rollid and chapstate=1\n" +
+            "and r.bookid =(select r.bookid from roll r,chapter c where r.rollid=c.rollid and c.chapid=#{chapid}) \n" +
+            "ORDER BY chapnum  LIMIT 1) ss2 \n" +
+            "on ss2.bookid=ss1.bookid\n" +
+            "LEFT JOIN (select r.rollid,c.chapid,r.bookid from chapter c,roll r where c.chapnum<(\n" +
+            "select chapnum from chapter where chapid=#{chapid}) \n" +
+            "and c.rollid=r.rollid \n" +
+            "and chapstate=1 and r.bookid =\n" +
+            "(select r.bookid from roll r,chapter c where r.rollid=c.rollid and c.chapid=#{chapid}) ORDER BY  chapnum desc LIMIT 1) ss3\n" +
+            " on ss3.bookid=ss2.bookid")
+    List<Map<String,Object>> getInformationByChapidNoUuid(Integer chapid);
 }

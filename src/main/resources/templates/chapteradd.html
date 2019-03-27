@@ -279,68 +279,7 @@
             <input type="hidden" name="__hash__" value="b9ab203729570dc1978673b5db9aa8bb_731be9e477bdedd81abf81c6a6c16a32"></form>
         <!-- end 隐藏的上传图片按钮 -->
         <!-- 定时发布浮层 -->
-        <div id="publishPopup" class="popupWrap w480" style="display:none;">
-            <a data-node="close" class="icon closePopup" href="javascript:"></a>
-            <h3>章节发布</h3>
-            <div class="popupBody p30">
-                <div class="popupContent">
-                    <ul class="send-time-list">
-                        <li>
-                            <em>发布章节：</em>
-                            <p><span data-node="chapterName"></span> <cite class="tag"><i><b></b></i><span data-node="chapterTypeName"></span></cite></p>
-                        </li>
-                        <li data-node="publishwordsli">
-                            <em>字数统计：</em>
-                            <p data-node="publishwordsp">
 
-                            </p>
-                        </li>
-                        <li>
-                            <em>最新章节：</em>
-                            <p>
-                                无最新章节                    </p>
-                        </li>
-                        <li>
-                            <em>设置发布时间：</em>
-                            <div class="setTimeBox">
-                                <p class="cf">
-                                <span class="radio on">
-                                    <input id="rightaway" data-node="publishTypeRadio" name="publishType" class="radioclass" type="radio" value="2">
-                                </span>
-                                    <label class="fl" for="rightaway">立即发布</label><br>
-                                    <span class="radio">
-                                    <input id="timing" data-node="publishTypeRadio" name="publishType" class="radioclass" type="radio" value="5">
-                                </span>
-                                    <label class="fl" for="timing">定时发布</label>
-                                    <b class="tips c999">（定时发布可能会延迟10-20分钟）</b>
-
-                                    <!-- <i id="publishDateBox" class="dateBox cf">
-                                        <cite class="dateIco"></cite>
-                                        <input id="publishDateInput" class="dateInput" type="text" value="">
-                                    </i> -->
-
-
-                                    <i class="new-dateBox  cf" id="publishDateBox">
-                                        <b class="date-ymd"><input class="lbf-text-input" id="datePickerTrigger-set" type="text"><s class="icon-down"></s><div class="lbf-popup lbf-dropdown lbf-date-picker lbf-reset"><a class="lbf-date-picker-btn-prev date-mode" href="javascript:;"></a><a class="lbf-date-picker-btn-next date-mode" href="javascript:;"></a><div class="lbf-date-picker-viewport"><table class="lbf-date-picker-table"><caption class="lbf-date-picker-caption"><a class="lbf-date-picker-caption-link">2019年03</a></caption><thead><tr><th class="lbf-date-picker-weekday">日</th><th class="lbf-date-picker-weekday">一</th><th class="lbf-date-picker-weekday">二</th><th class="lbf-date-picker-weekday">三</th><th class="lbf-date-picker-weekday">四</th><th class="lbf-date-picker-weekday">五</th><th class="lbf-date-picker-weekday">六</th></tr></thead><tbody><tr class="lbf-date-picker-week"><td class="lbf-date-picker-date lbf-date-picker-date-blank"></td><td class="lbf-date-picker-date lbf-date-picker-date-blank"></td><td class="lbf-date-picker-date lbf-date-picker-date-blank"></td><td class="lbf-date-picker-date lbf-date-picker-date-blank"></td><td class="lbf-date-picker-date lbf-date-picker-date-blank"></td><td data-date="1551439726687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">1</td><td data-date="1551526126687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">2</td></tr><tr><td data-date="1551612526687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">3</td><td data-date="1551698926687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">4</td><td data-date="1551785326687" class="lbf-date-picker-date  lbf-date-picker-date-enabled lbf-date-picker-date-selected">5</td><td data-date="1551871726687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">6</td><td data-date="1551958126687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">7</td><td data-date="1552044526687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">8</td><td data-date="1552130926687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">9</td></tr><tr><td data-date="1552217326687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">10</td><td data-date="1552303726687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">11</td><td data-date="1552390126687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">12</td><td data-date="1552476526687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">13</td><td data-date="1552562926687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">14</td><td data-date="1552649326687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">15</td><td data-date="1552735726687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">16</td></tr><tr><td data-date="1552822126687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">17</td><td data-date="1552908526687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">18</td><td data-date="1552994926687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">19</td><td data-date="1553081326687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">20</td><td data-date="1553167726687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">21</td><td data-date="1553254126687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">22</td><td data-date="1553340526687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">23</td></tr><tr><td data-date="1553426926687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">24</td><td data-date="1553513326687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">25</td><td data-date="1553599726687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">26</td><td data-date="1553686126687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">27</td><td data-date="1553772526687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">28</td><td data-date="1553858926687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">29</td><td data-date="1553945326687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">30</td></tr><tr><td data-date="1554031726687" class="lbf-date-picker-date  lbf-date-picker-date-enabled ">31</td><td class="lbf-date-picker-date lbf-date-picker-date-blank"></td><td class="lbf-date-picker-date lbf-date-picker-date-blank"></td><td class="lbf-date-picker-date lbf-date-picker-date-blank"></td><td class="lbf-date-picker-date lbf-date-picker-date-blank"></td><td class="lbf-date-picker-date lbf-date-picker-date-blank"></td><td class="lbf-date-picker-date lbf-date-picker-date-blank"></td></tr></tbody></table></div><div data-date="1551785326705" class="lbf-date-picker-today-link lbf-date-picker-date-enabled">今天</div></div></b>
-                                        <b class="date-t"><input class="lbf-text-input" id="timePickerTrigger" type="text">
-                                            <s class="icon-down"></s><div class="lbf-popup lbf-dropdown lbf-date-picker lbf-reset"><div class="lbf-date-picker-viewport">    <table class="lbf-date-picker-time-table">                <tbody class="lbf-date-picker-time-tbody tbody-hour-mode">                                      <tr>                  <td><a data-hour="0" class="lbf-date-picker-time ">0:00</a></td>                                                             <td><a data-hour="1" class="lbf-date-picker-time ">1:00</a></td>                                                             <td><a data-hour="2" class="lbf-date-picker-time ">2:00</a></td>                                                             <td><a data-hour="3" class="lbf-date-picker-time ">3:00</a></td>               </tr>                            <tr>                  <td><a data-hour="4" class="lbf-date-picker-time ">4:00</a></td>                                                             <td><a data-hour="5" class="lbf-date-picker-time ">5:00</a></td>                                                             <td><a data-hour="6" class="lbf-date-picker-time ">6:00</a></td>                                                             <td><a data-hour="7" class="lbf-date-picker-time ">7:00</a></td>               </tr>                            <tr>                  <td><a data-hour="8" class="lbf-date-picker-time ">8:00</a></td>                                                             <td><a data-hour="9" class="lbf-date-picker-time ">9:00</a></td>                                                             <td><a data-hour="10" class="lbf-date-picker-time ">10:00</a></td>                                                             <td><a data-hour="11" class="lbf-date-picker-time ">11:00</a></td>               </tr>                            <tr>                  <td><a data-hour="12" class="lbf-date-picker-time ">12:00</a></td>                                                             <td><a data-hour="13" class="lbf-date-picker-time ">13:00</a></td>                                                             <td><a data-hour="14" class="lbf-date-picker-time ">14:00</a></td>                                                             <td><a data-hour="15" class="lbf-date-picker-time ">15:00</a></td>               </tr>                            <tr>                  <td><a data-hour="16" class="lbf-date-picker-time ">16:00</a></td>                                                             <td><a data-hour="17" class="lbf-date-picker-time ">17:00</a></td>                                                             <td><a data-hour="18" class="lbf-date-picker-time ">18:00</a></td>                                                             <td><a data-hour="19" class="lbf-date-picker-time lbf-date-picker-time-selected">19:00</a></td>               </tr>                            <tr>                  <td><a data-hour="20" class="lbf-date-picker-time ">20:00</a></td>                                                             <td><a data-hour="21" class="lbf-date-picker-time ">21:00</a></td>                                                             <td><a data-hour="22" class="lbf-date-picker-time ">22:00</a></td>                                                             <td><a data-hour="23" class="lbf-date-picker-time ">23:00</a></td>               </tr>                              </tbody>    </table></div></div></b>
-                                    </i>
-                                    <i class="tips-error  cf" id="timing-tips-error" style="display:none;">
-                                        你设定的发布时间已过时，请重新设置。
-                                    </i>
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="popup-important-note">
-                        <p>请注意：根据国家相关法律法规要求，切勿上传任何色情、低俗、涉政等违法违规内容。一旦出现，我们将会根据法规进行审核处理。</p>
-                    </div>
-                </div>
-                <div class="confirmBtn">
-                    <a id="publishBtn" class="button green full" href="javascript:">发布</a>
-                </div>
-            </div>
-        </div>
         <!-- start 创建角色 弹窗 -->
         <div class="popup-wrap" id="createRolePopup" style="display: none;">
             <a class="close icon" href="javascript:" data-node-do-role="close"></a>
@@ -726,6 +665,7 @@
                         swal("保存失败!", "章节名称已存在，请修改章节名", "warning");
                     }else{
                         swal("保存成功", "已保存至草稿箱", "success");
+                        window.location.href="drafts";
                     }
                 }
             };

@@ -79,7 +79,10 @@ public class BooksService {
     public List<Map<String,Object>> queryByBookname(String bookname){return bd.queryByBookname(bookname);}
     public List<Map<String,Object>> geturl(Integer bookid){return bd.geturl(bookid);}
     public Integer up(Books books){return bd.up(books);}
-    public List<Map<String,Object>> queryBookByState(Integer startIndex,Integer endIndex,Integer btid,Integer bookstate,Integer rollmoney,Integer updatetime,Integer startSum,Integer endSum){
-        return bd.queryBookByState(startIndex,endIndex,btid,bookstate,rollmoney,updatetime,startSum,endSum);
+    public List<Map<String,Object>> queryBookByState(Integer startIndex,Integer endIndex,Integer btid,Integer bookstate,Integer rollmoney,Integer updatetime,Integer startSum,Integer endSum,String order){
+        return bd.queryBookByState(startIndex,endIndex,btid,bookstate,rollmoney,updatetime,startSum,endSum,order);
     }
+    public List<Map<String,Object>> getMonthAndRecAndReward(Integer bookid){return bd.getMonthAndRecAndReward(bookid);}
+    public List<Map<String,Object>> queryMonthAndRec(Integer bookid){return bd.queryMonthAndRec(bookid);}
+    public List<Map<String,Object>> queryReward(Integer bookid){return bd.queryReward(bookid);}
 }

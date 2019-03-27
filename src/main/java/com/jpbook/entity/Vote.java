@@ -8,6 +8,7 @@ public class Vote {
 	private Integer wtid;
 	private Date votetime;
 	private Integer bookid;
+	private Integer votenum;
 	public Integer getVoteid() {
 		return voteid;
 	}
@@ -38,6 +39,9 @@ public class Vote {
 	public void setBookid(Integer bookid) {
 		this.bookid = bookid;
 	}
+	public Integer getVotenum() { return votenum; }
+	public void setVotenum(Integer votenum) { this.votenum = votenum; }
+
 	@Override
 	public String toString() {
 		return "Vote [voteid=" + voteid + ", uuid=" + uuid + ", wtid=" + wtid

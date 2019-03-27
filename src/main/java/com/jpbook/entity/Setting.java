@@ -47,6 +47,15 @@ public class Setting {
         this.uuid = uuid;
     }
 
+    public Setting(String setcolor, String setfont, Integer setfontsize) {
+        this.setcolor = setcolor;
+        this.setfont = setfont;
+        this.setfontsize = setfontsize;
+    }
+
+    public Setting() {
+    }
+
     @Override
     public String toString() {
         return "Setting{" +

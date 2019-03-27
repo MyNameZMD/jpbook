@@ -11,16 +11,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 import com.jpbook.entity.Books;
 
 import com.jpbook.service.ChapterService;
 import com.jpbook.service.RollService;
 import com.jpbook.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Map;
 
 @Controller
 @RequestMapping("books")
@@ -52,6 +51,7 @@ public class BooksController {
         m.addAttribute("queryZanById",bs.queryZanById(uuid));
         return "book";
     }
+
     @RequestMapping("userExist")
     @ResponseBody
     public Integer userExist(HttpSession session){
@@ -144,10 +144,10 @@ public class BooksController {
     }
     @RequestMapping("up")
     @ResponseBody
-    public Integer up(Books books,HttpSession session){
+    public Integer up(Books books,String oldBookname,HttpSession session){
         System.out.println("books"+books);
         int i = bs.queryByBookname(books.getBookname()).size();
-        if (i>0){
+        if (i>0 && !books.getBookname().equals(oldBookname)){
             return 0;
         }
         books.setUrl(books.getBookname());
@@ -164,9 +164,43 @@ public class BooksController {
     }
     @RequestMapping("queryBookByState")
     @ResponseBody
-    public List<Map<String,Object>> queryBookByState(Integer Index,Integer btid,Integer bookstate,Integer rollmoney,Integer updatetime,Integer startSum,Integer endSum){
+    public List<Map<String,Object>> queryBookByState(Integer Index,Integer btid,Integer bookstate,Integer rollmoney,Integer updatetime,Integer startSum,Integer endSum,String order){
         Integer startIndex=(Index-1)*8;
-        System.out.println(startIndex+" "+btid+" "+bookstate+" "+rollmoney+" "+updatetime+" "+startSum+" "+endSum);
-        return bs.queryBookByState(startIndex,8,btid,bookstate,rollmoney,updatetime,startSum,endSum);
+        System.out.println(startIndex+" "+btid+" "+bookstate+" "+rollmoney+" "+updatetime+" "+startSum+" "+endSum+" "+order);
+        return bs.queryBookByState(startIndex,8,btid,bookstate,rollmoney,updatetime,startSum,endSum,order);
+    }
+    @RequestMapping("getMonthAndRecAndReward")
+    @ResponseBody
+    public Map<String,Object> getMonthAndRecAndReward(Integer bookid){
+        return bs.getMonthAndRecAndReward(bookid).get(0);
+    }
+    @RequestMapping("queryMonthAndRecAndReward")
+    @ResponseBody
+    public List<Map<String,Object>> queryMonthAndRecAndReward(Integer bookid){
+        List<Map<String, Object>> maps = bs.queryMonthAndRec(bookid);
+        List<Map<String, Object>> maps1 = bs.queryReward(bookid);
+        maps.addAll(maps1);
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Collections.sort(maps, new Comparator<Map<String, Object>>() {
+            @Override
+            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+                Date time=null;
+                Date time1 =null;
+                try{
+                    time= sdf.parse(o1.get("time").toString());
+                    time1=sdf.parse(o2.get("time").toString());
+                }catch (Exception e){
+
+                }
+                if (time.compareTo(time1)>0){
+                    return 1;
+                }
+                if (time.compareTo(time1)==0){
+                    return 0;
+                }
+                return -1;
+            }
+        });
+        return maps;
     }
 }

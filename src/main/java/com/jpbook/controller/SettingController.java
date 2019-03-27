@@ -20,6 +20,7 @@ public class SettingController {
     @ResponseBody
     public void upSetting(Setting set, HttpSession session){
         List<Users> users1 = (List<Users>)session.getAttribute("users");
+        if (users1==null){return;}
         Setting setting = ss.getSetting(users1.get(0).getUuid());
         if(setting==null){
             ss.addSetting(users1.get(0).getUuid());
@@ -31,6 +32,9 @@ public class SettingController {
     @ResponseBody
     public Setting getSetting(HttpSession session){
         List<Users> users1 = (List<Users>)session.getAttribute("users");
+        if (users1==null){
+            return new Setting("white","YaHei",18);
+        }
         Setting setting = ss.getSetting(users1.get(0).getUuid());
         if(setting==null){
             ss.addSetting(users1.get(0).getUuid());

@@ -84,4 +84,18 @@ public class UsersController {
         session.setAttribute("users",users1);
         return withdraw;
     }
+    @RequestMapping("getNewMoney")
+    @ResponseBody
+    public Integer getNewMoney(HttpSession session){
+        List<Users> users1 = (List<Users>)session.getAttribute("users");
+        return us.getNewMoney(users1.get(0).getUuid());
+    }
+    @RequestMapping("ckSession")
+    @ResponseBody
+    public Integer ckSession(HttpSession session,String name){
+        Object attribute = session.getAttribute(name);
+        System.out.println(name);
+        System.out.println(attribute);
+        return attribute==null?0:1;
+    }
 }
