@@ -14,6 +14,9 @@
     <script type="text/javascript" src="./css/aq_common.js.下载"></script>
     <meta name="__hash__" content="392c8dc771a8bb85cb23b4cfda7279f9_f0817b9cdc1612470db34b9d8f8d0d69">
     <script src="./js/jquery.form.js"></script>
+    <script src="./js/sweet-alert.js"></script>
+    <link rel="stylesheet" href="./css/sweet-alert.css">
+
 </head>
 <body>
 <div class="wrap">
@@ -46,8 +49,7 @@
 
                                     <span><em style="width:70%">0/0</em></span></p>
                             </dd>
-                            <dd class="link"><a href="https://write.qq.com/authors/person.html"><i>完整度75%</i>作家资料</a></dd>
-                            <dd class="link"><a id="openModifyPwdPopupBtn" href="javascript:">更改密码</a></dd>
+                            <dd class="link"><a href="writerdata.html">作家资料</a></dd>
                             <dd class="link end"><a href="https://write.qq.com/public/logout.html">退出登录</a></dd>
                         </dl>
                     </li>
@@ -108,15 +110,6 @@
                         <a href="income"><span class="income"></span>稿酬收入</a>
                     </li>
                     <li>
-                        <a href="https://write.qq.com/labor.html"><span class="labour"></span>劳务收入</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/authors/authorconsultlist.html"><span class="counsel"></span>作家咨询</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/integral_exchange/exchange.html"><span class="exchange"></span>积分兑换</a>
-                    </li>
-                    <li>
                         <a href="https://write.qq.com/interactivechapter/index.html"><span class="active"></span>互动管理</a>
                     </li>                                    </ul>
             </div>
@@ -144,21 +137,6 @@
                         <a class="expand" href="income">稿酬收入</a>
                     </li>
                     <li>
-                        <a class="min-link" href="https://write.qq.com/labor.html"><span class="icon labour"></span></a>
-                        <a class="expand" href="https://write.qq.com/labor.html">劳务收入</a>
-                    </li>
-
-
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/authors/authorconsultlist.html"><span class="icon counsel"></span></a>
-                        <a class="expand" href="https://write.qq.com/authors/authorconsultlist.html">作家咨询</a>
-                    </li>
-
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/integral_exchange/exchange.html"><span class="icon exchange"></span></a>
-                        <a class="expand" href="https://write.qq.com/integral_exchange/exchange.html">积分兑换</a>
-                    </li>
-                    <li>
                         <a class="min-link" href="https://write.qq.com/interactivechapter/index.html"><span class="icon active"></span></a>
                         <a class="expand" href="https://write.qq.com/interactivechapter/index.html">互动管理</a>
                     </li>
@@ -180,7 +158,7 @@
                 <div id="one">
                 <ul>
                     <li><em>目标读者</em>
-                        <span class="radio" id="nansheng">
+                        <span class="radio on" id="nansheng">
                     <input name="sex" class="radioclass" id="boy" type="radio" value="1" checked>
                 </span>
                         <label for="boy">男生</label>
@@ -427,15 +405,14 @@
             type:'post',
             async :true,
             success:function(data){
-                alert(data);
                 if(data==0){
-                    alert("小说名已存在");
+                    swal("小说名已存在!", "请更换小说名称", "warning");
                 }else{
                     $("#two").css("display","none");
                     $("#three").css("display","block");
                     $("#top").find("span").prop("class","act");
                     $("#top").find("em").prop("class","act");
-                    alert("创建成功");
+                    swal("创建成功", "您可以开始写作了", "success");
                 }
             }
         };

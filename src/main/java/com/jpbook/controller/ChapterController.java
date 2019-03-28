@@ -1,10 +1,7 @@
 package com.jpbook.controller;
 
-
-import com.jpbook.entity.Chapter;
-import com.jpbook.service.BuyrecordService;
-import com.jpbook.service.ChapterService;
-import com.jpbook.service.RollService;
+import com.jpbook.entity.*;
+import com.jpbook.service.*;
 import com.jpbook.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +23,10 @@ public class ChapterController {
     RollService rs;
     @Autowired
     BuyrecordService bs;
+    @Autowired
+    BrowseService brs;
+    @Autowired
+    ClickService cls;
     @RequestMapping("save")
     @ResponseBody
     public int save(Chapter chapter,String content){
@@ -155,7 +156,18 @@ public class ChapterController {
     }
     @RequestMapping("getChapContent")
     @ResponseBody
-    public List<Object> getChapContent(Integer chapid){
+    public List<Object> getChapContent(Integer chapid,HttpSession session){
+        List<Users> users1 = (List<Users>)session.getAttribute("users");
+        if (users1!=null){
+            brs.addBrowse(new Browse(users1.get(0).getUuid(),chapid));
+            Map<String, Object> clickByUuidAndChapid = cls.getClickByUuidAndChapid(users1.get(0).getUuid(), chapid);
+
+            if (clickByUuidAndChapid==null){
+                cls.addNewClick(users1.get(0).getUuid(), chapid);
+            }else{
+                cls.upNewClick(users1.get(0).getUuid(), chapid);
+            }
+        }
         List<Map<String, Object>> byBookid = cs.getChapter(chapid);
         System.out.println(chapid+"---"+byBookid);
         String str = FileUtil.read(byBookid.get(0).get("url") + "");
@@ -167,8 +179,17 @@ public class ChapterController {
         return obs;
     }
     @RequestMapping("getInformationByChapid")
-    public String  getInformationByChapid(Integer chapid, Model model){
-        List<Map<String, Object>> informationByChapid = cs.getInformationByChapid(2, 10000);
+    public String  getInformationByChapid(Integer chapid, Model model,HttpSession session){
+        List<Users> users1 = (List<Users>)session.getAttribute("users");
+        System.out.println("chapid:"+chapid);
+        List<Map<String, Object>> informationByChapid=null;
+        if (users1==null){
+            informationByChapid=cs.getInformationByChapidNoUuid(chapid);
+        }else {
+            informationByChapid = cs.getInformationByChapid(chapid, users1.get(0).getUuid());
+
+        }
+        System.out.println("informationByChapid"+informationByChapid);
         model.addAttribute("ibc",informationByChapid);
         return "lookBook";
     }

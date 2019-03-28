@@ -29,7 +29,7 @@ function _getNovelList(page){if(_isRequesting){return;}
 _isRequesting=1;_nodes.$novelList.empty();_nodes.$pager.hide();_util.request({url:_ajaxUrls.getNovelList,type:'post',dataType:'json',data:{'p':page,'artidx':_params.artidx},success:function(json){if(!json){return;}
 if(json.status){if(!json.data.list||json.data.list.length===0){if(_params.artidx<=1)
 {$('#bookManageNone').removeClass('hidden');}
-$('#bookManageExist').addClass('hidden');return;}else{var tpl=_uiBinder.bindData(_novelListTpl,{'list':json.data.list,'imgUrl':_params.imgUrl,'artidx':_params.artidx});_nodes.$novelList.html(tpl);_nodes.$pager.show();if(!_pager){_pager=_nodes.$pager.pagination(json.data.pageCount,{'callback':_getNovelList});$('#bookCount').text(json.data.bookCount);}}}else{_dialog.alert(json.info||'操作失败，请稍后再试');}},error:function(){_dialog.alert('操作失败，请稍后再试');},complete:function(){_isRequesting=0;}});}
+$('#bookManageExist').addClass('hidden');return;}else{var tpl=_uiBinder.bindData(_novelListTpl,{'list':json.data.list,'imgUrl':_params.imgUrl,'artidx':_params.artidx});_nodes.$novelList.html(tpl);_nodes.$pager.show();if(!_pager){_pager=_nodes.$pager.pagination(json.data.pageCount,{'callback':_getNovelList});$('#bookCount').text(json.data.bookCount);}}}else{_dialog.alert(json.info||'操作失败，请稍后再试');}},complete:function(){_isRequesting=0;}});}
 function _filterManhuaNovel()
 {$('#novelList').on('click','[url-chapter]',function(){var catid=$(this).attr('data-catid');var urlchapter=$(this).attr('url-chapter');if(catid==40001)
 {_dialog.alert('功能开发中，敬请期待。');return;}

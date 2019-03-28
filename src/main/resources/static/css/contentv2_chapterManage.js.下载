@@ -114,7 +114,7 @@ var list=[{'userInput':$chapterTitleInput.val(),'defaultInput':$chapterTitleInpu
 function _deleteChapter(CCID){if(!CCID){return;}
 if(_isSubmitting){return;}
 _isSubmitting=1;_util.request({url:_ajaxUrls.deleteChapter,type:'post',dataType:'json',data:{'CBID':_params.bookId,'CCID':CCID},success:function(json){if(!json){_topTip.show('返回数据格式异常，请稍后再试');return;}
-if(json.status){_topTip.show(json.info||'删除成功',function(){_cancelTipByExitEdit();_refreshCurrentPage();});}else{_topTip.show(json.info||'操作失败，请稍后再试');}},error:function(){_topTip.show('操作失败，请稍后再试');},complete:function(){_isSubmitting=0;}});}
+if(json.status){_topTip.show(json.info||'删除成功',function(){_cancelTipByExitEdit();_refreshCurrentPage();});}else{_topTip.show(json.info||'操作失败，请稍后再试');}},complete:function(){_isSubmitting=0;}});}
 function _setTipByRefreshPage(){window.onbeforeunload=function(){if(!_isTipByExitEdit||!_checkChapterIsModified()){return;}
 var tips=_tipByExitEdit;if(document.all){if(event.clientX>document.body.clientWidth||event.clientY<0||event.altKey||event.ctrlKey){return tips;}else{return tips;}}else{return tips;}};}
 function _confirmExitEdit(exitFn){if(typeof exitFn!=='function'){exitFn=function(){};}

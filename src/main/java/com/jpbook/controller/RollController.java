@@ -24,7 +24,7 @@ public class RollController {
     BooksService bs;
     @RequestMapping("addRoll")
     @ResponseBody
-    public int addRoll(Roll roll, HttpSession session){
+    public int addRoll(Roll roll,HttpSession session){
         List<Map<String, Object>> byRollname = rs.getByRollname(roll.getRollname());
         if (byRollname.size()>0){
             return 0;

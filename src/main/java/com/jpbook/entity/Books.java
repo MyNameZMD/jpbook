@@ -13,7 +13,6 @@ public class Books {
 	private Date endtime;
 	private String url;
 	private Integer sex;
-
 	public Date getEndtime() {
 		return endtime;
 	}
@@ -78,6 +77,14 @@ public class Books {
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getBookreferral() {
+		return bookreferral;
+	}
+
+	public void setBookreferral(String bookreferral) {
+		this.bookreferral = bookreferral;
 	}
 
 	public Books(Integer bookid, String bookname, String icon, Integer uuid, Integer btid, Integer bookstate, Date createtime, Date endtime, String url, Integer sex) {

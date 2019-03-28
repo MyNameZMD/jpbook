@@ -13,7 +13,10 @@ public class PathConfig extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
         registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
         registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
+        registry.addResourceHandler("/font/**").addResourceLocations("classpath:/static/font/");
         registry.addResourceHandler("/layui/**").addResourceLocations("classpath:/static/layui/");
+        registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
         registry.addResourceHandler("/img/**").addResourceLocations("file:///F:/PICS/");
+        registry.addResourceHandler("/imgicon/**").addResourceLocations("file:///F:/icon/");
     }
 }

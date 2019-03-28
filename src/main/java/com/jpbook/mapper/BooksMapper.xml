@@ -53,7 +53,7 @@
         group by b.bookid order by chapcount desc
     </select>
     <select id="queryBookById" parameterType="Integer" resultType="map">
-        select b.bookid,b.bookname,ifnull(b.icon,'/img/0.jpg') icon,u.uname,b.bookreferral,case bookstate when 0 then '连载' when 1 then '完本' end bookstate,bt.btid,bt.btname,ifnull(case CHAR_LENGTH(SUBSTRING(sum(c.chapcount),2))
+        select b.bookid,b.bookname,ifnull(b.icon,'/img/0.jpg') icon,u.pen,u.uname,b.bookreferral,case bookstate when 0 then '连载' when 1 then '完本' end bookstate,bt.btid,bt.btname,ifnull(case CHAR_LENGTH(SUBSTRING(sum(c.chapcount),2))
         when 0 then 0
         when 3 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'千')
         when 2 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'百')
@@ -128,5 +128,33 @@
             limit #{param2},#{param3}
         </if>
 
+    </select>
+    <select id="queryBookByState" resultType="Map">
+        select * from (
+        select bs.bookid,bs.icon,bs.bookname,bs.uuid,u.pen,r.rollmoney,max(c.updatetime) updatetime,bt.btid,bs.bookstate,(case when bs.bookstate=0 then '连载中' else '完结' end) bookstatename,IFNULL(bs.bookreferral,'暂无简介') bookreferral,bt.btname,IFNULL(sum(c.chapcount),0) sum from
+        books bs LEFT JOIN users u on bs.uuid=u.uuid left join booktype bt on bs.btid=bt.btid LEFT JOIN roll r on bs.bookid=r.bookid LEFT JOIN chapter c on r.rollid =c.rollid
+        GROUP BY bs.bookid) s
+        <where>
+            <if test="param3!=null">
+                and s.btid=#{param3}
+            </if>
+            <if test="param4!=null">
+                and s.bookstate=#{param4}
+            </if>
+            <if test="param5!=null">
+                and s.rollmoney=#{param5}
+            </if>
+            <if test="param6!=null">
+                and s.updatetime > date_sub(SYSDATE(),interval #{param6} day)
+            </if>
+            <if test="param7!=null">
+                and s.sum&gt;#{param7}
+            </if>
+            <if test="param8!=null">
+                and s.sum&lt;#{param8}
+            </if>
+        </where>
+        ORDER BY ${param9}
+        LIMIT #{param1},#{param2}
     </select>
 </mapper>

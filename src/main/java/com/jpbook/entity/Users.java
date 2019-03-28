@@ -23,6 +23,7 @@ public class Users {
 	private String pen;
 	private String qqid;
 	private String email;
+	private Double withdrawmoney;
 	public Integer getUuid() {
 		return uuid;
 	}
@@ -143,6 +144,9 @@ public class Users {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public Double getWithdrawmoney() { return withdrawmoney; }
+	public void setWithdrawmoney(Double withdrawmoney) { this.withdrawmoney = withdrawmoney; }
+
 	@Override
 	public String toString() {
 		return "Users [uuid=" + uuid + ", uname=" + uname + ", pwd=" + pwd

@@ -16,6 +16,8 @@
     <link rel="stylesheet" type="text/css" id="u0" href="./css/skin.min.css">
     <script src="./js/jquery.form.js"></script>
     <script src="./js/jquery-3.3.1.js.js"></script>
+    <script src="./js/sweet-alert.js"></script>
+    <link rel="stylesheet" href="./css/sweet-alert.css">
 </head>
 <body style="">
 <div class="wrap">
@@ -48,8 +50,7 @@
 
                                     <span><em style="width:70%">0/0</em></span></p>
                             </dd>
-                            <dd class="link"><a href="https://write.qq.com/authors/person.html"><i>完整度75%</i>作家资料</a></dd>
-                            <dd class="link"><a id="openModifyPwdPopupBtn" href="javascript:">更改密码</a></dd>
+                            <dd class="link"><a href="writerdata.html">作家资料</a></dd>
                             <dd class="link end"><a href="https://write.qq.com/public/logout.html">退出登录</a></dd>
                         </dl>
                     </li>
@@ -110,15 +111,6 @@
                         <a href="income"><span class="income"></span>稿酬收入</a>
                     </li>
                     <li>
-                        <a href="https://write.qq.com/labor.html"><span class="labour"></span>劳务收入</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/authors/authorconsultlist.html"><span class="counsel"></span>作家咨询</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/integral_exchange/exchange.html"><span class="exchange"></span>积分兑换</a>
-                    </li>
-                    <li>
                         <a href="https://write.qq.com/interactivechapter/index.html"><span class="active"></span>互动管理</a>
                     </li>                                    </ul>
             </div>
@@ -144,21 +136,6 @@
                     <li>
                         <a class="min-link" href="income"><span class="icon income"></span></a>
                         <a class="expand" href="income">稿酬收入</a>
-                    </li>
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/labor.html"><span class="icon labour"></span></a>
-                        <a class="expand" href="https://write.qq.com/labor.html">劳务收入</a>
-                    </li>
-
-
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/authors/authorconsultlist.html"><span class="icon counsel"></span></a>
-                        <a class="expand" href="https://write.qq.com/authors/authorconsultlist.html">作家咨询</a>
-                    </li>
-
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/integral_exchange/exchange.html"><span class="icon exchange"></span></a>
-                        <a class="expand" href="https://write.qq.com/integral_exchange/exchange.html">积分兑换</a>
                     </li>
                     <li>
                         <a class="min-link" href="https://write.qq.com/interactivechapter/index.html"><span class="icon active"></span></a>
@@ -210,7 +187,6 @@
                     $.ajax({
                         url: "roll/queryAllAndChapter",
                         success: function (data) {
-                            alert(JSON.stringify(data));
                             var str="";
                             var sum=0;
                             for(var i=0;i<data.length;i++){
@@ -325,7 +301,7 @@
                 </div>
                 <script>
                     function wordcount() {
-                        alert("字数统计:"+$("#chapterContentInput").val().length);
+                        swal("", "字数统计:"+$("#chapterContentInput").val().length);
                     }
                     $(function () {
                         read();
@@ -340,13 +316,11 @@
                         read();
                     }
                     function read() {
-                        alert($("#chapid").val());
                         if($("#chapid").val()==""){return;}
                         $.ajax({
                             url:"chapter/read",
                             data:{"chapid":$("#chapid").val()},
                             success:function (data) {
-                                alert(JSON.stringify(data));
                                 $("#chapterContent").val(data);
                             }
                         })
@@ -359,11 +333,12 @@
                                 type:'post',
                                 async :true,
                                 success:function(data){
-                                    alert("保存成功");
+                                    swal("保存成功", "已保存至草稿箱", "success");
                                     $("#chapterTitle").val($("#chapterTitleInput").html());
                                     $("#chapterContent").val($("#chapterContentInput").val());
                                     $("#viewChapterBox").css("display","block");
                                     $("#editChapterBox").css("display","none");
+                                    window.location.href="chapterSent";
                                 }
                             };
                             form.ajaxSubmit(options);
@@ -371,12 +346,12 @@
                     }
                     function verify() {
                         if($("#chapterTitleInput").val()=="此处输入章节号与章节名。示例：“第十章 天降奇缘”"){
-                            alert("请输入章节名称");
+                            swal("操作失败!", "章节名不能为空", "warning");
                             $("#chapterTitleInput").focus;
                             return false;
                         }
                         if($("#chapterContentInput").val()=="请输入正文。"){
-                            alert("请输入内容");
+                            swal("操作失败!", "内容不能为空", "warning");
                             $("#chapterContentInput").focus;
                             return false;
                         }
@@ -387,11 +362,10 @@
                             url:"chapter/sentupdel",
                             data:{"chapid":$("#chapid").val()},
                             success:function (data) {
-                                alert(data);
                                 if (data==0){
-                                    alert("此章节已被购买，无法删除");
+                                    swal("删除失败!", "此章节已被购买，无法删除", "warning");
                                 }else {
-                                    alert("删除成功，请到回收站查看");
+                                    swal("删除成功", "请到回收站查看", "success");
                                     $("#chapterContent").val("");
                                     $("#chapid").val("");
                                     window.location.reload();
