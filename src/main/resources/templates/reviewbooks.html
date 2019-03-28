@@ -381,25 +381,27 @@
 
             </ul>
             </th:block>
-            <div class="page-container">
-                <div class="lbf-pagination" >
-                    <ul class="lbf-pagination-item-list">
-                        <li class="lbf-pagination-item"><!--可用lbf-pagination-prev-->
-                            <a th:href="${page} ne 1 ? './queryById?bookid='+${books[0].bookid}+'&page='+${page-1}+'&revid='+${queryByRevid[0].revid} : 'javascript:;'" th:class="${page} ne 1 ? 'lbf-pagination-prev' : 'lbf-pageination-next lbf-pagination-disabled'">上一页</a>
-                        </li>
-                        <li class="lbf-pagination-item">
-                            <a th:href="${page eq pagecount} ? 'javascript:;' : './queryById?bookid='+${books[0].bookid}+'&page='+${page+1}+'&revid='+${queryByRevid[0].revid}" th:class="${page eq pagecount} ? 'lbf-pagination-prev  lbf-pagination-disabled' : 'lbf-pageination-next'">下一页</a>
-                        </li>
-                        <li class="lbf-pagination-item">
-                            <a href="javascript:;" id = "pagecount" class="lbf-pageination-next lbf-pagination-disabled" th:text="|第${page}页/共${pagecount}页|"></a>
-                        </li>
-                    </ul>
-                    <div class="lbf-pagination-jump">
-                        <input type="text" style="border: 1px solid gray;width:25px;text-align: center;" class="lbf-pagination-input" value="1" th:max="${pagecount}">
-                        <a href="javascript:;" class="lbf-pagination-go">GO</a>
+            <th:block th:if="${pagecount} ne 0">
+                <div class="page-container">
+                    <div class="lbf-pagination" >
+                        <ul class="lbf-pagination-item-list">
+                            <li class="lbf-pagination-item"><!--可用lbf-pagination-prev-->
+                                <a th:href="${page} ne 1 ? './queryById?bookid='+${books[0].bookid}+'&page='+${page-1}+'&revid='+${queryByRevid[0].revid} : 'javascript:;'" th:class="${page} ne 1 ? 'lbf-pagination-prev' : 'lbf-pageination-next lbf-pagination-disabled'">上一页</a>
+                            </li>
+                            <li class="lbf-pagination-item">
+                                <a th:href="${page eq pagecount} ? 'javascript:;' : './queryById?bookid='+${books[0].bookid}+'&page='+${page+1}+'&revid='+${queryByRevid[0].revid}" th:class="${page eq pagecount} ? 'lbf-pagination-prev  lbf-pagination-disabled' : 'lbf-pageination-next'">下一页</a>
+                            </li>
+                            <li class="lbf-pagination-item">
+                                <a href="javascript:;" id = "pagecount" class="lbf-pageination-next lbf-pagination-disabled" th:text="|第${page}页/共${pagecount}页|"></a>
+                            </li>
+                        </ul>
+                        <div class="lbf-pagination-jump">
+                            <input type="text" style="border: 1px solid gray;width:25px;text-align: center;" class="lbf-pagination-input" value="1" th:max="${pagecount}">
+                            <a href="javascript:;" class="lbf-pagination-go">GO</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </th:block>
 
             <th:block th:if="${session}">
                 <th:block th:if="${session.users}">
