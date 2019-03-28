@@ -30,4 +30,11 @@ public interface UsersDao {
     Integer getNewMoney(Integer uuid);
     @Update("update users set money=money-#{param2} where uuid=#{param1}\n")
     Integer rewardNew(Integer uuid,Integer money);
+
+    /**
+     * 模糊查询作者
+     * @param uname
+     * @return
+     */
+    public List<Map<String,Object>> likeQueryUsers(String uname);
 }

@@ -74,7 +74,7 @@ public interface BooksDao {
      * @param bookid
      * @return
      */
-    public List<Map<String,Object>> queryReviewbook(Integer bookid);
+    public List<Map<String,Object>> queryReviewbook(Integer bookid,Integer uuid);
 
     /**
      * 根据书籍查询出该书籍的章节
@@ -104,7 +104,7 @@ public interface BooksDao {
      */
     public List<Map<String,Object>> queryZanById(Integer uuid);
 
-    public List<Zan> zanExist(Integer revid, Integer uuid);
+    public List<Zan> zanExist(Integer revid, Integer uuid,Integer ztype);
 
     /**
      * 修改该用户的该评论的状态为1
@@ -120,7 +120,23 @@ public interface BooksDao {
      * @param uuid
      * @return
      */
-    public Integer addZan(Integer revid,Integer uuid);
+    public Integer addZan(Integer revid,Integer uuid,Integer ztype);
+
+    /**
+     * 模糊搜索书籍
+     * @param bookname
+     * @return
+     */
+    public List<Map<String,Object>> likeQueryBooks(String bookname,Integer limit);
+
+    /**
+     * 根据首页搜索框中的内容进行查询
+     * @param kw 作者名或者是书名
+     * @param page 页数
+     * @param limit 页面大小
+     * @return
+     */
+    public List<Map<String,Object>> likeBooks(String kw,Integer page,Integer limit,String sort);
 
     @Select("select * from books bk left join roll r on bk.bookid=r.bookid left join chapter c on r.rollid=c.rollid LEFT JOIN booktype bt on bk.btid=bt.btid where bk.uuid=#{uuid} GROUP BY bk.bookname")
     List<Map<String,Object>> queryByUuid(Users u);

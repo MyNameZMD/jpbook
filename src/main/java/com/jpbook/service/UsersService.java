@@ -19,4 +19,13 @@ public class UsersService {
     public Integer withdraw(Double money,Integer uuid){return ud.withdraw(money,uuid);}
     public Integer getNewMoney(Integer uuid){return ud.getNewMoney(uuid);}
     public Integer rewardNew(Integer uuid,Integer money){return ud.rewardNew(uuid,money);}
+
+    /**
+     * 模糊查询作者
+     * @param uname
+     * @return
+     */
+    public List<Map<String,Object>> likeQueryUsers(String uname){
+        return ud.likeQueryUsers(uname);
+    }
 }

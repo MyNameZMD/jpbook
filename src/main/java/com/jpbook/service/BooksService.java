@@ -49,8 +49,8 @@ public class BooksService {
     public List<Map<String,Object>> queryUsers(Integer bookid){
         return bd.queryUsers(bookid);
     }
-    public List<Map<String,Object>> queryReviewbook(Integer bookid){
-        return bd.queryReviewbook(bookid);
+    public List<Map<String,Object>> queryReviewbook(Integer bookid,Integer uuid){
+        return bd.queryReviewbook(bookid,uuid);
     }
     public List<Map<String,Object>> queryRolls(Integer bookid){
         return bd.queryRolls(bookid);
@@ -67,11 +67,11 @@ public class BooksService {
         return bd.queryZanById(uuid);
     }
 
-    public List<Zan> zanExist(Integer revid, Integer uuid){ return bd.zanExist(revid,uuid);}
+    public List<Zan> zanExist(Integer revid, Integer uuid,Integer ztype){ return bd.zanExist(revid,uuid,ztype);}
 
     public Integer editZan(Integer revid,Integer zstate,Integer uuid){return bd.editZan(revid,zstate,uuid);}
 
-    public Integer addZan(Integer revid,Integer uuid){ return bd.addZan(revid,uuid);}
+    public Integer addZan(Integer revid,Integer uuid,Integer ztype){ return bd.addZan(revid,uuid,ztype);}
     public List<Map<String,Object>> queryByUuid(Users u){
         return bd.queryByUuid(u);
     }
@@ -79,6 +79,14 @@ public class BooksService {
     public List<Map<String,Object>> queryByBookname(String bookname){return bd.queryByBookname(bookname);}
     public List<Map<String,Object>> geturl(Integer bookid){return bd.geturl(bookid);}
     public Integer up(Books books){return bd.up(books);}
+
+    public List<Map<String,Object>> likeQueryBooks(String bookname,Integer limit){
+        return bd.likeQueryBooks(bookname,limit);
+    }
+
+    public List<Map<String,Object>> likeBooks(String kw,Integer page,Integer limit,String sort){
+        return bd.likeBooks(kw,page,limit,sort);
+    }
     public List<Map<String,Object>> queryBookByState(Integer startIndex,Integer endIndex,Integer btid,Integer bookstate,Integer rollmoney,Integer updatetime,Integer startSum,Integer endSum,String order){
         return bd.queryBookByState(startIndex,endIndex,btid,bookstate,rollmoney,updatetime,startSum,endSum,order);
     }
