@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>交易金额</title>
+
+    <link rel="stylesheet" href="../assets/index02.css">
+
+    <link rel="stylesheet" href="../layui/layui-v2.4.5/layui/css/layui.css"  media="all">
+
+    <script src="../js/jquery-3.3.1.js"  th:inline="none"></script>
+
+    <script src="../layui/layui-v2.4.5/layui/layui.js" charset="utf-8" th:inline="none"></script>
+
+    <script>
+        $(function () {
+            $.ajax({
+                url: "/jpbook/back/deal",
+                success: function (data) {
+                    if (data.m1 != undefined){
+                        $("#m1").text(data.m1);
+                    }
+                    if (data.m2 != undefined){
+                        $("#m2").text(data.m2);
+                    }
+                    if (data.m3 != undefined){
+                        $("#m3").text(data.m3);
+                    }
+                    if (data.m4 != undefined){
+                        $("#m4").text(data.m4);
+                    }
+                    if (data.m5 != undefined){
+                        $("#m5").text(data.m5);
+                    }
+                }
+            });
+        })
+    </script>
+</head>
+
+<body style="margin-top: 10px;margin-left: 10px">
+
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto" style="width:1200px;height: 150px;margin-left: -30px">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+
+                <div class="row">
+                    <div class="col-md-3" style="width: 200px">
+                        <div class="well">
+                            <b>今日充值</b>
+                            <div class="text-primary" style="font-size: 32px; margin: 5px 0px;">
+                                ¥<span data-bind="price: stats_today.paid_amount" id="m1">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" style="width: 200px">
+                        <div class="well">
+                            <b>昨日充值</b>
+                            <div class="text-primary" style="font-size: 32px; margin: 5px 0px;">
+                                ¥<span data-bind="price: stats_yesterday.paid_amount" id="m2">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" style="width: 200px">
+                        <div class="well">
+                            <b>本周充值</b>
+                            <div class="text-primary" style="font-size: 32px; margin: 5px 0px;">
+                                ¥<span data-bind="price: stats_yesterday.paid_amount" id="m3">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" style="width: 200px">
+                        <div class="well">
+                            <b>本月充值</b>
+                            <div class="text-primary" style="font-size: 32px; margin: 5px 0px;">
+                                ¥<span data-bind="price: stats_this_month.paid_amount" id="m4">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" style="width: 200px">
+                        <div class="well">
+                            <b>累计充值</b>
+                            <div class="text-primary" style="font-size: 32px; margin: 5px 0px;">
+                                ¥<span data-bind="price: stats_all_time.paid_amount" id="m5">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-btn-container" style="position: absolute;top: 180px;z-index: 9999">
+        <span class="layui-btn layui-btn-sm" style="background-color:#f2f2f2 ;font-weight: bold;color: black">本月交易金额统计</span>
+    </div>
+
+    <table class="layui-hide" id="thismonth" lay-filter="thismonth"></table>
+
+    <script th:inline="none">
+        layui.use('table', function(){
+            var table = layui.table;
+
+            table.render({
+                elem: '#thismonth'
+                ,url:'/jpbook/back/thismonth'
+                ,width:300
+                ,toolbar: true
+                ,title: '本月交易金额统计'
+                ,totalRow: true
+                ,cols: [[
+                     {field:'toptime', title:'时间', sort: true, edit: 'text',totalRowText: '合计'}
+                    ,{field:'he', title:'金额', sort: true, totalRow: true}
+                ]]
+                //,page: true
+                ,response: {
+                    statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
+                }
+                ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+                    return {
+                        "code": res.status, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.total, //解析数据长度
+                        "data": res.rows.item //解析数据列表
+                    };
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

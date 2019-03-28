@@ -15,10 +15,10 @@
 
 	<script src="./js/jquery-3.3.1.js"></script>
 
-	<!--<script src="./js/stats.js"></script>
-	<script src="./js/LBF.js"></script>-->
-
 	<script src="./js/layui/layui.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="./css/sweet-alert.css" />
+	<script src="./js/sweet-alert.js"></script>
 
 </head>
 
@@ -37,17 +37,17 @@
 					<a href="javascript:h2();" class="header-nav-a " style="color: white">
 					<i class="iconfont icon-book"></i>我的书架</a>
 				</li>
-				<li class="header-nav-li" id="h3">
+				<!--<li class="header-nav-li" id="h3">
 					<a href="javascript:;" class="header-nav-a " style="color: white">
 					<i class="iconfont icon-msg"></i>
 					<i class="qdp-unread elUnread dn" style="color: white">未读</i>消息中心</a>
-				</li>
+				</li>-->
 
 			</ul>
 			<a href="login/emptySession" id="elLoginOut" class="header-log" data-eid="qd_M11" style="color: white">退出</a>
 			<a href="personal.html" id="headerLog" class="header-log" data-eid="qd_M06" data-target="headerDropList" style="color: white"></a>
 			<div class="header-goHome">
-				<a href="index.html" target="_blank" accesskey="5" data-eid="qd_M05" style="color: white">起点首页</a>
+				<a href="booktype/queryAll" target="_blank" accesskey="5" data-eid="qd_M05" style="color: white">起点首页</a>
 			</div>	
 		</div>
 	
@@ -662,11 +662,11 @@
 					<table id="shelfTable" class="ui-table">
 						<thead>
 						<tr>
-							<th scope="col">书名/最近更新章节</th>
-							<th scope="col" width="80">更新时间</th>
-							<th scope="col" width="90">作者</th>
-							<th scope="col" width="60">阅读进度</th>
-							<th scope="col" width="20">&nbsp;</th>
+							<th scope="col" width="350">书名/最近更新章节</th>
+							<th scope="col" width="100">更新时间</th>
+							<th scope="col" width="100">作者</th>
+							<th scope="col" >操作</th>
+
 						</tr>
 						</thead>
 						<tbody id="tbo">
@@ -698,11 +698,11 @@
 						<thead>
 						<tr>
 							<th scope="col"></th>
-							<th scope="col" >类型/书名</th>
-							<th scope="col" width="70">更新时间</th>
-							<th scope="col" width="90">作者</th>
-							<th scope="col" width="60">更新进度</th>
-							<th scope="col" width="20">&nbsp;</th>
+							<th scope="col" width="300" >类型/书名</th>
+							<th scope="col" width="120">更新时间</th>
+							<th scope="col" width="110">作者</th>
+							<th scope="col" width="55">更新进度</th>
+
 						</tr>
 						</thead>
 
@@ -946,7 +946,7 @@
         }
         $("#s4").show();
 
-        var grade;
+        var grade = 1;
         $.ajax({
             url: "per/queryusers",
             success: function (data) {
@@ -987,7 +987,9 @@
                     } else if(data == 3){
                         $("#wtid3").text(3);
                     }
-                }
+                }else {
+
+				}
 
             }
         });
@@ -995,12 +997,15 @@
         $.ajax({
             url: "per/wtid2",
             success: function (data) {
-				$("#wtid4").text(data.walnum+data.employ);
+				if (data.employ == null || data.employ == undefined){
+                    $("#wtid4").text(data.walnum);
+				}else {
+                    $("#wtid4").text(data.walnum+data.employ);
+				}
                 $("#wtid5").text(data.employ);
                 $("#wtid6").text(data.walnum);
             }
         });
-
         jp_M61();
     }
 
@@ -1205,7 +1210,7 @@
             data:{"uname":uname,"birthday":birthday,"self":self,"sex":sex},
             success:function (data) {
 				u8();
-                alert("保存信息成功")
+                swal("保存信息成功", "", "success");
             }
         })
 
@@ -1293,6 +1298,7 @@
 				async :true,
 				success:function(data){
 					console.log(data);
+                    swal("头像设置成功", "", "success");
 				}
 			};
 			form.ajaxSubmit(options);
@@ -1484,15 +1490,16 @@
 							"</b>&nbsp;&nbsp;"+
 							"<a href='ipreader.qidian.com/chapter/1013600660/454529040' class='shelf-table-chapter blue' target='_blank' title=''>"+data[j].chapname+"</a>"+
 							"</span></td>"+
-							"<td class='col2 font12'>"+data[j].btime+"</td>"+
+							"<td class='col2 font12'>"+renderTime(data[j].updatetime).substring(0,10)+"</td>"+
 							"<td class='col3'>"+
 							"<a href='author/403441163' target='_blank' title='' class='shelf-table-author font12'>"+data[j].uname+"</a>"+
-							"</td>"+
-							"<td class='col4'><a href='javasctipt:;' class='yesReadStatus spTips font12' target='_blank' title='读至第二章 首次穿越'>有更新</a></td>"+
-							"<td class='col5 shlef-menu'><a href='javascript:' class='blue iconfont icon-book jsTips elInBookShelf font12' title='加入书架' data-id='1013600660'></a></td>"+
-							"</tr>";
+							"</td>";
+							if(data[j].brid != -1){
+                            	r1 += "<td class='col5 shlef-menu'><a href='javascript:' class='gray iconfont icon-book jsTips font12 disabled' title='已在书架'></a></td>"+"</tr>";
+							}else{
+                                r1 += "<td class='col5 shlef-menu'><a href='javascript:' class='blue iconfont icon-book jsTips elInBookShelf font12' title='加入书架'></a></td>"+"</tr>";
+							}
 					}
-
 					$("#tbo").html(r1);
 				}
 
@@ -1516,6 +1523,7 @@
                 var tbo2 = "";
 				if (data.length == 0){
 				    $("ts").css("height","392");
+                    $("#tbo2").hide();
 					$("#rac1").show();
 				}else {
 					$("#shelfAmount").html(data[0].num+"&nbsp;本书籍");
@@ -1529,7 +1537,7 @@
                             "<a href='javascript:;' target='_blank' class='fen-category' style='color: grey'>「"+data[i].btname+"」</a>"+
                             "<a href='javascript:;' target='_blank' title='' data-bid='1013406185' data-eid='qd_M198'>"+data[i].bookname+"</a>"+
                             "</b></span></td>"+
-                            "<td class='col3 font12' >"+renderTime(data[i].chaptime).substring(6,16)+"</td>"+
+                            "<td class='col3 font12' >"+renderTime(data[i].chaptime).substring(0,16)+"</td>"+
                             "<td class='col4'>"+
                             "<a href='javascript:;' target='_blank' title='' class='shelf-table-author font12' data-eid='qd_M200' >"+data[i].uname+"</a>"+
                             "</td>";
@@ -1542,6 +1550,8 @@
                             "</tr>";
                     }
                     $("#tbo2").html(tbo2);
+                    $("#rac1").hide();
+                    $("#tbo2").show();
 				}
 
             }
@@ -1563,6 +1573,7 @@
 			data: {"brid":str.substring(0,str.length-1)},
 			success: function (data) {
 			    m2();
+                swal("删除成功", "", "success");
 			}
 		});
 

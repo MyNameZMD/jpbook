@@ -9,4 +9,7 @@ public class TestContorller {
     @RequestMapping("{name}")
     public void test(){}
 
+    @RequestMapping("back/{name}")
+    public void test2(){}
+
 }

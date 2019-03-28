@@ -90,10 +90,10 @@
 
     <select id="monthlyquery" resultType="map">
         select v.voteid,b.bookname,b.bookid,v.votetime,v.votenum,
-        (select count(voteid) from vote where wtid=2 and uuid=23
+        (select count(voteid) from vote where wtid=2 and uuid=#{uuid}
         and date_format(votetime, '%Y%m') = date_format(curdate() , '%Y%m')) num
         from books b,vote v
-        where v.bookid = b.bookid and v.wtid = 2 and v.uuid = 23
+        where v.bookid = b.bookid and v.wtid = 2 and v.uuid = #{uuid}
         and date_format(v.votetime, '%Y%m') = date_format(curdate() , '%Y%m')
     </select>
 

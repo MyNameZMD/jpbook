@@ -3,16 +3,16 @@
 <mapper namespace="com.jpbook.dao.BookrackDao">
 
     <select id="read" resultType="map">
-        select a.* from (select c.chapid,c.chapname,br.btime,b.bookid,b.bookname,bt.btname,u.uname,u.uuid from browse br inner join chapter c on br.chapid=c.chapid
+        select cc.*,IFNULL(br.brid,-1) brid
+        from
+        (select a.* from (select c.chapid,c.chapname,c.updatetime,b.bookid,b.bookname,bt.btname,u.uname,u.uuid from chapter c
         inner join roll r on c.rollid=r.rollid
         inner join books b on r.bookid=b.bookid
         inner join booktype bt on b.btid=bt.btid
         inner join users u on b.uuid=u.uuid) a where a.chapid in
-        (select b.cid from (select max(c.chapid) cid,b.bookid,b.bookname,bt.btname,u.uname from browse br inner join chapter c on br.chapid=c.chapid
-        inner join roll r on c.rollid=r.rollid
-        inner join books b on r.bookid=b.bookid
-        inner join booktype bt on b.btid=bt.btid
-        inner join users u on b.uuid=u.uuid group by b.bookid,b.bookname,bt.btname,u.uname) b) and a.uuid = #{uuid}
+        (select chapid from browse where btime in(
+        select max(br.btime) time from browse br,chapter c,roll r,books b where br.chapid=c.chapid and c.rollid=r.rollid and r.bookid=b.bookid GROUP BY b.bookid ))
+        and a.uuid = #{uuid}) cc left join bookrack br on cc.bookid=br.bookid
     </select>
 
     <select id="rack" resultType="map">
