@@ -38,16 +38,27 @@
     </style>
     <script src="../js/jquery-3.3.1.js"></script>
     <script type="text/javascript">
-        function showChapter(obj) {
-            $(obj).prop("class", "j_catalog_block act");
-            $(obj).prev().prop("class", "");
-            $("#catalogWrap").show();
-            $("#xinxi").hide();
+        function removeu(){
+            jQuery.ajax({
+                url:'/jpbook/login/quit',
+                success:function(data){
+                    jQuery(".sign-in").addClass("sign-in hidden");
+                    jQuery(".sign-out.hidden").addClass("sign-out");
+                    jQuery(".sign-in").removeClass("sign-in");
+                    jQuery(".sign-out.hidden").removeClass("sign-out hidden");
+                    window.location.reload()
+                }
+            });
         }
-
-        function showxinxi(obj) {
-            $(obj).prop("class", "act");
-            $(obj).next().prop("class", "j_catalog_block");
+        function showChapter(obj){
+            $(obj).prop("class","j_catalog_block act");
+            $(obj).prev().prop("class","");
+           $("#catalogWrap").show();
+           $("#xinxi").hide();
+        }
+        function showxinxi(obj){
+            $(obj).prop("class","act");
+            $(obj).next().prop("class","j_catalog_block");
             $("#catalogWrap").hide();
             $("#xinxi").show();
         }
@@ -59,72 +70,68 @@
             /*页面显示时要判断该评论该用户是否已经是点过赞的*/
             /*如果没有用户登录的话就跳转至登录页面*/
             var z = parseInt($(obj).children('span').html());
-            $.ajax({
-                url: './userExist',
-                type: 'post',
-                datatype: 'text',
-                success: function (data) {
-                    if (data == 0) {
-                        alert('请先登录哦');
-                    } else {
-                        /*点赞之前的样式 info-tab like-btn*/
-                        /*点赞之后的样式 info-tab like-btn act*/
-                        /*查询该用户是否已经是点过赞的*/
-                        $.ajax({
-                            url: 'zanExist',
-                            data: {'revid': revid},
-                            datatype: 'text',
-                            success: function (data) {
-                                if (data == 0) {
-                                    /*没有点过赞 新增赞*/
+			$.ajax({
+				url:'/jpbook/books/userExist',
+				type:'post',
+				datatype:'text',
+				success:function(data){
+					if(data == 0){
+                        window.location.href = '../login.html';
+					}else{
+					    $.ajax({
+							url:'zanExist',
+							data:{'revid':revid,'ztype':1},
+							datatype:'text',
+							success:function(data){
+								if(data == 0){
+								    /*没有点过赞 新增赞*/
+									$.ajax({
+										url:'addZan',
+										data:{'revid':revid,'ztype':1},
+										datatype:'text',
+										success:function(data){
+											/*改变样式 点赞总数*/
+											if(data == 1){
+                                                $(obj).attr("class",'info-tab like-btn act');
+                                                $(obj).children('span').html(z+1+'赞');
+											}
+										}
+									});
+								}else if(data == 1){
+								    /*点过赞但是状态为0 修改查询的信息*/
+									/*alert($(obj).attr("class"));*/
+									$.ajax({
+										url:'editZan',
+										data:{'revid':revid,'zstate':1},
+										datatype:'text',
+										success:function(data){
+											$(obj).attr("class",'info-tab like-btn act');
+                                            $(obj).children('span').html(z+1+'赞')
+                                    	}
+									});
+								}else if(data == 2){
+									/*点过赞 再次点赞就是取消赞*/
                                     $.ajax({
-                                        url: 'addZan',
-                                        data: {'revid': revid},
-                                        datatype: 'text',
-                                        success: function (data) {
-                                            /*改变样式 点赞总数*/
-                                            if (data == 1) {
-                                                $(obj).attr("class", 'info-tab like-btn act');
-                                                $(obj).children('span').html(z + 1 + '赞');
-                                            }
+                                        url:'editZan',
+                                        data:{'revid':revid,'zstate':0},
+                                        datatype:'text',
+                                        success:function(data){
+                                            $(obj).attr("class",'info-tab like-btn');
+                                            $(obj).children('span').html(z-1+'赞')
                                         }
                                     });
-                                } else if (data == 1) {
-                                    /*点过赞但是状态为0 修改查询的信息*/
-                                    /*alert($(obj).attr("class"));*/
-                                    $.ajax({
-                                        url: 'editZan',
-                                        data: {'revid': revid, 'zstate': 1},
-                                        datatype: 'text',
-                                        success: function (data) {
-                                            $(obj).attr("class", 'info-tab like-btn act');
-                                            $(obj).children('span').html(z + 1 + '赞')
-                                        }
-                                    });
-                                } else if (data == 2) {
-                                    /*点过赞 再次点赞就是取消赞*/
-                                    $.ajax({
-                                        url: 'editZan',
-                                        data: {'revid': revid, 'zstate': 0},
-                                        datatype: 'text',
-                                        success: function (data) {
-                                            $(obj).attr("class", 'info-tab like-btn');
-                                            $(obj).children('span').html(z - 1 + '赞')
-                                        }
-                                    });
-                                }
-                            }
-                        });
-                    }
-                }
-            });
-        }
-
-        function faties(bookid) {
-            jQuery.ajax({
-                url: './userExist',
-                success: function (data) {
-                    if (0 == data) {
+								}
+							}
+						});
+					}
+				}
+			});
+		}
+		function faties(bookid){
+			jQuery.ajax({
+				url:'./userExist',
+				success:function(data){
+				    if(0 == data){
                         window.location.href = "../login.html";
                     } else {
 
@@ -239,33 +246,31 @@
                         </th:block>
                     </th:block>
 
-                    <li class="line"></li>
-                    <li class="book-shelf" id="top-book-shelf">
-                        <a href="https://me.qidian.com/bookCase/bookCase.aspx" target="_blank">
-                            <em class="iconfont icon-book_icon"></em>
-                            <i>我的书架</i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+						<li class="line"></li>
+						<li class="book-shelf" id="top-book-shelf">
+							<a th:href="${session.users} ? '../personal.html?key=i' : '../login.html'" target="_blank">
+								<em class = "iconfont icon-book_icon"></em>
+								<i>我的书架</i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 
-    <div id="j-topHeadBox" class="top-bg-op-box " data-cookie="1"
-         style="background-image: url(&quot;//qidian.qpic.cn/qidian_common/349573/13d0351cb3cc62ac95a0ddfc7376be8a/0&quot;); display: none;"
-         data-l1="1">
-        <a class="jumpWrap"
-           href="http://cpgame.qd.game.qidian.com/Home/Index/directLogin/name/hlw/way/1?qd_game_key=hlw2560x450&amp;qd_dd_p1=1292"
-           target="_blank" data-eid="qd_G100" data-qd_dd_p1="1"> <span
-                class="op-tag" style="display: none;"></span>
-        </a> <a class="close-game-op" id="closeTopGame" href="javascript:"
-                data-eid="qd_G101">关闭广告</a>
+		<div id="j-topHeadBox" class="top-bg-op-box " data-cookie="1" style="background-image: url(&quot;//qidian.qpic.cn/qidian_common/349573/13d0351cb3cc62ac95a0ddfc7376be8a/0&quot;); display: none;" data-l1="1">
+			<a class="jumpWrap"
+				href="http://cpgame.qd.game.qidian.com/Home/Index/directLogin/name/hlw/way/1?qd_game_key=hlw2560x450&amp;qd_dd_p1=1292"
+				target="_blank" data-eid="qd_G100" data-qd_dd_p1="1"> <span
+				class="op-tag" style="display: none;"></span>
+			</a> <a class="close-game-op" id="closeTopGame" href="javascript:"
+				data-eid="qd_G101">关闭广告</a>
 
-    </div>
-    <div class="top-bg-box " id="j-topBgBox"
-         style="background-image:url(&#39;//qidian.qpic.cn/qidian_common/349573/7f689b6db8ad99e6093bae7db9a7d130/0&#39;)">
-    </div>
-    <div class="crumbs-nav center990" data-l1="1">
+		</div>
+		<div class="top-bg-box " id="j-topBgBox"
+			style="background-image:url(&#39;//qidian.qpic.cn/qidian_common/349573/7f689b6db8ad99e6093bae7db9a7d130/0&#39;)">
+		</div>
+		<div class="crumbs-nav center990" data-l1="1">
 
 			<span>
 				<cite class="lt"></cite>
@@ -323,15 +328,15 @@
                         <span class="EpImtlYe"></span>
                     </em>
 
-                    <cite>万会员周点击</cite><i>|</i>
-                    <em>
-                        <span class="EpImtlYe"></span>
-                    </em>
-                    <cite>总推荐</cite><i>|</i>
-                    <em>
-                        <span class="EpImtlYe"></span>
-                    </em><cite>周推荐</cite>
-                </p>
+						<cite>万会员周点击</cite><i>|</i>-->
+						<em>
+							<span th:text="${queryBookById[0].zvote}"></span>
+						</em>
+						<cite>总推荐</cite><i>|</i>
+						<em>
+							<span th:text="${queryBookById[0].mvote}"></span>
+						</em><cite>月推荐</cite>
+					</p>
 
                 <p>
                     <input type="hidden" id="atbookid" th:value="${queryBookById.get(0).get('bookid')}">
@@ -582,32 +587,30 @@
                                     </p>
                                 </div></li>-->
 
-                            <li class="update">
-                                <b>最近更新</b>
-                                <div class="detail">
-                                    <p class="cf">
-                                        <th:block th:if="${queryBookById[0].chapnum} gt 1">
-                                            <a class="blue"
-                                               href="https://vipreader.qidian.com/chapter/1013432619/452316826"
-                                               title="第二百六十九章 兽牙傀儡兵（210均订加更）" target="_blank"
-                                               th:text="|第${queryBookById[0].chapnum}章  ${queryBookById[0].chapname}|">
-                                            </a>
-                                            <i>·</i>
-                                            <em class="time" th:text="|更新时间：${queryBookById[0].chaptime}|"></em>
-                                        </th:block>
+								<li class="update">
+									<b>最近更新</b>
+									<div class="detail">
+										<p class="cf">
+                                            <th:block th:if="${queryBookById[0].chapnum} gt 1">
+                                                <a class="blue" href="https://vipreader.qidian.com/chapter/1013432619/452316826" target="_blank"
+												   th:title="|第${queryBookById[0].chapnum}章  ${queryBookById[0].chapname}|"
+                                                   th:text="|第${queryBookById[0].chapnum}章  ${queryBookById[0].chapname}|">
+                                                </a>
+                                                <i>·</i>
+                                                <em class="time" th:text="|更新时间：${queryBookById[0].chaptime}|"></em>
+                                            </th:block>
 
-                                    </p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="fans-zone" data-l1="5">
-                    <h3 class="lang">粉丝互动</h3>
-                    <div class="fans-interact cf">
-                        <dl>
-                            <dd>
-                                <h4 id="ticket-Tab">
+										</p>
+									</div></li>
+							</ul>
+						</div>
+					</div>
+					<div class="fans-zone" data-l1="5">
+						<h3 class="lang">粉丝互动</h3>
+						<div class="fans-interact cf">
+							<dl>
+								<dd>
+									<h4 id="ticket-Tab">
 
                                     <a class="lang act" href="javascript:walletTab('qd_G20','month-ticket')"
                                        data-eid="qd_G20">月票</a><em>|</em>
@@ -1406,7 +1409,7 @@
                                                         </h5>
                                                         <p class="info dib-wrap" data-id="1244484136">
                                                             <span class="mr20" th:text="|${qr.commenttime}发布|">2019-02-15发布</span>
-                                                            <a href="https://forum.qidian.com/post/12073675103859503/1244484136"
+                                                            <a th:href="@{/reviewbook/queryById(bookid=${queryBookById[0].bookid},revid=${qr.revid})}"
                                                                class="info-tab mr20" target="_blank">
                                                                 <i class="iconfont icon-xiaoxi"></i>
                                                                 <span th:text="|${qr.rqcount}条回复|">1条回复</span>
