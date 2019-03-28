@@ -21,7 +21,126 @@
 <link charset="utf-8" rel="stylesheet" href="../css/LightTip.css">
 <link charset="utf-8" rel="stylesheet" href="../css/Popup.css">
 <link charset="utf-8" rel="stylesheet" href="../css/Drag.css">
+    <link charset="utf-8" rel="stylesheet" href="../css/iconfont.css">
+    <script src="../js/jquery-3.3.1.js"></script>
 <style name="lbf-overlay">.lbf-overlay { position:fixed; top:0; left:0;}</style>
+    <script type="text/javascript">
+        function dianzan(obj,revid){
+            var z = parseInt($(obj).children('span').html());
+            $.ajax({
+                url:'/jpbook/books/userExist',
+                type:'post',
+                datatype:'text',
+                success:function(data){
+                    if(data == 0){
+                        window.location.href = '../login.html';
+                    }else{
+                        $.ajax({
+                            url:'/jpbook/books/zanExist',
+                            data:{'revid':revid,'ztype':1},
+                            datatype:'text',
+                            success:function(data){
+                                if(data == 0){
+                                    /*没有点过赞 新增赞*/
+                                    $.ajax({
+                                        url:'/jpbook/books/addZan',
+                                        data:{'revid':revid,'ztype':1},
+                                        datatype:'text',
+                                        success:function(data){
+                                            /*改变样式 点赞总数*/
+                                            if(data == 1){
+                                                $(obj).attr("class",'info-tab like-btn act');
+                                                $(obj).children('span').html(z+1+'赞');
+                                            }
+                                        }
+                                    });
+                                }else if(data == 1){
+                                    /*点过赞但是状态为0 修改查询的信息*/
+                                    /*alert($(obj).attr("class"));*/
+                                    $.ajax({
+                                        url:'/jpbook/books/editZan',
+                                        data:{'revid':revid,'zstate':1},
+                                        datatype:'text',
+                                        success:function(data){
+                                            $(obj).attr("class",'info-tab like-btn act');
+                                            $(obj).children('span').html(z+1+'赞')
+                                        }
+                                    });
+                                }else if(data == 2){
+                                    /*点过赞 再次点赞就是取消赞*/
+                                    $.ajax({
+                                        url:'/jpbook/books/editZan',
+                                        data:{'revid':revid,'zstate':0},
+                                        datatype:'text',
+                                        success:function(data){
+                                            $(obj).attr("class",'info-tab like-btn');
+                                            $(obj).children('span').html(z-1+'赞')
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+        function faties(bookid){
+            jQuery.ajax({
+                url:'/jpbook/books/userExist',
+                success:function(data){
+                    if(0 == data){
+                        window.location.href = "../login.html";
+                    }else{
+                        window.close();
+                        window.open("/jpbook/books/queryBookByFatie?retype=1"+"&bookid="+bookid);
+                    }
+                }
+            });
+        }
+        function removeu(){
+            jQuery.ajax({
+                url:'/jpbook/login/quit',
+                success:function(data){
+                    jQuery(".sign-in").addClass("sign-in hidden");
+                    jQuery(".sign-out.hidden").addClass("sign-out");
+                    jQuery(".sign-in").removeClass("sign-in");
+                    jQuery(".sign-out.hidden").removeClass("sign-out hidden");
+                    window.location.reload()
+                }
+            });
+        }
+        $(document).ready(function () {
+            $(".sign-in").mouseover(function () {
+                $(this).addClass("sign-in act");
+            });
+            $(".sign-in").mouseout(function () {
+                $(this).removeClass("act");
+            });
+            $(".site").mouseover(function () {
+                $(this).addClass("site act");
+            });
+            $(".site").mouseout(function () {
+                $(this).removeClass("act");
+            });
+            $(".site").nextAll().mouseover(function(){
+                $(this).addClass("act");
+            });
+            $(".site").nextAll().mouseout(function () {
+                $(this).removeClass("act");
+            });
+
+            $(".lbf-pagination-jump a").click(function () {
+                if($(".lbf-pagination-jump input").val() > $(".lbf-pagination-jump input").attr('max')){
+                    $(".lbf-pagination-jump input").focus();
+                    $(".lbf-pagination-jump input").val('');
+                    return false;
+                }else{
+                    var page = $(".lbf-pagination-jump input").val();
+                    window.location.href = "./queryAll?bookid="+$("h1").attr("id")+"&page="+page;
+                }
+            })
+        });
+    </script>
 </head>
 <body data-dynamic="false" style="zoom: 1;">
 
@@ -32,8 +151,8 @@
         <div class="nav-list site-nav fl">
             <ul>
                 <li class="site">
-                    <a class="pin-logo" href="https://www.qidian.com/">
-                        <span>江派中文网</span>
+                    <a class="pin-logo" href="booktype/queryAll" style = "font-size: 18px;font-family: 'Courier New', Courier, monospace">江派中文网
+
                     </a>
                 </li>
                 <li><a href="https://www.qidian.com/xuanhuan" target="" data-eid="qd_A47">玄幻</a></li>
@@ -64,1496 +183,122 @@
                     <form id="formUrl" action="https://www.qidian.com/search" method="get" target="_blank">
                         <label id="pin-search" for="topSearchSubmit" data-eid="qd_A62"><em class="iconfont"></em>
                         </label>
-                        <input id="pin-input" class="pin-input hide" type="text" name="kw" placeholder="伊森的奇幻漂流">
+                        <input id="pin-input" class="pin-input hide" type="text" name="kw" placeholder="请输入作者名或书名">
                         <input class="submit-input" type="submit" id="topSearchSubmit" data-eid="qd_A62">
                     </form>
                 </li>
                 <li class="line"></li>
-                <li class="sign-out hidden">
-                    <a id="pin-login" href="javascript:" data-eid="qd_A64">登录</a>
-                    <a class="reg" href="https://passport.qidian.com/reg.html?appid=10&amp;areaid=1&amp;target=iframe&amp;ticket=1&amp;auto=1&amp;autotime=30&amp;returnUrl=https%3A%2F%2Fwww.qidian.com" target="_blank">注册</a>
+                <li th:class="${session.users} ? 'sign-out hidden' : 'sign-out'">
+                    <a id="pin-login" href="../login.html">登录</a>
+                    <a class="reg" href="../register.html" target="_blank">注册</a>
                 </li>
-                <li class="sign-in">
-                    <a href="https://me.qidian.com/Index.aspx" target="_blank" data-eid="qd_A65"><i id="nav-user-name">书友20190303160502500</i><span></span></a>
-                    <div class="dropdown">
-                        <a href="https://me.qidian.com/msg/lists.aspx?page=1" target="_blank" data-eid="qd_A66">消息(<i id="top-msg">0</i>)</a>
-                        <a href="https://www.qidian.com/charge/meRedirect" target="_blank" data-eid="qd_A67">充值</a>
-                        <a href="https://me.qidian.com/Index.aspx" target="_blank" data-eid="qd_A68">个人中心</a>
-                        <a href="https://www.qidian.com/help/kf" target="_blank" data-eid="qd_A69">客服中心</a>
-                        <a id="exit" href="javascript:" data-eid="qd_A70">退出</a>
-                    </div>
-                </li>
+                <th:block th:if="${session}">
+                    <th:block th:if="${session.users}">
+                        <li th:class="${session.users[0] } ? 'sign-in' : 'sign-in hidden'">
+                            <a href="../personal.html" target="_blank">
+                                <span id = "uuid" style="display: none" th:text="${session.users[0].uuid}"></span>
+                                <i id="nav-user-name" th:text="${session.users[0].uname}"></i>
+                                <span></span>
+                            </a>
+                            <div class="dropdown">
+                                <a href="https://me.qidian.com/msg/lists.aspx?page=1" target="_blank" data-eid="qd_A66">
+                                    消息(<i id="top-msg">0</i>)
+                                </a>
+                                <a href="https://www.qidian.com/charge/meRedirect" target="_blank">充值</a>
+                                <a href="../personal.html" target="_blank">个人中心</a>
+                                <a href="https://www.qidian.com/help/kf" target="_blank">客服中心</a>
+                                <a id="exit" href="javascript:void(0);" onclick="removeu()">退出</a>
+                            </div>
+                        </li>
+                    </th:block>
+                </th:block>
                 <li class="line"></li>
                 <li class="book-shelf" id="top-book-shelf">
-                    <a href="https://me.qidian.com/bookCase/bookCase.aspx" target="_blank" data-eid="qd_A63"><em class="iconfont"></em><i>我的书架
-                    </i></a></li>
+                    <a th:href="${session.users} ? '../personal.html?key=i' : '../login.html'" target="_blank">
+                        <em class="iconfont"></em><i>我的书架
+                    </i></a>
+                </li>
             </ul>
         </div>
     </div>
 </div>
     <div class="main-header">
-        <h1>作品讨论区<a target="_blank" href="https://book.qidian.com/info/1014188809">《大神，来了》</a></h1>
+        <h1 th:id="${books[0].bookid}">作品讨论区<a target="_blank" th:href="@{/books/queryBookById(bookid=${books[0].bookid})}" th:utext="|《${books[0].bookname}》|"></a></h1>
     </div>
     <div class="main-wrap cf">
     <div class="main-body fl">
         <ul class="main-nav dib-wrap cf">
             <li class="fl mr24">
-                <a href="https://forum.qidian.com/index/13062901703661303?type=1" class="nav-tab act">全部 (106)</a>
+                <a href="https://forum.qidian.com/index/13062901703661303?type=1" class="nav-tab act" th:text="|全部(${book.size()})|"></a>
             </li>
-            <li class="fl mr24">
+            <!--<li class="fl mr24">
                     <span class="nav-tab">热帖</span>
             </li>
             <li class="fl mr24">
                     <span class="nav-tab">打赏</span>
-            </li>
-            <li class="fl">
+            </li>-->
+            <!--<li class="fl">
                 <a href="https://forum.qidian.com/index/13062901703661303?type=200" class="nav-tab ">
                     本章说 (72)
                 </a>
-            </li>
+            </li>-->
             <li class="fr">
-                <a target="_blank" href="https://forum.qidian.com/send/13062901703661303" class="sendPost blue">
-                    <i class="iconfont icon-send"></i>我要发帖
+                <a target="_blank" href = "javascript:void(0);" th:onclick="|faties(${books[0].bookid})|" class="sendPost blue">
+                    我要发帖
                 </a>
             </li>
-        </ul>
-        
-        <ul class="top-post">
-            
-                <li class="post-wrap cf ">
-                <div class="card-wrap fl" data-g="453647334" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/194373245"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100" alt="青春流逝1270"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/194373245" class="blue mr4 b">青春流逝1270</a><span class="gray">发表了帖子</span>
-                    </p>
-                    <h2 class="post-title ofe">
-                    
-                        <a class="" href="https://forum.qidian.com/post/13062901703661303/321335013780094976" target="_blank">
-                            <i class="icon icon-topfix mr6"></i><i class="icon icon-jinghua mr6"></i>打赏楼！
-                        </a>
-                    </h2>
-                      
-                    <p class="post-info dib-wrap" data-id="321335013780094976">
-                        <span class="mr20">刚刚更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/321335013780094976" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>100条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>10赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
         </ul>
         
         <ul class="all-post">
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="800202620694" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/202620694"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(1)" alt="无人拾得我"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
+                <li class="post-wrap" th:each="q : ${queryAll}">
+                <div class="card-wrap fl">
+                    <a target="_blank" href="https://my.qidian.com/user/202620694">
+                        <img class="head-img" src="../images/1.jpg" alt="无人拾得我">
+                    </a>
                 </div>
                 <div class="post">
                     <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/202620694" class="blue mr4 b">无人拾得我</a><span class="gray">发表了帖子</span>
+                        <a target="_blank" href="https://my.qidian.com/user/202620694" class="blue mr4 b" th:text="${q.uname}">无人拾得我</a>
+                        <span class="gray">发表了帖子</span>
                     </p>
                     
                     <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/325314867072598016" class="black">看看</a>
+                        <a target="_blank" th:text="${q.revvlue}" href="https://forum.qidian.com/post/13062901703661303/325314867072598016" class="black">看看</a>
                     </p>
                     
                     <p class="post-info dib-wrap" data-id="325314867072598016">
-                        <span class="mr20">2小时前更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/325314867072598016" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
+                        <span class="mr20" th:text="${q.commenttime}">2小时前更新</span>
+                        <a th:href="@{/reviewbook/queryById(bookid=${books[0].bookid},revid=${q.revid})}"
+                           class="info-tab mr20" target="_blank">
+                            <i class="iconfont icon-xiaoxi"></i>
+                            <span th:text="|${q.rqcount}条回复|">0条回复</span>
                         </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>0赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="3468626721" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/316747568"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(2)" alt="旦曦晨雨"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/316747568" class="blue mr4 b">旦曦晨雨</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/325241015822843904" class="black">七月推来的</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="325241015822843904">
-                        <span class="mr20">7小时前更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/325241015822843904" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>0赞</span>
+                        <a href="javascript:;" th:class="${q.z} gt -1 ? 'info-tab like-btn act' : 'info-tab like-btn'" th:onclick="'javascript:dianzan(this,'+${q.revid}+')'">
+                            <i class="iconfont icon-dianzan"></i>
+                            <span th:text="|${q.zan}赞|">0赞</span>
                         </a>
                     </p>
                 </div>
             </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="854008580691" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/323475829"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(3)" alt="枉入红尘WRHC"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/323475829" class="blue mr4 b">枉入红尘WRHC</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/1249883102" class="black">看的我是神清气爽呀！整个人的状态都换过来了，好久没读到的好书了！</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="1249883102">
-                        <span class="mr20">8小时前更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/1249883102" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>0赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="120005437021" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/312083940"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(4)" alt="杂草中的霸王草"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/312083940" class="blue mr4 b">杂草中的霸王草</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/325173418171432960" class="black">看完了，我就想问问作者是不是像主角那样到作者群py的<i class="icon-emoji icon-emoji-8"></i><i class="icon-emoji icon-emoji-8"></i><i class="icon-emoji icon-emoji-8"></i></a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="325173418171432960">
-                        <span class="mr20">11小时前更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/325173418171432960" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>0赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="119190229269" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/3372497"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(5)" alt="紫曦墨兮"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/3372497" class="blue mr4 b">紫曦墨兮</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/325047718034735104" class="black">七月推荐的，过来瞄一瞄，字数有点少啊</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="325047718034735104">
-                        <span class="mr20">12小时前更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/325047718034735104" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>1条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>2赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="800177445095" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/177445095"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(6)" alt="子与沫"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/177445095" class="blue mr4 b">子与沫</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/325166231629987840" class="black">以那味大神为原型啊</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="325166231629987840">
-                        <span class="mr20">12小时前更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/325166231629987840" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>0赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="2766975913" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/300365342"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(7)" alt="被永久禁言后开的小号"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/300365342" class="blue mr4 b">被永久禁言后开的小号</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/324992880894607360" class="black">顶一下，还不错，投资拿了30点</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="324992880894607360">
-                        <span class="mr20">昨天更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/324992880894607360" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>2赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="2766975913" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/300365342"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(7)" alt="被永久禁言后开的小号"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/300365342" class="blue mr4 b">被永久禁言后开的小号</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/324991480215371776" class="black">所以，你也在PY吗？</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="324991480215371776">
-                        <span class="mr20">昨天更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/324991480215371776" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>2赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="115802513203" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/146720171"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/default_user.0.2.png" alt="追风吹你"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/146720171" class="blue mr4 b">追风吹你</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/324989362850889728" class="black">题材新颖，文笔不错，养一段时间，挺好的，作者加油</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="324989362850889728">
-                        <span class="mr20">昨天更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/324989362850889728" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>2赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="800002715249" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/2715249"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(8)" alt="血色教父"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/2715249" class="blue mr4 b">血色教父</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/324878082089549824" class="black">刷三下</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="324878082089549824">
-                        <span class="mr20">昨天更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/324878082089549824" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>2赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="800002715249" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/2715249"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(8)" alt="血色教父"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/2715249" class="blue mr4 b">血色教父</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/324877995175247872" class="black">刷两下</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="324877995175247872">
-                        <span class="mr20">昨天更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/324877995175247872" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>2赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="800002715249" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/2715249"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(8)" alt="血色教父"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/2715249" class="blue mr4 b">血色教父</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/324877951697027072" class="black">刷一下</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="324877951697027072">
-                        <span class="mr20">昨天更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/324877951697027072" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>1赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="854001586079" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/323476465"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(9)" alt="幻影九月雨"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/323476465" class="blue mr4 b">幻影九月雨</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/1249715873" class="black">推荐票送上</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="1249715873">
-                        <span class="mr20">昨天更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/1249715873" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>1赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="854008601936" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/323475301"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(10)" alt="花悬婵"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/323475301" class="blue mr4 b">花悬婵</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/1249499874" class="black">真好看，好久没看到这么有意思的女主 哈哈哈。</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="1249499874">
-                        <span class="mr20">2019-03-16更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/1249499874" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>2赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="2948414540" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/214471703"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(11)" alt="书友160118113723111"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/214471703" class="blue mr4 b">书友160118113723111</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/323768434309529600" class="black">加油！</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="323768434309529600">
-                        <span class="mr20">2019-03-15更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/323768434309529600" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>1赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="854001549759" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/323331620"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(12)" alt="三轮追宝马"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/323331620" class="blue mr4 b">三轮追宝马</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/1249364411" class="black">看到今天了，紧凑，不空洞，很有文笔。赞一个</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="1249364411">
-                        <span class="mr20">2019-03-15更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/1249364411" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>2赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="2948414540" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/214471703"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(11)" alt="书友160118113723111"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/214471703" class="blue mr4 b">书友160118113723111</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/323037090751250432" class="black">作者厉害，快点更新，作者你是不是没有存稿啊？快发😂</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="323037090751250432">
-                        <span class="mr20">2019-03-13更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/323037090751250432" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>2赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="119090019358" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/132849402"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(13)" alt="microsheep"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/132849402" class="blue mr4 b">microsheep</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/323031001997639680" class="black">作者加油！</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="323031001997639680">
-                        <span class="mr20">2019-03-13更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/323031001997639680" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>1条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>1赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="3262818825" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/318516489"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(14)" alt="霜澜墨炎"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/318516489" class="blue mr4 b">霜澜墨炎</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/322667842019459072" class="black">写的还可以哦，第一次见这种题材的</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="322667842019459072">
-                        <span class="mr20">2019-03-12更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/322667842019459072" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>2赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="854008544741" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/323331369"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(15)" alt="书友20181020024008522"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/323331369" class="blue mr4 b">书友20181020024008522</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/1248854232" class="black">作者有木有兴趣多玩些悲情戏啊，表示悲情的东西总是最感人的说，信不信由你~</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="1248854232">
-                        <span class="mr20">2019-03-12更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/1248854232" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>1赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="119090041632" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/400182"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(16)" alt="剑友"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/400182" class="blue mr4 b">剑友</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/322294620266692608" class="black">中秋月明推荐过来，题材新颖，值得一看。</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="322294620266692608">
-                        <span class="mr20">2019-03-11更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/322294620266692608" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>3赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="854001365827" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/228934259"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/default_user.0.2.png" alt="文立言"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/228934259" class="blue mr4 b">文立言</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/322085302233661440" class="black">加油！＾０＾~</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="322085302233661440">
-                        <span class="mr20">2019-03-10更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/322085302233661440" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>1赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="800005543367" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/5543367"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(17)" alt="Moovs"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/5543367" class="blue mr4 b">Moovs</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/322008031795740672" class="black">作者看过“文壕”没有？泥白佛的！也是写网文的！就是那本书和女主有点虐！别的还不错</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="322008031795740672">
-                        <span class="mr20">2019-03-10更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/322008031795740672" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>1赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="800215761868" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/215761868"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(18)" alt="铁肩塞翁"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/215761868" class="blue mr4 b">铁肩塞翁</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <h2 class="post-title ofe">
-                    
-                        <a class="" target="_blank" href="https://forum.qidian.com/post/13062901703661303/1248357603">
-                            啥时候给我一个这么牛逼的系统！！！
-                        </a>
-                    </h2>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/1248357603" class="black">给是一个这么牛逼的系统，我成白金大神了，回来给作者大大章推，黄金盟都没问题啊<i class="icon-emoji icon-emoji-4"></i></a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="1248357603">
-                        <span class="mr20">2019-03-09更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/1248357603" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>1赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="800212901830" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/212901830"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(19)" alt="wanmn"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/212901830" class="blue mr4 b">wanmn</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/321597263761833984" class="black">不错</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="321597263761833984">
-                        <span class="mr20">2019-03-09更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/321597263761833984" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>1赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="119190062791" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/152038031"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(20)" alt="1凡人迷1"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/152038031" class="blue mr4 b">1凡人迷1</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/321564755410223104" class="black">酒妹那边来的，不过感觉真不错。希望是个粮草</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="321564755410223104">
-                        <span class="mr20">2019-03-09更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/321564755410223104" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>1赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="2363590359" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/212783659"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(11)" alt="青山神话"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/212783659" class="blue mr4 b">青山神话</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/321486338077556736" class="black">酒池妹那里来的<i class="icon-emoji icon-emoji-32"></i></a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="321486338077556736">
-                        <span class="mr20">2019-03-09更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/321486338077556736" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>2条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>2赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="800000509868" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/509868"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(21)" alt="复仇烈火"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/509868" class="blue mr4 b">复仇烈火</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/321501143043735552" class="black">大头推荐的，先收藏养肥，12票推荐</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="321501143043735552">
-                        <span class="mr20">2019-03-09更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/321501143043735552" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>2赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="800131729340" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/131729340"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(22)" alt="調矢"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/131729340" class="blue mr4 b">調矢</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/321425660805513216" class="black">加油</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="321425660805513216">
-                        <span class="mr20">2019-03-08更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/321425660805513216" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>1赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="800101382060" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/101382060"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(23)" alt="dfzl"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/101382060" class="blue mr4 b">dfzl</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/321091836909256704" class="black">好看</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="321091836909256704">
-                        <span class="mr20">2019-03-08更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/321091836909256704" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>2赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="800001497928" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/1497928"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(16)" alt="Wilburn"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/1497928" class="blue mr4 b">Wilburn</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/320702934365175808" class="black">雾草那么新颖的题材嘛啧</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="320702934365175808">
-                        <span class="mr20">2019-03-06更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/320702934365175808" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>3赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="800001214743" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/1214743"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(16)" alt="独孤子明"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/1214743" class="blue mr4 b">独孤子明</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/320701011176062976" class="black">占楼求加精。</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="320701011176062976">
-                        <span class="mr20">2019-03-06更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/320701011176062976" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>1赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
-                <li class="post-wrap">
-                <div class="card-wrap fl" data-g="800215761868" data-h="0" data-a="0">
-                    <a target="_blank" href="https://my.qidian.com/user/215761868"><img class="head-img" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(18)" alt="铁肩塞翁"></a>
-                    
-                    <div class="card">
-                        <div class="card-info cf">
-                            <div class="la-ball-pulse">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="post">
-                    <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/215761868" class="blue mr4 b">铁肩塞翁</a><span class="gray">发表了帖子</span>
-                    </p>
-                    
-                    <h2 class="post-title ofe">
-                    
-                        <a class="" target="_blank" href="https://forum.qidian.com/post/13062901703661303/1247642951">
-                            一血
-                        </a>
-                    </h2>
-                    
-                    <p class="post-body">
-                        <a target="_blank" href="https://forum.qidian.com/post/13062901703661303/1247642951" class="black">加油更新，好看！</a>
-                    </p>
-                    
-                    <p class="post-info dib-wrap" data-id="1247642951">
-                        <span class="mr20">2019-03-05更新</span>
-                        <a href="https://forum.qidian.com/post/13062901703661303/1247642951" class="info-tab mr20" target="_blank">
-                            <i class="iconfont pr6"></i>
-                            <span>0条回复</span>
-                        </a>
-                        
-                            <a href="javascript:;" class="info-tab like-btn">
-                                <i class="iconfont pr6"></i>
-                        
-                            <span>2赞</span>
-                        </a>
-                    </p>
-                </div>
-            </li>
-            
         </ul>
-        <div class="page-container" data-pagemax="1" data-page="1"></div>
-        
-    </div>
-    <div class="side-wrap fr">
-        <div class="forum-info tc mb20" data-l1="1">
-            <a target="_blank" href="https://book.qidian.com/info/1014188809">
-            <img src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/150" class="forum-book" alt="大神，来了">
-            </a>
-            <h3>大神，来了</h3>
-            
-                <a href="javascript:;" class="red-btn forum-collect" data-c="0">
-                    <i class="iconfont icon-collect"></i>收藏此讨论区
-                </a>
-            
-            
-                <a href="javascript:;" class="blue-btn forum-sign" data-s="0" data-eid="qd_G120">签到</a>
-            
-        </div>
-        
-            <div class="forum-info mb20">
-                
-                    <a href="javascript:;" class="fr blue applyMaster">申请成为版主</a>
-                
-                <h3 class="lang">版主</h3>
-                <ul>
-                    
-                        <li class="forum-people cf">
-                            
-                                <img src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(24)" class="head-img fr" alt="二厂厂长">
-                                    <h4 class="ofe">二厂厂长</h4>
-                                <span class="icon icon-rybz">荣誉版主</span>
-                            
-                        </li>
-                    
-                </ul>
-            </div>
-        
-        
-        <div class="right-op-wrap mb20" data-l1="2">
-            <a href="http://cpgame.qd.game.qidian.com/Home/Index/directLogin/name/bdsb/way/1?qd_game_key=bdsb250x174&amp;qd_dd_p1=1023" target="_blank" style="display:block;" data-eid="qd_G121" data-qd_dd_p1="1"><img src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/0" title=""><span class="op-tag"></span></a>
-        </div>
-        
-        <div class="forum-info mb40">
-            <h3 class="lang">粉丝签到</h3>
-            <ol class="fansSign">
-                
-                    <li class="forum-people cf">
-                        <img src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/100(18)" class="head-img fr" alt="铁肩塞翁">
-                        <h4 class="ofe">铁肩塞翁</h4>
-                        <span class="gray">2019-03-09</span>
+        <div class="page-container" data-pagemax="7" data-page="1">
+            <div class="lbf-pagination">
+                <ul class="lbf-pagination-item-list">
+                    <li class="lbf-pagination-item"><!--可用lbf-pagination-prev-->
+                        <a th:href="${page} ne 1 ? './queryAll?bookid='+${books[0].bookid}+'&page='+${page-1} : 'javascript:;'" th:class="${page} ne 1 ? 'lbf-pagination-prev' : 'lbf-pageination-next lbf-pagination-disabled'">上一页</a>
                     </li>
-                
-            </ol>
+                    <li class="lbf-pagination-item">
+                        <a th:href="${page eq pagecount} ? 'javascript:;' : './queryAll?bookid='+${books[0].bookid}+'&page='+${page+1}" th:class="${page eq pagecount} ? 'lbf-pagination-prev  lbf-pagination-disabled' : 'lbf-pageination-next'">下一页</a>
+                    </li>
+                    <li class="lbf-pagination-item">
+                        <a href="javascript:;" id = "pagecount" class="lbf-pageination-next lbf-pagination-disabled" th:text="|第${page}页/共${pagecount}页|"></a>
+                    </li>
+                </ul>
+                <div class="lbf-pagination-jump">
+                    <input type="text" style="border: 1px solid gray;width:25px;text-align: center;" class="lbf-pagination-input" value="1" th:max="${pagecount}">
+                    <a href="javascript:;" class="lbf-pagination-go">GO</a>
+                </div>
+            </div>
         </div>
     </div>
     </div>
@@ -1605,75 +350,5 @@
         
     </div>
 </div>
-<script>
-    // 全局的通用数据都放g_data变量里h
-    var g_data = {};
-    // 环境变量，会按照环境选择性打log
-    g_data.envType = 'pro';
-    // 用作统计PV
-    g_data.pageId = 'qd_P_bc_all';
-    // 当前页面路由
-    g_data.domain = '//forum.qidian.com';
-    g_data.bid = '1014188809';
-    g_data.prefix = '';
-    g_data.pageType = 1;
-    g_data.forumId = '13062901703661303';
-    g_data.user = {"isLogin":true,"avatar":"//qidian.gtimg.com/qd/images/ico/default_user.0.2.png","nickName":"书友20190303160502500","userId":328774214,"userType":0,"guid":"854009831668","tucaoUrl":"https://support.qq.com/embed/app/2184?data=8688b2482faf6474acd6b47053daac0a98875d55fa895869f54d09056163b39cd3da4783b3b01df1cad0a3a29046ce6c1ed592457cb4085f9dd30c24c10aee0b944d60e04343cd2a1acb55aa2253ee4d2b36802ed3ea1a699104ae1952761464f5a16504b9ecd999922a374dd10bc21828af10fbce544f97e56fc6aaeced9478180883edfdf93dece10b0f562361c3b43f0268a6c6b05390427e6ea5adc9db66558d77caf94797242e9d1a231611611c331a3b270cbe6338359e4f5093573282"};
-    g_data.author = {"authorId":"403901564","authorName":"二厂厂长","authorImg":"//facepic.qidian.com/qd_face/349573/a403901564/100","ywGuid":"119098039373","guid":"119098039373"};
-</script>
-<script data-ignore="true" src="./作品讨论区《大神，来了》-二厂厂长-起点中文小说网_files/LBF.js.下载"></script>
-<script>
-    // LBF 配置
-    LBF.config({"paths":{"site":"//qidian.gtimg.com/qd/js","qd":"//qidian.gtimg.com/qd","common":"//qidian.gtimg.com/common/1.0.0"},"vars":{"theme":"//qidian.gtimg.com/qd/css"},"combo":true,"debug":false});
-    LBF.use(['lib.jQuery'], function ($) {
-        window.$ = $;
-    });
-</script>
-<script>
-    LBF.use(['monitor.SpeedReport', 'qd/js/component/login.a4de6.js', 'qd/js/forum/index.a0e8c.js' ], function (SpeedReport, Login, Index) {
-        // 页面逻辑入口
-        if(Login){
-            Login.init().always(function(){
-                Index && typeof Index === 'function' && new Index();
-            })
-        }
-        if(0 && 0 != ''){
-            $(window).on('load.speedReport', function () {
-                // speedTimer[onload]
-                speedTimer.push(new Date().getTime());
-                var f1 = 7718, // china reading limited's ID
-                        f2 = 0, // site ID
-                        f3 = 0; // page ID
-                // chrome & IE9 Performance API
-                SpeedReport.reportPerformance({
-                    flag1: f1,
-                    flag2: f2,
-                    flag3IE: f3,
-                    flag3Chrome: f3,
-                    rate:0.1,
-                    url: '//isdspeed.qidian.com/cgi-bin/r.cgi'
-                });
-                // common speedTimer:['dom ready', 'onload']
-                var speedReport = SpeedReport.create({
-                    flag1: f1,
-                    flag2: f2,
-                    flag3: f3,
-                    start: speedZero,
-                    rate:0.1,
-                    url: '//isdspeed.qidian.com/cgi-bin/r.cgi'
-                });
-                // chrome & IE9 Performance API range 1~19, common speedTimer use 20+
-                for (var i = 0; i < speedTimer.length; i++) {
-                    speedReport.add(speedTimer[i], i + 20)
-                }
-                // http://isdspeed.qq.com/cgi-bin/r.cgi?flag1=7718&flag2=224&flag3=1&1=38&2=38&…
-                speedReport.send();
-            })
-        }
-    });
-    speedTimer.push(new Date().getTime());
-</script>
-
-
-
-</body></html>
+</body>
+</html>

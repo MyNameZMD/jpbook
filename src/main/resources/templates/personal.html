@@ -752,6 +752,17 @@
         });
     }
 
+    function GetQueryString(name){
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return unescape(r[2]); return null;
+    };
+    var myurl=GetQueryString("key");
+    if (myurl == "i"){
+        alert(myurl);
+        h2();
+    }
+
     $("#u2").click(function () {
         for (var i=1; i<=10 ;i++){
             $("#u"+i).prop("class","");

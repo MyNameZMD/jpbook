@@ -108,7 +108,7 @@
   2、支持和鼓励作者的话
   3、有深度的讨论作品剧情、角色等"></textarea>
             <div class="bar cf">
-                <input class="fl mr20 cant" type="submit" value="发表">
+                <input class="fl mr20 cant" type="submit" disabled="disabled" value="发表">
                 <span class="textNum">0</span>/500
             </div>
         </form>
@@ -174,8 +174,10 @@
            $(".textNum").html($(this).val().length);
            if($(this).val().length < 5){
                 $(".fl.mr20").addClass("cant");
+               $("#sub").attr("disabled",true);
            }else{
                $(".fl.mr20").removeClass("cant");
+               $("#sub").attr("disabled",false);
            }
 
         });
