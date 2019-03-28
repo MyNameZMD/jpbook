@@ -14,10 +14,7 @@
 
 <link data-ignore="true" rel="shortcut icon" type="image/x-icon" href="https://qidian.gtimg.com/qd/favicon/qd_icon.c443c.ico">
 <link data-ignore="true" rel="Bookmark" type="image/x-icon" href="https://qidian.gtimg.com/qd/favicon/qd_icon.c443c.ico">
-
 <link rel="stylesheet" data-ignore="true" href="../css/emoji.c4e81.css">
-
-
 <link data-ignore="true" rel="stylesheet" href="../css/module.e710a.css">
 <link data-ignore="true" rel="stylesheet" href="../css/layout.5de0f.css">
 <link data-ignore="true" rel="stylesheet" href="../css/book_details.1baf2.css">
@@ -36,6 +33,18 @@
 </style>
     <script src="../js/jquery-3.3.1.js"></script>
     <script type="text/javascript">
+        function removeu(){
+            jQuery.ajax({
+                url:'/jpbook/login/quit',
+                success:function(data){
+                    jQuery(".sign-in").addClass("sign-in hidden");
+                    jQuery(".sign-out.hidden").addClass("sign-out");
+                    jQuery(".sign-in").removeClass("sign-in");
+                    jQuery(".sign-out.hidden").removeClass("sign-out hidden");
+                    window.location.reload()
+                }
+            });
+        }
         function showChapter(obj){
             $(obj).prop("class","j_catalog_block act");
             $(obj).prev().prop("class","");
@@ -49,33 +58,25 @@
             $("#xinxi").show();
         }
         function dianzan(obj,revid){
-            /*点赞时还需要判断是否已经是点过赞的了，样式点一次变一次；
-			点赞的总数放进变量中，从页面获取，如果是点过的就减一次
-			没有点过赞的就增加一次，变量随之改变*/
-            /*页面显示时要判断该评论该用户是否已经是点过赞的*/
-			/*如果没有用户登录的话就跳转至登录页面*/
             var z = parseInt($(obj).children('span').html());
 			$.ajax({
-				url:'./userExist',
+				url:'/jpbook/books/userExist',
 				type:'post',
 				datatype:'text',
 				success:function(data){
 					if(data == 0){
-					    alert('请先登录哦');
+                        window.location.href = '../login.html';
 					}else{
-                        /*点赞之前的样式 info-tab like-btn*/
-                        /*点赞之后的样式 info-tab like-btn act*/
-						/*查询该用户是否已经是点过赞的*/
 					    $.ajax({
 							url:'zanExist',
-							data:{'revid':revid},
+							data:{'revid':revid,'ztype':1},
 							datatype:'text',
 							success:function(data){
 								if(data == 0){
 								    /*没有点过赞 新增赞*/
 									$.ajax({
 										url:'addZan',
-										data:{'revid':revid},
+										data:{'revid':revid,'ztype':1},
 										datatype:'text',
 										success:function(data){
 											/*改变样式 点赞总数*/
@@ -115,21 +116,39 @@
 				}
 			});
 		}
-		function faties(bname,bid){
-            alert(1);
-			/*$.ajax({
+		function faties(bookid){
+			jQuery.ajax({
 				url:'./userExist',
-				type:'post',
-				datatype:'text',
 				success:function(data){
-				    if(1 == data){
-				        alert('请先登录！');
+				    if(0 == data){
+                        window.location.href = "../login.html";
 					}else{
-                        window.location.replace("http://www.baidu.com");
+				        window.close();
+                        window.open("/jpbook/books/queryBookByFatie?retype=1"+"&bookid="+bookid);
 					}
 				}
-			});*/
+			});
 		}
+        $(document).ready(function () {
+            $(".sign-in").mouseover(function () {
+                $(this).addClass("sign-in act");
+            });
+            $(".sign-in").mouseout(function () {
+                $(this).removeClass("act");
+            });
+            $(".site").mouseover(function () {
+                $(this).addClass("site act");
+            });
+            $(".site").mouseout(function () {
+                $(this).removeClass("act");
+            });
+			$(".site").nextAll().mouseover(function(){
+                $(this).addClass("act");
+			});
+            $(".site").nextAll().mouseout(function () {
+                $(this).removeClass("act");
+            });
+        });
     </script>
 
 
@@ -138,52 +157,37 @@
 	<div class="share-img">
 		<img src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/share.6aa92.png" width="300" height="300">
 	</div>
-
 	<div class="wrap">
 		<div id="pin-nav" class="pin-nav-wrap need-search" data-l1="40">
 			<div class="box-center cf">
 				<div class="nav-list site-nav fl">
 					<ul>
 						<li class="site"><a class="pin-logo"
-							href="https://www.qidian.com/" data-eid="qd_A43"><span></span></a>
+							href="booktype/queryAll" style = "font-size: 18px;font-family: 'Courier New', Courier, monospace">江派中文网</a>
+						</li>
+						<li><a href="https://www.qidian.com/xuanhuan" target="">玄幻</a></li>
+						<li><a href="https://www.qidian.com/dushi" target="">都市</a></li>
+						<li><a href="https://www.qidian.com/xianxia" target="">仙侠</a></li>
+						<li><a href="https://www.qidian.com/kehuan" target="">科幻</a></li>
+						<li><a href="https://www.qidian.com/youxi" target="">游戏</a></li>
+						<li><a href="https://www.qidian.com/lishi" target="">历史</a></li>
+						<li><a href="https://www.qidian.com/rank" target="_blank">排行</a></li>
+						<li class="more">
+							<a href="javascript:" id="top-nav-more" target="">
+								更多<span></span>
+							</a>
 							<div class="dropdown">
-								<a href="https://www.qdmm.com/" target="" data-eid="qd_A44">起点女生网</a>
-								<a href="http://chuangshi.qq.com/" target="" data-eid="qd_A45">创世中文网</a>
-								<a href="http://yunqi.qq.com/" target="" data-eid="qd_A46">云起书院</a>
-							</div></li>
-						<li><a href="https://www.qidian.com/xuanhuan" target=""
-							data-eid="qd_A47">玄幻</a></li>
-						<li><a href="https://www.qidian.com/dushi" target=""
-							data-eid="qd_A48">都市</a></li>
-						<li><a href="https://www.qidian.com/xianxia" target=""
-							data-eid="qd_A49">仙侠</a></li>
-						<li><a href="https://www.qidian.com/kehuan" target=""
-							data-eid="qd_A50">科幻</a></li>
-						<li><a href="https://www.qidian.com/youxi" target=""
-							data-eid="qd_A56">游戏</a></li>
-						<li><a href="https://www.qidian.com/lishi" target=""
-							data-eid="qd_A52">历史</a></li>
-						<li><a href="https://www.qidian.com/rank" target="_blank"
-							data-eid="qd_A53">排行</a></li>
-						<li class="more"><a href="javascript:" id="top-nav-more"
-							target="" data-eid="qd_A54">更多<span></span></a>
-							<div class="dropdown">
-								<a href="https://www.qidian.com/all" target="_blank"
-									data-eid="qd_A169">全部作品</a> <a
-									href="https://www.qidian.com/2cy" target="" data-eid="qd_A55">二次元</a>
-								<a href="https://www.qidian.com/qihuan" target=""
-									data-eid="qd_A51">奇幻</a> <a href="https://www.qidian.com/wuxia"
-									target="" data-eid="qd_A57">武侠</a> <a
-									href="https://www.qidian.com/lingyi" target=""
-									data-eid="qd_A58">悬疑灵异</a> <a
-									href="https://www.qidian.com/junshi" target=""
-									data-eid="qd_A59">军事</a> <a
-									href="https://www.qidian.com/xianshi" target=""
-									data-eid="qd_A60">现实</a> <a href="https://www.qidian.com/tiyu"
-									target="" data-eid="qd_A61">体育</a> <a
-									href="https://www.qidian.com/duanpian" target=""
-									data-eid="qd_A196">短篇</a>
-							</div></li>
+								<a href="https://www.qidian.com/all" target="_blank">全部作品</a>
+								<a href="https://www.qidian.com/2cy" target="">二次元</a>
+								<a href="https://www.qidian.com/qihuan" target="">奇幻</a>
+								<a href="https://www.qidian.com/wuxia" target="">武侠</a>
+								<a href="https://www.qidian.com/lingyi" target="">悬疑灵异</a>
+								<a href="https://www.qidian.com/junshi" target="">军事</a>
+								<a href="https://www.qidian.com/xianshi" target="">现实</a>
+								<a href="https://www.qidian.com/tiyu" target="">体育</a>
+								<a href="https://www.qidian.com/duanpian" target="">短篇</a>
+							</div>
+						</li>
 					</ul>
 				</div>
 				<div class="nav-list min-user fr">
@@ -198,29 +202,38 @@
 							</form>
 						</li>
 						<li class="line"></li>
-						<li class="sign-out"><a id="pin-login" href="javascript:"
-							data-eid="qd_A64">登录</a> <a class="reg"
-							href="https://passport.qidian.com/reg.html?appid=10&amp;areaid=1&amp;target=iframe&amp;ticket=1&amp;auto=1&amp;autotime=30&amp;returnUrl=https%3A%2F%2Fwww.qidian.com"
-							target="_blank">注册</a></li>
-						<li class="sign-in hidden"><a
-							href="https://me.qidian.com/Index.aspx" target="_blank"
-							data-eid="qd_A65"><i id="nav-user-name"></i><span></span></a>
-							<div class="dropdown">
-								<a href="https://me.qidian.com/msg/lists.aspx?page=1"
-									target="_blank" data-eid="qd_A66">消息(<i id="top-msg">0</i>)
-								</a> <a href="https://www.qidian.com/charge/meRedirect"
-									target="_blank" data-eid="qd_A67">充值</a> <a
-									href="https://me.qidian.com/Index.aspx" target="_blank"
-									data-eid="qd_A68">个人中心</a> <a
-									href="https://www.qidian.com/help/kf" target="_blank"
-									data-eid="qd_A69">客服中心</a> <a id="exit" href="javascript:"
-									data-eid="qd_A70">退出</a>
-							</div></li>
+						<li th:class="${session.users} ? 'sign-out hidden' : 'sign-out'">
+							<a id="pin-login" href="../login.html">登录</a>
+							<a class="reg" href="../register.html" target="_blank">注册</a>
+						</li>
+						<th:block th:if="${session}">
+							<th:block th:if="${session.users}">
+								<li th:class="${session.users[0] } ? 'sign-in' : 'sign-in hidden'">
+									<a href="../personal.html" target="_blank">
+										<span id = "uuid" style="display: none" th:text="${session.users[0].uuid}"></span>
+										<i id="nav-user-name" th:text="${session.users[0].uname}"></i>
+										<span></span>
+									</a>
+									<div class="dropdown">
+										<a href="https://me.qidian.com/msg/lists.aspx?page=1" target="_blank" data-eid="qd_A66">
+											消息(<i id="top-msg">0</i>)
+										</a>
+										<a href="https://www.qidian.com/charge/meRedirect" target="_blank">充值</a>
+										<a href="../personal.html" target="_blank">个人中心</a>
+										<a href="https://www.qidian.com/help/kf" target="_blank">客服中心</a>
+										<a id="exit" href="javascript:void(0);" onclick="removeu()">退出</a>
+									</div>
+								</li>
+							</th:block>
+						</th:block>
+
 						<li class="line"></li>
-						<li class="book-shelf" id="top-book-shelf"><a
-							href="https://me.qidian.com/bookCase/bookCase.aspx"
-							target="_blank" data-eid="qd_A63"><em class = "iconfont icon-book_icon"></em><i>我的书架
-							</i></a></li>
+						<li class="book-shelf" id="top-book-shelf">
+							<a th:href="${session.users} ? '../personal.html?key=i' : '../login.html'" target="_blank">
+								<em class = "iconfont icon-book_icon"></em>
+								<i>我的书架</i>
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -257,12 +270,7 @@
 			<div class="book-information cf" data-l1="2">
 				<div class="book-img">
 					<a class="J-getJumpUrl" id="bookImg" href="javascript:void(0)">
-						<th:block th:if="${queryBookById[0].icon} eq ''">
-							<img  src="../images/0.jpg"/>
-						</th:block>
-						<th:block th:if="${queryBookById[0].icon} neq ''">
-							<img th:src="${queryBookById[0].icon}"/>
-						</th:block>
+						<img th:src="${queryBookById[0].icon}"/>
 					</a>
 				</div>
 
@@ -283,7 +291,6 @@
 
 					<p class="intro" ></p>
 					<p>
-
 						<em>
 							<span th:text="${queryBookById[0].chapcount}"></span>
 						</em><cite>字</cite><i>|</i>
@@ -291,18 +298,18 @@
 						<span th:text="${queryBookById[0].cnum}"></span>
 						</em>
 						<cite>阅文总点击</cite><i>|</i>
-						<em>
+						<!--<em>
 							<span class="EpImtlYe"></span>
 						</em>
 
-						<cite>万会员周点击</cite><i>|</i>
+						<cite>万会员周点击</cite><i>|</i>-->
 						<em>
-							<span class="EpImtlYe"></span>
+							<span th:text="${queryBookById[0].zvote}"></span>
 						</em>
 						<cite>总推荐</cite><i>|</i>
 						<em>
-							<span class="EpImtlYe"></span>
-						</em><cite>周推荐</cite>
+							<span th:text="${queryBookById[0].mvote}"></span>
+						</em><cite>月推荐</cite>
 					</p>
 
 					<p>
@@ -375,7 +382,7 @@
                             </a>
                         </li>
 						<li class="j_discussion_block">
-                            <a class="lang" href="https://forum.qidian.com/index/12073675103859503" target="_blank">作品讨论
+                            <a class="lang" th:href="@{/reviewbook/queryAll(bookid=${queryBookById[0].bookid})}" target="_blank">作品讨论
                                 <i>
 							        <span id="J-discusCount" th:text="|(${queryBookById[0].reviewcount}条)|">(301条)</span>
                                 </i>
@@ -503,8 +510,8 @@
 									<div class="detail">
 										<p class="cf">
                                             <th:block th:if="${queryBookById[0].chapnum} gt 1">
-                                                <a class="blue" href="https://vipreader.qidian.com/chapter/1013432619/452316826"
-                                                   title="第二百六十九章 兽牙傀儡兵（210均订加更）" target="_blank"
+                                                <a class="blue" href="https://vipreader.qidian.com/chapter/1013432619/452316826" target="_blank"
+												   th:title="|第${queryBookById[0].chapnum}章  ${queryBookById[0].chapname}|"
                                                    th:text="|第${queryBookById[0].chapnum}章  ${queryBookById[0].chapname}|">
                                                 </a>
                                                 <i>·</i>
@@ -817,9 +824,8 @@
 					<div class="user-commentWrap" data-l1="8">
 						<div class="user-comment-wrap book-friend">
 							<div class="comment-head cf">
-								<h3 class="lang">
-									<a class="send blue j_forumBtn" href = ""
-									  >我要发帖
+								<h3 class="lang"><!--@{/books/fatie(retype=1,bookid=${queryBookById[0].bookid})}-->
+									<a class="send blue j_forumBtn" href = "javascript:void(0);" th:onclick="|faties(${queryBookById[0].bookid})|">我要发帖
 									</a>
 									<a class="comment-btn blue j_commentBtn hidden" id="goComment"
 										href="javascript:" data-comment="1" data-eid="qd_G33">我要评价
@@ -1240,43 +1246,16 @@
                                                             </h5>
                                                             <p class="info dib-wrap" data-id="1244484136">
                                                                 <span class="mr20" th:text="|${qr.commenttime}发布|">2019-02-15发布</span>
-                                                                <a href="https://forum.qidian.com/post/12073675103859503/1244484136"
+                                                                <a th:href="@{/reviewbook/queryById(bookid=${queryBookById[0].bookid},revid=${qr.revid})}"
                                                                    class="info-tab mr20" target="_blank">
                                                                     <i class="iconfont icon-xiaoxi"></i>
-                                                                    <span th:text="|${qr.rqcount}条回复|">1条回复</span>
+                                                                    <span th:text="|${qr.rqcount}条回复|"></span>
                                                                 </a>
-																<th:block th:if="${queryZanById.size()} eq 0">
-																	<a href="javascript:;" th:onclick="'javascript:dianzan(this,'+${qr.revid}+')'" class="info-tab like-btn">
-																		<i class="iconfont icon-dianzan"></i>
-																		<span th:text="|${qr.zan}赞|">4赞</span>
-																	</a>
-																</th:block>
-																<th:block th:if="${queryZanById.size()} gt 0">
-																	<th:block th:each="qz : ${queryZanById}">
-																		<th:block th:if="${qz.reviewid} eq ${qr.revid}">
-																			<th:block th:if="${qz.zstate} eq 0">
-																				<a href="javascript:;" th:onclick="'javascript:dianzan(this,'+${qr.revid}+')'" class="info-tab like-btn">
-																					<i class="iconfont icon-dianzan"></i>
-																					<span th:text="|${qr.zan}赞|">4赞</span>
-																				</a>
-																			</th:block>
-																			<th:block th:if="${qz.zstate} eq 1">
-																				<a href="javascript:;" th:onclick="'javascript:dianzan(this,'+${qr.revid}+')'" class="info-tab like-btn act">
-																					<i class="iconfont icon-dianzan"></i>
-																					<span th:text="|${qr.zan}赞|">4赞</span>
-																				</a>
-																			</th:block>
-																		</th:block>
-																		<th:block th:if="${qr.revid} ne ${qz.reviewid}">
-																			<th:block th:if="${qz.zstate} ne 0">
-																				<a href="javascript:;" th:onclick="'javascript:dianzan(this,'+${qr.revid}+')'" class="info-tab like-btn">
-																					<i class="iconfont icon-dianzan"></i>
-																					<span th:text="|${qr.zan}赞|">4赞</span>
-																				</a>
-																			</th:block>
-																		</th:block>
-																	</th:block>
-																</th:block>
+																<a href="javascript:;" th:onclick="'javascript:dianzan(this,'+${qr.revid}+')'"
+																   th:class="${qr.z} gt -1 ? 'info-tab like-btn act' : 'info-tab like-btn '">
+																	<i class="iconfont icon-dianzan"></i>
+																	<span th:text="|${qr.zan}赞|">4赞</span>
+																</a>
                                                             </p>
                                                         </div>
                                                     </li>

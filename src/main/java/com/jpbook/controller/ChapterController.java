@@ -1,9 +1,7 @@
 package com.jpbook.controller;
 
-import com.jpbook.entity.Books;
-import com.jpbook.entity.Booktype;
+
 import com.jpbook.entity.Chapter;
-import com.jpbook.service.BooksService;
 import com.jpbook.service.BuyrecordService;
 import com.jpbook.service.ChapterService;
 import com.jpbook.service.RollService;

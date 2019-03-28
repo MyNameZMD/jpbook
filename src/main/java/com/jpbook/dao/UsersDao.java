@@ -18,4 +18,11 @@ public interface UsersDao {
             "select chapid,count(buyid) count from statistics where buydate>#{param1} and buydate<#{param2} GROUP BY chapid) s2\n" +
             "where s1.chapid=s2.chapid and s1.uuid=#{param3}")
     List<Map<String,Object>> getRemuneration(String startTime,String endTime,Integer uuid);
+
+    /**
+     * 模糊查询作者
+     * @param uname
+     * @return
+     */
+    public List<Map<String,Object>> likeQueryUsers(String uname);
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jpbook.dao.RbreplyDao">
+    <insert id="add" parameterType="com.jpbook.entity.Rbreply">
+        insert into rbreply values(null,#{revid},#{replytype},#{repcontent},#{from_uuid},#{to_uuid},now())
+    </insert>
+    <select id="queryNewRbreply" parameterType="Integer" resultType="map">
+        select *,(select uname from users where uuid = from_uuid) from_uname,(select uname from users where uuid = to_uuid) to_uname from rbreply where replytype = #{param1} and from_uuid = #{param2} order by repid desc limit 1
+    </select>
+</mapper>

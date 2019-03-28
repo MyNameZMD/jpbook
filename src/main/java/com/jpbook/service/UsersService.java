@@ -13,4 +13,13 @@ public class UsersService {
     @Resource
     UsersDao ud;
     public List<Map<String,Object>> getRemuneration(String startTime,String endTime,Integer uuid){return  ud.getRemuneration(startTime,endTime,uuid);};
+
+    /**
+     * 模糊查询作者
+     * @param uname
+     * @return
+     */
+    public List<Map<String,Object>> likeQueryUsers(String uname){
+        return ud.likeQueryUsers(uname);
+    }
 }

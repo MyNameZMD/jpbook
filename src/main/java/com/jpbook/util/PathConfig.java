@@ -12,6 +12,8 @@ public class PathConfig extends WebMvcConfigurationSupport {
         // 所有静态济资源中的图片都放到磁盘上，static下只剩js、css这些了
         registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
         registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
+        registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
+        registry.addResourceHandler("/layui/**").addResourceLocations("classpath:/static/layui/");
         registry.addResourceHandler("/img/**").addResourceLocations("file:///F:/PICS/");
     }
 }

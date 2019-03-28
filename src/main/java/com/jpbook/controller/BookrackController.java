@@ -2,15 +2,11 @@ package com.jpbook.controller;
 
 import com.jpbook.service.BookrackService;
 import com.jpbook.util.Gs;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 

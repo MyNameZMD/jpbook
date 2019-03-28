@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jpbook.dao.ReviewbookDao">
+
+    <insert id="add" parameterType="com.jpbook.entity.Reviewbook">
+        insert into reviewbook values(null,#{revvlue},now(),#{uuid},#{retype},#{bookid})
+    </insert>
+    <select id="queryAll" resultType="map" parameterType="Integer">
+        select s1.*,ifnull(s2.zan,0) zan,ifnull(s3.uuid,-1) z
+        from
+        (select u.uuid,u.uname,u.pen,ifnull(u.icon,'../images/0.jpg') icon,rb.revvlue,count(rp.revid) rqcount,rb.commenttime,rb.revid from users u left join reviewbook rb on u.uuid = rb.uuid left join rbreply rp on rb.revid = rp.revid
+        where rb.retype = 1 and rb.bookid = #{param1}
+        group by rb.revid) s1 left join
+        (select reviewid,count(zanid) zan from zan where zantype=1 and zstate = 1 GROUP BY reviewid) s2 on s2.reviewid=s1.revid
+        left join (select * from zan where uuid = #{param3} and zantype = 1 and zstate = 1) s3 on s3.reviewid = s1.revid
+        order by s1.revid desc
+        <if test="param2 != null">
+            limit #{param2},5
+        </if>
+    </select>
+    <select id="queryByRevid" parameterType="Integer" resultType="map">
+        select s1.*,ifnull(s2.zan,0) zan,ifnull(s3.uuid,-1) z
+        from
+        (select u.uuid,u.uname,u.pen,ifnull(u.icon,'../images/0.jpg') icon,rb.revvlue,count(rp.revid) rqcount,rb.commenttime,rb.revid from users u left join reviewbook rb on u.uuid = rb.uuid left join rbreply rp on rb.revid = rp.revid
+        where rb.retype = 1 and rb.revid = #{param1}
+        group by rb.revid) s1 left join
+        (select reviewid,count(zanid) zan from zan where zantype=1 and zstate = 1 GROUP BY reviewid) s2 on s2.reviewid=s1.revid
+        left join (select * from zan where uuid = #{param2} and zantype = 1 and zstate = 1) s3 on s3.reviewid = s1.revid
+        order by s1.revid desc
+    </select>
+    <select id="queryById" resultType="map" parameterType="Integer">
+        select s1.*,ifnull(s2.zan,0) zan,ifnull(s3.uuid,-1) z from
+        (select u.uuid,u.uname,rb.revid,ifnull(rp.repid,-1) repid,ifnull(u.icon,'../images/0.jpg') icon,rp.repcontent,rp.replytype,(select uname from users where uuid = rp.from_uuid) from_uname,rp.reptime from users u left join reviewbook rb on u.uuid = rb.uuid left join rbreply rp on rp.revid = rb.revid where rb.revid = #{param1} ) s1 left join
+        (select reviewid,count(zanid) zan from zan where zantype=2 and zstate = 1 GROUP BY reviewid) s2 on s2.reviewid=s1.repid
+        left join (select * from zan where uuid = #{param2} and zantype = 2 and zstate = 1) s3 on s3.reviewid = s1.repid
+        order by s1.repid desc,s1.reptime
+        <if test="param3 != null">
+            limit #{param3},5
+        </if>
+    </select>
+</mapper>
