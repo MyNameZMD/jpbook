@@ -25,6 +25,8 @@ public class ChapterController {
     BuyrecordService bs;
     @Autowired
     BrowseService brs;
+    @Autowired
+    ClickService cls;
     @RequestMapping("save")
     @ResponseBody
     public int save(Chapter chapter,String content){
@@ -158,6 +160,13 @@ public class ChapterController {
         List<Users> users1 = (List<Users>)session.getAttribute("users");
         if (users1!=null){
             brs.addBrowse(new Browse(users1.get(0).getUuid(),chapid));
+            Map<String, Object> clickByUuidAndChapid = cls.getClickByUuidAndChapid(users1.get(0).getUuid(), chapid);
+
+            if (clickByUuidAndChapid==null){
+                cls.addNewClick(users1.get(0).getUuid(), chapid);
+            }else{
+                cls.upNewClick(users1.get(0).getUuid(), chapid);
+            }
         }
         List<Map<String, Object>> byBookid = cs.getChapter(chapid);
         System.out.println(chapid+"---"+byBookid);
