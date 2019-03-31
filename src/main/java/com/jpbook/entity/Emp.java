@@ -7,6 +7,7 @@ public class Emp {
 	private String ephone;
 	private String eidcard;
 	private Integer position;
+
 	public Integer getEid() {
 		return eid;
 	}

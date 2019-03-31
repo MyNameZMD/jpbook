@@ -22,4 +22,5 @@ public class BooktypeService {
     public List<Booktype> query(){
         return bd.query();
     }
+    public List<Map<String,Object>> queryTypeAndBooks(){return bd.queryTypeAndBooks();}
 }

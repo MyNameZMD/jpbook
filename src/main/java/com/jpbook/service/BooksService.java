@@ -93,4 +93,5 @@ public class BooksService {
     public List<Map<String,Object>> getMonthAndRecAndReward(Integer bookid){return bd.getMonthAndRecAndReward(bookid);}
     public List<Map<String,Object>> queryMonthAndRec(Integer bookid){return bd.queryMonthAndRec(bookid);}
     public List<Map<String,Object>> queryReward(Integer bookid){return bd.queryReward(bookid);}
+    public Integer bookEnd(Integer bookid){return bd.bookEnd(bookid);}
 }

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jpbook.dao.BackDao">
+
+    <select id="count" resultType="Integer" statementType="STATEMENT">
+        select count(*) s from ${_parameter}
+    </select>
+
+    <select id="novelquery" parameterType="com.jpbook.entity.LayuiPage" resultType="map">
+        select b.*,br.*,u.*,n1.sum recsum,n2.sum monthsum,chap.chapcount,(case b.bookstate when 0 then '连载' else '完本' end ) state
+        from books b,booktype br,users u,
+        (select b.bookid,IFNULL(sum(v.votenum),0) sum from books b left join (select bookid,votenum from vote where wtid=1) v on b.bookid=v.bookid  GROUP BY b.bookid
+        ) n1,
+        (select b.bookid,IFNULL(sum(v.votenum),0) sum from books b left join (select bookid,votenum from vote where wtid=2) v on b.bookid=v.bookid  GROUP BY b.bookid
+        ) n2,
+        (select bb.bookid,ifnull(sum(cc.chapcount)/10000,0) chapcount
+        from books bb left join roll rr on bb.bookid=rr.bookid left join chapter cc
+        on rr.rollid = cc.rollid group by bb.bookid) chap
+        where b.btid=br.btid and b.uuid=u.uuid and b.bookid = n1.bookid
+        and b.bookid=n2.bookid and chap.bookid=b.bookid
+        and (b.bookname like concat('%',#{searchContent},'%') or u.pen like concat('%',#{searchContent},'%'))
+        limit #{page},#{limit}
+    </select>
+
+    <select id="novelCount" parameterType="String" resultType="Integer">
+        select count(*)
+        from books b,booktype br,users u,
+        (select b.bookid,IFNULL(sum(v.votenum),0) sum from books b left join (select bookid,votenum from vote where wtid=1) v on b.bookid=v.bookid  GROUP BY b.bookid
+        ) n1,
+        (select b.bookid,IFNULL(sum(v.votenum),0) sum from books b left join (select bookid,votenum from vote where wtid=2) v on b.bookid=v.bookid  GROUP BY b.bookid
+        ) n2,
+        (select bb.bookid,ifnull(sum(cc.chapcount)/10000,0) chapcount
+        from books bb left join roll rr on bb.bookid=rr.bookid left join chapter cc
+        on rr.rollid = cc.rollid group by bb.bookid) chap
+        where b.btid=br.btid and b.uuid=u.uuid and b.bookid = n1.bookid
+        and b.bookid=n2.bookid and chap.bookid=b.bookid
+        and (b.bookname like concat('%',#{searchContent},'%') or u.pen like concat('%',#{searchContent},'%'))
+    </select>
+
+
+    <select id="userquery" parameterType="com.jpbook.entity.LayuiPage" resultType="map">
+        select * from users limit #{page},#{limit}
+    </select>
+
+    <select id="authorquery" parameterType="com.jpbook.entity.LayuiPage" resultType="map">
+        select *,count(u.uuid) num from users u,books b
+        where u.uuid=b.uuid and pen!='' group by u.uuid limit #{page},#{limit}
+    </select>
+
+    <select id="booksincome" resultType="map">
+        SELECT s3.*,IFNULL(d.rewardsum,0) rewardsum from
+        (SELECT s2.*,IFNULL(c.monthsum,0) monthsum from
+        (select s1.*,IFNULL(b.recsum,0) recsum from
+        (select bs.bookid,bs.bookname,left(IFNULL(a.remuneration,0),LOCATE('.',IFNULL(a.remuneration,0))-1) remuneration from books bs LEFT JOIN (
+        select s1.bookid,(s1.chapcount/200*s2.count) remuneration from
+        (select bs.uuid,bs.bookid,bs.bookname,bs.btid,bs.bookstate,bs.createtime,bs.icon,
+        bs.sex,bs.bookreferral,r.rollid,r.rollname,r.rollnum,r.updatetime rollupdatetime,
+        c.chapid,c.chapvalue,c.chapnum,c.chapmoney,c.chapstate,c.chaptime,c.updatetime chapupdatetime,
+        c.url,c.chapsum,c.chapname,c.chapcount,u.uname
+        from books bs,roll r,chapter c,users u
+        where bs.bookid=r.bookid and r.rollid=c.rollid and bs.uuid=u.uuid) s1,(
+        select chapid,count(buyid) count from statistics  GROUP BY bookid) s2
+        where s1.chapid=s2.chapid ) a on bs.bookid=a.bookid) s1 LEFT JOIN
+        (select bookid,sum(votenum) recsum from vote where wtid=1 GROUP BY bookid) b on s1.bookid=b.bookid ) s2 LEFT JOIN
+        (select bookid,sum(votenum) monthsum from vote where wtid=2 GROUP BY bookid) c on s2.bookid=c.bookid) s3 LEFT JOIN
+        (SELECT bookid,sum(rewanum) rewardsum from reward GROUP BY bookid) d on s3.bookid=d.bookid
+    </select>
+
+    <select id="homepage" resultType="map">
+        select count(*) usernum,(select count(*) from users where pen!='') authornum  from users;
+    </select>
+
+    <select id="deal" resultType="map">
+        select s1.*,s2.*,s3.*,s4.*,s5.*  from
+        (select sum(money)m1 from recharge where to_days(topuptime) = to_days(now())) s1,
+        (select sum(money)m2 from recharge where to_days(now()) - to_days(topuptime)=1) s2,
+        (select sum(money)m3 from recharge where yearweek(date_format(topuptime,'%Y-%m-%d'))= yearweek(now())) s3,
+        (select sum(money)m4 from recharge where date_format(topuptime,'%Y%m') = date_format(curdate(),'%Y%m')) s4,
+        (select sum(money)m5 from recharge)s5
+    </select>
+
+
+</mapper>

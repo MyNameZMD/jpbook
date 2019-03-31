@@ -16,4 +16,6 @@ public interface LoginDao {
 
     public Integer editsignlong(Integer signlong,Integer uuid);
 
+    public Integer editwallet(Integer walnum,Integer uuid);
+
 }

@@ -138,7 +138,16 @@ public interface BooksDao {
      */
     public List<Map<String,Object>> likeBooks(String kw,Integer page,Integer limit,String sort);
 
-    @Select("select * from books bk left join roll r on bk.bookid=r.bookid left join chapter c on r.rollid=c.rollid LEFT JOIN booktype bt on bk.btid=bt.btid where bk.uuid=#{uuid} GROUP BY bk.bookname")
+    @Select("select bs.*,bbb.*,bt.btname,IFNULL(br.count,0) count  from books bs LEFT JOIN\n" +
+            "(select a.* from \n" +
+            "(select bs.bookid,c.* from chapter c,roll r,books bs where c.rollid=r.rollid and bs.bookid=r.bookid) a,\n" +
+            "(select b.bookid,max(b.chaptime)time from  \n" +
+            "(select b.bookid,c.chapname,c.chaptime,c.chapid \n" +
+            "from books b,roll r,chapter c\n" +
+            "where b.bookid=r.bookid and r.rollid=c.rollid \n" +
+            "and b.uuid = #{uuid} and c.chapstate=1 order by c.chaptime desc) b\n" +
+            "group by b.bookid) bb where a.bookid=bb.bookid and a.chaptime=bb.time) bbb on bs.bookid=bbb.bookid INNER JOIN booktype bt on bs.btid=bt.btid LEFT JOIN\n" +
+            "(select bookid,count(*) count from bookrack GROUP BY bookid) br on bs.bookid=br.bookid")
     List<Map<String,Object>> queryByUuid(Users u);
     @Insert("insert into books(bookname,uuid,btid,bookstate,createtime,url,icon,sex,bookreferral) values(#{bookname},#{uuid},#{btid},0,SYSDATE(),#{url},#{icon},#{sex},#{bookreferral});")
     Integer add(Books books);
@@ -174,4 +183,6 @@ public interface BooksDao {
     List<Map<String,Object>> queryMonthAndRec(Integer bookid);
     @Select("select r.rewatime time,r.bookid,u.uname,2 type,r.rewanum num,'起点币' name from reward r,users u where r.uuid=u.uuid and r.bookid=#{bookid};")
     List<Map<String,Object>> queryReward(Integer bookid);
+    @Update("update books set bookstate=1 where bookid=#{bookid}\n")
+    Integer bookEnd(Integer bookid);
 }

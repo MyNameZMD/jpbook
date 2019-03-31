@@ -16,10 +16,10 @@
     </select>
 
     <insert id="def1" parameterType="Integer">
-        insert into wallet values(null,#{uuid},1,0);
+        insert into wallet values(null,#{uuid},1,0,now());
     </insert>
     <insert id="def2" parameterType="Integer">
-        insert into wallet values(null,#{uuid},2,0);
+        insert into wallet values(null,#{uuid},2,0,now());
     </insert>
 
 </mapper>

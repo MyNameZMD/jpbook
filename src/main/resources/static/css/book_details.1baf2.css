@@ -239,21 +239,21 @@ h3.wrap-title a .iconfont {
   width: 60px;
   height: 29px;
   animation: petal 6s 1s infinite ease-out;
-  background: url(../images/petal_1.79a58.png) no-repeat
+  background: url(/qd/images/book_details/petal_1.79a58.png) no-repeat
 }
 .top-bg-op-box .box-center .petal.p2 {
   right: 300px;
   width: 44px;
   height: 29px;
   animation: petal 5.5s 2s infinite ease-out;
-  background: url(../images/petal_2.9c88f.png) no-repeat
+  background: url(/qd/images/book_details/petal_2.9c88f.png) no-repeat
 }
 .top-bg-op-box .box-center .petal.p3 {
   right: 500px;
   width: 32px;
   height: 20px;
   animation: petal 4.5s 1.5s infinite ease-out;
-  background: url(../images/petal_3.67c98.png) no-repeat
+  background: url(/qd/images/book_details/petal_3.67c98.png) no-repeat
 }
 .top-bg-op-box .box-center .btn {
   position: absolute;
@@ -263,7 +263,7 @@ h3.wrap-title a .iconfont {
   width: 222px;
   height: 76px;
   animation: pulse 1.5s infinite;
-  background: url(../images/btn.0.2.00bd4.png) no-repeat
+  background: url(/qd/images/book_details/btn.0.2.00bd4.png) no-repeat
 }
 @keyframes petal {
   0% {
@@ -372,10 +372,10 @@ h3.wrap-title a .iconfont {
   height: 120px
 }
 .border-shadow span:first-child {
-  background: url(../images/shadow_slider.236f3.png) 0 0 no-repeat
+  background: url(/qd/images/book_details/shadow_slider.236f3.png) 0 0 no-repeat
 }
 .border-shadow span:first-child + span {
-  background: url(../images/shadow_slider.236f3.png) -2px 0 no-repeat
+  background: url(/qd/images/book_details/shadow_slider.236f3.png) -2px 0 no-repeat
 }
 .book-detail-wrap {
   position: relative;
@@ -396,7 +396,7 @@ h3.wrap-title a .iconfont {
   right: -4px;
   width: 65px;
   height: 65px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -79px -82px;
   background-size: 335px
@@ -1101,7 +1101,7 @@ h3.wrap-title a .iconfont {
 .fans-interact dd .icon-box.month span {
   width: 36px;
   height: 52px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -299px 0;
   background-size: 335px
@@ -1112,7 +1112,7 @@ h3.wrap-title a .iconfont {
 .fans-interact dd .icon-box.rec span {
   width: 36px;
   height: 52px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -299px -54px;
   background-size: 335px
@@ -1125,7 +1125,7 @@ h3.wrap-title a .iconfont {
   width: 40px;
   height: 40px;
   margin-left: -20px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -146px -222px;
   background-size: 335px
@@ -1231,7 +1231,7 @@ h3.wrap-title a .iconfont {
   width: 104px;
   height: 62px;
   margin: 20px auto;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -87px 0;
   background-size: 335px
@@ -1290,7 +1290,7 @@ h3.wrap-title a .iconfont {
 .fans-interact .fans-dynamic li em.money {
   width: 14px;
   height: 14px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -320px -188px;
   background-size: 335px
@@ -1299,7 +1299,7 @@ h3.wrap-title a .iconfont {
   width: 10px;
   height: 14px;
   margin-right: 2px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -323px -164px;
   background-size: 335px
@@ -1308,7 +1308,7 @@ h3.wrap-title a .iconfont {
   width: 10px;
   height: 14px;
   margin-right: 2px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -325px -138px;
   background-size: 335px
@@ -1430,7 +1430,7 @@ h3.wrap-title a .iconfont {
   bottom: -8px;
   width: 55px;
   height: 44px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -66px -156px;
   background-size: 335px
@@ -1477,7 +1477,7 @@ h3.wrap-title a .iconfont {
   width: 77px;
   height: 72px;
   margin: 80px auto 20px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: 0 -82px;
   background-size: 335px
@@ -1521,7 +1521,7 @@ h3.wrap-title a .iconfont {
   height: 11px;
   margin: -3px 0 0 5px;
   vertical-align: middle;
-  background-image: url(../images/score_min.2e8bb.png)
+  background-image: url(/qd/images/book_details/score_min.2e8bb.png)
 }
 .user-comment-wrap .comment-list dd .comment-info h6 span.star5 {
   background-position: 0 0
@@ -1619,7 +1619,7 @@ h3.wrap-title a .iconfont {
   width: 85px;
   height: 80px;
   margin: 80px auto 20px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: 0 0;
   background-size: 335px
@@ -1670,7 +1670,7 @@ h3.wrap-title a .iconfont {
   width: 45px;
   height: 44px;
   height: 45px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -100px -222px;
   background-size: 335px
@@ -1803,7 +1803,7 @@ h3.wrap-title a .iconfont {
 .author-state .info-wrap .god-light.lv1 {
   width: 18px;
   height: 16px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -129px -64px;
   background-size: 335px
@@ -1811,7 +1811,7 @@ h3.wrap-title a .iconfont {
 .author-state .info-wrap .god-light.lv2 {
   width: 19px;
   height: 16px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -299px -188px;
   background-size: 335px
@@ -1819,7 +1819,7 @@ h3.wrap-title a .iconfont {
 .author-state .info-wrap .god-light.lv3 {
   width: 19px;
   height: 16px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -299px -206px;
   background-size: 335px
@@ -1827,7 +1827,7 @@ h3.wrap-title a .iconfont {
 .author-state .info-wrap .god-light.lv4 {
   width: 19px;
   height: 16px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -299px -224px;
   background-size: 335px
@@ -1873,7 +1873,7 @@ h3.wrap-title a .iconfont {
   width: 40px;
   height: 16px;
   margin-left: -19px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -87px -64px;
   background-size: 335px
@@ -1946,7 +1946,7 @@ h3.wrap-title a .iconfont {
 .author-state .work-state li span.book {
   width: 48px;
   height: 48px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -193px -80px;
   background-size: 335px
@@ -1954,7 +1954,7 @@ h3.wrap-title a .iconfont {
 .author-state .work-state li span.word {
   width: 48px;
   height: 48px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -249px -150px;
   background-size: 335px
@@ -1962,7 +1962,7 @@ h3.wrap-title a .iconfont {
 .author-state .work-state li span.coffee {
   width: 48px;
   height: 48px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -50px -222px;
   background-size: 335px
@@ -2035,7 +2035,7 @@ h3.wrap-title a .iconfont {
   left: 0;
   width: 44px;
   height: 44px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -146px -82px;
   background-size: 335px
@@ -2308,7 +2308,7 @@ h3.wrap-title a .iconfont {
 .famous-fans-list .rank-list li .fans-img .fans-level.icon-fans-first {
   width: 48px;
   height: 20px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -249px -200px;
   background-size: 335px
@@ -2316,7 +2316,7 @@ h3.wrap-title a .iconfont {
 .famous-fans-list .rank-list li .fans-img .fans-level.icon-fans-second {
   width: 48px;
   height: 19px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: 0 -272px;
   background-size: 335px
@@ -2324,7 +2324,7 @@ h3.wrap-title a .iconfont {
 .famous-fans-list .rank-list li .fans-img .fans-level.icon-fans-third {
   width: 52px;
   height: 20px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -193px -130px;
   background-size: 335px
@@ -2332,7 +2332,7 @@ h3.wrap-title a .iconfont {
 .famous-fans-list .rank-list li .fans-img .fans-level.icon-fans-fourth {
   width: 50px;
   height: 20px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -188px -222px;
   background-size: 335px
@@ -2340,7 +2340,7 @@ h3.wrap-title a .iconfont {
 .famous-fans-list .rank-list li .fans-img .fans-level.icon-fans-fifth {
   width: 50px;
   height: 20px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -240px -222px;
   background-size: 335px
@@ -2399,7 +2399,7 @@ h3.wrap-title a .iconfont {
   width: 16px;
   height: 14px;
   margin-left: 10px;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -167px -64px;
   background-size: 335px
@@ -2607,7 +2607,7 @@ h3.wrap-title a .iconfont {
   transition: right ease-out .5s;
   text-align: center;
   color: #bf2c24;
-  background-image: url(../images/sprite.385d7.png);
+  background-image: url(/qd/images/book_details/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -123px -156px;
   background-size: 335px
@@ -2781,12 +2781,12 @@ h3.wrap-title a .iconfont {
   color: #a6a6a6;
   border-bottom: 1px solid #e6e6e6
 }
-input[type=checkbox] {
+/*input[type=checkbox] {
   position: absolute;
   top: 14px;
   clip: rect(0,0,0,0);
   opacity: 0
-}
+}*/
 input[type=checkbox]:hover {
   cursor: pointer
 }
@@ -3121,19 +3121,19 @@ label:hover b {
 (min-device-pixel-ratio:1.3),
 (min-resolution:1.3dppx) {
   .border-shadow span:first-child {
-    background: url(../images/shadow_slider_2x.23023.png) 0 0 no-repeat;
+    background: url(/qd/images/book_details/shadow_slider_2x.23023.png) 0 0 no-repeat;
     background-size: cover
   }
   .border-shadow span:first-child + span {
-    background: url(../images/shadow_slider_2x.23023.png) -2px 0 no-repeat;
+    background: url(/qd/images/book_details/shadow_slider_2x.23023.png) -2px 0 no-repeat;
     background-size: cover
   }
   .border-shadow.subscribe span:first-child {
-    background: url(../images/s_shadow_left_2x.62e13.png);
+    background: url(/qd/images/book_details/s_shadow_left_2x.62e13.png);
     background-size: cover
   }
   .border-shadow.subscribe span:first-child + span {
-    background: url(../images/s_shadow_right_2x.39cb1.png);
+    background: url(/qd/images/book_details/s_shadow_right_2x.39cb1.png);
     background-size: cover
   }
   .author-state .author-photo span,
@@ -3144,14 +3144,14 @@ label:hover b {
   .fans-interact .fans-dynamic li em,
   .fans-interact dd .icon-box span,
   .volume h3 .subscribe:hover strong {
-    background-image: url(../images/sprite_2x.558e8.png)!important
+    background-image: url(/qd/images/book_details/sprite_2x.558e8.png)!important
   }
   .user-level,
   .vote-popup-wrap .popup-content .vote-complete .complete-img {
     background-image: url(/qd/images/common/common_sprite_2x.af3ed.png)!important
   }
   .user-comment-wrap .comment-list dd .comment-info h6 span {
-    background-image: url(../images/score_min_2x.8c552.png);
+    background-image: url(/qd/images/book_details/score_min_2x.8c552.png);
     background-size: 100%
   }
   .catalog-content-wrap .no-data .null {
@@ -3169,12 +3169,12 @@ label:hover b {
   .famous-fans-list .rank-list li .fans-img .fans-level.icon-fans-fourth,
   .famous-fans-list .rank-list li .fans-img .fans-level.icon-fans-second,
   .famous-fans-list .rank-list li .fans-img .fans-level.icon-fans-third {
-    background-image: url(../images/sprite_2x.558e8.png)
+    background-image: url(/qd/images/book_details/sprite_2x.558e8.png)
   }
   .break-rules-report .icon-warning,
   .discuss-list li.qd-game .qd-game-wrap .user-photo,
   .fans-interact .fans-dynamic .no-data span {
-    background-image: url(../images/sprite_2x.558e8.png)
+    background-image: url(/qd/images/book_details/sprite_2x.558e8.png)
   }
 }
 @media (max-width:2560px) {

@@ -2,6 +2,7 @@ package com.jpbook.controller;
 
 import com.jpbook.entity.Books;
 import com.jpbook.entity.Roll;
+import com.jpbook.entity.Users;
 import com.jpbook.service.BooksService;
 import com.jpbook.service.RollService;
 import com.jpbook.util.FileUtil;
@@ -58,5 +59,11 @@ public class RollController {
     public List<Roll> queryAllCatalog(Integer bookid){
         List<Roll> catalog = rs.queryAllAndChapter(bookid);
         return catalog;
+    }
+    @RequestMapping("queryMoneyRoll")
+    @ResponseBody
+    public List<Map<String,Object>> queryMoneyRoll(Integer bookid,HttpSession session){
+        List<Users> users1 = (List<Users>)session.getAttribute("users");
+        return rs.queryMoneyRoll(bookid,users1.get(0).getUuid());
     }
 }

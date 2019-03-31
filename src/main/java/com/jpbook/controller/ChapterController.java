@@ -141,14 +141,14 @@ public class ChapterController {
     }
     @RequestMapping("sentsave")
     @ResponseBody
-    public void sentsave(Chapter chapter,String content){
-        System.out.println(chapter);
+    public void sentsave(Chapter chapter,String content,String oldname){
         List<Map<String, Object>> byChapname = cs.getByChapid(chapter.getChapid());
         String url = rs.geturl(Integer.parseInt(byChapname.get(0).get("rollid").toString()));
         chapter.setChapcount(content.length());
         chapter.setChapstate(1);
         chapter.setChapnum(0);
         FileUtil.write(url+"\\"+chapter.getChapname()+".txt",content);
+        FileUtil.delPaper("f:\\\\books\\\\"+url+"\\\\"+oldname+".txt");
         chapter.setUrl(url+"\\\\"+chapter.getChapname()+".txt");
         System.out.println(chapter);
 
@@ -192,5 +192,15 @@ public class ChapterController {
         System.out.println("informationByChapid"+informationByChapid);
         model.addAttribute("ibc",informationByChapid);
         return "lookBook";
+    }
+    @RequestMapping("getBookAllMoney")
+    @ResponseBody
+    public Map<String,Object> getBookAllMoney(Integer bookid,HttpSession session){
+        List<Users> users1 = (List<Users>)session.getAttribute("users");
+        Integer uuid=-1;
+        if (users1!=null){
+            uuid=users1.get(0).getUuid();
+        }
+        return cs.getBookAllMoney(bookid,uuid);
     }
 }

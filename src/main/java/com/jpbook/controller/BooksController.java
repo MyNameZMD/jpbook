@@ -1,5 +1,6 @@
 package com.jpbook.controller;
 
+import com.alipay.api.domain.SsdataFindataOperatorUserinfoCertifyModel;
 import com.jpbook.entity.Users;
 import com.jpbook.entity.Zan;
 import com.jpbook.service.BooksService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -60,7 +63,15 @@ public class BooksController {
         m.addAttribute("queryZanById",bs.queryZanById(uuid));
         return "book";
     }
-
+    @RequestMapping("getMoneyBookByBookid")
+    public String getMoneyBookByBookid(Model m, Integer bookid,HttpSession session){
+        List<Users> users = (List<Users>)session.getAttribute("users");
+        if(null == users){
+            return "redirect:/login";
+        }
+        m.addAttribute("queryBookById",bs.queryBookById(bookid));
+        return "take";
+    }
     @RequestMapping("userExist")
     @ResponseBody
     public Integer userExist(HttpSession session){
@@ -263,4 +274,16 @@ public class BooksController {
         });
         return maps;
     }
+    @RequestMapping("download")
+    @ResponseBody
+    public void download(HttpServletRequest request, HttpServletResponse response,String path){
+        System.out.println(path);
+    }
+    @RequestMapping("bookEnd")
+    @ResponseBody
+    public Integer bookEnd(Integer bookid){
+        return bs.bookEnd(bookid);
+    }
 }
+
+

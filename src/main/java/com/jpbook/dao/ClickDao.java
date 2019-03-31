@@ -14,6 +14,6 @@ public interface ClickDao {
     Map<String,Object>  getClickByUuidAndChapid(Integer uuid,Integer chapid);
     @Insert("insert into click(bookid,uuid,clicktime,cnum) VALUES((select bs.bookid from books bs,roll r,chapter c where bs.bookid=r.bookid and r.rollid=c.rollid and c.chapid=#{param2}),#{param1},SYSDATE(),1)\n")
     Integer addNewClick(Integer uuid,Integer chapid);
-    @Update("update click set cnum=cnum+1,clicktime=SYSDATE() where uuid=#{param1} and bookid=(select bs.bookid from books bs,roll r,chapter c where bs.bookid=r.bookid and r.rollid=c.rollid and c.chapid=#{param2})\n")
+    @Update("update click set cnum=cnum+1-(case when clicktime=SYSDATE() then 1 else 0 end),clicktime=SYSDATE() where uuid=#{param1} and bookid=(select bs.bookid from books bs,roll r,chapter c where bs.bookid=r.bookid and r.rollid=c.rollid and c.chapid=#{param2})\n")
     Integer upNewClick(Integer uuid,Integer chapid);
 }

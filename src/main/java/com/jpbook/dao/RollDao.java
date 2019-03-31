@@ -26,4 +26,5 @@ public interface RollDao {
     List<Roll> queryAllAndChapter(Integer bookid);
     @Update("UPDATE roll r set url=CONCAT((SELECT b.url FROM books b where b.bookid=r.bookid),'\\\\\\\\',substring_index(url,'\\\\',-1)) where r.bookid=#{bookid}")
     Integer upurl(Integer bookid);
+    List<Map<String,Object>> queryMoneyRoll(Integer bookid,Integer uuid);
 }

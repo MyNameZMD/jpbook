@@ -203,7 +203,7 @@
                                                str+="   </p>";
                                                str+="   <p class=\"f12\">";
                                                str+="<i>";
-                                               str+="   "+data[i].updatetime+"                                            </i>";
+                                               str+="   "+jsonDateFormat(data[i].updatetime)+"                                            </i>";
                                                str+="共"+data[i].chapcount+"字";
                                                str+="</p>";
                                                str+="</div>";
@@ -214,6 +214,10 @@
                                             read();
                                         }
                                     })
+                                    function jsonDateFormat(date) {//json日期格式转换为正常格式
+                                        var dateee = new Date(date).toJSON();
+                                        return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+                                    }
                                 </script>
                             </div><div class="slimScrollBar" style="background: rgb(204, 204, 204); width: 10px; position: absolute; top: 0px; opacity: 1; display: none; border-radius: 0px; z-index: 99; right: -1px; height: 740px;"></div><div class="slimScrollRail" style="width: 10px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(238, 238, 238); opacity: 1; z-index: 90; right: -1px;"></div></div>
                         </div>

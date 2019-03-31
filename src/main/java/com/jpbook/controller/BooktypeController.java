@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
+
 import com.jpbook.entity.Booktype;
 
 
@@ -38,5 +40,10 @@ public class BooktypeController {
     @ResponseBody
     public List<Booktype> query(){
         return bs.query();
+    }
+    @RequestMapping("queryTypeAndBooks")
+    @ResponseBody
+    public List<Map<String,Object>> queryTypeAndBooks(){
+        return bs.queryTypeAndBooks();
     }
 }

@@ -17,4 +17,6 @@ public interface BooktypeDao {
 
     @Select("select * from booktype")
     List<Booktype> query();
+
+    List<Map<String,Object>> queryTypeAndBooks();
 }

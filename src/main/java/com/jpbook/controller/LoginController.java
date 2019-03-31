@@ -45,6 +45,8 @@ public class LoginController {
            }else {
                u.setPhone(phone);
                ls.addUser(u);
+               re.def1(re.seluser(u.getPhone()));
+               re.def2(re.seluser(u.getPhone()));
                session.setAttribute("users",ls.userInfo(phone));
                rs = 2;
            }
@@ -58,6 +60,17 @@ public class LoginController {
        }
 
        session.setAttribute("newdate",new Date());
+
+       //赠送推荐票
+        List<Users> usergrade = (List<Users>)session.getAttribute("users");
+        if(usergrade.get(0).getGrade() >=3 && usergrade.get(0).getGrade() < 13){
+            ls.editwallet(1,usergrade.get(0).getUuid());
+        }else if(usergrade.get(0).getGrade() >=13 && usergrade.get(0).getGrade() < 23){
+            ls.editwallet(2,usergrade.get(0).getUuid());
+        }else if(usergrade.get(0).getGrade() >=23){
+            ls.editwallet(3,usergrade.get(0).getUuid());
+        }
+
        return rs;
     }
 

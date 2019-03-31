@@ -214,7 +214,7 @@
                                     }
                                     str+="<div class=\"sectionBox\">";
                                     str+="<p><em>"+data[i].chapterList[j].chapname+"</em></p>";
-                                    str+="<p class=\"f12\"><i>"+data[i].chapterList[j].updatetime+"</i>共"+data[i].chapterList[j].chapcount+"字</p>";
+                                    str+="<p class=\"f12\"><i>"+jsonDateFormat(data[i].chapterList[j].updatetime)+"</i>共"+data[i].chapterList[j].chapcount+"字</p>";
                                     str+="</div>";
                                     str+="</li>";
                                 }
@@ -229,6 +229,10 @@
                             $("#sentList").html(str);
                         }
                     })
+                    function jsonDateFormat(date) {//json日期格式转换为正常格式
+                        var dateee = new Date(date).toJSON();
+                        return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+                    }
                 </script>
                 <!-- 查看/编辑章节 -->
                 <div id="chapterContainer" class="mRightContent fl">
@@ -331,6 +335,7 @@
                             var options = {
                                 url:'chapter/sentsave', //上传文件的路径
                                 type:'post',
+                                data:{"oldname":$("#chapterTitle").html()},
                                 async :true,
                                 success:function(data){
                                     swal("保存成功", "已保存至草稿箱", "success");

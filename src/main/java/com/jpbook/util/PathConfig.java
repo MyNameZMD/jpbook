@@ -18,5 +18,9 @@ public class PathConfig extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
         registry.addResourceHandler("/img/**").addResourceLocations("file:///F:/PICS/");
         registry.addResourceHandler("/imgicon/**").addResourceLocations("file:///F:/icon/");
+        registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
+        // registry.addResourceHandler("/img/**").addResourceLocations("file:///F:/PICS/");
+        registry.addResourceHandler("/imgicon/**").addResourceLocations("file:///E:/icon/");
+        registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/static/assets/");
     }
 }

@@ -90,4 +90,8 @@ public interface ChapterDao {
             "(select r.bookid from roll r,chapter c where r.rollid=c.rollid and c.chapid=#{chapid}) ORDER BY  chapnum desc LIMIT 1) ss3\n" +
             " on ss3.bookid=ss2.bookid")
     List<Map<String,Object>> getInformationByChapidNoUuid(Integer chapid);
+    @Select("select IFNULL(sum(left((c.chapcount/200),LOCATE('.',(c.chapcount/200))-1)),0) money,count(c.chapid) count from books bs,roll r,chapter c where bs.bookid=r.bookid and r.rollid=c.rollid and r.rollmoney=2 and c.chapstate=1 and bs.bookid=#{param1} and chapid not in (select chapid from buyrecord where uuid=#{param2})\n")
+    Map<String,Object> getBookAllMoney(Integer bookid,Integer uuid);
+    @Select("select IFNULL(sum(left((c.chapcount/200),LOCATE('.',(c.chapcount/200))-1)),0) money from chapter c,roll r where c.rollid=r.rollid and c.chapid=#{chapid} and rollmoney=2 \n")
+    Integer getChapMoney(Integer chapid);
 }

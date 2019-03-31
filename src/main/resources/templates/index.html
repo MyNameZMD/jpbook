@@ -1002,7 +1002,7 @@
         <div class="cf" id="numero4">
             <div class="left-wrap fl">
                 <h3 class="wrap-title lang">
-                    完本精品记得结束时吧mapper中的书籍状态改一下<span th:text="|完本总数${queryWanben.size()}本|"></span>
+                    完本精品<span th:text="|完本总数${queryWanben.size()}本|"></span>
                     <a class="more" href="//www.qidian.com/finish" target="_blank">更多<em class="iconfont">&#xe553;</em></a>
                 </h3>
                 <div class="center-book-list fl" data-l2="2">
@@ -1012,7 +1012,7 @@
                         <th:block th:each="qw,status : ${queryWanben}">
                             <th:block th:if="${status.index} lt 6">
                                 <li data-rid="1">
-                                    <div class="book-img">
+                                    <div class="book-img" th:style="background">
                                         <a th:href="@{/books/queryBookById(bookid=${qw.bookid})}" target="_blank">
                                             <img class="lazy" th:src="|../images/${qw.icon}|"
                                                  th:alt="${qw.bookname}"><span>9</span></a>

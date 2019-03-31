@@ -410,14 +410,7 @@
 
                                     if (data && falg ) {
                                          $("#successToken").val(data.validate);
-                                        var f = document.referrer;
-                                        var fs = window.location.href.substr(0,window.location.href.lastIndexOf("#")) ;
-                                        if(f === fs){
-                                            window.location.href='./booktype/queryAll';
-										}else{
-                                            window.location.href = document.referrer;
-										}
-
+                                         window.location.href="/jpbook/booktype/queryAll";
                                      }else if(falg == false && data){
                                          $("#error-tip").attr("class","error-tip");
                                          $("#error-tip").text("您输入的账号或密码不正确，请重新输入");

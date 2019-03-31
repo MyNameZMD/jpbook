@@ -238,6 +238,14 @@
                     <!--小说显示-->
                     <div class="read-content j_readContent" id="bookcontent" style="font-family: YaHei;">
                     </div>
+                    <!--购买-->
+                    <div class="vip-limit-wrap">
+                        <h3 class="lang"><i>这是VIP章节</i>需要订阅后才能阅读</h3>
+                        <div class="subscribe-btn-wrap dib-wrap ">
+                            <a class="all j_subscribeBtn " data-soa="1" href="javascript:subbuyrecord(0)" data-eid="qd_R112"><em>全部订阅</em><span><i>5175</i>起点币</span><cite>订阅章节：共<s class="j_chapterNum">475</s>章</cite></a>
+                            <a class="single j_subscribeBtn" data-soa="0" data-uid="175" href="javascript:subbuyrecord(0)" data-eid="qd_R113"><em>订阅本章</em><span><i>16</i>起点币</span></a>
+                        </div>
+                    </div>
 
                     <div class="admire-wrap">
                         <a class="report-btn j_reportBtn" href="javascript:" data-eid="qd_R106"><em class="iconfont"></em>举报</a>
@@ -245,7 +253,31 @@
                             <a class="admire lang j_admireBtn" href="javascript:rewardClick()" data-showtype="3" data-eid="qd_R105">赞赏<span class="j_admireNum"></span></a>
                         </div>
                         <dl class="user-active cf">
-                        </dl></div>
+                        </dl>
+                    </div>
+                    <script type="text/javascript">
+
+                        function rloadmoney() {
+                            $.ajax({
+                                url:"/jpbook/chapter/getBookAllMoney",
+                                data:{"bookid":$("#bookid").val()},
+                                success:function (data) {
+                                    $(".vip-limit-wrap").find(".all").find("i").html(data.money);
+                                    $(".vip-limit-wrap").find(".all").find("s").html(data.count);
+                                    $(".vip-limit-wrap").find(".all").prop("href","javascript:subbuyrecord("+data.money+",'all')");
+
+                                }
+                            })
+                            $.ajax({
+                                url:"/jpbook/buyrecord/getByChapidAndUuid",
+                                data:{"chapid":$("#chapid").val()},
+                                success:function (data) {
+                                    $(".vip-limit-wrap").find(".single").find("i").html(data);
+                                    $(".vip-limit-wrap").find(".single").prop("href","javascript:subbuyrecord("+data+",'single')");
+                                }
+                            })
+                        }
+                    </script>
                 </div>
             </div><!-- start 顶部随机广告 -->
 
@@ -268,9 +300,12 @@
 </div>
 <script type="text/javascript">
     $(function () {
+
         read($("#chapid").val());
     })
     function read(chapid) {
+        $("#chapid").val(chapid);
+        rloadmoney();
         $.ajax({
             url:"/jpbook/chapter/getChapContent",
             data:{"chapid":chapid},
@@ -282,8 +317,19 @@
                 $("#showchapcount").html(data[0].chapcount);
                 $("#showupdatetime").html(jsonDateFormat(data[0].updatetime));
                 var str="";
-                for (var i=0;i<data[1].length;i++){
-                    str+="<p>　　"+data[1][i]+"</p>";
+                var chapmoney=parseInt($(".vip-limit-wrap").find(".single").find("i").html());
+                if (chapmoney==0){
+                    $(".vip-limit-wrap").css("display","none");
+                    $(".admire-wrap").css("display","block");
+                    for (var i=0;i<data[1].length;i++){
+                        str+="<p>　　"+data[1][i]+"</p>";
+                    }
+                }else{
+                    $(".vip-limit-wrap").css("display","block");
+                    $(".admire-wrap").css("display","none");
+                    for (var i=0;i<data[1].length && i<2;i++){
+                        str+="<p>　　"+data[1][i]+"</p>";
+                    }
                 }
                 $("#bookcontent").html(str);
                 $("#j_floatWrap").find("dd").find(".catalog").css("display","none");
@@ -1157,7 +1203,124 @@
 </div>
 <div class="lbf-overlay"
      style="display:none;background-color: black; opacity: 0.3; z-index: 62779; width: 1350px; height: 3256px;"></div>
+<div class="lbf-panell" style="position:fixed;z-index: 62780; width: 520px; top: 158.5px; left: 413.5px;display: none;"><a href="javascript:closePanl();"
+                                                                                                           class="lbf-panel-close lbf-icon lbf-icon-close"></a>
+    <div class="lbf-panel-head" style="display: none;">提示</div>
+    <div class="lbf-panel-body">
+        <div class="book-popup subscribe-popup" id="subscribePopup" data-l1="15">
+            <!-- start 标题 -->
+            <div class="popup-title">
+                <h3 class="lang">订阅</h3>
+            </div>
+            <div class="sub-content" data-l2="4">
+                <div class="tip" style="text-align: center">
+                    <h4>本次订阅将消耗<span class="current-price">1191</span>起点币</h4>
+                    <p>当前余额为<em class="current-balance">90</em>起点币<i>·</i>还需支付<span class="diff">1101</span>起点币</p>
+                    <div class="popup-btn">
+                        <!--<a class="red-btn j_quickpay" href="javascript:" data-eid="qd_G92">快捷支付</a>-->
+                        <a class="blue-btn j_charge" href="/jpbook/topup" data-eid="qd_G93" target="_blank">去充值</a>
+                    </div>
+                </div>
+            </div>
+            <!-- end 订阅提示信息 -->
 
+        </div>
+        <div class="book-popup subscribe-popup" id="enoughmoney" data-l1="15">
+            <div class="popup-title">
+                <h3 class="lang">订阅</h3>
+            </div>
+            <div class="sub-content" data-l2="4">
+                <div class="tip">
+                    <h4>本次订阅将消耗<span>10</span>起点币</h4>
+                    <p>当前余额为<em>90</em>起点币</p>
+                    <div class="popup-btn">
+                        <a class="red-btn j_paynow" href="javascript:buyrecordChap()" data-eid="qd_G90">立即支付</a>
+                    </div>
+                </div>
+            </div>
+            <!-- end 订阅提示信息 -->
+
+        </div>
+    </div>
+    <div class="lbf-panel-foot" style="display: none;">
+        <div class="lbf-panel-foot-l"></div>
+        <div class="lbf-panel-foot-r"><a href="javascript:;"
+                                         class="lbf-button lbf-button-primary lbf-button-default lbf-button-normal">确定</a><a
+                href="javascript:;" class="lbf-button lbf-button-default lbf-button-normal"
+                style="display: none;">否定</a><a href="javascript:;"
+                                                class="lbf-button lbf-button-default lbf-button-normal">取消</a></div>
+    </div>
+</div>
+<div class="lbf-overlayy"
+     style="background-color: black;position: fixed; opacity: 0.3; z-index: 62779; width: 100%; height: 100%;display: none;"></div>
+<script type="text/javascript">
+    function subbuyrecord(money,obj) {
+
+        $(".j_paynow").prop("href",obj=="all"?"javascript:buyrecordAll()":"javascript:buyrecordChap()");
+
+        $(".sub-content").find("span").html(money);
+        $("#subscribePopup").css("display","none");
+        $("#enoughmoney").css("display","none");
+        $(".lbf-panell").css("display","block");
+        $(".lbf-overlayy").css("display","block");
+        $.ajax({
+            url: "/jpbook/users/ckSession",
+            data: {"name": 'users'},
+            type: "post",
+            success: function (data) {
+                if (data == 0) {
+                    window.location.href = "/jpbook/login";
+                } else {
+                    $.ajax({
+                        url: "/jpbook/users/getNewMoney",
+                        success: function (data) {
+                            if (data > 0) {
+                                $(".sub-content").find("em").html(data);
+                            } else {
+                                data=0;
+                                $(".sub-content").find("em").html(data);
+                            }
+                            if(parseInt(money)-parseInt(data)>0){
+                                $("#subscribePopup").css("display","block");
+                                $(".diff").html(parseInt(money)-parseInt(data));
+                            }else {
+                                $("#enoughmoney").css("display","block");
+                            }
+                        }
+                    })
+                }
+            }
+        })
+    }
+    function buyrecordChap() {
+        $.ajax({
+            url: "/jpbook/buyrecord/buyrecordChap",
+            data: {"chapid": $("#chapid").val(),"money":$(".sub-content").find("span").html()},
+            success: function (data) {
+                closePanl();
+                window.location.reload();
+            }, type: "post",
+            traditional: true
+        })
+    }
+    function buyrecordAll() {
+        $.ajax({
+            url: "/jpbook/buyrecord/getUnpurchasedGoodwillMethodByUuid",
+            data: {"bookid": $("#bookid").val(),"money":$(".sub-content").find("span").html()},
+            success: function (data) {
+                closePanl();
+                window.location.reload();
+            }, type: "post",
+            traditional: true
+        })
+    }
+    function closePanl() {
+        $("#subscribePopup").css("display","none");
+        $("#enoughmoney").css("display","none");
+        $(".lbf-panell").css("display","none");
+        $(".lbf-overlayy").css("display","none");
+    }
+</script>
 <script>
     //全局的通用数据都放g_data变量里
     var g_data = {};

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../layui/layui.css"  media="all">
+
+    <script src="../js/jquery-3.3.1.js"  th:inline="none"></script>
+    <script src="../layui/layui.js" charset="utf-8"  th:inline="none"></script>
+</head>
+<body>
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add" onclick="add()">添加</button>
+    </div>
+    <table class="layui-hide" id="novel" lay-filter="novel"></table>
+    <div style="display: none;text-align: center;margin-top: 100px;margin-left: 50px;" id="div">
+        <form class="layui-form" action="" id="frm">
+            <div class="layui-form-item" style="width: 500px;">
+                <label class="layui-form-label">选择书籍</label>
+                <div class="layui-input-block">
+                    <select name="bookid" id="bookid" lay-verify="" lay-search>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-upload">
+                <button type="button" class="layui-btn" id="test1">上传图片</button>
+                <input type="hidden" name="filename" id="filename">
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="demo1">
+                    <p id="demoText"></p>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="demo1" id="sub">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<script type="text/javascript" th:inline="none">
+    function add() {
+        layui.use('layer', function() { //独立版的layer无需执行这一句
+            var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                shadeClose: true,
+                area: ['700px', '450px'],
+                skin: 'yourclass',
+                content: $("#div")
+            });
+        });
+
+    }
+    $.ajax({
+        url:"/jpbook/booktype/queryTypeAndBooks",
+        success:function (data) {
+            var str="";
+            str+="<option value=\"\">请选择</option>";
+            for(var i=0;i<data.length;i++){
+
+                str+="<optgroup label=\""+data[i].btname+"\">";
+                for(var j=0;j<data[i].books.length;j++){
+                    str+="<option value=\""+data[i].books[j].bookid+"\">"+data[i].books[j].bookname+"</option>";
+                }
+                str+="</optgroup>";
+            }
+            $("#bookid").html(str);
+        }
+    })
+    layui.use(['table','form', 'layedit', 'laydate','upload'], function(){
+        var table = layui.table
+            ,upload = layui.upload
+            ,form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        table.render({
+            elem: '#novel'
+            ,url:'/jpbook/advertising/queryAll'
+            ,cols: [[
+                {field:'icon',align:'center', title: '封面',templet:function (d) { return '<img src="/jpbook/img/'+d.pic+'">'}}
+                ,{field:'bookname',  title: '书名'}
+                ,{field:'ename',  title: '操作人员',align:'center'}
+                ,{field:'adtime', title: '上传时间',templet:function (d) { return jsonDateFormat(d.adtime)}}
+            ]]
+            ,page: true
+            ,done:function(res,curr,count){
+                hoverOpenImg();//显示大图
+                $('table tr').on('click',function(){
+                    $('table tr').css('background','');
+                    $(this).css('background','<%=PropKit.use("config.properties").get("table_color")%>');
+                });
+            }
+        });
+        form.on('submit(demo1)', function(data){
+            if (data.field.bookid==''||data.field.file==''){
+                layer.msg('请选择信息。。', {icon: 5});
+            }else {
+                var $ = layui.$;
+                $.ajax({
+                    url: "/jpbook/advertising/addAdvertising",
+                    type: 'post',
+                    data: {"bookid": data.field.bookid, "file": data.field.file},
+                    success: function (date) {
+                        table.render({
+                            elem: '#novel'
+                            , url: '/jpbook/advertising/queryAll'
+                            , cols: [[
+                                {
+                                    field: 'icon', align: 'center', title: '封面', templet: function (d) {
+                                        return '<img src="/jpbook/img/' + d.pic + '">'
+                                    }
+                                }
+                                , {field: 'bookname', title: '书名'}
+                                , {field: 'ename', title: '操作人员', align: 'center'}
+                                , {
+                                    field: 'adtime', title: '上传时间', templet: function (d) {
+                                        return jsonDateFormat(d.adtime)
+                                    }
+                                }
+                            ]]
+                            , page: true
+                            , done: function (res, curr, count) {
+                                hoverOpenImg();//显示大图
+                                $('table tr').on('click', function () {
+                                    $('table tr').css('background', '');
+                                    $(this).css('background', '<%=PropKit.use("config.properties").get("table_color")%>');
+                                });
+                            }
+                        });
+                    }
+                })
+            }
+            return false;
+        });
+
+        //搜索加载--数据表格重载
+        var active = {
+            reload: function () {
+                var searchContent = $("#companyName").val();//搜索框内容
+                //执行重载
+                table.reload('novel', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        searchContent: searchContent//作为参数传递给后端
+                    }
+                });
+            }
+        };
+
+        $('#searchCompany').on('click', function () {
+            var type = $(this).data('type');//自定义type属性，这里即为reload
+            active[type] ? active[type].call(this) : ''; //如果存在active[type]，则调用改函数
+        });
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+            ,url: '/jpbook/TestFile'
+            ,multiple: true
+            ,auto:false
+            ,bindAction: '#sub'
+            /*,choose: function(obj){
+                var flag = true;
+                obj.preview(function(index, file, result){
+                    console.log(file);            //file表示文件信息，result表示文件src地址
+                    var img = new Image();
+                    img.src = result;
+                    img.onload = function () { //初始化夹在完成后获取上传图片宽高，判断限制上传图片的大小。
+                        if(img.width ==600 && img.height ==800){
+                            obj.upload(index, file); //满足条件调用上传方法
+                        }else{
+                            flag = false;
+                            layer.msg("您上传的小图大小必须是600*800尺寸！");
+                            return false;
+                        }
+                    }
+                    return flag;
+                });
+            }*/
+            ,before: function(obj){
+                obj.preview(function(index, file, result){
+                    $("#filename").val(result);
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+        });
+    });
+    function jsonDateFormat(date) {//json日期格式转换为正常格式
+        var dateee = new Date(date).toJSON();
+        return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+    }
+    function hoverOpenImg(){
+        var img_show = null; // tips提示
+        $('td img').hover(function(){
+            var img = "<img class='img_msg' src='"+$(this).attr('src')+"' style='width:130px;' />";
+            img_show = layer.tips(img, this,{
+                tips:[2, 'rgba(41,41,41,.5)']
+                ,area: ['160px']
+            });
+        },function(){
+            layer.close(img_show);
+        });
+        $('td img').attr('style','max-width:70px');
+    }
+
+
+</script>
+</html>

@@ -1,5 +1,6 @@
 package com.jpbook.controller;
 
+import com.jpbook.entity.Recharge;
 import com.jpbook.entity.Signexp;
 import com.jpbook.entity.Users;
 import com.jpbook.service.PersonalService;
@@ -35,11 +36,6 @@ public class PersonalController {
     @RequestMapping("guess")
     public List<Map<String,Object>> guess(HttpSession session){
         return ps.guess(Gs.getsession(session));
-    }
-
-    @RequestMapping("monthlyquery")
-    public List<Map<String,Object>> monthlyquery(HttpSession session){
-        return ps.monthlyquery(Gs.getsession(session));
     }
 
     @RequestMapping("signexp")
@@ -118,6 +114,51 @@ public class PersonalController {
             ps.editicon(fileName,Gs.getsession(session));
         }
         return 1;
+    }
+
+    @RequestMapping("record1")
+    public List<Recharge> record1(HttpSession session){
+        return ps.record1(Gs.getsession(session));
+    }
+
+    @RequestMapping("record2")
+    public List<Map<String,Object>> record2(HttpSession session){
+        return ps.record2(Gs.getsession(session));
+    }
+
+    @RequestMapping("record3")
+    public List<Map<String,Object>> record3(HttpSession session){
+        return ps.record3(Gs.getsession(session));
+    }
+
+    @RequestMapping("wtid1")
+    public Integer wtid1(HttpSession session){
+        return ps.wtid1(Gs.getsession(session));
+    }
+
+    @RequestMapping("wtid2")
+    public Map<String,Object> wtid2(HttpSession session){
+        return ps.wtid2(Gs.getsession(session));
+    }
+
+    @RequestMapping("monthlyquery")
+    public List<Map<String,Object>> monthlyquery(HttpSession session){
+        return ps.monthlyquery(Gs.getsession(session));
+    }
+
+    @RequestMapping("recquery")
+    public List<Map<String,Object>> recquery(HttpSession session){
+        return ps.recquery(Gs.getsession(session));
+    }
+
+    @RequestMapping("reviewquery")
+    public List<Map<String,Object>> reviewquery(HttpSession session){
+        return ps.reviewquery(Gs.getsession(session));
+    }
+
+    @RequestMapping("replyquery")
+    public List<Map<String,Object>> replyquery(HttpSession session){
+        return ps.replyquery(Gs.getsession(session));
     }
 
 
