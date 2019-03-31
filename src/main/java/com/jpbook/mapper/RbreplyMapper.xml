@@ -5,6 +5,9 @@
         insert into rbreply values(null,#{revid},#{replytype},#{repcontent},#{from_uuid},#{to_uuid},now())
     </insert>
     <select id="queryNewRbreply" parameterType="Integer" resultType="map">
-        select *,(select uname from users where uuid = from_uuid) from_uname,(select uname from users where uuid = to_uuid) to_uname from rbreply where replytype = #{param1} and from_uuid = #{param2} order by repid desc limit 1
+        select *,(select bookid from reviewbook where revid = rbreply.revid) bookid,(select uname from users where uuid = from_uuid) from_uname,(select uname from users where uuid = to_uuid) to_uname from rbreply where replytype = #{param1} and from_uuid = #{param2} order by repid desc limit 1
+    </select>
+    <select id="queryRbRbreply" resultType="map" parameterType="Integer">
+        select *,(select uname from users where uuid = from_uuid) from_uname,(select uname from users where uuid  = to_uuid) to_uname from rbreply where replytype = 2 and revid = #{param1} order by reptime,repid
     </select>
 </mapper>

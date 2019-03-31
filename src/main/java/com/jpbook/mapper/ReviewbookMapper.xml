@@ -30,7 +30,7 @@
     </select>
     <select id="queryById" resultType="map" parameterType="Integer">
         select s1.*,ifnull(s2.zan,0) zan,ifnull(s3.uuid,-1) z from
-        (select u.uuid,u.uname,rb.revid,ifnull(rp.repid,-1) repid,ifnull(u.icon,'../images/0.jpg') icon,rp.repcontent,rp.replytype,(select uname from users where uuid = rp.from_uuid) from_uname,rp.reptime from users u left join reviewbook rb on u.uuid = rb.uuid left join rbreply rp on rp.revid = rb.revid where rb.revid = #{param1} ) s1 left join
+        (select u.uuid,u.uname,rb.revid,ifnull(rp.repid,-1) repid,(select count(repid) from rbreply where revid = rp.repid and replytype = 2) rpcount,ifnull(u.icon,'../images/0.jpg') icon,rp.repcontent,rp.replytype,from_uuid,(select uname from users where uuid = rp.from_uuid) from_uname,rp.reptime from users u left join reviewbook rb on u.uuid = rb.uuid left join rbreply rp on rp.revid = rb.revid where rb.revid = #{param1} ) s1 left join
         (select reviewid,count(zanid) zan from zan where zantype=2 and zstate = 1 GROUP BY reviewid) s2 on s2.reviewid=s1.repid
         left join (select * from zan where uuid = #{param2} and zantype = 2 and zstate = 1) s3 on s3.reviewid = s1.repid
         order by s1.repid desc,s1.reptime

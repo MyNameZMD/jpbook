@@ -87,4 +87,30 @@ public class BooksService {
     public List<Map<String,Object>> likeBooks(String kw,Integer page,Integer limit,String sort){
         return bd.likeBooks(kw,page,limit,sort);
     }
+
+    public List<Map<String,Object>> cankNewBook(Integer page){
+        return bd.cankNewBook(page);
+    }
+    public List<Map<String,Object>> cankNewPenBook(Integer page){
+        return bd.cankNewPenBook(page);
+    }
+
+    public List<Map<String,Object>> cankWeekClick(Integer page){
+        return bd.cankWeekClick(page);
+    }
+    public List<Map<String,Object>> cankQueryVote(Integer type,Integer page){
+        return  bd.cankQueryVote(type,page);
+    }
+    public List<Map<String,Object>> cankBookrack(Integer page){
+        return bd.cankBookrack(page);
+    }
+    public List<Map<String,Object>> cankWanben(Integer type,Integer page){
+        return bd.cankWanben(type,page);
+    }
+    public List<Map<String,Object>> cankQianli(Integer page){
+        return bd.cankQianli(page);
+    }
+    public List<Map<String,Object>> cankHotsell(Integer page){
+        return bd.cankHotsell(page);
+    }
 }

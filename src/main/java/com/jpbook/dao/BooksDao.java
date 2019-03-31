@@ -137,6 +137,60 @@ public interface BooksDao {
      */
     public List<Map<String,Object>> likeBooks(String kw,Integer page,Integer limit,String sort);
 
+    /**
+     * 查询新书榜
+     * @return
+     */
+    public List<Map<String,Object>> cankNewBook(Integer page);
+
+    /**
+     * 新人新书榜
+     * @return
+     */
+    public List<Map<String,Object>> cankNewPenBook(Integer page);
+
+    /**
+     * 当周点击量
+     * @return
+     */
+    public List<Map<String,Object>> cankWeekClick(Integer page);
+
+    /**
+     * 查询推荐（周、月、总）
+     * @param type
+     * @return
+     */
+    public List<Map<String,Object>> cankQueryVote(Integer type,Integer page);
+
+    /**
+     * 查询书籍被收藏的次数排行
+     * @param page
+     * @return
+     */
+    public List<Map<String,Object>> cankBookrack(Integer page);
+
+    /**
+     * 查询完本的点击量
+     * @param types
+     * @param page
+     * @return
+     */
+    public List<Map<String,Object>> cankWanben(Integer types,Integer page);
+
+    /**
+     * 潜力榜
+     * @param page
+     * @return
+     */
+    public List<Map<String,Object>> cankQianli(Integer page);
+
+    /**
+     * 24小时热销榜
+     * @param page
+     * @return
+     */
+    public List<Map<String,Object>> cankHotsell(Integer page);
+
     @Select("select * from books bk left join roll r on bk.bookid=r.bookid left join chapter c on r.rollid=c.rollid LEFT JOIN booktype bt on bk.btid=bt.btid where bk.uuid=#{uuid} GROUP BY bk.bookname")
     List<Map<String,Object>> queryByUuid(Users u);
     @Insert("insert into books(bookname,uuid,btid,bookstate,createtime,url,icon,sex,bookreferral) values(#{bookname},#{uuid},#{btid},0,SYSDATE(),#{url},#{icon},#{sex},#{bookreferral});")

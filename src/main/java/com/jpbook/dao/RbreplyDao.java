@@ -15,4 +15,11 @@ public interface RbreplyDao {
      * @return
      */
     public List<Map<String,Object>> queryNewRbreply(Integer replytype,Integer from_uuid);
+
+    /**
+     * 查询回复的回复
+     * @param revid
+     * @return
+     */
+    public List<Map<String,Object>> queryRbRbreply(Integer revid);
 }

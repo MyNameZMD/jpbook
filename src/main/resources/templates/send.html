@@ -69,10 +69,9 @@
                     <th:block th:if="${session.users}">
                         <li th:class="${session.users[0] } ? 'sign-in' : 'sign-in hidden'">
                             <a href="../personal.html" target="_blank">
-                                <i id="nav-user-name" th:text="${session.users[0].uname}">书友20190303160502500</i><span></span>
+                                <i id="nav-user-name" th:text="${session.users[0].uname}"></i><span></span>
                             </a>
                             <div class="dropdown">
-                                <a href="https://me.qidian.com/msg/lists.aspx?page=1" target="_blank" data-eid="qd_A66">消息(<i id="top-msg">0</i>)</a>
                                 <a href="https://www.qidian.com/charge/meRedirect" target="_blank" data-eid="qd_A67">充值</a>
                                 <a href="../personal.html" target="_blank" data-eid="qd_A68">个人中心</a>
                                 <a href="https://www.qidian.com/help/kf" target="_blank" data-eid="qd_A69">客服中心</a>
@@ -84,8 +83,10 @@
 
                 <li class="line"></li>
                 <li class="book-shelf" id="top-book-shelf">
-                    <a href="https://me.qidian.com/bookCase/bookCase.aspx" target="_blank" data-eid="qd_A63"><em class="iconfont"></em><i>我的书架
-                    </i></a></li>
+                    <a href="https://me.qidian.com/bookCase/bookCase.aspx" target="_blank">
+                        <em class="iconfont"></em><i>我的书架</i>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -93,22 +94,20 @@
     <div class="main">
     <div class="bg">
         <p class="breadcrumb main-wrap">
-            <a th:href="@{/books/queryBookById(bookid=${xinxi.bookid})}" th:text="|${xinxi.bookname}的讨论区|">人皇在上的讨论区</a><span class="iconfont"></span>发表讨论
+            <a th:href="@{/books/queryBookById(bookid=${xinxi.bookid})}" th:text="|${xinxi.bookname}的讨论区|"></a><span class="iconfont"></span>发表讨论
         </p>
     </div>
     <div class="main-wrap">
-        <form class="form" action="/jpbook/reviewbook/add">
+        <form class="form" action="/jpbook/reviewbook/add" method="post" target="_blank">
                 <input type="hidden" name = "bookid" th:value="${xinxi.bookid}">
-                <input type="hidden" name = "bookname" th:value="${xinxi.bookname}">
                 <input type="hidden" name = "uuid" th:value="${xinxi.uuid}">
-                <input type="hidden" name = "bookid" th:value="${xinxi.bookid}">
                 <input type ="hidden" name = "retype" th:value="${xinxi.retype}">
             <textarea name="revvlue" placeholder="如何写一个受欢迎的帖子：
   1、喜欢不喜欢本书的原因
   2、支持和鼓励作者的话
   3、有深度的讨论作品剧情、角色等"></textarea>
             <div class="bar cf">
-                <input class="fl mr20 cant" type="submit" disabled="disabled" value="发表">
+                <input disabled="disabled" id = "sub" class="cant" type="submit"  value="发表">
                 <span class="textNum">0</span>/500
             </div>
         </form>
@@ -164,22 +163,15 @@
         $(".site").nextAll().mouseout(function () {
             $(this).removeClass("act");
         });
-        /*$("textarea[name='content']").change(function(){
-            var val = this.val();
-            var len = val.length;
-            console.log(val+"   ",len);
-
-        });*/
         $('textarea').bind('input propertychange', function() {
            $(".textNum").html($(this).val().length);
            if($(this).val().length < 5){
-                $(".fl.mr20").addClass("cant");
+                $(".cant").addClass("cant");
                $("#sub").attr("disabled",true);
            }else{
-               $(".fl.mr20").removeClass("cant");
+               $(".cant").removeClass("cant");
                $("#sub").attr("disabled",false);
            }
-
         });
     });
 </script>
