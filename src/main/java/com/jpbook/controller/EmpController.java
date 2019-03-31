@@ -49,8 +49,11 @@ public class EmpController {
 
     @RequestMapping("quit")
     @ResponseBody
-    public Integer quit(HttpSession session){
-
+    public Integer quit(){
+        Subject subject=SecurityUtils.getSubject();
+        if(subject.isAuthenticated()){
+            subject.logout();
+        }
         return 1;
     }
 

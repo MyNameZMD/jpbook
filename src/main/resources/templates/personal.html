@@ -2,20 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>首页_个人中心_起点书城</title>
+	<title>首页_个人中心_江派书城</title>
 	
 	<link rel="icon" type="image/x-icon" href="./images/jp_iocn.ico">
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.11.css">
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.12.css">
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.13.css">
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.14.css">
+	<link rel="stylesheet" data-ignore="true" href="./css/index.0.15.css">
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.16.css">
 
-	<link rel="stylesheet" href="./js/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="./layui/layui.css" media="all">
 
 	<script src="./js/jquery-3.3.1.js"></script>
 
-	<script src="./js/layui/layui.js"></script>
+	<!--<script src="./js/stats.js"></script>
+	<script src="./js/LBF.js"></script>-->
 
 	<link rel="stylesheet" type="text/css" href="./css/sweet-alert.css" />
 	<script src="./js/sweet-alert.js"></script>
@@ -59,9 +61,9 @@
 				<li class="active" id="u1">
 					<a href="javascript:init()" class="sideBar-list-a"><i class="iconfont icon-home"></i>首页</a>
 				</li>
-				<!--<li class="" id="u2">
+				<li class="" id="u2">
 					<a class="sideBar-list-a"><i class="iconfont icon-home"></i>好友</a>
-				</li>-->
+				</li>
 				<li id="u6" onclick="u6()">
 					<a class="sideBar-list-a" data-eid="qd_M12"><i class="iconfont  icon-finance"></i>账务中心</a>
 				</li>
@@ -169,75 +171,54 @@
 
 		<!--好友-->
 		<div class="qdp-content" data-l1="3" style="display: none" id="s2" >
-			<h2 class="qdp-hometitle"><a href="/jpbook/index">首页</a>&nbsp;&gt;&nbsp;好友</h2>
+			<h2 class="qdp-hometitle"><a href="/jpbook/booktype/queryAll">首页</a>&nbsp;&gt;&nbsp;好友</h2>
 			<div class="qdp-record friend-record" data-l2="11">
 				<div id="tabView" class="ui-tab-tabs">
-					<a href="javascript:;" class="checked" data-rel="tabTarget1" data-eid="qd_M157">互为关注(<span class="w_followeach">0</span>)</a>
-					<a href="javascript:;" class="" data-rel="tabTarget2" data-eid="qd_M158">我的关注(<span class="w_following">0</span>)</a>
-					<a href="javascript:;" class="" data-rel="tabTarget3" data-eid="qd_M159">我的粉丝(<span class="w_myfans">0</span>)</a>
-					<a href="javascript:;" class="" data-rel="tabTarget4" data-eid="qd_M160">黑名单(<span class="w_blacklist">0</span>)</a>
+					<a href="javascript:qd_M157();" class="checked" data-rel="tabTarget1" id="qd_M157">互为关注(<span class="w_followeach">0</span>)</a>
+					<a href="javascript:qd_M158();" class="" data-rel="tabTarget2" id="qd_M158">我的关注(<span class="w_following">0</span>)</a>
+					<a href="javascript:qd_M159();" class="" data-rel="tabTarget3" id="qd_M159">我的粉丝(<span class="w_myfans">0</span>)</a>
+					<!--<a href="javascript:;" class="" data-rel="tabTarget4" id="qd_M160">黑名单(<span class="w_blacklist">0</span>)</a>-->
 				</div>
 				<div id="jsTabContents" class="ui-tab-contents">
-					<div id="tabTarget1" class="ui-tab-content  checked" data-l3="25">
+					<div id="tabTarget1" class="ui-tab-content checked" data-l3="25">
 						<div id="tableTarget1" class="table-x">
-							<div class="table-size ui-loading-animation" style="height: 300px; transition: height 200ms ease 0s;">
 								<table class="ui-table">
-									<tbody>
+									<tbody id="t1">
 
 									</tbody>
 								</table>
-								<div class="table-null-x dn" style="display: block;">暂无互相关注的好友</div>
-								<div class="ui-loading" style="top: 0px; display: none;"><i class="ui-loading-icon"></i></div>
-							</div>
-							<div class="table-page-x elTablePage dn">
-								<div class="table-page"><div class="ui-page-x"><span class="ui-page ui-page-prev"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path d="M85.876,100.5l49.537-50.526c4.089-4.215,4.089-11.049,0-15.262 c-4.089-4.218-10.719-4.218-14.808,0L63.586,92.868c-4.089,4.215-4.089,11.049,0,15.264l57.018,58.156 c4.089,4.215,10.719,4.215,14.808,0c4.089-4.215,4.089-11.049,0-15.262L85.876,100.5z"></path></svg></span><span class="ui-page ui-page-current">1</span><span class="ui-page ui-page-next"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path d="M85.876,100.5l49.537-50.526c4.089-4.215,4.089-11.049,0-15.262 c-4.089-4.218-10.719-4.218-14.808,0L63.586,92.868c-4.089,4.215-4.089,11.049,0,15.264l57.018,58.156 c4.089,4.215,10.719,4.215,14.808,0c4.089-4.215,4.089-11.049,0-15.262L85.876,100.5z"></path></svg></span></div></div>
-							</div>
+								<div class="table-null-x dn" style="display: none;" id="tx1">暂无互相关注的好友</div>
 						</div>
 					</div>
 					<div id="tabTarget2" class="ui-tab-content" data-l3="26">
 						<div id="tableTarget2" class="table-x">
-							<div class="table-size ui-loading-animation" style="height: 300px; transition: height 200ms ease 0s;">
 								<table class="ui-table">
-									<tbody>
+									<tbody id="t2">
 
 									</tbody>
 								</table>
-								<div class="table-null-x dn" style="display: block;">暂无已关注的好友</div>
-								<div class="ui-loading" style="top: 0px; display: none;"><i class="ui-loading-icon"></i></div>
-							</div>
-							<div class="table-page-x elTablePage dn">
-								<div class="table-page"><div class="ui-page-x"><span class="ui-page ui-page-prev"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path d="M85.876,100.5l49.537-50.526c4.089-4.215,4.089-11.049,0-15.262 c-4.089-4.218-10.719-4.218-14.808,0L63.586,92.868c-4.089,4.215-4.089,11.049,0,15.264l57.018,58.156 c4.089,4.215,10.719,4.215,14.808,0c4.089-4.215,4.089-11.049,0-15.262L85.876,100.5z"></path></svg></span><span class="ui-page ui-page-current">1</span><span class="ui-page ui-page-next"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path d="M85.876,100.5l49.537-50.526c4.089-4.215,4.089-11.049,0-15.262 c-4.089-4.218-10.719-4.218-14.808,0L63.586,92.868c-4.089,4.215-4.089,11.049,0,15.264l57.018,58.156 c4.089,4.215,10.719,4.215,14.808,0c4.089-4.215,4.089-11.049,0-15.262L85.876,100.5z"></path></svg></span></div></div>
-							</div>
+								<div class="table-null-x dn" style="display: none;" id="tx2">暂无已关注的好友</div>
 						</div>
 					</div>
 					<div id="tabTarget3" class="ui-tab-content " data-l3="27">
 						<div id="tableTarget3" class="table-x">
-							<div class="table-size">
 								<table class="ui-table">
-									<tbody></tbody>
+									<tbody id="t3">
+
+									</tbody>
 								</table>
-								<div class="table-null-x dn">暂无关注我的粉丝</div>
-								<div class="ui-loading"><i class="ui-loading-icon"></i></div>
-							</div>
-							<div class="table-page-x elTablePage">
-								<div class="table-page"></div>
-							</div>
+								<div class="table-null-x dn" style="display: none;" id="tx3">暂无关注我的粉丝</div>
 						</div>
 					</div>
 					<div id="tabTarget4" class="ui-tab-content " data-l3="28">
 						<div id="tableTarget4" class="table-x">
-							<div class="table-size">
 								<table class="ui-table">
 									<tbody></tbody>
 								</table>
 								<div class="table-null-x dn">暂无黑名单记录</div>
-								<div class="ui-loading"><i class="ui-loading-icon"></i></div>
-							</div>
-							<div class="table-page-x elTablePage">
-								<div class="table-page"></div>
-							</div>
 						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -820,8 +801,8 @@
 				$("#headerLog").text(data[0].uname);
                 $("#uname").text(data[0].uname);
                 $("#grade").text("Lv"+data[0].grade);
-                $("#eye").text(data[0].eye);
-                $("#fans").text(data[0].fans);
+                $("#eye").text(data[0].fans);
+                $("#fans").text(data[0].eye);
                 if(data[0].money > 10000){
                     $("#money").text((data[0].money/10000)+"w");
 				}else{
@@ -872,8 +853,134 @@
             $("#s"+i).hide();
         }
         $("#s2").show();
-
+        qd_M159();
+        qd_M158();
+        qd_M157();
     })
+
+	function qd_M157() {
+        $("#qd_M158").prop("class","");
+        $("#qd_M159").prop("class","");
+        $("#qd_M157").prop("class","checked");
+        $("#tabTarget2").prop("class","ui-tab-content");
+        $("#tabTarget3").prop("class","ui-tab-content");
+        $("#tabTarget1").prop("class","ui-tab-content checked");
+
+        $.ajax({
+            url: "per/mutualquery",
+            success: function (data) {
+				var t1 = "";
+               if (data.length > 0){
+                   $(".w_followeach").text(data.length);
+                   for (var i=0; i<data.length; i++){
+					   t1+="<tr class='qdp-operate-wrapper'>"+
+                       "<td width='300'>"+
+                       "<a href='pc/home?uuid="+data[i].uuid+"' class='friend-avatar' target='_blank' data-eid='qd_M162'>"+
+                       "<img src='/jpbook/imgicon/"+data[i].icon+"'>"+
+                       "</a>"+
+                       "<div class='friend-wrapper'>"+
+                       "<div class='friend-name'><a href='pc/home?uuid="+data[i].uuid+"' target='_blank'>"+data[i].uname+"</a>"+
+                       "<i class='icon icon-boy'></i>"+
+                       "</div>"+
+                       "</div>"+
+                       "</td>"+
+                       "<td width='80' class='friend-add'></td>"+
+                       "<td>"+
+                       "<a href='javascript:;' class='ui-button jsSendMsg' role='button' data-image='images/ico/default_user.0.2.png' data-name='书友20180218153427385'>发私信</a>"+
+                       "<a href='javascript:;' class='qdp-operate ui-button ui-button-default jsUnfollow' data-id='313853460' role='button'>取消关注</a>"+
+                       "</td></tr>"	;
+                   }
+                   $("#t1").html(t1);
+			   }else {
+				   $("#tx1").show();
+			   }
+            }
+        });
+
+    }
+    function qd_M158() {
+        $("#qd_M157").prop("class","");
+        $("#qd_M159").prop("class","");
+        $("#qd_M158").prop("class","checked");
+        $("#tabTarget1").prop("class","ui-tab-content");
+        $("#tabTarget3").prop("class","ui-tab-content");
+        $("#tabTarget2").prop("class","ui-tab-content checked");
+
+        $.ajax({
+            url: "per/eyequery",
+            success: function (data) {
+                var t2 = "";
+                if (data.length > 0){
+                    $(".w_following").text(data.length);
+                    for (var i=0; i<data.length; i++){
+                        t2+="<tr class='qdp-operate-wrapper'>"+
+                            "<td width='300'>"+
+                            "<a href='pc/home?uuid="+data[i].uuid+"' class='friend-avatar' target='_blank' data-eid='qd_M162'>"+
+                            "<img src='/jpbook/imgicon/"+data[i].icon+"'>"+
+                            "</a>"+
+                            "<div class='friend-wrapper'>"+
+                            "<div class='friend-name'><a href='pc/home?uuid="+data[i].uuid+"' target='_blank'>"+data[i].uname+"</a>"+
+                            "<i class='icon icon-boy'></i>"+
+                            "</div>"+
+                            "</div>"+
+                            "</td>"+
+                            "<td width='80' class='friend-add'></td>"+
+                            "<td>"+
+                            "<a href='javascript:;' class='ui-button jsSendMsg' role='button' data-image='images/ico/default_user.0.2.png' data-name='书友20180218153427385'>发私信</a>"+
+                            "<a href='javascript:;' class='qdp-operate ui-button ui-button-default jsUnfollow' data-id='313853460' role='button'>取消关注</a>"+
+                            "</td></tr>"	;
+                    }
+                    $("#t2").html(t2);
+                }else {
+                    $("#tx2").show();
+                }
+            }
+        });
+
+    }
+    function qd_M159() {
+        $("#qd_M157").prop("class","");
+        $("#qd_M158").prop("class","");
+        $("#qd_M159").prop("class","checked");
+        $("#tabTarget1").prop("class","ui-tab-content");
+        $("#tabTarget2").prop("class","ui-tab-content");
+        $("#tabTarget3").prop("class","ui-tab-content checked");
+        $.ajax({
+            url: "per/fansquery",
+            success: function (data) {
+                var t3 = "";
+                if (data.length > 0){
+                    $(".w_myfans	").text(data.length);
+                    for (var i=0; i<data.length; i++){
+                        t3+="<tr class='qdp-operate-wrapper'>"+
+                            "<td width='300'>"+
+                            "<a href='pc/home?uuid="+data[i].uuid+"' class='friend-avatar' target='_blank' data-eid='qd_M162'>"+
+                            "<img src='/jpbook/imgicon/"+data[i].icon+"'>"+
+                            "</a>"+
+                            "<div class='friend-wrapper'>"+
+                            "<div class='friend-name'><a href='pc/home?uuid="+data[i].uuid+"' target='_blank'>"+data[i].uname+"</a>"+
+                            "<i class='icon icon-boy'></i>"+
+                            "</div>"+
+                            "</div>"+
+                            "</td>"+
+                            "<td width='80' class='friend-add'></td>"+
+                            "<td>"+
+                            "<a href='javascript:;' class='ui-button jsSendMsg' role='button' data-image='images/ico/default_user.0.2.png' data-name='书友20180218153427385'>发私信</a>";
+                        	if(data[i].sta == -1){
+								t3+="<a href='javascript:;' class='ui-button ui-button-default jsFollow' role='button' data-eid='qd_M165'>关注</a>";
+							}else {
+                                t3+= "<a href='javascript:;' class='qdp-operate ui-button ui-button-default jsUnfollow' data-id='313853460' role='button'>取消关注</a>";
+							}
+                            "</td></tr>"	;
+                    }
+                    $("#t3").html(t3);
+                }else {
+                    $("#tx3").show();
+                }
+            }
+        });
+    }
+
 
     $("#u3").click(function () {
         for (var i=1; i<=10 ;i++){
@@ -1057,7 +1164,7 @@
        });
 
     })
-    
+
     function u6() {
         for (var i = 1; i <= 10; i++) {
             $("#u" + i).prop("class", "");
@@ -1100,11 +1207,11 @@
 			   }else {
                    $("#tnd1").show();
 			   }
-			   
+
             }
         });
     }
-    
+
     $("#record2").click(function () {
         $("#tabTarget16").prop("class","ui-tab-content");
         $("#record1").prop("class","");
@@ -1131,7 +1238,7 @@
 
             }
         });
-		
+
     })
 
     $("#record3").click(function () {
@@ -1158,9 +1265,7 @@
                     $("#tnd3").show();
                 }
 
-            }
-        });
-    })
+    });
 
     function u8() {
         for (var i = 1; i <= 10; i++) {

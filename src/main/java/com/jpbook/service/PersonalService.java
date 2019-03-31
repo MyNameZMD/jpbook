@@ -97,6 +97,16 @@ public class PersonalService {
         return pd.replyquery(uuid);
     }
 
+    public List<Map<String,Object>> mutualquery(Integer uuid){
+        return pd.mutualquery(uuid);
+    }
 
+    public List<Map<String,Object>> eyequery(Integer uuid){
+        return pd.eyequery(uuid);
+    }
+
+    public List<Map<String,Object>> fansquery(Integer uuid){
+        return pd.fansquery(uuid);
+    }
 
 }
