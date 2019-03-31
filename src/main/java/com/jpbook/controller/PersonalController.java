@@ -59,13 +59,6 @@ public class PersonalController {
                 ps.editSignexp(s);
             }
         }
-        /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date d = null;
-        try{
-            d = sdf.parse("2019-03-12 18:51:10");
-        }catch (Exception e){
-            e.printStackTrace();
-        }*/
 
         //时间差 秒
         Long second = DateUtil.getSubSecond(new Date(),(Date)session.getAttribute("newdate"))+s.getSignlong();
@@ -161,6 +154,19 @@ public class PersonalController {
         return ps.replyquery(Gs.getsession(session));
     }
 
+    @RequestMapping("mutualquery")
+    public List<Map<String,Object>> mutualquery(HttpSession session){
+        return ps.mutualquery(Gs.getsession(session));
+    }
 
+    @RequestMapping("eyequery")
+    public List<Map<String,Object>> eyequery(HttpSession session){
+        return ps.eyequery(Gs.getsession(session));
+    }
+
+    @RequestMapping("fansquery")
+    public List<Map<String,Object>> fansquery(HttpSession session){
+        return ps.fansquery(Gs.getsession(session));
+    }
 
 }

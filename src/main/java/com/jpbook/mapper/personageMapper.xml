@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jpbook.dao.PersonageDao">
+
+    <select id="authorData" resultType="map">
+        select *,
+        ifnull((select round(sum(c.chapcount)/10000,2) from users u,books b,roll r,chapter c
+        where u.uuid=b.uuid and b.bookid=r.bookid
+        and r.rollid=c.rollid and u.uuid=#{uuid} and c.chapstate=1),0) num,
+        ifnull((select count(*) from users u,books b
+        where u.uuid=b.uuid and u.uuid=#{uuid}),0) amount
+        from users where uuid=#{uuid}
+    </select>
+
+    <select id="hotSerial" resultType="map">
+        select a.*,b.chaptime time,b.chapname cname,b.chapid,ifnull(c.bookid,-1) sta from (
+        select b.*,bt.btname,c.chapname,c.chaptime,ifnull(round(sum(c.chapcount)/10000,2),0)num
+        from books b,booktype bt,roll r,chapter c
+        where bt.btid=b.btid and b.bookid=r.bookid and r.rollid=c.rollid
+        and b.uuid = ${param1} and c.chapstate=1 group by b.bookid
+        order by b.createtime desc limit 1) a
+        left join
+        (select b.bookid,c.chapname,c.chaptime,c.chapid from books b,roll r,chapter c
+        where b.bookid=r.bookid and r.rollid=c.rollid
+        and b.uuid = ${param1} and c.chapstate=1 order by c.chaptime desc) b
+        on a.bookid=b.bookid left join
+        (select b.bookid from books b,bookrack br
+        where b.bookid=br.bookid and br.uuid = ${param2}) c
+        on a.bookid=c.bookid
+        order by b.chaptime desc limit 1
+    </select>
+
+    <select id="authorBooks" resultType="map">
+        select a.*,ifnull(a.endtime,-1) overtime,ct.num,ifnull(c.brid,-1)sta from (
+        select b.*,bt.btid bid,bt.btname,c.chaptime,c.chapname,c.chapid
+        from books b,booktype bt,roll r,chapter c
+        where bt.btid=b.btid and b.bookid=r.bookid and r.rollid=c.rollid
+        and b.uuid = #{param1} and c.chapstate=1 order by b.createtime) a
+        right join
+        (select b.bookid,max(b.chaptime)time from
+        (select b.bookid,c.chapname,c.chaptime,c.chapid from books b,roll r,chapter c
+        where b.bookid=r.bookid and r.rollid=c.rollid
+        and b.uuid = #{param1} and c.chapstate=1 order by c.chaptime desc) b
+        group by b.bookid) bb
+        on a.chaptime=bb.time
+        left join
+        (select b.bookid,ifnull(round(sum(c.chapcount)/10000,2),0)num
+        from books b,roll r,chapter c
+        where b.bookid=r.bookid and r.rollid=c.rollid
+        and b.uuid = #{param1} and c.chapstate=1 GROUP BY b.bookid) ct
+        on ct.bookid=a.bookid
+        left join
+        (select b.bookid brid from books b,bookrack br
+        where b.bookid=br.bookid and br.uuid = #{param2}) c
+        on a.bookid=c.brid order by a.createtime
+    </select>
+
+    <select id="homeInfo" resultType="map">
+        select *,ifnull(f.fans,0)fans,ifnull(u.eye,0)eye,ifnull(pen,-1) sta from
+        (select count(fansid) eye from fans where fanuuid=#{uuid}) u,
+        (select count(fansid) fans from fans where uuid=#{uuid}) f,
+        users us where us.uuid=#{uuid}
+    </select>
+
+    <select id="q1" resultType="map">
+        select ifnull(br.c,0)brnum,ifnull(w1.v1,0)num1,ifnull(w2.v2,0)num2
+        from
+        (select sum(votenum)v1 from vote where uuid=#{uuid} and wtid=1) w1,
+        (select sum(votenum)v2 from vote where uuid=#{uuid} and wtid=2) w2,
+        (select count(bookid)c from bookrack where uuid = #{uuid})br
+    </select>
+    <select id="q2" resultType="Integer" parameterType="Integer">
+        select ifnull(count(b.bookid),0) bnum from (select b.bookid from buyrecord br,chapter c,roll r,books b
+        where br.chapid=c.chapid and c.rollid=r.rollid and r.bookid=b.bookid
+        and br.uuid=#{uuid} group by b.bookid) b
+    </select>
+    <select id="q3" resultType="Integer" parameterType="Integer">
+        select ifnull(count(v.bookid),0) vnum from
+        (select b.bookid from vote v,books b where v.bookid=b.bookid and v.uuid=#{uuid} group by b.bookid)v
+    </select>
+
+    <select id="fansState" resultType="Integer">
+        select fansid from fans where uuid=#{param1} and fanuuid = #{param2}
+    </select>
+
+    <insert id="fansAdd">
+        insert into fans values(null,#{param1},#{param2})
+    </insert>
+
+    <delete id="delFans">
+        delete from fans where fanuuid=#{param1} and uuid=#{param2}
+    </delete>
+
+    <select id="usersBooks" resultType="map">
+        select a.*,ifnull(a.endtime,-1) overtime,ct.num,ifnull(c.brid,-1)sta from (
+        select b.*,bt.btid bid,bt.btname,c.chaptime,c.chapname,c.chapid
+        from books b,booktype bt,roll r,chapter c,bookrack br
+        where bt.btid=b.btid and b.bookid=r.bookid and r.rollid=c.rollid
+        and br.bookid=b.bookid
+        and br.uuid = #{param1} and c.chapstate=1 order by b.createtime) a
+        right join
+        (select b.bookid,max(b.chaptime)time from
+        (select b.bookid,c.chapname,c.chaptime,c.chapid
+        from books b,roll r,chapter c,bookrack br
+        where b.bookid=r.bookid and r.rollid=c.rollid and b.bookid=br.bookid
+        and br.uuid = #{param1} and c.chapstate=1 order by c.chaptime desc) b
+        group by b.bookid) bb
+        on a.chaptime=bb.time
+        left join
+        (select b.bookid,ifnull(round(sum(c.chapcount)/10000,2),0)num
+        from books b,roll r,chapter c,bookrack br
+        where b.bookid=r.bookid and r.rollid=c.rollid and b.bookid=br.bookid
+        and br.uuid = #{param1} and c.chapstate=1 GROUP BY b.bookid) ct
+        on ct.bookid=a.bookid
+        left join
+        (select b.bookid brid from books b,bookrack br
+        where b.bookid=br.bookid and br.uuid = #{param2}) c
+        on a.bookid=c.brid
+        order by a.createtime
+    </select>
+
+</mapper>

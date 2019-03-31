@@ -60,5 +60,10 @@ public interface PersonalDao {
 
     public List<Map<String,Object>> replyquery(Integer uuid);
 
+    public List<Map<String,Object>> mutualquery(Integer uuid);
+
+    public List<Map<String,Object>> eyequery(Integer uuid);
+
+    public List<Map<String,Object>> fansquery(Integer uuid);
 
 }

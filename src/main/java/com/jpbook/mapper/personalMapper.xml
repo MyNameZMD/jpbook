@@ -109,4 +109,36 @@
         where r.revid=rb.revid and rb.bookid=b.bookid and from_uuid = #{uuid}
     </select>
 
+    <select id="mutualquery" resultType="map">
+        select u.* from
+        (select f.uuid from users u,fans f
+        where u.uuid=f.fanuuid and u.uuid=#{uuid}) e
+        inner join
+        (select f.fanuuid from users u,fans f
+        where u.uuid=f.uuid and u.uuid=#{uuid}) fen
+        on e.uuid = fen.fanuuid
+        left join users u
+        on u.uuid=fen.fanuuid
+    </select>
+
+    <select id="eyequery" resultType="map">
+        select u.* from
+        (select f.uuid from users u,fans f
+        where u.uuid=f.fanuuid and u.uuid=#{uuid}) g
+        left join users u
+        on u.uuid=g.uuid
+    </select>
+
+    <select id="fansquery" resultType="map">
+        select u.*,ifnull(g.uuid,-1) sta from
+        (select f.fanuuid from users u,fans f
+        where u.uuid=f.uuid and u.uuid=#{uuid}) f
+        left join users u
+        on u.uuid=f.fanuuid
+        left join
+        (select f.uuid from users u,fans f
+        where u.uuid=f.fanuuid and u.uuid=#{uuid}) g
+        on f.fanuuid=g.uuid
+    </select>
+
 </mapper>
