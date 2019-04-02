@@ -3,8 +3,9 @@ package com.jpbook.controller;
 import com.alipay.api.domain.SsdataFindataOperatorUserinfoCertifyModel;
 import com.jpbook.entity.Users;
 import com.jpbook.entity.Zan;
-import com.jpbook.service.BooksService;
-import com.jpbook.service.UsersService;
+import com.jpbook.service.*;
+import com.jpbook.util.FileDown;
+import com.jpbook.util.Gs;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import com.jpbook.entity.Books;
 
-import com.jpbook.service.ChapterService;
-import com.jpbook.service.RollService;
 import com.jpbook.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,6 +41,8 @@ public class BooksController {
     ChapterService cs;
     @Resource
     UsersService us;
+    @Autowired
+    BooktypeService bts;
 
     @RequestMapping("query")
     public String query(){
@@ -172,6 +173,24 @@ public class BooksController {
         return "selectbook";
     }
 
+    @RequestMapping("rank")
+    public String rank(Model m){
+        m.addAttribute("queryAll",bts.queryAll());
+        m.addAttribute("queryNewBook",bs.cankNewBook(0));
+        m.addAttribute("cankNewPenBook",bs.cankNewPenBook(0));
+        m.addAttribute("cankWeekClick",bs.cankWeekClick(0));
+        m.addAttribute("dvote",bs.cankQueryVote(1,0));
+        m.addAttribute("mvote",bs.cankQueryVote(2,0));
+        m.addAttribute("zvote",bs.cankQueryVote(3,0));
+        m.addAttribute("cankBookrack",bs.cankBookrack(0));
+        m.addAttribute("dclick",bs.cankWanben(1,0));
+        m.addAttribute("mclick",bs.cankWanben(2,0));
+        m.addAttribute("zclick",bs.cankWanben(null,0));
+        m.addAttribute("cankQianli",bs.cankQianli(0));
+        m.addAttribute("cankHotsell",bs.cankHotsell(0));
+        return "hot";
+    }
+
 
     /**
      * -------------------------------------------------------------------------
@@ -274,15 +293,23 @@ public class BooksController {
         });
         return maps;
     }
-    @RequestMapping("download")
-    @ResponseBody
-    public void download(HttpServletRequest request, HttpServletResponse response,String path){
-        System.out.println(path);
-    }
     @RequestMapping("bookEnd")
     @ResponseBody
     public Integer bookEnd(Integer bookid){
         return bs.bookEnd(bookid);
+    }
+    @RequestMapping("download")
+    public void download(Integer bookid,HttpSession session,HttpServletResponse resp, HttpServletRequest req){
+        System.out.println(111);
+        List<Map<String, Object>> download = bs.download(bookid, Gs.getsession(session));
+        String bookname = download.get(0).get("bookname").toString();
+        String[] picname=new String[download.size()];
+        for (int i=0;i<download.size();i++){
+            picname[i]=download.get(i).get("url").toString();
+        }
+        FileDown fileDown=new FileDown();
+        fileDown.createZIP(bookname,picname,resp,req);
+
     }
 }
 

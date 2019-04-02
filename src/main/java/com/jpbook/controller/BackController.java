@@ -1,5 +1,6 @@
 package com.jpbook.controller;
 
+import com.jpbook.entity.BackChart;
 import com.jpbook.entity.LayuiPage;
 import com.jpbook.entity.Lp;
 import com.jpbook.service.BackService;
@@ -50,6 +51,20 @@ public class BackController {
     public Lp thismonth(){
        return bs.thismonth();
     }
+    @RequestMapping("getAllIncome")
+    public Object[] getAllIncome(){ return bs.getAllIncome();}
+    @RequestMapping("getAllAndYear")
+    public Map<String,Object> getAllAndYear(){return bs.getAllAndYear();}
+    @RequestMapping("getAllAuthorMoney")
+    public LayuiPage getAllAuthorMoney(LayuiPage lp){return bs.getAllAuthorMoney(lp);}
+    @RequestMapping("getAllAuthorDistribute")
+    public List<Map<String,Object>> getAllAuthorDistribute(){return bs.getAllAuthorDistribute();}
+    @RequestMapping("getUsersAndAuthorCount")
+    public Map<String,Object> getUsersAndAuthorCount(){return bs.getUsersAndAuthorCount();}
+    @RequestMapping("getBookTypeProportion")
+    public List<Map<String,Object>> getBookTypeProportion(){return bs.getBookTypeProportion();}
+    @RequestMapping("getAllCountByBtid")
+    public LayuiPage getAllCountByBtid(LayuiPage lp){return bs.getAllCountByBtid(lp);}
 
 }
 

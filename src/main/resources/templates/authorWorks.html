@@ -174,11 +174,11 @@
                     <tr>
                         <th></th>
                         <th class="tl">书名</th>
-                        <th class="tl">最新章节</th>
+                        <th class="tl" width="100px;">最新章节</th>
                         <th class="center">编辑分组</th>
                         <th>收藏</th>
                         <th>状态</th>
-                        <th class="center">操作</th>
+                        <th class="center" width="200px;">操作</th>
                     </tr>
                     </thead>
                     <tbody id="novelList">
@@ -338,19 +338,16 @@
                 str+="</td>";
                 var state=data[i].bookstate==0?'连载中':'完结';
                 str+="<td>"+state+"";
-                str+="<div class=\"dib-wrap\">";
-                if(data[i].bookstate==0){
-                    str+="<a class=\"button blue\" href=\"javascript:void(0);\" onclick=\"bookEnd("+data[i].bookid+")\"><span class=\"icon\"></span><i>完结</i></a>"
-                }else{
-                    str+="<a class=\"button white\" href=\"javascript:void(0);\"><span class=\"icon\"></span><i>已完结</i></a>";
-                }
-                str+="</div>";
                 str+="</td>";
                 str+="<td>";
                 str+="<div class=\"dib-wrap\">";
                 str+="<a class=\"button blue\" href=\"javascript:void(0);\" onclick=\"skip("+data[i].bookid+",'chapteradd')\"><span class=\"icon\"></span><i>写新章节</i></a>"
                 str+="<a class=\"button white\" href=\"javascript:void(0);\" onclick=\"skip("+data[i].bookid+",'chaptersent')\"><span class=\"icon\"></span><i>已发布章节</i></a>";
-
+                if(data[i].bookstate==0){
+                    str+="<a class=\"button blue\" href=\"javascript:void(0);\" onclick=\"bookEnd("+data[i].bookid+")\"><span class=\"icon\"></span><i>完结</i></a>"
+                }else{
+                    str+="<a class=\"button white\" href=\"javascript:void(0);\"><span class=\"icon\"></span><i>已完结</i></a>";
+                }
                 str+="</div>";
                 str+="</td>";
                 str+="</tr>";

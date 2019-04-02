@@ -31,7 +31,7 @@ public class ShiroConfig {
 
         filterMap.put("/Emp/login", "anon");
 
-        //filterMap.put("/back/*","authc");
+        filterMap.put("/back/*","authc");
 
         //调整修改页面
         shiroFilterFactoryBean.setLoginUrl("/back/login.html");

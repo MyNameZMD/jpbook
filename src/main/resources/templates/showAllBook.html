@@ -80,6 +80,7 @@
     <link charset="utf-8" rel="stylesheet" href="./css/Autocomplete.css">
     <link charset="utf-8" rel="stylesheet" href="./css/Dropdown.css">
     <link charset="utf-8" rel="stylesheet" href="./css/Popup.css">
+    <script src="./js/jquery-3.3.1.js"></script>
 </head>
 <body style="zoom: 1;">
 
@@ -152,8 +153,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="main-nav-wrap" data-l1="3">
         <div class="main-nav box-center cf" id="type-hover">
             <div class="classify-list fl so-awesome" id="classify-list" data-l1="3">
@@ -315,7 +314,6 @@
                     </dd>
                 </dl>
             </div>
-
             <ul>
                 <li class="first"><b><strong></strong></b><span><em>
                 <i></i>
@@ -527,7 +525,7 @@
                 <div class="work-filter type-filter" id="btdiv" data-l2="3">
                     <h3>分类</h3>
                     <ul class="row-1" type="category">
-                        <input type="hidden" id="btid" value="">
+                        <input type="hidden" id="btid" th:value="${param.btid}">
                         <li data-id="-1" class="act arrow"><a
                                 href="javascript:closesel('btid','booktype','btdiv')"
                                 data-eid="qd_B17">全部</a></li>
@@ -598,6 +596,27 @@
 
                     </ul>
                 <script type="text/javascript" >
+                    $(function () {
+                        var btid=$("#btid").val();
+                        switch (parseInt(btid)){
+                            case 1:btck(1,'玄幻',21);break;
+                            case 2:btck(2,'奇幻',1);break;
+                            case 3:btck(3,'武侠',2);break;
+                            case 4:btck(4,'仙侠',22);break;
+                            case 5:btck(5,'都市',4);break;
+                            case 6:btck(6,'现实',15);break;
+                            case 7:btck(7,'军事',6);break;
+                            case 8:btck(8,'历史',5);break;
+                            case 9:btck(9,'游戏',7);break;
+                            case 10:btck(11,'科幻',9);break;
+                            case 11:btck(12,'灵异',10);break;
+                            case 12:btck(8,'历史',5);break;
+                            case 13:btck(13,'二次元',12);break;
+                            case 14:btck(14,'短篇',20076);break;
+                            default:break;
+                        }
+                    })
+
                     function btck(btid,btname,dataid) {
                         $("#btdiv").find("li").prop("class","");
                         $("#btdiv").find("li[data-id="+dataid+"]").prop("class","act arrow");
@@ -1044,7 +1063,7 @@
     </ul>
 </div>
 </body>
-<script src="./js/jquery-3.3.1.js"></script>
+
 <script type="text/javascript">
     $(function () {
         read();

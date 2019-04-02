@@ -40,5 +40,77 @@ public interface BackDao {
             "on time.toptime = date_format(r.topuptime,'%Y-%m-%d')\n" +
             "where time.toptime<now() group by time.toptime order by time.toptime \n")
     public List<Map<String,Object>> thismonth(String month);
-
+    @Select("\n" +
+            "select (aa.sum+bb.sum) sum from\n" +
+            "(select a.month,IFNULL(b.sum,0) sum from (\n" +
+            "SELECT convert(DATE_FORMAT(DATE_SUB(NOW(), INTERVAL xc Month), '%m'),SIGNED) as month\n" +
+            "FROM ( \n" +
+            "\t\t\tSELECT @xi:=@xi+1 as xc from \n" +
+            "\t\t\t(SELECT 1 UNION SELECT 2 UNION SELECT 3 ) xc1, \n" +
+            "\t\t\t(SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 ) xc2,  \n" +
+            "\t\t\t(SELECT @xi:=0) xc0 \n" +
+            ") xcxc) a LEFT JOIN\n" +
+            "(select MONTH(buy.buydate) 'month',sum(FLOOR(c.chapcount/200)) sum from buyrecord buy,chapter c where buy.chapid=c.chapid and YEAR(buy.buydate)=YEAR(NOW()) GROUP BY MONTH(buy.buydate)\n" +
+            ") b on a.month=b.month \n" +
+            "ORDER BY MONTH) aa INNER JOIN\n" +
+            "(\n" +
+            "select a.month,IFNULL(b.sum,0) sum from (\n" +
+            "SELECT convert(DATE_FORMAT(DATE_SUB(NOW(), INTERVAL xc Month), '%m'),SIGNED) as month\n" +
+            "FROM ( \n" +
+            "\t\t\tSELECT @xi:=@xi+1 as xc from \n" +
+            "\t\t\t(SELECT 1 UNION SELECT 2 UNION SELECT 3 ) xc1, \n" +
+            "\t\t\t(SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 ) xc2,  \n" +
+            "\t\t\t(SELECT @xi:=0) xc0 \n" +
+            ") xcxc) a LEFT JOIN\n" +
+            "(select sum(rewanum) sum,MONTH(rewatime) 'month' from reward where YEAR(rewatime)=YEAR(NOW()) GROUP BY MONTH(rewatime)) b on a.month=b.month \n" +
+            "ORDER BY MONTH) bb on aa.month=bb.month")
+    Integer[] getAllIncome();
+    @Select("select sum from (\n" +
+            "select a.month,IFNULL(b.sum,0) sum from (\n" +
+            "SELECT convert(DATE_FORMAT(DATE_SUB(NOW(), INTERVAL xc Month), '%m'),SIGNED) as month\n" +
+            "FROM ( \n" +
+            "\t\t\tSELECT @xi:=@xi+1 as xc from \n" +
+            "\t\t\t(SELECT 1 UNION SELECT 2 UNION SELECT 3 ) xc1, \n" +
+            "\t\t\t(SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 ) xc2,  \n" +
+            "\t\t\t(SELECT @xi:=0) xc0 \n" +
+            ") xcxc) a LEFT JOIN\n" +
+            "(select MONTH(buy.buydate) 'month',sum(FLOOR(c.chapcount/200)) sum from buyrecord buy,chapter c where buy.chapid=c.chapid and YEAR(buy.buydate)=YEAR(NOW()) GROUP BY MONTH(buy.buydate)\n" +
+            ") b on a.month=b.month \n" +
+            "ORDER BY MONTH) c")
+    Integer[] getAllBuyrecord();
+    @Select("select sum from (\n" +
+            "select a.month,IFNULL(b.sum,0) sum from (\n" +
+            "SELECT convert(DATE_FORMAT(DATE_SUB(NOW(), INTERVAL xc Month), '%m'),SIGNED) as month\n" +
+            "FROM ( \n" +
+            "\t\t\tSELECT @xi:=@xi+1 as xc from \n" +
+            "\t\t\t(SELECT 1 UNION SELECT 2 UNION SELECT 3 ) xc1, \n" +
+            "\t\t\t(SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 ) xc2,  \n" +
+            "\t\t\t(SELECT @xi:=0) xc0 \n" +
+            ") xcxc) a LEFT JOIN\n" +
+            "(select sum(rewanum) sum,MONTH(rewatime) 'month' from reward where YEAR(rewatime)=YEAR(NOW()) GROUP BY MONTH(rewatime)) b on a.month=b.month \n" +
+            "ORDER BY MONTH) c")
+    Integer[] getAllReward();
+    @Select("select (a.sum+b.sum) 'all',a.sum rew,b.sum buy,(c.sum+d.sum) yearAll from (\n" +
+            "select sum(rewanum) sum from reward) a,(\n" +
+            "select sum(FLOOR(c.chapcount/200)) sum from buyrecord buy,chapter c where buy.chapid=c.chapid) b,(\n" +
+            "select sum(rewanum) sum from reward where YEAR(rewatime)=YEAR(NOW())) c,(\n" +
+            "select sum(FLOOR(c.chapcount/200)) sum from buyrecord buy,chapter c where buy.chapid=c.chapid and YEAR(buy.buydate)=YEAR(NOW())) d\n" +
+            "\n")
+    Map<String,Object> getAllAndYear();
+    @Select("select a.pen,IFNULL(b.sum,0) rewmoney,IFNULL(c.sum,0) buymoney,IFNULL((b.sum+c.sum),0) allmoney,IFNULL(FLOOR((b.sum/2)+(c.sum/5)),0) duemoney,IFNULL(FLOOR(((b.sum/2)+(c.sum/5))/100),0) actualmoney,IFNULL(FLOOR(a.withdrawmoney),0) withdrawmoney,IFNULL(FLOOR((((b.sum/2)+(c.sum/5))/100)-a.withdrawmoney),0) residuemoney from (\n" +
+            "select * from users where pen !='') a LEFT JOIN\n" +
+            "(select u.uuid,sum(r.rewanum) sum from reward r,books bs,users u where r.bookid=bs.bookid and bs.uuid=u.uuid group by u.uuid) b on a.uuid=b.uuid left JOIN\n" +
+            "(select u.uuid,FLOOR(sum(c.chapcount)/200) sum from buyrecord buy,chapter c,roll r,books bs,users u where buy.chapid=c.chapid and c.rollid=r.rollid and r.bookid=bs.bookid and bs.uuid=u.uuid group by u.uuid) c on b.uuid=c.uuid \n")
+    List<Map<String,Object>> getAllAuthorMoney();
+    @Select("select pro.pname name,count(u.uuid) value from users u,province pro where u.pro=pro.pid and u.pen!='' GROUP BY pro.pid\n")
+    List<Map<String,Object>> getAllAuthorDistribute();
+    @Select("SELECT (SELECT count(uuid)  from users) usercount,(SELECT count(uuid)  from users where pen!='') authorcount  from dual\n")
+    Map<String,Object> getUsersAndAuthorCount();
+    @Select("select bt.btname name,count(b.bookid) value from booktype bt LEFT JOIN books b on bt.btid=b.btid GROUP BY bt.btid\n")
+    List<Map<String,Object>> getBookTypeProportion();
+    @Select("select a.btid,a.btname,a.chapcount,b.rollcount,c.bookcount,a.chapnum from (\n" +
+            "select bt.btid,bt.btname,count(c.chapid) chapcount,IFNULL(sum(c.chapcount),0) chapnum from booktype bt LEFT JOIN books bs on bt.btid=bs.btid LEFT JOIN roll r on bs.bookid=r.bookid LEFT JOIN chapter c on r.rollid=c.rollid GROUP BY bt.btid) a,\n" +
+            "(select bt.btid,bt.btname,count(r.rollid) rollcount from booktype bt LEFT JOIN books bs on bt.btid=bs.btid LEFT JOIN roll r on bs.bookid=r.bookid  GROUP BY bt.btid) b,\n" +
+            "(select bt.btid,bt.btname,count(b.bookid) bookcount from booktype bt LEFT JOIN books b on bt.btid=b.btid GROUP BY bt.btid) c where a.btname=b.btname and b.btname=c.btname\n")
+    List<Map<String,Object>> getAllCountByBtid();
 }

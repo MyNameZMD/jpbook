@@ -54,7 +54,7 @@
                 </a>
             </div>
             <div class="logo fl">
-                <a href="//www.qidian.com" data-eid="qd_A11"></a>
+                <a href="/jpbook/booktype/queryAll" data-eid="qd_A11"></a>
             </div>
             <div class="search-wrap fl">
                 <form id="formUrl" action="/jpbook/books/likeBooks" method="get" target="_blank">
@@ -74,11 +74,11 @@
                 <li class="first"><span><em><i></i><i></i><i></i></em>作品分类</span></li>
                 <li class="nav-li"><a href="/jpbook/showAllBook.html"
                                       data-eid="qd_A15">全部作品</a></li>
-                <li class="nav-li"><a href="//www.qidian.com/rank"
+                <li class="nav-li"><a href="/jpbook/books/rank"
                                       data-eid="qd_A16">排行</a></li>
-                <li class="nav-li"><a href="showEndBook.html"
+                <li class="nav-li"><a href="/jpbook/showEndBook.html"
                                       data-eid="qd_A17">完本</a></li>
-                <li class="nav-li"><a href="showFreeBook.html"
+                <li class="nav-li"><a href="/jpbook/showFreeBook.html"
                                       data-eid="qd_A18">免费</a></li>
                 <li class="nav-li"><a
                         href="/jpbook/users/openwriter" target="_blank"
@@ -87,8 +87,7 @@
         </div>
     </div>
     <div class="focus-wrap box-center mb40 cf">
-        <div class="classify-list fl so-awesome" id="classify-list"
-             data-l1="3">
+        <div class="classify-list fl so-awesome" id="classify-list">
             <dl class="cf" th:each="bt : ${queryAll}">
                 <dd th:class="${bt.btid % 2 == 0 ? 'left' : 'even'}"
                     th:style="${bt.btid % 2 == 0 ? 'margin-left:106.5px;margin-top:-60px;' : ''}">
@@ -98,7 +97,7 @@
             </dl>
         </div>
         <!-- 图片轮换 -->
-        <div class="focus-box fl" data-l1="6">
+        <div class="focus-box fl">
             <div class="focus-slider">
                 <div class="lbf-slides switchable-slides" id="switchable-slides">
                     <ul>
@@ -278,23 +277,16 @@
             </div>
         </div>
     </div>
-    <div class="banner-wrap box-center mb30" id="banner-two" data-l1="31">
-        <div class="la-ball-pulse">
-            <span></span><span></span><span></span>
-        </div>
-        <a href="javascript:" target="_blank" data-eid="qd_A116"
-           data-qd_dd_p1="1"><img src=""><span class="op-tag"></span></a><a
-            href="javascript:" target="_blank" data-eid="qd_A116"
-            data-qd_dd_p1="1"><span class="op-tag"></span></a>
-    </div>
+    <!--四大排行-->
     <div class="rank-wrap box-center mb20" data-l1="11">
         <div id="numero3">
             <div id="rank-list-row" class="rank-list-row cf mb20">
                 <div class="rank-list" data-l2="1" style="margin-left:50px;">
                     <h3 class="wrap-title lang">
-                        原创风云榜<i>&#183;</i>新书<a class="more"
-                                               href="//www.qidian.com/rank/yuepiao?chn=0" data-eid="qd_A118"
-                                               target="_blank">更多<em class="iconfont">&#xe553;</em></a>
+                        原创风云榜<i>&#183;</i>新书
+                        <a class="more" href="//www.qidian.com/rank/yuepiao?chn=0" target="_blank">
+                            更多<em class="iconfont">&#xe553;</em>
+                        </a>
                     </h3>
                     <div class="book-list">
                         <ul>
@@ -467,10 +459,13 @@
                         </ul>
                     </div>
                 </div>
+                <!--24小时热销榜-->
                 <div class="rank-list sort-list" data-l2="2" style="margin-left:50px;">
                     <h3 class="wrap-title lang">
-                        24小时热销榜<a class="more" href="//www.qidian.com/rank/hotsales"
-                                  data-eid="qd_A118" target="_blank">更多<em class="iconfont">&#xe553;</em></a>
+                        24小时热销榜
+                        <a class="more" href="//www.qidian.com/rank/hotsales" target="_blank">
+                            更多<em class="iconfont">&#xe553;</em>
+                        </a>
                     </h3>
                     <div class="book-list">
                         <ul>
@@ -484,17 +479,16 @@
                                         </h4>
                                         <p class="digital f16">销量冠军</p>
                                         <p class="author">
-                                            <a class="type" href="//www.qidian.com/dushi"
-                                               target="_blank">都市</a><i>&#183;</i><a class="writer"
-                                                                                     href="//me.qidian.com/authorIndex.aspx?id=3228548"
-                                                                                     target="_blank">老鹰吃小鸡</a>
+                                            <a class="type" href="//www.qidian.com/dushi" target="_blank">都市</a>
+                                            <i>&#183;</i>
+                                            <a class="writer" href="//me.qidian.com/authorIndex.aspx?id=3228548" target="_blank">老鹰吃小鸡</a>
                                         </p>
                                     </div>
                                     <div class="book-cover">
-                                        <a class="link" href="//book.qidian.com/info/1012237441"
-                                           data-eid="qd_A117" target="_blank" data-bid="1012237441"><img
-                                                src="//bookcover.yuewen.com/qdbimg/349573/1012237441/90"
-                                                alt="全球高武"></a><span></span>
+                                        <a class="link" href="//book.qidian.com/info/1012237441" target="_blank">
+                                            <img src="//bookcover.yuewen.com/qdbimg/349573/1012237441/90" alt="全球高武">
+                                        </a>
+                                        <span></span>
                                     </div>
                                 </div>
                             </li>
@@ -641,10 +635,10 @@
                         </ul>
                     </div>
                 </div>
+                <!--新锐周点击榜-->
                 <div class="rank-list" data-l2="3" style="margin-left:50px;">
                     <h3 class="wrap-title lang">
-                        新锐周点击榜<a class="more" href="//www.qidian.com/rank/newvipclick"
-                                 target="_blank" data-eid="qd_A118">更多<em class="iconfont">&#xe553;</em></a>
+                        新锐周点击榜
                     </h3>
                     <div class="book-list">
                         <ul>
@@ -698,10 +692,10 @@
                         </ul>
                     </div>
                 </div>
+                <!--周推荐票榜-->
                 <div class="rank-list" data-l2="4" style="margin-left:50px;">
                     <h3 class="wrap-title lang">
-                        周推荐票榜<a class="more" href="//www.qidian.com/rank/recom"
-                                target="_blank" data-eid="qd_A118">更多<em class="iconfont">&#xe553;</em></a>
+                        周推荐票榜
                     </h3>
                     <div class="book-list">
                         <ul>
@@ -874,21 +868,13 @@
                         </ul>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-    <div class="banner-wrap box-center mb40" id="banner3" data-l1="32">
-        <div class="la-ball-pulse">
-            <span></span><span></span><span></span>
-        </div>
-        <a href="javascript:" target="_blank" data-eid="qd_A120"><img
-                src=""><span class="op-tag"></span></a><a href="javascript:"
-                                                          target="_blank" data-eid="qd_A120"><span
-            class="op-tag"></span></a>
-    </div>
+    <!--过渡图片-->
+    <HR style="border:1;dashed #987cb9;margin-top: 100px" width="80%" color=#987cb9 SIZE=1>
     <!--本周上新-->
-    <div class="new-rec-wrap box-center cf" data-l1="18">
+    <div class="new-rec-wrap box-center cf" style="margin-top: 100px">
         <div class="left-wrap fl">
             <h3 class="wrap-title lang">
                 新书推荐<span th:text="|本周入库${queryNewBooks.size()}本|"></span>
@@ -989,20 +975,13 @@
             </div>
         </div>
     </div>
-    <div class="banner-wrap box-center mb40" id="banner4" data-l1="33">
-        <div class="la-ball-pulse">
-            <span></span><span></span><span></span>
-        </div>
-        <a href="javascript:" target="_blank" data-eid="qd_A137"><img
-                src=""></a><a href="javascript:" target="_blank"
-                              data-eid="qd_A137"></a>
-    </div>
+    <HR style="border:1;dashed #987cb9;" width="80%" color=#987cb9 SIZE=1>
     <!--完本精品-->
-    <div class="finish-book-wrap box-center" data-l1="13">
+    <div class="finish-book-wrap box-center" style="margin-top: 100px;">
         <div class="cf" id="numero4">
             <div class="left-wrap fl">
                 <h3 class="wrap-title lang">
-                    完本精品<span th:text="|完本总数${queryWanben.size()}本|"></span>
+                    完本精品记得结束时吧mapper中的书籍状态改一下<span th:text="|完本总数${queryWanben.size()}本|"></span>
                     <a class="more" href="//www.qidian.com/finish" target="_blank">更多<em class="iconfont">&#xe553;</em></a>
                 </h3>
                 <div class="center-book-list fl" data-l2="2">
@@ -1024,7 +1003,7 @@
                                         </h3>
                                         <p th:text="${qw.bookreferral}"></p>
                                         <div class="state-box cf">
-                                            <span th:text="|${qw.chapcount}+|"></span>
+                                           <!-- <span th:text="${qw.chapcount}"></span>-->
                                             <i th:text="${qw.btname}"></i>
                                             <a class="author" th:text="${qw.pen}"
                                                href="//me.qidian.com/authorIndex.aspx?id=4362466"
@@ -1085,8 +1064,10 @@
             </div>
         </div>
     </div>
-    <div class="update-wrap box-center mb40 cf" data-l1="19">
-        <div class="update-rec-wrap fl" data-l2="1">
+    <HR style="border:1;dashed #987cb9;margin-top: 80px" width="80%" color=#987cb9 SIZE=1>
+    <!--所有的最近更新-->
+    <div class="update-wrap box-center mb40 cf" style="margin-top: 80px">
+        <div class="update-rec-wrap fl">
             <h3 class="wrap-title lang">
                 最近更新<span>24小时内更新19054本</span>
             </h3>
@@ -1169,25 +1150,14 @@
         </div>
         <div class="update-list-wrap fl" data-l2="2">
             <div class="update-tab cf">
-                <a class="blue" href="//www.qidian.com/all" target="_blank"
-                   data-eid="qd_A155">更多<em class="iconfont">&#xe553;</em></a><span
-                    class="blue">&#124;</span>
-                <p id="update-tab">
-                    <a class="act" href="javascript:" data-eid="qd_A152">全部</a><span>&#183;</span><a
-                        href="javascript:" data-eid="qd_A153">免费</a><span>&#183;</span><a
-                        href="javascript:" data-eid="qd_A154">VIP</a>
-                </p>
+                <a class="blue" href="//www.qidian.com/all" target="_blank">更多
+                    <em class="iconfont">&#xe553;</em>
+                </a>
             </div>
+            <!--中间展示详细的信息-->
             <div id="update-list" class="update-list">
                 <div class="update-table all">
                     <table width="100%">
-                        <!-- <colgroup>
-                        <col width="74px">
-                        <col width="170px">
-                        <col width="270px">
-                        <col width="100px">
-                        <col width="70px">
-                    </colgroup>-->
                         <tbody>
                         <tr data-rid="1">
                             <td><a class="classify" href="//www.qidian.com/duanpian"
@@ -1856,8 +1826,11 @@
                     </colgroup>-->
                         <tbody>
                         <tr data-rid="1">
-                            <td><a class="classify" href="//www.qidian.com/lingyi"
-                                   data-eid="qd_A156" target="_blank"><em>「</em>悬疑灵异<em>」</em></a></td>
+                            <td>
+                                <a class="classify" href="//www.qidian.com/lingyi" target="_blank">
+                                    <em>「</em>悬疑灵异<em>」</em>
+                                </a>
+                            </td>
                             <td><a class="name"
                                    href="//book.qidian.com/info/1013635331" target="_blank"
                                    data-eid="qd_A157" data-bid="1013635331">老子是阎王</a></td>
@@ -2179,30 +2152,26 @@
                 </div>
             </div>
         </div>
+        <!--大神推荐-->
         <div class="god-wrap fr" data-l2="3">
             <h3 class="wrap-title lang">
-                大神俱乐部<a href="//www.qidian.com/dashen" target="_blank">更多<em
-                    class="iconfont more-dashen"> &#xe553;< /em></a>
+                大神推荐
+                <a href="//www.qidian.com/dashen" target="_blank">更多</a>
             </h3>
             <div class="god-list">
                 <ul>
                     <li data-rid="1">
                         <div class="god-info">
                             <div class="photo">
-                                <a href="//me.qidian.com/authorIndex.aspx?id=4406509"
-                                   target="_blank" data-eid="qd_A161"><img class="lazy"
-                                                                           src="//qidian.gtimg.com/qd/images/common/author_boy.c610d.png"
-                                                                           data-original="//facepic.qidian.com/qd_face/349573/a4406509/0"></a>
+                                <a href="//me.qidian.com/authorIndex.aspx?id=4406509" arget="_blank">
+                                    <img class="lazy" src="//qidian.gtimg.com/qd/images/common/author_boy.c610d.png"></a>
                             </div>
                             <h3>
-                                <a href="//me.qidian.com/authorIndex.aspx?id=4406509"
-                                   target="_blank" data-eid="qd_A160">净无痕</a>
+                                <a href="//me.qidian.com/authorIndex.aspx?id=4406509" target="_blank">净无痕</a>
                             </h3>
-                            <p class="type">阅文集团白金作家</p>
                             <h4>代表作</h4>
                             <p class="works cf">
-                                <a href="//book.qidian.com/info/3446747" target="_blank"
-                                   data-eid="qd_A162" data-bid="3446747">太古神王</a>
+                                <a href="//book.qidian.com/info/3446747" target="_blank">太古神王</a>
                             </p>
                             <p class="intro">阅文集团白金作家，网络文学知名玄幻作家，名校高材生，作品深受读者喜爱。</p>
                         </div>
@@ -2261,99 +2230,6 @@
             </div>
         </div>
     </div>
-    <div class="filter-search-wrap" data-l1="21">
-        <div class="box-center cf">
-            <div class="filter-search-box fl">
-                <div class="title fl">没有找到？试试这里</div>
-                <div class="filter-search fl">
-                    <div id="classify" class="lbf-combobox">
-                        <select>
-                            <option value="21">玄幻</option>
-                            <option value="1">奇幻</option>
-                            <option value="2">武侠</option>
-                            <option value="22">仙侠</option>
-                            <option value="4">都市</option>
-                            <option value="15">现实</option>
-                            <option value="6">军事</option>
-                            <option value="5">历史</option>
-                            <option value="7">游戏</option>
-                            <option value="8">体育</option>
-                            <option value="9">科幻</option>
-                            <option value="10">悬疑灵异</option>
-                            <option value="41">女生网</option>
-                            <option value="12">二次元</option>
-                        </select><a href="javascript:"
-                                    class="lbf-button lbf-combobox-label" hidefocus="true"><span
-                            class="lbf-combobox-caption">玄幻</span><span
-                            class="lbf-combobox-icon">&nbsp;</span></a>
-                    </div>
-                    <div id="serial" class="lbf-combobox">
-                        <select name="">
-                            <option value="0">连载</option>
-                            <option value="1">完本</option>
-                        </select><a href="javascript:"
-                                    class="lbf-button lbf-combobox-label" hidefocus="true"><span
-                            class="lbf-combobox-caption">连载</span><span
-                            class="lbf-combobox-icon">&nbsp;</span></a>
-                    </div>
-                    <div id="charge" class="lbf-combobox">
-                        <select name="">
-                            <option value="0">免费</option>
-                            <option value="1">收费</option>
-                        </select><a href="javascript:"
-                                    class="lbf-button lbf-combobox-label" hidefocus="true"><span
-                            class="lbf-combobox-caption">免费</span><span
-                            class="lbf-combobox-icon">&nbsp;</span></a>
-                    </div>
-                    <div id="words" class="lbf-combobox words">
-                        <select name="">
-                            <option value="5">200万以上</option>
-                            <option value="4">100万-200万字</option>
-                            <option value="3">50万-100万字</option>
-                            <option value="2">30万-50万字</option>
-                            <option value="1">30万以下</option>
-                        </select><a href="javascript:"
-                                    class="lbf-button lbf-combobox-label" hidefocus="true"><span
-                            class="lbf-combobox-caption">100万-200万字</span><span
-                            class="lbf-combobox-icon">&nbsp;</span></a>
-                    </div>
-                    <div id="tags" class="lbf-combobox tags">
-                        <select name="">
-                            <option value="全部标签">全部标签</option>
-                            <option value="腹黑">腹黑</option>
-                            <option value="热血">热血</option>
-                            <option value="猥琐">猥琐</option>
-                            <option value="恶搞">恶搞</option>
-                            <option value="爆笑">爆笑</option>
-                            <option value="重生">重生</option>
-                            <option value="技术流">技术流</option>
-                            <option value="系统流">系统流</option>
-                            <option value="丧尸">丧尸</option>
-                            <option value="僵尸">僵尸</option>
-                            <option value="盗墓">盗墓</option>
-                            <option value="玄学">玄学</option>
-                            <option value="鉴宝">鉴宝</option>
-                        </select><a href="javascript:"
-                                    class="lbf-button lbf-combobox-label" hidefocus="true"><span
-                            class="lbf-combobox-caption">全部标签</span><span
-                            class="lbf-combobox-icon">&nbsp;</span></a>
-                    </div>
-                    <a id="btn-filter-search" class="red-btn" href="javascript:"
-                       target="_blank" data-eid="qd_A167">按条件找书</a>
-                </div>
-            </div>
-            <div class="everyone fl" data-eid="qd_A147">
-                <p class="title fl">大家都在搜</p>
-                <div class="key-words fl">
-                    <a
-                            href="http://www.qidian.com/all?size=4&amp;chanId=21&amp;action=0"
-                            target="_blank" data-eid="qd_A168">玄幻+连载+100万~200万</a><a
-                        href="http://www.qidian.com/all?chanId=4&amp;action=0&amp;vip=1"
-                        target="_blank" data-eid="qd_A168">都市+连载+vip</a>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="footer">
         <div class="box-center cf">
             <div class="friend-link">
@@ -2402,24 +2278,6 @@
                 <p>请所有作者发布作品时务必遵守国家互联网信息管理办法规定，我们拒绝任何色情小说，一经发现，即作删除！举报电话：010-59357051</p>
                 <p>本站所收录的作品、社区话题、用户评论、用户上传内容或图片等均属用户个人行为。如前述内容侵害您的权益，欢迎举报投诉，一经核实，立即删除，本站不承担任何责任</p>
                 <p>联系方式 总机 021-61870500 地址：中国（上海）自由贸易试验区碧波路690号6号楼101、201室</p>
-            </div>
-            <div class="safety-box">
-                <div class="safety-img dib-wrap">
-                    <a class="site1"
-                       href="http://103.21.140.216:86/Welcome.Asp?Id=3101151112"
-                       target="_blank"></a><a class="site2"
-                                              href="http://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&entyId=20111011181417625"
-                                              target="_blank"></a><a class="site3"
-                                                                     href="http://www.cyberpolice.cn/wfjb"
-                                                                     target="_blank"></a><a
-                        class="site4"
-                        href="https://ss.knet.cn/verifyseal.dll?sn=e18013031011571840mt51000000&pa=111332"
-                        target="_blank"></a><a class="site5" href="http://www.shjbzx.cn"
-                                               target="_blank"></a><a class="site6"
-                                                                      href="http://www.12377.cn/node_548446.htm"
-                                                                      target="_blank"></a><a
-                        class="site7" href="http://www.12377.cn/" target="_blank"></a>
-                </div>
             </div>
         </div>
     </div>

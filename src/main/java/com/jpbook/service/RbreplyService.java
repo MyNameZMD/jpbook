@@ -22,4 +22,8 @@ public class RbreplyService {
     public List<Map<String,Object>> queryNewRbreply(Integer replytype, Integer from_uuid){
         return rd.queryNewRbreply(replytype,from_uuid);
     }
+
+    public List<Map<String,Object>> queryRbRbreply(Integer revid){
+        return rd.queryRbRbreply(revid);
+    }
 }

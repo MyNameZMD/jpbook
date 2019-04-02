@@ -387,10 +387,10 @@
                     </script>
 
                     <a class="blue-btn" id="topVoteBtn" href="javascript:recClick();"
-                       data-showtype="1" data-eid="qd_G06">投票互动</a> <a class="blue-btn"
+                       data-showtype="1" data-eid="qd_G06">投票互动</a> <!--<a class="blue-btn"
                                                                        id="downloadAppBtn"
-                                                                       th:href="@{/books/download?path={filename}(filename=${queryBookById[0].url})}">下载App<br>新人免费读
-                </a>
+                                                                       >下载App<br>新人免费读
+                </a>-->
                 </p>
 
 				</div>
@@ -430,11 +430,36 @@
 
                 <a class="blue" id="subscribe" th:href="@{/books/getMoneyBookByBookid?bookid={filename}(filename=${queryBookById[0].bookid})}" data-eid="qd_G13"><em
                         class="iconfont icon-dingyue"></em>订阅</a> <i></i> <a class="blue download"
-                                                                             id="download" href="javascript:"
+                                                                             id="download" th:href="@{/books/download?bookid={filename}(filename=${queryBookById[0].bookid})}"
                                                                              data-eid="qd_G14"><em
                     class="iconfont icon-xiazai-xue"></em>下载 </a>
             </div>
         </div>
+		<script type="text/javascript">
+			function download() {
+                swal({
+                        title: "确定下载吗?",
+                        text: "下载免费章节以及已购买章节",
+                        type: "warning",
+                        showCancelButton: true,
+						cancelButtonText:"取消",
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确定!"
+                    },
+                    function(){
+                        $.ajax({
+                            url:"/jpbook/books/download",
+                            data:{"bookid":$("#atbookid").val()},
+                            success:function (data) {
+                                if(data==''){
+                                    swal("下载失败", "没有可下载的章节", "warning")
+                                }
+                            }
+                        })
+                    });
+
+            }
+		</script>
         <div class="content-nav-wrap cf" data-l1="3">
             <div class="nav-wrap fl">
                 <ul>
@@ -2166,7 +2191,7 @@
                         <h5>账户余额 <span id="balance"></span> 起点币<i>·</i>还差<em class="f14" id="differ"></em>起点币</h5>
                         <p class="popup-btn"><!--<a class="red-btn j_quickPay" href="javascript:"
                                                 data-eid="qd_G61">快捷支付打赏</a>--><a class="blue-btn j_charge"
-                                                                               href="topup" target="_blank"
+                                                                               href="/jpbook/topup" target="_blank"
                                                                                data-eid="qd_G62">去充值</a></p>
                     </div>
                     <!-- end 有限制不可以打赏 余额不足 -->

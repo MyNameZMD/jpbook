@@ -138,6 +138,61 @@ public interface BooksDao {
      */
     public List<Map<String,Object>> likeBooks(String kw,Integer page,Integer limit,String sort);
 
+
+    /**
+     * 查询新书榜
+     * @return
+     */
+    public List<Map<String,Object>> cankNewBook(Integer page);
+
+    /**
+     * 新人新书榜
+     * @return
+     */
+    public List<Map<String,Object>> cankNewPenBook(Integer page);
+
+    /**
+     * 当周点击量
+     * @return
+     */
+    public List<Map<String,Object>> cankWeekClick(Integer page);
+
+    /**
+     * 查询推荐（周、月、总）
+     * @param type
+     * @return
+     */
+    public List<Map<String,Object>> cankQueryVote(Integer type,Integer page);
+
+    /**
+     * 查询书籍被收藏的次数排行
+     * @param page
+     * @return
+     */
+    public List<Map<String,Object>> cankBookrack(Integer page);
+
+    /**
+     * 查询完本的点击量
+     * @param types
+     * @param page
+     * @return
+     */
+    public List<Map<String,Object>> cankWanben(Integer types,Integer page);
+
+    /**
+     * 潜力榜
+     * @param page
+     * @return
+     */
+    public List<Map<String,Object>> cankQianli(Integer page);
+
+    /**
+     * 24小时热销榜
+     * @param page
+     * @return
+     */
+    public List<Map<String,Object>> cankHotsell(Integer page);
+
     @Select("select bs.*,bbb.*,bt.btname,IFNULL(br.count,0) count  from books bs LEFT JOIN\n" +
             "(select a.* from \n" +
             "(select bs.bookid,c.* from chapter c,roll r,books bs where c.rollid=r.rollid and bs.bookid=r.bookid) a,\n" +
@@ -147,7 +202,7 @@ public interface BooksDao {
             "where b.bookid=r.bookid and r.rollid=c.rollid \n" +
             "and b.uuid = #{uuid} and c.chapstate=1 order by c.chaptime desc) b\n" +
             "group by b.bookid) bb where a.bookid=bb.bookid and a.chaptime=bb.time) bbb on bs.bookid=bbb.bookid INNER JOIN booktype bt on bs.btid=bt.btid LEFT JOIN\n" +
-            "(select bookid,count(*) count from bookrack GROUP BY bookid) br on bs.bookid=br.bookid")
+            "(select bookid,count(*) count from bookrack GROUP BY bookid) br on bs.bookid=br.bookid  where uuid=#{uuid}")
     List<Map<String,Object>> queryByUuid(Users u);
     @Insert("insert into books(bookname,uuid,btid,bookstate,createtime,url,icon,sex,bookreferral) values(#{bookname},#{uuid},#{btid},0,SYSDATE(),#{url},#{icon},#{sex},#{bookreferral});")
     Integer add(Books books);
@@ -185,4 +240,7 @@ public interface BooksDao {
     List<Map<String,Object>> queryReward(Integer bookid);
     @Update("update books set bookstate=1 where bookid=#{bookid}\n")
     Integer bookEnd(Integer bookid);
+    @Select("select  bs.bookname,c.* from books bs,roll r,chapter c where (bs.bookid=r.bookid and r.rollid=c.rollid and bs.bookid=#{param1} and rollmoney=1 and c.chapstate=1) or (bs.bookid=r.bookid and r.rollid=c.rollid and bs.bookid=#{param1} and rollmoney=2 and c.chapstate=1 and c.chapid in(\n" +
+            "select chapid from buyrecord where uuid=#{param2}))")
+    List<Map<String,Object>> download(Integer bookid,Integer uuid);
 }

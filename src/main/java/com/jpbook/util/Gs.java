@@ -13,6 +13,9 @@ public class Gs {
 
     public static Integer getsession(HttpSession session){
         List<Users> users = (List<Users>)session.getAttribute("users");
+        if (null==users){
+            return null;
+        }
         return users.get(0).getUuid();
     }
 

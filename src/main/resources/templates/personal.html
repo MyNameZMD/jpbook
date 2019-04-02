@@ -15,10 +15,8 @@
 	<link rel="stylesheet" href="./layui/layui.css" media="all">
 
 	<script src="./js/jquery-3.3.1.js"></script>
-
-	<!--<script src="./js/stats.js"></script>
-	<script src="./js/LBF.js"></script>-->
-
+	<script src="./layui/layui.js"></script>
+d
 	<link rel="stylesheet" type="text/css" href="./css/sweet-alert.css" />
 	<script src="./js/sweet-alert.js"></script>
 
@@ -1252,19 +1250,20 @@
         $.ajax({
             url: "per/record3",
             success: function (data) {
-                var record3=""
-                if (data.length>0){
-                    for (var i = 0; i<data.length; i++){
-                        record3 += "<tr class='qdp-operate-wrapper'><td class='col1'>"+
-                            "<span class='shelf-table-author font12'>"+data[i].bookname+"</span> </td>"+
-                            "<td class='col1'><span class='shelf-table-author font12'>"+data[i].count+"</span></td>"+
-                            "<td class='col1'><span class='shelf-table-author font12'>"+data[i].sum+"书币</span></td></tr>";
+                var record3 = ""
+                if (data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
+                        record3 += "<tr class='qdp-operate-wrapper'><td class='col1'>" +
+                            "<span class='shelf-table-author font12'>" + data[i].bookname + "</span> </td>" +
+                            "<td class='col1'><span class='shelf-table-author font12'>" + data[i].count + "</span></td>" +
+                            "<td class='col1'><span class='shelf-table-author font12'>" + data[i].sum + "书币</span></td></tr>";
                     }
                     $("#tab3").html(record3);
-                }else {
+                } else {
                     $("#tnd3").show();
                 }
-
+            }
+		});
     });
 
     function u8() {

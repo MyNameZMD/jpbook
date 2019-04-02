@@ -13,7 +13,7 @@
         <button class="layui-btn layui-btn-sm" lay-event="add" onclick="add()">添加</button>
     </div>
     <table class="layui-hide" id="novel" lay-filter="novel"></table>
-    <div style="display: none;text-align: center;margin-top: 100px;margin-left: 50px;" id="div">
+    <div style="display: none;margin-top: 100px;margin-left: 50px;" id="div">
         <form class="layui-form" action="" id="frm">
             <div class="layui-form-item" style="width: 500px;">
                 <label class="layui-form-label">选择书籍</label>
@@ -47,6 +47,7 @@
                 type: 1,
                 title: false,
                 closeBtn: 0,
+                skin:'layui-layer-rim',
                 shadeClose: true,
                 area: ['700px', '450px'],
                 skin: 'yourclass',

@@ -235,8 +235,9 @@
                                     </p>
                                     <p class="intro" th:text="${lb.bookreferral}"></p>
                                     <p class="update">
-                                        <a href="https://vipreader.qidian.com/chapter/1013012550/457465956" target="_blank" th:utext="|最新更新 : ${lb.chapname}|"></a>
-                                        <em>·</em><span th:text="${lb.chaptime}"></span>
+                                            <a th:href="${lb.chapid} ne -1 ? 'https://vipreader.qidian.com/chapter/1013012550/457465956' : 'javascript:;'" target="_blank" th:utext="|最新更新 : ${lb.chapname}|"></a>
+                                            <em>·</em><span th:text="${lb.chaptime}"></span>
+
                                     </p>
                                 </div>
                                 <div class="book-right-info">

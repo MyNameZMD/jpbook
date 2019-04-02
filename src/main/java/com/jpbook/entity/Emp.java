@@ -1,5 +1,7 @@
 package com.jpbook.entity;
 
+import java.util.Date;
+
 public class Emp {
 	private Integer eid;
 	private String ename;
@@ -7,6 +9,42 @@ public class Emp {
 	private String ephone;
 	private String eidcard;
 	private Integer position;
+	private Integer state;
+	private String sex;
+	private String email;
+	private Date regtime;
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Date getRegtime() {
+		return regtime;
+	}
+
+	public void setRegtime(Date regtime) {
+		this.regtime = regtime;
+	}
 
 	public Integer getEid() {
 		return eid;
