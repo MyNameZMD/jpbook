@@ -1,9 +1,11 @@
 package com.jpbook.dao;
 
+import com.jpbook.entity.Emp;
 import com.jpbook.entity.LayuiPage;
 import com.jpbook.entity.Lp;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 import java.util.Map;
@@ -40,6 +42,19 @@ public interface BackDao {
             "on time.toptime = date_format(r.topuptime,'%Y-%m-%d')\n" +
             "where time.toptime<now() group by time.toptime order by time.toptime \n")
     public List<Map<String,Object>> thismonth(String month);
+
+    @Select("select * from emp where eid=#{eid}")
+    public Map<String,Object> admin_info(Integer eid);
+
+    @Update("update emp set ename=#{ename},sex=#{sex},ephone=#{ephone},email=#{email} where eid=${eid}")
+    public Integer eidtadmin(Emp emp);
+
+    @Select("select epwd from emp where eid=#{eid}")
+    public String getpwd(Integer eid);
+
+    @Update("update emp set epwd=#{param1} where eid=#{param2}")
+    public Integer editpwd(String epwd,Integer eid);
+
     @Select("\n" +
             "select (aa.sum+bb.sum) sum from\n" +
             "(select a.month,IFNULL(b.sum,0) sum from (\n" +

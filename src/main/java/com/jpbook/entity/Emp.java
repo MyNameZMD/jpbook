@@ -84,9 +84,17 @@ public class Emp {
 	}
 	@Override
 	public String toString() {
-		return "Emp [eid=" + eid + ", ename=" + ename + ", epwd=" + epwd
-				+ ", ephone=" + ephone + ", eidcard=" + eidcard + ", position="
-				+ position + "]";
+		return "Emp{" +
+				"eid=" + eid +
+				", ename='" + ename + '\'' +
+				", epwd='" + epwd + '\'' +
+				", ephone='" + ephone + '\'' +
+				", eidcard='" + eidcard + '\'' +
+				", position=" + position +
+				", sex='" + sex + '\'' +
+				", email='" + email + '\'' +
+				", regtime=" + regtime +
+				", state=" + state +
+				'}';
 	}
-	
 }

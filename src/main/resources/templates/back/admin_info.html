@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="../layui/layui-v2.4.5/layui/css/layui.css"  media="all">
+
+    <script src="../js/jquery-3.3.1.js" charset="utf-8"></script>
+
+    <script src="../layui/layui-v2.4.5/layui/layui.js" charset="utf-8"></script>
+
+</head>
+<body style="margin: 50px 300px;">
+
+
+    <form class="layui-form layui-form-pane">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="ename" id="ename" class="layui-input" disabled>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">年龄</label>
+            <div class="layui-input-inline">
+                <input type="text" name="eidcard" id="eidcard" class="layui-input" disabled>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-inline">
+                <input type="text" name="sex" id="sex" class="layui-input" disabled>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-inline">
+                <input type="text" name="ephone" id="ephone" class="layui-input" disabled>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-inline">
+                <input type="text" name="email" id="email" class="layui-input"  disabled>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">注册日期</label>
+            <div class="layui-input-inline">
+                <input type="text" name="regtime" id="regtime" class="layui-input"  disabled>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">权限</label>
+            <div class="layui-input-inline">
+                <input type="text" name="position" id="position" class="layui-input" disabled>
+            </div>
+        </div>
+    </form>
+    <div class="layui-form-item">
+        <button class="layui-btn" id="edit" >修改信息</button>
+        <button class="layui-btn layui-btn-danger" id="editpwd" >修改密码</button>
+    </div>
+
+
+    <form class="layui-form layui-form-pane" action="" method="post" lay-filter="example" id="editinfo" style="display: none;margin: 30px 50px">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="ename2" id="ename2" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" pane="" style="width: 297px">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="sex" id="sex1" value="男" title="男" checked>
+                <input type="radio" name="sex" id="sex2" value="女" title="女">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-inline">
+                <input type="text" name="ephone2" id="ephone2" lay-verify="required" autocomplete="off" class="layui-input" maxlength="11">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-inline">
+                <input type="text" name="email2" id="email2" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin: 30px 100px">
+            <button class="layui-btn" lay-submit="" lay-filter="demo2">确认修改</button>
+        </div>
+    </form>
+
+    <form class="layui-form layui-form-pane" action="" lay-filter="example" id="pwdinfo" style="display: none;margin: 30px 50px">
+        <div class="layui-form-item">
+            <label class="layui-form-label">旧密码</label>
+            <div class="layui-input-inline">
+                <input type="text" name="pwd" id="pwd" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">新密码</label>
+            <div class="layui-input-inline">
+                <input type="text" name="epwd" id="epwd" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">再次输入</label>
+            <div class="layui-input-inline">
+                <input type="text" name="epwd2" id="epwd2" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin: 30px 100px">
+            <button class="layui-btn" lay-submit="" lay-filter="demo3">确认修改</button>
+        </div>
+    </form>
+
+    <script>
+        var layer;
+        layui.use('layer', function() {
+            var $ = layui.jquery,
+                layer = layui.layer;
+        });
+
+        init();
+        function init() {
+            $.ajax({
+                url: "/jpbook/back/adminquery",
+                dataType:'json',
+                success: function (data) {
+                    $("#ename").val(data.ename);
+                    $("#eidcard").val(GetAge(data.eidcard));
+                    $("#sex").val(data.sex);
+                    $("#ephone").val(data.ephone);
+                    $("#email").val(data.email);
+                    $("#regtime").val(renderTime(data.regtime).substring(0,10));
+                    if (data.position == 0){
+                        $("#position").val("超级管理员")
+                    }else {
+                        $("#position").val("普通管理员")
+                    }
+                }
+            });
+        }
+
+        $('#edit').on('click', function(){
+            layer.open({
+                type: 1,
+                title:'修改信息',
+                skin: 'layui-layer-rim', //加上边框
+                area: ['420px', '390px'], //宽高
+                content: $("#editinfo")
+            });
+            $("#ename2").val($("#ename").val());
+            if ($("#sex").val() == "男"){
+                $("#sex1").prop("checked",true);
+            }else{
+                $("#sex2").prop("checked",true);
+            }
+            $("#ephone2").val($("#ephone").val());
+            $("#email2").val($("#email").val());
+            layui.form.render();
+        });
+
+        $('#editpwd').on('click', function(){
+            layer.open({
+                type: 1,
+                title:'修改密码',
+                skin: 'layui-layer-rim', //加上边框
+                area: ['420px', '320px'], //宽高
+                content: $("#pwdinfo")
+            });
+        });
+
+
+        layui.use(['form', 'layedit', 'laydate'], function(){
+            var form = layui.form
+                ,layer = layui.layer
+                ,layedit = layui.layedit
+                ,laydate = layui.laydate;
+
+            //自定义验证规则
+            form.verify({
+                title: function(value){
+                    if(value.length < 5){
+                        return '标题至少得5个字符啊';
+                    }
+                }
+                ,pass: [
+                    /^[\S]{6,12}$/
+                    ,'密码必须6到12位，且不能出现空格'
+                ]
+                ,content: function(value){
+                    layedit.sync(editIndex);
+                }
+            });
+
+            //监听提交
+            form.on('submit(demo2)', function(data){
+                $.ajax({
+                    url: "/jpbook/back/eidtadmin",
+                    data:{"ename":data.field.ename2,"sex":data.field.sex,"ephone":data.field.ephone2,"email":data.field.email2},
+                    success: function (data) {
+                        if (data == 1){
+                            layer.alert("修改成功");
+                            init();
+                        }else {
+                            layer.alert("修改失败");
+                        }
+                    }
+                });
+                return false;
+            });
+
+            //监听提交
+            form.on('submit(demo3)', function(data){
+
+               if ($("#epwd").val() != $("#epwd2").val()){
+                    layer.msg("两次密码输入不一致!");
+                    return false;
+                }else {
+                   $.ajax({
+                       url: "/jpbook/back/getpwd",
+                       data:{"pwd":$("#pwd").val(),"epwd":$("#epwd").val()},
+                       success: function (data) {
+                           if(data == 0){
+                               layer.msg("旧密码不对!");
+                           }else {
+                               layer.alert("修改成功!");
+                           }
+                       }
+                   });
+               }
+                return false;
+            });
+
+        });
+
+
+
+        function GetAge(identityCard) {
+            var len = (identityCard + "").length;
+            if (len == 0) {
+                return 0;
+            } else {
+                if ((len != 15) && (len != 18))//身份证号码只能为15位或18位其它不合法
+                {
+                    return 0;
+                }
+            }
+            var strBirthday = "";
+            if (len == 18)//处理18位的身份证号码从号码中得到生日和性别代码
+            {
+                strBirthday = identityCard.substr(6, 4) + "/" + identityCard.substr(10, 2) + "/" + identityCard.substr(12, 2);
+            }
+            if (len == 15) {
+                strBirthday = "19" + identityCard.substr(6, 2) + "/" + identityCard.substr(8, 2) + "/" + identityCard.substr(10, 2);
+            }
+            //时间字符串里，必须是“/”
+            var birthDate = new Date(strBirthday);
+            var nowDateTime = new Date();
+            var age = nowDateTime.getFullYear() - birthDate.getFullYear();
+            //再考虑月、天的因素;.getMonth()获取的是从0开始的，这里进行比较，不需要加1
+            if (nowDateTime.getMonth() < birthDate.getMonth() || (nowDateTime.getMonth() == birthDate.getMonth() && nowDateTime.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
+        function renderTime(date) {
+            var dateee = new Date(date).toJSON();
+            return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+        }
+    </script>
+
+
+</body>
+</html>
+
+

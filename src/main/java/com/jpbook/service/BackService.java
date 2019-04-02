@@ -1,6 +1,7 @@
 package com.jpbook.service;
 
 import com.jpbook.dao.BackDao;
+import com.jpbook.entity.Emp;
 import com.jpbook.entity.BackChart;
 import com.jpbook.entity.LayuiPage;
 import com.jpbook.entity.Lp;
@@ -106,4 +107,21 @@ public class BackService {
         lp.setData(bd.getAllCountByBtid());
         return lp;
     }
+
+    public Map<String,Object> admin_info(Integer eid){
+        return bd.admin_info(eid);
+    }
+
+    public Integer eidtadmin(Emp emp){
+        return bd.eidtadmin(emp);
+    }
+
+    public String getpwd(Integer eid){
+        return bd.getpwd(eid);
+    }
+
+    public Integer editpwd(String epwd,Integer eid){
+        return bd.editpwd(epwd,eid);
+    }
+
 }

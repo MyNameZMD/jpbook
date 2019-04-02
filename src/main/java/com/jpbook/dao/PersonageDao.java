@@ -28,5 +28,4 @@ public interface PersonageDao {
 
     public List<Map<String,Object>> usersBooks(Integer someuuid,Integer uuid);
 
-
 }

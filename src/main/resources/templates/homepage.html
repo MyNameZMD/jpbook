@@ -161,7 +161,7 @@
                     <!--<a href="javascript:;" class="qdp-button-a mlr4" id="elSendMsg" data-image="//facepic.qidian.com" data-name="唐家三少" data-id="265554" data-guid="119090278789" data-eid="qd_M246">私信</a>
 -->
                     <th:block th:if="${h.sta} ne -1">
-                        <a th:href="@{/pc/authorData?uuid={uuid}(uuid=${h.uuid})}" class="qdp-button-a mlr4" target="_blank">作家页</a>
+                        <a th:href="@{/pc/authorData?bid={uuid}(uuid=${h.uuid})}" class="qdp-button-a mlr4" target="_blank">作家页</a>
                     </th:block>
 
                    <!-- <div class="user-menu-wrapper">
@@ -309,9 +309,12 @@
                 url: "fansAdd",
                 data: {"buuid":$("#buuid").val()},
                 success: function (data) {
-
-                    swal("关注成功", "", "success");
-                    setTimeout(function(){ window.location.reload();},1000);
+                    if(data == -1){
+                        window.location.href = "/jpbook/login.html";
+                    }else {
+                        swal("关注成功", "", "success");
+                        setTimeout(function(){ window.location.reload();},1000);
+                    }
                 }
             });
         });
@@ -321,9 +324,12 @@
                 url: "delFans",
                 data: {"buuid":$("#buuid").val()},
                 success: function (data) {
-
-                    swal("取消关注成功", "", "success");
-                    setTimeout(function(){ window.location.reload();},1000);
+                    if(data == -1){
+                        window.location.href = "/jpbook/login.html";
+                    }else {
+                        swal("取消关注成功", "", "success");
+                        setTimeout(function(){ window.location.reload();},1000);
+                    }
                 }
             });
         });
