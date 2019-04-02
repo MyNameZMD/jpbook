@@ -17,9 +17,9 @@ public class BooksService {
     @Resource
     BooksDao bd;
 
-    public List<Map<String,Object>> queryRecommend(Integer retype,Integer page,Integer limit){
+    public List<Map<String,Object>> queryRecommend(){
 
-        return bd.queryRecommend(retype,page,limit);
+        return bd.queryRecommend();
     }
 
     public List<Map<String,Object>> queryClick(){
@@ -88,29 +88,45 @@ public class BooksService {
         return bd.likeBooks(kw,page,limit,sort);
     }
 
-    public List<Map<String,Object>> cankNewBook(Integer page){
-        return bd.cankNewBook(page);
+    public List<Map<String,Object>> cankNewBook(Integer page,Integer btid){
+        return bd.cankNewBook(page,btid);
     }
-    public List<Map<String,Object>> cankNewPenBook(Integer page){
-        return bd.cankNewPenBook(page);
+    public List<Map<String,Object>> cankNewPenBook(Integer page,Integer btid){
+        return bd.cankNewPenBook(page,btid);
     }
 
-    public List<Map<String,Object>> cankWeekClick(Integer page){
-        return bd.cankWeekClick(page);
+    public List<Map<String,Object>> cankWeekClick(Integer page,Integer btid){
+        return bd.cankWeekClick(page,btid);
     }
-    public List<Map<String,Object>> cankQueryVote(Integer type,Integer page){
-        return  bd.cankQueryVote(type,page);
+    public List<Map<String,Object>> cankQueryVote(Integer type,Integer page,Integer btid){
+        return  bd.cankQueryVote(type,page,btid);
     }
-    public List<Map<String,Object>> cankBookrack(Integer page){
-        return bd.cankBookrack(page);
+    public List<Map<String,Object>> cankBookrack(Integer page,Integer btid){
+        return bd.cankBookrack(page,btid);
     }
-    public List<Map<String,Object>> cankWanben(Integer type,Integer page){
-        return bd.cankWanben(type,page);
+    public List<Map<String,Object>> cankWanben(Integer type,Integer page,Integer btid){
+        return bd.cankWanben(type,page,btid);
     }
-    public List<Map<String,Object>> cankQianli(Integer page){
-        return bd.cankQianli(page);
+    public List<Map<String,Object>> cankQianli(Integer page,Integer btid){
+        return bd.cankQianli(page,btid);
     }
-    public List<Map<String,Object>> cankHotsell(Integer page){
-        return bd.cankHotsell(page);
+    public List<Map<String,Object>> cankHotsell(Integer page,Integer btid){
+        return bd.cankHotsell(page,btid);
     }
+    public List<Map<String,Object>> fans(Integer dateType){
+        return bd.fans(dateType);
+    }
+    public List<Map<String,Object>> newBookClick(){
+        return bd.newBookClick();
+    }
+    public List<Map<String,Object>> querybrnum(){
+        return bd.querybrnum();
+    }
+    public List<Map<String,Object>> recentUpdates(){
+        return bd.recentUpdates();
+    }
+    public List<Map<String,Object>> queryFansByBookid(Integer bookid){
+        return bd.queryFansByBookid(bookid);
+    }
+
 }

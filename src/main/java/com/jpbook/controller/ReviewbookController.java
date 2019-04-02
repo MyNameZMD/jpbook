@@ -38,8 +38,6 @@ public class ReviewbookController {
         }
         Integer r = rs.queryAll(bookid,null,uuid).size();
         Integer pagecount =  r % 5 == 0 ? r / 5 : r / 5 + 1;
-        System.out.println("(page-1)*5==================="+(page-1)*5);
-        System.out.println(r%5);
         m.addAttribute("queryAll",rs.queryAll(bookid,(page-1)*5,uuid));
         m.addAttribute("books",bs.queryBookById(bookid));
         m.addAttribute("book",rs.queryAll(bookid,null,uuid));

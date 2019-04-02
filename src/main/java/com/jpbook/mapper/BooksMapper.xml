@@ -2,9 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="com.jpbook.dao.BooksDao">
     <select id="queryRecommend" parameterType="Integer" resultType="map">
-        select b.*,u.pen,u.uname,bt.btname,r.retype from books b inner join users u on b.uuid = u.uuid inner join recommend r on b.bookid = r.rebookid inner join booktype bt on b.btid = bt.btid
-        where DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= date(r.redate) and r.retype=#{param1} order by r.retype
-        limit #{param2},#{param3}
+        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,b.bookstate,b.bookreferral,bt.btid,bt.btname,ifnull(s4.chaptime,'') chaptime,ifnull(s4.chapid,-1) chapid,ifnull(s4.chapnum,-1) chapnum,ifnull((select chapname from chapter where chapid = s4.chapid),'暂时还没有章节') chapname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,v.dvote,v.mvote,v.zvote
+        from users u inner join books b on u.uuid = b.uuid
+        inner join booktype bt on b.btid = bt.btid
+        left join (select b.bookid,sum(case v.wtid when 1 then v.votenum else 0 end) dvote,sum(case v.wtid when 2 then v.votenum else 0 end) mvote,sum(case v.wtid when 1 then v.votenum when 2 then v.votenum else 0 end) zvote from  users u inner join books b on b.uuid=u.uuid left join vote v on b.bookid = v.bookid group by b.bookid) v on b.bookid = v.bookid
+        left join (select b.bookid,c.chaptime,max(c.chapid) chapid,c.chapnum from books b left join roll r on b.bookid = r.bookid left join chapter c on c.rollid = r.rollid group by b.bookid order by r.rollid desc,c.chapnum desc) s4 on s4.bookid = b.bookid
+        group by b.bookid
+        order by v.dvote desc
+        limit 0,18
     </select>
 
 
@@ -20,7 +25,7 @@
     <select id = "queryNewBooks" resultType="map">
         select b.bookname,b.icon,b.bookreferral,u.pen,u.uname,bt.btid,rpad(SUBSTRING(c.chapcount,1,1),CHAR_LENGTH(SUBSTRING(c.chapcount,1)),0) chapcount
         from books b inner join booktype bt on b.btid = bt.btid inner join users u on u.uuid = b.uuid inner join roll r on r.bookid = b.bookid
-        inner join chapter c on c.rollid = r.rollid WHERE b.bookstate=0 and YEARWEEK(date_format(b.createtime,'%Y-%m-%d')) = YEARWEEK(now()) ;
+        inner join chapter c on c.rollid = r.rollid WHERE b.bookstate=0 and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(b.createtime)
     </select>
     <select id = "queryQianli" resultType="map">
         select b.bookname,b.bookid,bt.btid,bt.btname,u.pen,u.uname,u.uuid,b.icon,sum(c.cnum*5) qianli from books b inner join booktype bt on b.btid = bt.btid inner join users u on b.uuid = u.uuid right join click c on c.bookid = b.bookid
@@ -134,35 +139,56 @@
 
     </select>
     <select id = "cankNewBook" parameterType="Integer" resultType="map">
-        select s1.*,s3.mvote from (select u.uuid,u.uname,u.pen,b.bookid,b.bookname,bt.btid,bt.btname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid
+        select s1.*,s3.mvote,ifnull(s4.chaptime,'') chaptime,ifnull(s4.chapid,-1) chapid,ifnull(s4.chapnum,-1) chapnum,ifnull((select chapname from chapter where chapid = s4.chapid),'暂时还没有章节') chapname from (select u.uuid,u.uname,u.pen,b.bookid,b.bookname,b.bookstate,b.bookreferral,bt.btid,bt.btname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid
         where  DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= date(b.createtime) and b.bookstate = 0) s1 inner join (select * from
         (select b.bookid,ifnull(sum(c.chapcount),0) chapcount from books b left join roll r on b.bookid = r.bookid left join chapter c on c.rollid = r.rollid
         group by b.bookid) s where s.chapcount &lt; 200000) s2 on s1.bookid = s2.bookid left join (select b.bookid,sum(case v.wtid when 1 then v.votenum else 0 end) dvote,sum(case v.wtid when 2 then v.votenum else 0 end) mvote,sum(case v.wtid when 1 then v.votenum when 2 then v.votenum else 0 end) zvote from  users u inner join books b on b.uuid=u.uuid left join vote v on b.bookid = v.bookid group by b.bookid) s3 on s1.bookid = s3.bookid
-        order by s3.mvote
-        limit #{param1},10
+        left join (select b.bookid,c.chaptime,max(c.chapid) chapid,c.chapnum from books b left join roll r on b.bookid = r.bookid left join chapter c on c.rollid = r.rollid group by b.bookid order by r.rollid desc,c.chapnum desc) s4 on s4.bookid = s1.bookid
+        <if test="param2 != -1">
+            where s1.btid = ${param2}
+        </if>
+        order by s3.mvote desc
+        <if test="param1 != null">
+            limit #{param1},10
+        </if>
     </select>
     <select id="cankNewPenBook" parameterType="Integer" resultType="map">
-        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,bt.btid,bt.btname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,p.pianli from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid
+        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,b.bookstate,b.bookreferral,bt.btid,bt.btname,ifnull(s4.chaptime,'') chaptime,ifnull(s4.chapid,-1) chapid,ifnull(s4.chapnum,-1) chapnum,ifnull((select chapname from chapter where chapid = s4.chapid),'暂时还没有章节') chapname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,p.pianli from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid
         and DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= date(b.createtime) and b.bookstate = 0
         left join (select c.bookid,c.cnum+m.dvote*5+p.bknum*2 pianli from (select b.bookid,ifnull(sum(c.cnum),0) cnum from books b left join click c on b.bookid = c.bookid and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(c.clicktime)
         group by b.bookid) c left join (select b.bookid,sum(case v.wtid when 1 then v.votenum else 0 end) dvote,sum(case v.wtid when 2 then v.votenum else 0 end) mvote,sum(case v.wtid when 1 then v.votenum when 2 then v.votenum else 0 end) zvote from  users u inner join books b on b.uuid=u.uuid left join vote v on b.bookid = v.bookid and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(v.votetime) group by b.bookid) m on c.bookid = m.bookid left join (select b.bookid,count(bk.brid) bknum from books b left join bookrack bk on b.bookid = bk.bookid
-        group by b.bookid) p on m.bookid = p.bookid) p on b.bookid = p.bookid
+        group by b.bookid) p on m.bookid = p.bookid) p on b.bookid = p.bookid left join (select b.bookid,c.chaptime,max(c.chapid) chapid,c.chapnum from books b left join roll r on b.bookid = r.bookid left join chapter c on c.rollid = r.rollid group by b.bookid order by r.rollid desc,c.chapnum desc) s4 on s4.bookid = b.bookid
+        <if test="param2 != -1">
+            where b.btid = ${param2}
+        </if>
         group by u.uuid
         order by p.pianli desc
-        limit #{param1},10
+        <if test="param1 != null">
+            limit #{param1},10
+        </if>
     </select>
     <select id="cankWeekClick" parameterType="Integer" resultType="map">
-        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,bt.btid,bt.btname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,c.cnum from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid left join (select b.bookid,ifnull(sum(c.cnum),0) cnum from books b left join click c on b.bookid = c.bookid and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(c.clicktime)
-        group by b.bookid) c on c.bookid = b.bookid
+        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,b.bookstate,b.bookreferral,bt.btid,bt.btname,ifnull(s4.chaptime,'') chaptime,ifnull(s4.chapid,-1) chapid,ifnull(s4.chapnum,-1) chapnum,ifnull((select chapname from chapter where chapid = s4.chapid),'暂时还没有章节') chapname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,c.cnum from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid left join (select b.bookid,ifnull(sum(c.cnum),0) cnum from books b left join click c on b.bookid = c.bookid and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(c.clicktime)
+        group by b.bookid) c on c.bookid = b.bookid left join (select b.bookid,c.chaptime,max(c.chapid) chapid,c.chapnum from books b left join roll r on b.bookid = r.bookid left join chapter c on c.rollid = r.rollid group by b.bookid order by r.rollid desc,c.chapnum desc) s4 on s4.bookid = b.bookid
+        <if test="param2 != -1">
+            where b.btid = ${param2}
+        </if>
         group by b.bookid
         order by c.cnum desc
-        limit #{param1},10
+        <if test="param1 != null">
+            limit #{param1},10
+        </if>
     </select>
+
     <select id="cankQueryVote" resultType="map" parameterType="Integer">
-        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,bt.btid,bt.btname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,v.dvote,v.mvote,v.zvote
+        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,b.bookstate,b.bookreferral,bt.btid,bt.btname,ifnull(s4.chaptime,'') chaptime,ifnull(s4.chapid,-1) chapid,ifnull(s4.chapnum,-1) chapnum,ifnull((select chapname from chapter where chapid = s4.chapid),'暂时还没有章节') chapname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,v.dvote,v.mvote,v.zvote
         from users u inner join books b on u.uuid = b.uuid
         inner join booktype bt on b.btid = bt.btid
         left join (select b.bookid,sum(case v.wtid when 1 then v.votenum else 0 end) dvote,sum(case v.wtid when 2 then v.votenum else 0 end) mvote,sum(case v.wtid when 1 then v.votenum when 2 then v.votenum else 0 end) zvote from  users u inner join books b on b.uuid=u.uuid left join vote v on b.bookid = v.bookid group by b.bookid) v on b.bookid = v.bookid
+        left join (select b.bookid,c.chaptime,max(c.chapid) chapid,c.chapnum from books b left join roll r on b.bookid = r.bookid left join chapter c on c.rollid = r.rollid group by b.bookid order by r.rollid desc,c.chapnum desc) s4 on s4.bookid = b.bookid
+        <if test="param3 != -1">
+            where b.btid = ${param3}
+        </if>
         group by b.bookid
         <if test="param1 == 1">
             order by v.dvote desc
@@ -173,16 +199,24 @@
         <if test="param1 == 3">
             order by v.zvote desc
         </if>
-        limit #{param2},10
+        <if test="param2 != null">
+            limit #{param2},10
+        </if>
     </select>
     <select id="cankBookrack" parameterType="Integer" resultType="map">
-        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,bt.btid,bt.btname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,bc.bknum from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid left join (select b.bookid,count(bk.brid) bknum from books b left join bookrack bk on b.bookid = bk.bookid
+        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,b.bookstate,b.bookreferral,bt.btid,bt.btname,ifnull(s4.chaptime,'') chaptime,ifnull(s4.chapid,-1) chapid,ifnull(s4.chapnum,-1) chapnum,ifnull((select chapname from chapter where chapid = s4.chapid),'暂时还没有章节') chapname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,bc.bknum from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid left join (select b.bookid,count(bk.brid) bknum from books b left join bookrack bk on b.bookid = bk.bookid
         group by b.bookid) bc on b.bookid = bc.bookid
+        left join (select b.bookid,c.chaptime,max(c.chapid) chapid,c.chapnum from books b left join roll r on b.bookid = r.bookid left join chapter c on c.rollid = r.rollid group by b.bookid order by r.rollid desc,c.chapnum desc) s4 on s4.bookid = b.bookid
+        <if test="param2 != -1">
+            where b.btid = ${param2}
+        </if>
         order by bc.bookid
-        limit #{param1},10
+        <if test="param1 != null">
+            limit #{param1},10
+        </if>
     </select>
     <select id="cankWanben" parameterType="Integer" resultType="map">
-        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,bt.btid,bt.btname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,c.cnum from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid left join
+        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,bt.btid,bt.btname,b.bookstate,b.bookreferral,ifnull(s4.chaptime,'') chaptime,ifnull(s4.chapid,-1) chapid,ifnull(s4.chapnum,-1) chapnum,ifnull((select chapname from chapter where chapid = s4.chapid),'暂时还没有章节') chapname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,c.cnum from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid left join
         (select b.bookid,ifnull(sum(c.cnum),0) cnum from books b left join click c on b.bookid = c.bookid
         <if test="param1 == 1">
             and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(c.clicktime)
@@ -191,20 +225,73 @@
             and DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= date(c.clicktime)
         </if>
         where b.bookstate = 1
-        group by b.bookid) c on c.bookid = b.bookid where b.bookstate = 1
+        group by b.bookid) c on c.bookid = b.bookid
+        left join (select b.bookid,c.chaptime,max(c.chapid) chapid,c.chapnum from books b left join roll r on b.bookid = r.bookid left join chapter c on c.rollid = r.rollid group by b.bookid order by r.rollid desc,c.chapnum desc) s4 on s4.bookid = b.bookid
+        where b.bookstate = 1
+        <if test="param3 != -1">
+            and b.btid = ${param3}
+        </if>
         order by c.cnum desc
-        limit #{param2},10
+        <if test="param2 != null">
+            limit #{param2},10
+        </if>
     </select>
     <select id="cankQianli" resultType="map" parameterType="Integer">
-        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,bt.btid,bt.btname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,p.pianli from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid and b.bookstate = 0
+        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,b.bookstate,b.bookreferral,bt.btid,bt.btname,ifnull(s4.chaptime,'') chaptime,ifnull(s4.chapid,-1) chapid,ifnull(s4.chapnum,-1) chapnum,ifnull((select chapname from chapter where chapid = s4.chapid),'暂时还没有章节') chapname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,p.pianli from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid and b.bookstate = 0
         left join (select c.bookid,c.cnum+m.dvote*5+p.bknum*2 pianli from (select b.bookid,ifnull(sum(c.cnum),0) cnum from books b left join click c on b.bookid = c.bookid and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(c.clicktime)
         group by b.bookid) c left join (select b.bookid,sum(case v.wtid when 1 then v.votenum else 0 end) dvote,sum(case v.wtid when 2 then v.votenum else 0 end) mvote,sum(case v.wtid when 1 then v.votenum when 2 then v.votenum else 0 end) zvote from  users u inner join books b on b.uuid=u.uuid left join vote v on b.bookid = v.bookid and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(v.votetime) group by b.bookid) m on c.bookid = m.bookid left join (select b.bookid,count(bk.brid) bknum from books b left join bookrack bk on b.bookid = bk.bookid
         group by b.bookid) p on m.bookid = p.bookid) p on b.bookid = p.bookid
+        left join (select b.bookid,c.chaptime,max(c.chapid) chapid,c.chapnum from books b left join roll r on b.bookid = r.bookid left join chapter c on c.rollid = r.rollid group by b.bookid order by r.rollid desc,c.chapnum desc) s4 on s4.bookid = b.bookid
+        <if test="param2 != -1">
+            where b.btid = ${param2}
+        </if>
         order by p.pianli desc
-        limit #{param1},10
+        <if test="param1 != null">
+            limit #{param1},10
+        </if>
     </select>
     <select id="cankHotsell" parameterType="Integer" resultType="map">
-        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,bt.btid,bt.btname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,x.buycum from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid left join (select b.bookid,ifnull(sum(floor((select chapcount from chapter where chapid = br.chapid)/200)),0) buycum from books b left join roll r on b.bookid = r.bookid and r.rollmoney = 2 left join chapter c on r.rollid = c.rollid left join buyrecord br on c.chapid = br.chapid and to_days(br.buydate) = to_days(now()) group by b.bookid) x on x.bookid = b.bookid order by x.buycum desc
-        limit #{param1},10
+        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,b.bookstate,b.bookreferral,bt.btid,bt.btname,ifnull(s4.chaptime,'') chaptime,ifnull(s4.chapid,-1) chapid,ifnull(s4.chapnum,-1) chapnum,ifnull((select chapname from chapter where chapid = s4.chapid),'暂时还没有章节') chapname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,x.buycum from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid left join (select b.bookid,ifnull(sum(floor((select chapcount from chapter where chapid = br.chapid)/200)),0) buycum from books b left join roll r on b.bookid = r.bookid and r.rollmoney = 2 left join chapter c on r.rollid = c.rollid left join buyrecord br on c.chapid = br.chapid and to_days(br.buydate) = to_days(now()) group by b.bookid) x on x.bookid = b.bookid
+        left join (select b.bookid,c.chaptime,max(c.chapid) chapid,c.chapnum from books b left join roll r on b.bookid = r.bookid left join chapter c on c.rollid = r.rollid group by b.bookid order by r.rollid desc,c.chapnum desc) s4 on s4.bookid = b.bookid
+        <if test="param2 != -1">
+            where b.btid = ${param2}
+        </if>
+        order by x.buycum desc
+        <if test="param1 != null">
+            limit #{param1},10
+        </if>
+    </select>
+    <select id="fans" resultType="map" parameterType="Integer">
+        select u.uuid,u.uname,r.rewanum from users u inner join (select uuid,sum(rewanum) rewanum from reward
+        <if test="_parameter == 1">
+            where to_days(rewatime) = to_days(now())
+        </if>
+        group by uuid) r on u.uuid = r.uuid limit 0,100
+    </select>
+    <select id = "newBookClick" resultType="map">
+        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,bt.btid,bt.btname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,c.cnum from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid left join (select b.bookid,ifnull(sum(c.cnum),0) cnum from books b left join click c on b.bookid = c.bookid
+        group by b.bookid) c on c.bookid = b.bookid
+        where DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= date(b.createtime)
+        group by b.bookid
+        order by c.cnum desc
+        limit 0,18
+    </select>
+    <select id="querybrnum" resultType="map">
+        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,b.bookstate,b.bookreferral,bt.btid,bt.btname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,bc.bknum from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid left join (select b.bookid,count(bk.brid) bknum from books b left join bookrack bk on b.bookid = bk.bookid
+        group by b.bookid) bc on b.bookid = bc.bookid
+        where DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= date(b.createtime)
+        order by bc.bookid
+        limit 0,12
+    </select>
+    <select id="recentUpdates" resultType="map">
+        select u.uuid,u.uname,u.pen,b.bookid,b.bookname,b.bookreferral,bt.btid,bt.btname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,g.chapid,g.chapnum,g.chapname,g.chaptime from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid inner join (select b.bookid,c.chapid,c.chapnum,chapname,chaptime from books b inner join roll r on b.bookid = r.bookid inner join chapter c on r.rollid = c.rollid
+        and DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= date(chaptime) group by b.bookid) g on b.bookid = g.bookid
+    </select>
+    <select id="queryFansByBookid" resultType="map">
+        select u.uuid,u.uname,ifnull(u.icon,'1.jpg') icon,(ifnull(v.zvote,0)*100)+ifnull(r.rewanum,0) sums from users u left join
+        (select v.uuid,b.bookid,sum(case v.wtid when 1 then v.votenum else 0 end) dvote,sum(case v.wtid when 2 then v.votenum else 0 end) mvote,sum(case v.wtid when 1 then v.votenum when 2 then v.votenum else 0 end) zvote from  users u inner join books b on b.uuid=u.uuid inner join vote v on b.bookid = v.bookid where b.bookid = #{param1} group by b.bookid,v.uuid) v on u.uuid = v.uuid left join
+        (select u.uuid,r.rewanum from users u inner join (select uuid,sum(rewanum) rewanum from reward where bookid = #{param1} group by uuid) r on u.uuid = r.uuid)
+        r on r.uuid = u.uuid
+        order by sums desc
     </select>
 </mapper>
