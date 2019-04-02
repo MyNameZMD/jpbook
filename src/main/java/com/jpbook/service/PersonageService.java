@@ -18,10 +18,16 @@ public class PersonageService {
     }
 
     public Map<String,Object> hotSerial(Integer bid,Integer uid){
+        if(null == uid){
+            uid = -1;
+        }
         return pd.hotSerial(bid,uid);
     }
 
     public List<Map<String,Object>> authorBooks(Integer bid, Integer uid){
+        if(null == uid){
+            uid = -1;
+        }
         return pd.authorBooks(bid,uid);
     }
 
@@ -40,6 +46,9 @@ public class PersonageService {
     }
 
     public Integer fansState(Integer buuid,Integer uuid){
+        if(null == uuid){
+            uuid = -1;
+        }
         Integer state = pd.fansState(buuid,uuid);
         if (null == state){
             state = -1;
@@ -56,7 +65,11 @@ public class PersonageService {
     }
 
     public List<Map<String,Object>> usersBooks(Integer someuuid,Integer uuid){
+        if(null == uuid){
+            uuid = -1;
+        }
         return pd.usersBooks(someuuid,uuid);
     }
+
 
 }

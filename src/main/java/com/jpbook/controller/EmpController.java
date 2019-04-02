@@ -1,6 +1,7 @@
 package com.jpbook.controller;
 
 import com.jpbook.entity.Emp;
+import com.jpbook.service.BackService;
 import com.jpbook.service.EmpService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -25,7 +27,7 @@ public class EmpController {
 
     @RequestMapping("login")
     @ResponseBody
-    public Integer login(String ename,String epwd) {
+    public Integer login(String ename,String epwd,HttpSession session) {
 
         Emp login = es.Hlogin(ename, epwd);
 
@@ -33,6 +35,7 @@ public class EmpController {
         UsernamePasswordToken token = new UsernamePasswordToken("","","");
         if (null != login) {
            token = new UsernamePasswordToken(ename,epwd,"");
+           session.setAttribute("emp",login);
         }
         try {
             subject.login(token);
@@ -56,5 +59,6 @@ public class EmpController {
         }
         return 1;
     }
+
 
 }

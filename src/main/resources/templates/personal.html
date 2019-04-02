@@ -12,11 +12,11 @@
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.15.css">
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.16.css">
 
-	<link rel="stylesheet" href="./js/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="./layui/layui.css" media="all">
 
 	<script src="./js/jquery-3.3.1.js"></script>
 
-	<script src="./js/layui/layui.js"></script>
+	<script src="./layui/layui.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="./css/sweet-alert.css" />
 	<script src="./js/sweet-alert.js"></script>
@@ -45,10 +45,10 @@
 				</li>-->
 
 			</ul>
-			<a href="login/emptySession" id="elLoginOut" class="header-log" data-eid="qd_M11" style="color: white">退出</a>
-			<a href="personal.html" id="headerLog" class="header-log" data-eid="qd_M06" data-target="headerDropList" style="color: white"></a>
+			<a href="login/emptySession" id="elLoginOut" class="header-log" style="color: white">退出</a>
+			<a href="personal.html" id="headerLog" class="header-log"  style="color: white"></a>
 			<div class="header-goHome">
-				<a href="booktype/queryAll" target="_blank" accesskey="5" data-eid="qd_M05" style="color: white">起点首页</a>
+				<a href="booktype/queryAll" target="_blank" style="color: white">起点首页</a>
 			</div>	
 		</div>
 	
@@ -82,7 +82,7 @@
 					<a class="sideBar-list-a" target="_blank" data-eid="qd_M20"><i class="iconfont icon-safety"></i>个人设置</a>
 				</li>
 				<li id="u5">
-					<a href="javascript:;" class="sideBar-list-a" target="_blank" data-eid="qd_M21"><i class="iconfont icon-author"></i>作家专区</a>
+					<a href="/jpbook/users/openwriter" class="sideBar-list-a" target="_blank" data-eid="qd_M21"><i class="iconfont icon-author"></i>作家专区</a>
 				</li >
 			</ul>
 
@@ -98,7 +98,7 @@
 				</div>
 				<div class="home-user" data-l3="1">
 					<div class="qdp-button">
-						<a href="https://my.qidian.com/user/328696517" class="qdp-button-a mlr4" target="_blank" data-eid="qd_M23">个人主页</a>
+						<a href="javascript:;" id="homeurl" class="qdp-button-a mlr4" target="_blank" data-eid="qd_M23">个人主页</a>
 						<a href="javascript:u8()" class="qdp-button-a qdp-button-icon ml12" data-eid="qd_M22">
 							<i class="iconfont icon-gear"></i>
 						</a>
@@ -643,7 +643,7 @@
 						<thead>
 						<tr>
 							<th scope="col" width="350">书名/最近更新章节</th>
-							<th scope="col" width="100">更新时间</th>
+							<th scope="col" width="130">更新时间</th>
 							<th scope="col" width="100">作者</th>
 							<th scope="col" >操作</th>
 
@@ -794,6 +794,7 @@
             url: "per/fansByeye",
             data: {},
             success: function (data) {
+                $("#homeurl").prop("href","pc/home?uuid="+data[0].uuid);
 
 				$("#icon").prop("src","/jpbook/imgicon/"+data[0].icon);
 
@@ -821,9 +822,9 @@
                 if (data.length > 0){
                     for (var i=0; i<6; i++){
                         yemian+="<li class='recmd-list-item' style='margin-left: 15px'>"+
-                            "<a href='' target='_blank' class='recmd-list-a' data-eid='qd_M42' data-bid='1004895204'>" +
+                            "<a href='/jpbook/books/queryBookById?bookid="+data[i].bookid+"' target='_blank' class='recmd-list-a' data-eid='qd_M42' data-bid='1004895204'>" +
                             "<div class='recmd-commet'>"+data[i].bookreferral.substring(0,30)+"</div>" +
-                            "<img src='./images/180.jpg' alt='' class='recmd-list-img'>" +
+                            "<img src='/jpbook/imgicon/"+data[i].icon+"' alt='' class='recmd-list-img'>" +
                             "<div class='recmd-list-title' data-eid='qd_M42' data-bid='1004895204'>"+data[i].bookname+"</div>" +
                             "</a><div class='recmd-list-data' title='猜你喜欢'>猜你喜欢</div></li>";
                     }
@@ -885,17 +886,19 @@
                        "</td>"+
                        "<td width='80' class='friend-add'></td>"+
                        "<td>"+
-                       "<a href='javascript:;' class='ui-button jsSendMsg' role='button' data-image='images/ico/default_user.0.2.png' data-name='书友20180218153427385'>发私信</a>"+
-                       "<a href='javascript:;' class='qdp-operate ui-button ui-button-default jsUnfollow' data-id='313853460' role='button'>取消关注</a>"+
+                       /*"<a href='javascript:;' class='ui-button jsSendMsg' role='button' data-image='images/ico/default_user.0.2.png' data-name='书友20180218153427385'>发私信</a>"+*/
+                       "<a href='javascript:canceleye("+data[i].uuid+",1);' class='qdp-operate ui-button ui-button-default jsUnfollow' data-id='313853460' role='button'>取消关注</a>"+
                        "</td></tr>"	;
                    }
                    $("#t1").html(t1);
+                   $("#tx1").hide();
 			   }else {
+                   $(".w_followeach").text(0);
+                   $("#t1").html("");
 				   $("#tx1").show();
 			   }
             }
         });
-
     }
     function qd_M158() {
         $("#qd_M157").prop("class","");
@@ -925,12 +928,15 @@
                             "</td>"+
                             "<td width='80' class='friend-add'></td>"+
                             "<td>"+
-                            "<a href='javascript:;' class='ui-button jsSendMsg' role='button' data-image='images/ico/default_user.0.2.png' data-name='书友20180218153427385'>发私信</a>"+
-                            "<a href='javascript:;' class='qdp-operate ui-button ui-button-default jsUnfollow' data-id='313853460' role='button'>取消关注</a>"+
+                            /*"<a href='javascript:;' class='ui-button jsSendMsg' role='button' data-image='images/ico/default_user.0.2.png' data-name='书友20180218153427385'>发私信</a>"+*/
+                            "<a href='javascript:canceleye("+data[i].uuid+",2);' class='qdp-operate ui-button ui-button-default jsUnfollow' data-id='313853460' role='button'>取消关注</a>"+
                             "</td></tr>"	;
                     }
                     $("#t2").html(t2);
+                    $("#tx2").hide();
                 }else {
+                    $(".w_following").text(0);
+                    $("#t2").html("");
                     $("#tx2").show();
                 }
             }
@@ -949,7 +955,7 @@
             success: function (data) {
                 var t3 = "";
                 if (data.length > 0){
-                    $(".w_myfans	").text(data.length);
+                    $(".w_myfans").text(data.length);
                     for (var i=0; i<data.length; i++){
                         t3+="<tr class='qdp-operate-wrapper'>"+
                             "<td width='300'>"+
@@ -963,23 +969,60 @@
                             "</div>"+
                             "</td>"+
                             "<td width='80' class='friend-add'></td>"+
-                            "<td>"+
-                            "<a href='javascript:;' class='ui-button jsSendMsg' role='button' data-image='images/ico/default_user.0.2.png' data-name='书友20180218153427385'>发私信</a>";
+                            "<td>";
+                            /*"<a href='javascript:;' class='ui-button jsSendMsg' role='button' data-image='images/ico/default_user.0.2.png' data-name='书友20180218153427385'>发私信</a>";*/
                         	if(data[i].sta == -1){
-								t3+="<a href='javascript:;' class='ui-button ui-button-default jsFollow' role='button' data-eid='qd_M165'>关注</a>";
+								t3+="<a href='javascript:fansadd("+data[i].uuid+");' class='ui-button ui-button-default jsFollow' role='button' data-eid='qd_M165'>关注</a>";
 							}else {
-                                t3+= "<a href='javascript:;' class='qdp-operate ui-button ui-button-default jsUnfollow' data-id='313853460' role='button'>取消关注</a>";
+                                t3+= "<a href='javascript:canceleye("+data[i].uuid+",3);' class='qdp-operate ui-button ui-button-default jsUnfollow' data-id='313853460' role='button'>取消关注</a>";
 							}
                             "</td></tr>"	;
                     }
                     $("#t3").html(t3);
+                    $("#tx3").hide();
                 }else {
+                    $(".w_myfans").text(0);
+                    $("#t3").html("");
                     $("#tx3").show();
                 }
             }
         });
     }
-
+    
+    function canceleye(buuid,state) {
+        $.ajax({
+            url: "pc/delFans",
+			data:{"buuid":buuid},
+            success: function (data) {
+                swal("取消关注成功", "", "success");
+                if (state == 1){
+                    qd_M159();
+                    qd_M158();
+                    qd_M157();
+				}else if(state == 2){
+                    qd_M157();
+                    qd_M159();
+                    qd_M158();
+				}else if(state == 3){
+                    qd_M157();
+                    qd_M158();
+                    qd_M159();
+				}
+            }
+        });
+    }
+	function fansadd(buuid) {
+		$.ajax({
+			url: "pc/fansAdd",
+			data: {"buuid":buuid},
+			success: function (data) {
+				swal("关注成功", "", "success");
+                qd_M157();
+                qd_M158();
+				qd_M159();
+			}
+		});
+    }
 
     $("#u3").click(function () {
         for (var i=1; i<=10 ;i++){
@@ -1592,14 +1635,14 @@
 						r1 += "<tr class='qdp-operate-wrapper'>"+
 							"<td class='col1'>"+
 							"<span class='shelf-table-name'><b>"+
-							"<a href='xuanhuan.qidian.com' target='_blank' class='fen-category' style='color: grey'>「"+data[j].btname+"」</a>"+
-							"<a href='book.qidian.com/info/1013600660' target='_blank' title=''>"+data[j].bookname+"</a>"+
+							"<a href='?btid="+data[j].btid+"' target='_blank' class='fen-category' style='color: grey'>「"+data[j].btname+"」</a>"+
+							"<a href='/jpbook/books/queryBookById?bookid="+data[j].bookid+"' target='_blank' title=''>"+data[j].bookname+"</a>"+
 							"</b>&nbsp;&nbsp;"+
-							"<a href='ipreader.qidian.com/chapter/1013600660/454529040' class='shelf-table-chapter blue' target='_blank' title=''>"+data[j].chapname+"</a>"+
+							"<a href='/jpbook/chapter/getInformationByChapid/?chapid="+data[j].chapid+"' class='shelf-table-chapter blue' target='_blank' title=''>"+data[j].chapname+"</a>"+
 							"</span></td>"+
-							"<td class='col2 font12'>"+renderTime(data[j].updatetime).substring(0,10)+"</td>"+
+							"<td class='col2 font12'>"+renderTime(data[j].chaptime).substring(0,16)+"</td>"+
 							"<td class='col3'>"+
-							"<a href='author/403441163' target='_blank' title='' class='shelf-table-author font12'>"+data[j].uname+"</a>"+
+							"<a href='/jpbook/pc/authorData?bid="+data[j].uuid+"' target='_blank' title='' class='shelf-table-author font12'>"+data[j].pen+"</a>"+
 							"</td>";
 							if(data[j].brid != -1){
                             	r1 += "<td class='col5 shlef-menu'><a href='javascript:' class='gray iconfont icon-book jsTips font12 disabled' title='已在书架'></a></td>"+"</tr>";
@@ -1642,16 +1685,16 @@
                             "<span class='shelf-table-name'>"+
                             "<b>"+
                             "<a href='javascript:;' target='_blank' class='fen-category' style='color: grey'>「"+data[i].btname+"」</a>"+
-                            "<a href='javascript:;' target='_blank' title='' data-bid='1013406185' data-eid='qd_M198'>"+data[i].bookname+"</a>"+
+                            "<a href='/jpbook/books/queryBookById?bookid="+data[i].bookid+"' target='_blank' title='' data-bid='1013406185' data-eid='qd_M198'>"+data[i].bookname+"</a>"+
                             "</b></span></td>"+
                             "<td class='col3 font12' >"+renderTime(data[i].chaptime).substring(0,16)+"</td>"+
                             "<td class='col4'>"+
-                            "<a href='javascript:;' target='_blank' title='' class='shelf-table-author font12' data-eid='qd_M200' >"+data[i].uname+"</a>"+
+                            "<a href='/jpbook/pc/authorData?bid="+data[i].uuid+"' target='_blank' title='' class='shelf-table-author font12' data-eid='qd_M200' >"+data[i].pen+"</a>"+
                             "</td>";
 								if(data[i].bookstate == 0 ){
-                                    tbo2 += "<td class='col5'><a href='javascript:;' class='spTips font12 yesReadStatus' target='_blank' title=''>连载中</a></td>";
+                                    tbo2 += "<td class='col5'><a href='/jpbook/books/queryBookById?bookid="+data[i].bookid+"' class='spTips font12 yesReadStatus' target='_blank' title=''>连载中</a></td>";
 								}else {
-                                    tbo2 += "<td class='col5'><a href='javascript:;' class='spTips font12 yesReadStatus' target='_blank' title=''>已完本</a></td>";
+                                    tbo2 += "<td class='col5'><a href='/jpbook/books/queryBookById?bookid="+data[i].bookid+"' class='spTips font12 yesReadStatus' target='_blank' title=''>已完本</a></td>";
 								}
 							tbo2 += "<td class='col6 shlef-menu'></td>"+
                             "</tr>";

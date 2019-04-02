@@ -315,27 +315,7 @@ body {
   white-space: nowrap;
   text-overflow: ellipsis
 }
-.header-log:after {
-  position: absolute;
-  top: 31px;
-  right: 1px;
-  width: 5px;
-  height: 5px;
-  content: '';
-  background: url(/qdp/img/header-arrow@1x.0.1.png) center no-repeat
-}
-.header-log::after {
-  position: absolute;
-  top: 31px;
-  right: 1px;
-  width: 5px;
-  height: 5px;
-  content: '';
-  transform: rotate(45deg);
-  border-right: 1px solid #fff;
-  border-bottom: 1px solid #fff;
-  background: 0 0
-}
+
 .header-drop {
   font-size: 14px;
   line-height: 36px;
