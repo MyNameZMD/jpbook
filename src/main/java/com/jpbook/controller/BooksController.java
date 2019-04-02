@@ -62,6 +62,7 @@ public class BooksController {
         m.addAttribute("queryRolls",bs.queryRolls(bookid));
         m.addAttribute("queryChapters",bs.queryChapters(bookid,uuid));
         m.addAttribute("queryZanById",bs.queryZanById(uuid));
+        m.addAttribute("queryFansByBookid",bs.queryFansByBookid(bookid));
         return "book";
     }
     @RequestMapping("getMoneyBookByBookid")
@@ -174,22 +175,172 @@ public class BooksController {
     }
 
     @RequestMapping("rank")
-    public String rank(Model m){
+    public String rank(Model m,Integer bt){
+        if(null == bt){
+            bt = -1;
+        }
         m.addAttribute("queryAll",bts.queryAll());
-        m.addAttribute("queryNewBook",bs.cankNewBook(0));
-        m.addAttribute("cankNewPenBook",bs.cankNewPenBook(0));
-        m.addAttribute("cankWeekClick",bs.cankWeekClick(0));
-        m.addAttribute("dvote",bs.cankQueryVote(1,0));
-        m.addAttribute("mvote",bs.cankQueryVote(2,0));
-        m.addAttribute("zvote",bs.cankQueryVote(3,0));
-        m.addAttribute("cankBookrack",bs.cankBookrack(0));
-        m.addAttribute("dclick",bs.cankWanben(1,0));
-        m.addAttribute("mclick",bs.cankWanben(2,0));
-        m.addAttribute("zclick",bs.cankWanben(null,0));
-        m.addAttribute("cankQianli",bs.cankQianli(0));
-        m.addAttribute("cankHotsell",bs.cankHotsell(0));
+        m.addAttribute("queryNewBook",bs.cankNewBook(0,bt));
+        m.addAttribute("cankNewPenBook",bs.cankNewPenBook(0,bt));
+        m.addAttribute("cankWeekClick",bs.cankWeekClick(0,bt));
+        m.addAttribute("dvote",bs.cankQueryVote(1,0,bt));
+        m.addAttribute("mvote",bs.cankQueryVote(2,0,bt));
+        m.addAttribute("zvote",bs.cankQueryVote(3,0,bt));
+        m.addAttribute("cankBookrack",bs.cankBookrack(0,bt));
+        m.addAttribute("dclick",bs.cankWanben(1,0,bt));
+        m.addAttribute("mclick",bs.cankWanben(2,0,bt));
+        m.addAttribute("zclick",bs.cankWanben(null,0,bt));
+        m.addAttribute("cankQianli",bs.cankQianli(0,bt));
+        m.addAttribute("cankHotsell",bs.cankHotsell(0,bt));
+        m.addAttribute("bt",bt);
         return "hot";
     }
+    @RequestMapping("yuepiao")
+    public String yuepiao(Model m,Integer page,Integer bt){
+        if(null == bt){
+            bt = -1;
+        }
+        if(null == page || page <= 0){
+            page = 1;
+        }
+        Integer r = bs.cankNewBook(null,bt).size();
+        Integer pagecount =  r % 10 == 0 ? r / 10 : r / 10 + 1;
+        m.addAttribute("queryAll",bts.queryAll());
+        m.addAttribute("list",bs.cankNewBook((page-1)*10,bt));
+        m.addAttribute("page",page);
+        m.addAttribute("pagecount",pagecount);
+        m.addAttribute("type","yuepiao");
+        m.addAttribute("bt",bt);
+        return "allhot";
+    }
+
+    @RequestMapping("hotsales")
+    public String hotsales(Model m,Integer page,Integer bt){
+        if(null == bt){
+            bt = -1;
+        }
+        if(null == page || page <= 0){
+            page = 1;
+        }
+        Integer r = bs.cankHotsell(null,bt).size();
+        Integer pagecount =  r % 10 == 0 ? r / 10 : r / 10 + 1;
+        m.addAttribute("queryAll",bts.queryAll());
+        m.addAttribute("list",bs.cankHotsell((page-1)*10,bt));
+        m.addAttribute("page",page);
+        m.addAttribute("pagecount",pagecount);
+        m.addAttribute("type","hotsales");
+        m.addAttribute("bt",bt);
+        return "allhot";
+    }
+    @RequestMapping("click")
+    public String click(Model m,Integer page,Integer bt){
+        if(null == bt){
+            bt = -1;
+        }
+        if(null == page || page <= 0){
+            page = 1;
+        }
+        Integer r = bs.cankWeekClick(null,bt).size();
+        Integer pagecount =  r % 10 == 0 ? r / 10 : r / 10 + 1;
+        m.addAttribute("queryAll",bts.queryAll());
+        m.addAttribute("list",bs.cankWeekClick((page-1)*10,bt));
+        m.addAttribute("page",page);
+        m.addAttribute("pagecount",pagecount);
+        m.addAttribute("type","click");
+        m.addAttribute("bt",bt);
+        return "allhot";
+    }
+    @RequestMapping("recom")
+    public String recom(Model m,Integer page,Integer bt,Integer dateType){
+        if(null == bt){
+            bt = -1;
+        }
+        if(null == page || page <= 0){
+            page = 1;
+        }
+        if(dateType == null){
+            m.addAttribute("list",bs.cankQueryVote(1,(page-1)*10,bt));
+            dateType = 1;
+            m.addAttribute("types","dvote");
+        }else{
+            if(dateType == 2){
+                m.addAttribute("list",bs.cankQueryVote(dateType,(page-1)*10,bt));
+                m.addAttribute("types","mvote");
+            }else if(dateType == 3){
+                m.addAttribute("list",bs.cankQueryVote(dateType,(page-1)*10,bt));
+                m.addAttribute("types","zvote");
+            }else{
+                dateType = 1;
+                m.addAttribute("list",bs.cankQueryVote(1,(page-1)*10,bt));
+                m.addAttribute("types","dvote");
+            }
+        }
+        Integer r = bs.cankWeekClick(null,bt).size();
+        Integer pagecount =  r % 10 == 0 ? r / 10 : r / 10 + 1;
+        m.addAttribute("queryAll",bts.queryAll());
+        m.addAttribute("page",page);
+        m.addAttribute("pagecount",pagecount);
+        m.addAttribute("type","recom");
+        m.addAttribute("bt",bt);
+        m.addAttribute("dateType",dateType);
+        return "allhot";
+    }
+    @RequestMapping("collect")
+    public String collect(Model m,Integer page,Integer bt){
+        if(null == bt){
+            bt = -1;
+        }
+        if(null == page || page <= 0){
+            page = 1;
+        }
+        Integer r = bs.cankBookrack(null,bt).size();
+        Integer pagecount =  r % 10 == 0 ? r / 10 : r / 10 + 1;
+        m.addAttribute("queryAll",bts.queryAll());
+        m.addAttribute("list",bs.cankBookrack((page-1)*10,bt));
+        m.addAttribute("page",page);
+        m.addAttribute("pagecount",pagecount);
+        m.addAttribute("type","collect");
+        m.addAttribute("bt",bt);
+        return "allhot";
+    }
+    @RequestMapping("fin")
+    public String fin(Model m,Integer page,Integer bt,Integer dateType){
+        if(null == bt){
+            bt = -1;
+        }
+        if(null == page || page <= 0){
+            page = 1;
+        }
+        Integer r = null;
+        if(dateType == null){
+            dateType = 3;
+        }
+        if(dateType != 1 || dateType != 2){
+            dateType = 3;
+        }
+        r = bs.cankWanben(dateType,null,bt).size();
+        Integer pagecount =  r % 10 == 0 ? r / 10 : r / 10 + 1;
+        m.addAttribute("queryAll",bts.queryAll());
+        m.addAttribute("list",bs.cankWanben(dateType,(page-1)*10,bt));
+        m.addAttribute("page",page);
+        m.addAttribute("pagecount",pagecount);
+        m.addAttribute("type","fin");
+        m.addAttribute("bt",bt);
+        m.addAttribute("dateType",dateType);
+        return "allhot";
+    }
+    @RequestMapping("fans")
+    public String fans(Model m,Integer dateType){
+        if(dateType == null){
+            dateType = 1;
+        }
+        m.addAttribute("queryAll",bts.queryAll());
+        m.addAttribute("fans",bs.fans(dateType));
+        m.addAttribute("type","fans");
+        m.addAttribute("dateType",dateType);
+        return "fans";
+    }
+
 
 
     /**

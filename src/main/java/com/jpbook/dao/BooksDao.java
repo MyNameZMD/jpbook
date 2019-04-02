@@ -14,10 +14,9 @@ import java.util.Map;
 public interface BooksDao {
     /**
      * 按推荐类型查询出书籍信息（强推，编辑推荐，热门）
-     * @param retype （强推，编辑推荐，热门）
      * @return
      */
-    public List<Map<String,Object>> queryRecommend(Integer retype,Integer page,Integer limit);
+    public List<Map<String,Object>> queryRecommend();
 
     /**
      * 新锐点击榜  查询本周点击前15名
@@ -143,33 +142,33 @@ public interface BooksDao {
      * 查询新书榜
      * @return
      */
-    public List<Map<String,Object>> cankNewBook(Integer page);
+    public List<Map<String,Object>> cankNewBook(Integer page,Integer btid);
 
     /**
      * 新人新书榜
      * @return
      */
-    public List<Map<String,Object>> cankNewPenBook(Integer page);
+    public List<Map<String,Object>> cankNewPenBook(Integer page,Integer btid);
 
     /**
      * 当周点击量
      * @return
      */
-    public List<Map<String,Object>> cankWeekClick(Integer page);
+    public List<Map<String,Object>> cankWeekClick(Integer page,Integer btid);
 
     /**
      * 查询推荐（周、月、总）
      * @param type
      * @return
      */
-    public List<Map<String,Object>> cankQueryVote(Integer type,Integer page);
+    public List<Map<String,Object>> cankQueryVote(Integer type,Integer page,Integer btid);
 
     /**
      * 查询书籍被收藏的次数排行
      * @param page
      * @return
      */
-    public List<Map<String,Object>> cankBookrack(Integer page);
+    public List<Map<String,Object>> cankBookrack(Integer page,Integer btid);
 
     /**
      * 查询完本的点击量
@@ -177,21 +176,54 @@ public interface BooksDao {
      * @param page
      * @return
      */
-    public List<Map<String,Object>> cankWanben(Integer types,Integer page);
+    public List<Map<String,Object>> cankWanben(Integer types,Integer page,Integer btid);
 
     /**
      * 潜力榜
      * @param page
      * @return
      */
-    public List<Map<String,Object>> cankQianli(Integer page);
+    public List<Map<String,Object>> cankQianli(Integer page,Integer btid);
 
     /**
      * 24小时热销榜
      * @param page
      * @return
      */
-    public List<Map<String,Object>> cankHotsell(Integer page);
+    public List<Map<String,Object>> cankHotsell(Integer page,Integer btid);
+
+    /**
+     * 用户打赏榜
+     * @param dateType
+     * @return
+     */
+    public List<Map<String,Object>> fans(Integer dateType);
+
+    /**
+     * 新书总点击
+     * @return
+     */
+    public List<Map<String,Object>> newBookClick();
+
+    /**
+     * 新书被收藏的总数
+     * @return
+     */
+    public List<Map<String,Object>> querybrnum();
+
+    /**
+     * 最近更新的书籍
+     * @return
+     */
+    public List<Map<String,Object>> recentUpdates ();
+
+    /**
+     * 本书的粉丝排行榜
+     * @param bookid
+     * @return
+     */
+    public List<Map<String,Object>> queryFansByBookid(Integer bookid);
+
 
     @Select("select bs.*,bbb.*,bt.btname,IFNULL(br.count,0) count  from books bs LEFT JOIN\n" +
             "(select a.* from \n" +

@@ -35,6 +35,9 @@
                 })
 
             });
+            $(".type-list > p > a").click(function () {
+                window.location.href = "/jpbook/books/rank"+"?bt="+$(this).attr("id");
+            })
         })
     </script>
 </head>
@@ -99,7 +102,7 @@
                             class="info"><i th:text="${bt.btname}"></i><b th:text="${bt.count}"></b></span></cite></a>
                 </dd>
             </dl>
-</div>
+        </div>
 
         <ul>
             <li class="first"  onmouseover="$('#classify-list').attr('style','display:block')" onmouseout="$('#classify-list').attr('style','display:none')"><b><strong></strong></b><span><em>
@@ -107,7 +110,7 @@
             </em>作品分类</span>
             </li>
             <li class="nav-li"><a href="https://www.qidian.com/all">全部作品</a></li>
-            <li class="nav-li"><a href="https://www.qidian.com/rank"class="act">排行</a></li>
+            <li class="nav-li"><a href="/jpbook/books/rank"class="act">排行</a></li>
             <li class="nav-li"><a href="https://www.qidian.com/finish">完本</a></li>
             <li class="nav-li"><a href="https://www.qidian.com/free">免费</a></li>
             <li class="nav-li"><a href="https://write.qq.com/public/login.html" target="_blank">作家专区</a></li>
@@ -119,34 +122,22 @@
         <div class="rank-nav-list fl" data-l1="4">
     <ul>
         
-        <li class="act"><a href="https://www.qidian.com/rank" data-eid="qd_C01">人气榜单</a><cite></cite></li>
+        <li class="act"><a href="./rank" data-eid="qd_C01">人气榜单</a><cite></cite></li>
     </ul>
     <p class="line"></p>
     <h4>热门作品排行</h4>
     <ul class="list_type_detective">
-        <li class=""><a href="https://www.qidian.com/rank/yuepiao?style=1" data-eid="qd_C02">原创风云榜</a><cite></cite></li>
-        <li class=""><a href="https://www.qidian.com/rank/hotsales?style=1" data-eid="qd_C03">24小时热销榜</a><cite></cite></li>
-        <li class=""><a href="https://www.qidian.com/rank/newvipclick?style=1" data-eid="qd_C68">新锐会员周点击榜</a><cite></cite></li>
-        <li class=""><a href="https://www.qidian.com/rank/click?style=1" data-eid="qd_C04">会员点击榜</a><cite></cite></li>
-        <li class=""><a href="https://www.qidian.com/rank/recom?style=1" data-eid="qd_C05">推荐票榜</a><cite></cite></li>
-        <li class=""><a href="https://www.qidian.com/rank/collect?style=1" data-eid="qd_C06">收藏榜</a><cite></cite></li>
-        <li class=""><a href="https://www.qidian.com/rank/vipup?style=1" data-eid="qd_C07">VIP更新榜</a><cite></cite></li>
-        <li class=""><a href="https://www.qidian.com/rank/vipcollect?style=1" data-eid="qd_C08">VIP收藏榜</a><cite></cite></li>
-        <li class=""><a href="https://www.qidian.com/rank/vipreward?style=1" data-eid="qd_C09">VIP精品打赏榜</a><cite></cite></li>
-        <li class=""><a href="https://www.qidian.com/rank/fin?style=1" data-eid="qd_C10">完本榜</a><cite></cite></li>
-    </ul>
-    <p class="line"></p>
-    <h4>新书排行</h4>
-    <ul class="list_type_detective">
-        <li class=""><a href="https://www.qidian.com/rank/signnewbook?style=1" data-eid="qd_C11">签约作家新书榜</a><cite></cite></li>
-        <li class=""><a href="https://www.qidian.com/rank/pubnewbook?style=1" data-eid="qd_C12">公众作者新书榜</a><cite></cite></li>
-        <li class=""><a href="https://www.qidian.com/rank/newsign?style=1" data-eid="qd_C13">新人签约新书榜</a><cite></cite></li>
-        <li class=""><a href="https://www.qidian.com/rank/newauthor?style=1" data-eid="qd_C14">新人作者新书榜</a><cite></cite></li>
+        <li th:class="${type} eq 'yuepiao' ? 'act' : ''"><a href="../books/yuepiao">原创风云榜</a><cite></cite></li>
+        <li th:class="${type} eq 'hotsales' ? 'act' : ''"><a href="../books/hotsales">24小时热销榜</a><cite></cite></li>
+        <li th:class="${type} eq 'click' ? 'act' : ''"><a href="../books/click">周点击榜</a><cite></cite></li>
+        <li th:class="${types} eq 'dvote' or ${types} eq 'mvote' or ${types} eq 'zvote' ? 'act' : ''"><a href="../books/recom">推荐票榜</a><cite></cite></li>
+        <li th:class="${type} eq 'collect' ? 'act' : ''"><a href="../books/collect">收藏榜</a><cite></cite></li>
+        <li th:class="${type} eq 'fin' ? 'act' : ''"><a href="../books/fin">完本榜</a><cite></cite></li>
     </ul>
     <p class="line"></p>
     <h4>社区排行</h4>
     <ul>
-        <li class=""><a href="https://www.qidian.com/rank/fans" data-eid="qd_C15">打赏粉丝榜</a><cite></cite></li>
+        <li class=""><a href="./fans">打赏粉丝榜</a><cite></cite></li>
     </ul>
 </div>
         <div class="main-content-wrap fl">
@@ -156,20 +147,13 @@
                     </h3>
                 <div class="type-list">
                     <p>
-                        <a data-chanid="-1" class="act" href="javascript:">全部分类</a><em>·</em>
-                        <a data-chanid="21" class="" href="javascript:">玄幻</a><em>·</em>
-                        <a data-chanid="1" class="" href="javascript:">奇幻</a><em>·</em>
-                        <a data-chanid="2" class="" href="javascript:">武侠</a><em>·</em>
-                        <a data-chanid="22" class="" href="javascript:">仙侠</a><em>·</em>
-                        <a data-chanid="4" class="" href="javascript:">都市</a><em>·</em>
-                        <a data-chanid="15" class="" href="javascript:">现实</a><em>·</em>
-                        <a data-chanid="6" class="" href="javascript:">军事</a><em>·</em>
-                        <a data-chanid="5" class="" href="javascript:">历史</a><em>·</em>
-                        <a data-chanid="7" class="" href="javascript:">游戏</a><em>·</em>
-                        <a data-chanid="8" class="" href="javascript:">体育</a><em>·</em>
-                        <a data-chanid="9" class="" href="javascript:">科幻</a><em>·</em>
-                        <a data-chanid="10" class="" href="javascript:">悬疑灵异</a><em>·</em>
-                        <a data-chanid="12" class="" href="javascript:">二次元</a>
+                        <a id = "-1" th:class="${bt} eq -1 or ${bt} eq null ? 'act' : ''" href="javascript:">全部分类</a><em>·</em>
+                        <th:block th:each="qa,status : ${queryAll}">
+                            <a th:class="${bt} eq ${qa.btid} ? 'act' : ''" th:id="${qa.btid}" href="javascript:" th:text="${qa.btname}">玄幻</a>
+                            <th:block th:unless="${status.last}">
+                                <em>·</em>
+                            </th:block>
+                        </th:block>
                     </p>
                 </div>
             </div>
@@ -225,140 +209,6 @@
                             24小时热销榜
                         </h3>
                         <div class="book-list">
-                            
-                            <!--<ul>
-                                <li class="unfold">
-                                    <div class="book-wrap cf">
-                                        <div class="book-info fl">
-                                            <h3>NO.1</h3>
-                                            <h4>
-                                                <a href="https://book.qidian.com/info/1012237441" target="_blank">全球高武</a>
-                                            </h4>
-                                            <p class="digital f16">销量冠军</p>
-                                            <p class="author">
-                                                <a class="type" href="https://www.qidian.com/dushi" target="_blank">都市</a>
-                                                <i>·</i>
-                                                <a class="writer" href="https://me.qidian.com/authorIndex.aspx?id=3228548" target="_blank">老鹰吃小鸡</a>
-                                            </p>
-                                        </div>
-                                        <div class="book-cover">
-                                            <a class="link" href="https://book.qidian.com/info/1012237441" target="_blank">
-                                                <img src="./排行_files/90(1)">
-                                            </a>
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                </li>
-                                                  
-                                <li data-rid="2">
-                                    <div class="num-box"><span class="num2">2</span></div>
-                                    <div class="name-box">
-                                        
-                                        <a class="name" href="https://book.qidian.com/info/1010868264" target="_blank" data-eid="qd_C40" data-bid="1010868264">诡秘之主</a>
-                                        
-                                        
-                                        <span class="iconfont"></span>
-                                        
-                                    </div>
-                                </li>
-                                
-                                <li data-rid="3">
-                                    <div class="num-box"><span class="num3">3</span></div>
-                                    <div class="name-box">
-                                        
-                                        <a class="name" href="https://book.qidian.com/info/1012982353" target="_blank" data-eid="qd_C40" data-bid="1012982353">史上最强赘婿</a>
-                                        
-                                        
-                                        <span class="iconfont"></span>
-                                        
-                                    </div>
-                                </li>
-                                
-                                <li data-rid="4">
-                                    <div class="num-box"><span class="num4">4</span></div>
-                                    <div class="name-box">
-                                        
-                                        <a class="name" href="https://book.qidian.com/info/1011705052" target="_blank" data-eid="qd_C40" data-bid="1011705052">明朝败家子</a>
-                                        
-                                        
-                                        <span class="iconfont up"></span>
-                                        
-                                    </div>
-                                </li>
-                                
-                                <li data-rid="5">
-                                    <div class="num-box"><span class="num5">5</span></div>
-                                    <div class="name-box">
-                                        
-                                        <a class="name" href="https://book.qidian.com/info/1010734492" target="_blank" data-eid="qd_C40" data-bid="1010734492">凡人修仙之仙界篇</a>
-                                        
-                                        
-                                        <span class="iconfont"></span>
-                                        
-                                    </div>
-                                </li>
-                                
-                                <li data-rid="6">
-                                    <div class="num-box"><span class="num6">6</span></div>
-                                    <div class="name-box">
-                                        
-                                        <a class="name" href="https://book.qidian.com/info/1005236478" target="_blank" data-eid="qd_C40" data-bid="1005236478">道君</a>
-                                        
-                                        
-                                        <span class="iconfont up"></span>
-                                        
-                                    </div>
-                                </li>
-                                
-                                <li data-rid="7">
-                                    <div class="num-box"><span class="num7">7</span></div>
-                                    <div class="name-box">
-                                        
-                                        <a class="name" href="https://book.qidian.com/info/1009704712" target="_blank" data-eid="qd_C40" data-bid="1009704712">牧神记</a>
-                                        
-                                        
-                                        <span class="iconfont"></span>
-                                        
-                                    </div>
-                                </li>
-                                
-                                <li data-rid="8">
-                                    <div class="num-box"><span class="num8">8</span></div>
-                                    <div class="name-box">
-                                        
-                                        <a class="name" href="https://book.qidian.com/info/1004074281" target="_blank" data-eid="qd_C40" data-bid="1004074281">重生之最强人生</a>
-                                        
-                                        
-                                        <span class="iconfont up"></span>
-                                        
-                                    </div>
-                                </li>
-                                
-                                <li data-rid="9">
-                                    <div class="num-box"><span class="num9">9</span></div>
-                                    <div class="name-box">
-                                        
-                                        <a class="name" href="https://book.qidian.com/info/1011489683" target="_blank" data-eid="qd_C40" data-bid="1011489683">民国谍影</a>
-                                        
-                                        
-                                        <span class="iconfont"></span>
-                                        
-                                    </div>
-                                </li>
-                                
-                                <li data-rid="10">
-                                    <div class="num-box"><span class="num10">10</span></div>
-                                    <div class="name-box">
-                                        
-                                        <a class="name" href="https://book.qidian.com/info/3602691" target="_blank" data-eid="qd_C40" data-bid="3602691">修真聊天群</a>
-                                        
-                                        
-                                        <span class="iconfont"></span>
-                                        
-                                    </div>
-                                </li>
-                                
-                            </ul>-->
                             <ul>
                                 <th:block th:each="qb,status : ${cankHotsell}">
                                     <li th:class="${status.index} eq 0 ? 'unfold' : ''">
@@ -473,7 +323,7 @@
                                                             <a class="type" href="https://www.qidian.com/youxi" target="_blank" th:text="${wc.btname}">游戏</a>
                                                             <i>·</i>
                                                             <a class="writer" href="https://me.qidian.com/authorIndex.aspx?id=4362443" target="_blank"
-                                                               th:text="${wc.uname}">骷髅精灵</a>
+                                                               th:text="${wc.pen}">骷髅精灵</a>
                                                         </p>
                                                     </div>
                                                     <div class="book-cover">
@@ -515,7 +365,7 @@
                                                             <a class="type" href="https://www.qidian.com/youxi" target="_blank" th:text="${wc.btname}">游戏</a>
                                                             <i>·</i>
                                                             <a class="writer" href="https://me.qidian.com/authorIndex.aspx?id=4362443" target="_blank"
-                                                               th:text="${wc.uname}">骷髅精灵</a>
+                                                               th:text="${wc.pen}">骷髅精灵</a>
                                                         </p>
                                                     </div>
                                                     <div class="book-cover">
@@ -557,7 +407,7 @@
                                                             <a class="type" href="https://www.qidian.com/youxi" target="_blank" th:text="${wc.btname}">游戏</a>
                                                             <i>·</i>
                                                             <a class="writer" href="https://me.qidian.com/authorIndex.aspx?id=4362443" target="_blank"
-                                                               th:text="${wc.uname}">骷髅精灵</a>
+                                                               th:text="${wc.pen}">骷髅精灵</a>
                                                         </p>
                                                     </div>
                                                     <div class="book-cover">

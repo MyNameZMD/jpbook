@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <!-- saved from url=(0039)https://book.qidian.com/info/1013432619 -->
-<html class="loaded" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html class="loaded"  lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 
-    <title>书籍详情</title>
+<title>书籍详情</title>
 
-    <script src="../js/stats.js" name="MTAH5" sid="500451537"></script>
-    <script src="../js/push.js"></script>
+<script src="../js/stats.js" name="MTAH5" sid="500451537"></script>
+<script src="../js/push.js"></script>
 
 
-    <link data-ignore="true" rel="shortcut icon" type="image/x-icon"
-          href="https://qidian.gtimg.com/qd/favicon/qd_icon.c443c.ico">
-    <link data-ignore="true" rel="Bookmark" type="image/x-icon"
-          href="https://qidian.gtimg.com/qd/favicon/qd_icon.c443c.ico">
-    <link rel="stylesheet" data-ignore="true" href="../css/emoji.c4e81.css">
-    <link data-ignore="true" rel="stylesheet" href="../css/module.e710a.css">
-    <link data-ignore="true" rel="stylesheet" href="../css/layout.5de0f.css">
-    <link data-ignore="true" rel="stylesheet" href="../css/book_details.1baf2.css">
-    <link data-ignore="true" rel="stylesheet" href="../css/Panel.css">
-    <link data-ignore="true" rel="stylesheet" href="../css/LightTip.css">
-    <link data-ignore="true" rel="stylesheet" href="../css/Popup.css">
-    <link data-ignore="true" rel="stylesheet" href="../css/Drag.css">
-    <link rel="stylesheet" data-ignore="true" href="../css/iconfont.css">
+
+<link data-ignore="true" rel="shortcut icon" type="image/x-icon" href="https://qidian.gtimg.com/qd/favicon/qd_icon.c443c.ico">
+<link data-ignore="true" rel="Bookmark" type="image/x-icon" href="https://qidian.gtimg.com/qd/favicon/qd_icon.c443c.ico">
+<link rel="stylesheet" data-ignore="true" href="../css/emoji.c4e81.css">
+<link data-ignore="true" rel="stylesheet" href="../css/module.e710a.css">
+<link data-ignore="true" rel="stylesheet" href="../css/layout.5de0f.css">
+<link data-ignore="true" rel="stylesheet" href="../css/book_details.1baf2.css">
+<link data-ignore="true" rel="stylesheet" href="../css/Panel.css">
+<link data-ignore="true" rel="stylesheet" href="../css/LightTip.css">
+<link data-ignore="true" rel="stylesheet" href="../css/Popup.css">
+<link data-ignore="true" rel="stylesheet" href="../css/Drag.css">
+<link rel="stylesheet" data-ignore="true" href="../css/iconfont.css">
     <link rel="stylesheet" data-ignore="true" href="../css/iconfonts.css">
     <script src="../js/jquery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/sweet-alert.js"></script>
@@ -62,13 +61,7 @@
             $("#catalogWrap").hide();
             $("#xinxi").show();
         }
-
-        function dianzan(obj, revid) {
-            /*点赞时还需要判断是否已经是点过赞的了，样式点一次变一次；
-			点赞的总数放进变量中，从页面获取，如果是点过的就减一次
-			没有点过赞的就增加一次，变量随之改变*/
-            /*页面显示时要判断该评论该用户是否已经是点过赞的*/
-            /*如果没有用户登录的话就跳转至登录页面*/
+        function dianzan(obj,revid){
             var z = parseInt($(obj).children('span').html());
 			$.ajax({
 				url:'/jpbook/books/userExist',
@@ -134,7 +127,6 @@
 				    if(0 == data){
                         window.location.href = "../login.html";
 					}else{
-
 				        window.close();
                         window.open("/jpbook/books/queryBookByFatie?retype=1"+"&bookid="+bookid);
 					}
@@ -274,22 +266,17 @@
 				<a href="https://book.qidian.com/info/1013432619" th:text="${queryBookById[0].bookname}">人皇在上</a>
 				<cite class="rt"></cite>
 			</span>
-    </div>
-    <div class="border-shadow ">
-        <span></span> <span></span>
-    </div>
-    <div class="book-detail-wrap center990">
-        <div class="book-information cf" data-l1="2">
-            <div class="book-img">
-                <a class="J-getJumpUrl" id="bookImg" href="javascript:void(0)">
-                    <th:block th:if="${queryBookById[0].icon} eq ''">
-                        <img src="../images/0.jpg"/>
-                    </th:block>
-                    <th:block th:if="${queryBookById[0].icon} neq ''">
-                        <img th:src="@{/img/{filename}(filename=${queryBookById[0].icon})}"/>
-                    </th:block>
-                </a>
-            </div>
+		</div>
+		<div class="border-shadow ">
+			<span></span> <span></span>
+		</div>
+		<div class="book-detail-wrap center990">
+			<div class="book-information cf" data-l1="2">
+				<div class="book-img">
+					<a class="J-getJumpUrl" id="bookImg" href="javascript:void(0)">
+						<img th:src="${queryBookById[0].icon}"/>
+					</a>
+				</div>
 
 				<div class="book-info ">
 					<h1>
@@ -317,8 +304,9 @@
 						<cite>阅文总点击</cite><i>|</i>
 						<!--<em>
 							<span class="EpImtlYe"></span>
-						</em>-->
+						</em>
 
+						<cite>万会员周点击</cite><i>|</i>-->
 						<em>
 							<span th:text="${queryBookById[0].zvote}"></span>
 						</em>
@@ -995,24 +983,40 @@
                                    href="javascript:" data-comment="1" data-eid="qd_G33">我要评价
                                 </a>
                                 <span class="j_godiscuss act">
+									</div>
+								</dd>
+							</dl>
+						</div>
+					</div>
+					<!--作品讨论区-->
+					<div class="user-commentWrap" data-l1="8">
+						<div class="user-comment-wrap book-friend">
+							<div class="comment-head cf">
+								<h3 class="lang"><!--@{/books/fatie(retype=1,bookid=${queryBookById[0].bookid})}-->
+									<a class="send blue j_forumBtn" href = "javascript:void(0);" th:onclick="|faties(${queryBookById[0].bookid})|">我要发帖
+									</a>
+									<a class="comment-btn blue j_commentBtn hidden" id="goComment"
+										href="javascript:" data-comment="1" data-eid="qd_G33">我要评价
+									</a>
+									<span class="j_godiscuss act">
 										作品讨论区
 									</span><i class="grey">|</i>
-                                <span class="j_gocomment" data-eid="qd_G113">
+									<span class="j_gocomment" data-eid="qd_G113">
 										书友评价
 									</span>
-                            </h3>
-                            <div class="sort-box hidden" id="sortBox">
-                                <a class="act" href="javascript:" data-order="2" data-eid="qd_G31">
-                                    热门
-                                </a>
-                                <span>·</span>
-                                <a href="javascript:" data-order="0" data-eid="qd_G32">
-                                    最新
-                                </a>
-                                <span class="grey">|</span>
-                            </div>
-                        </div>
-                        <div class="userCommentWrap" id="userCommentWrap" data-l1="7">
+								</h3>
+								<div class="sort-box hidden" id="sortBox">
+									<a class="act" href="javascript:" data-order="2" data-eid="qd_G31">
+										热门
+									</a>
+									<span>·</span>
+									<a href="javascript:" data-order="0" data-eid="qd_G32">
+										最新
+									</a>
+									<span class="grey">|</span>
+								</div>
+							</div>
+							<div class="userCommentWrap" id="userCommentWrap" data-l1="7">
 
                             <!-- start 书友评价 -->
                             <div id="commentList">
@@ -1031,800 +1035,551 @@
                                             </div>
                                             <div class="comment-info">
 
-                                                <h6>
-                                                    <a class="zan " href="javascript:" data-rateid="1416105"
-                                                       data-islike="" data-eid="qd_G112"><b>2</b><em
-                                                            class="iconfont icon-dianzan"></em></a><a class="blue"
-                                                                                                      href="https://me.qidian.com/friendIndex.aspx?id=112416992"
-                                                                                                      target="_blank">古道西风笑</a><i>评</i><span
-                                                        class="score-min star5"></span>
-                                                </h6>
+													<h6>
+														<a class="zan " href="javascript:" data-rateid="1416105"
+															data-islike="" data-eid="qd_G112"><b>2</b><em
+															class="iconfont icon-dianzan"></em></a><a class="blue"
+															href="https://me.qidian.com/friendIndex.aspx?id=112416992"
+															target="_blank">古道西风笑</a><i>评</i><span
+															class="score-min star5"></span>
+													</h6>
 
-                                                <p class="normal">
-                                                    <cite class="iconfont blue j_unfold" title="展开评论"></cite>
-                                                </p>
-                                                <p>2019-02-18 15:01</p>
-                                            </div>
-                                        </dd>
+													<p class="normal">
+														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
+													</p>
+													<p>2019-02-18 15:01</p>
+												</div>
+											</dd>
 
-                                        <dd>
-                                            <div class="user-photo">
-                                                <a
-                                                        href="https://me.qidian.com/friendIndex.aspx?id=301346563"
-                                                        target="_blank"> <img
-                                                        src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(1)"> <span
-                                                        class="user-level lv1"></span>
-                                                </a>
-                                            </div>
-                                            <div class="comment-info">
+											<dd>
+												<div class="user-photo">
+													<a
+														href="https://me.qidian.com/friendIndex.aspx?id=301346563"
+														target="_blank"> <img
+														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(1)"> <span
+														class="user-level lv1"></span>
+													</a>
+												</div>
+												<div class="comment-info">
 
-                                                <h6>
-                                                    <a class="iconfont icon-dianzan" href="javascript:"
-                                                       data-rateid="1420382"
-                                                       data-islike="" data-eid="qd_G112"><b>0</b><em
-                                                            class="iconfont "></em></a><a class="blue"
-                                                                                          href="https://me.qidian.com/friendIndex.aspx?id=301346563"
-                                                                                          target="_blank">有妖汽</a><i>评</i><span
-                                                        class="score-min star5"></span>
-                                                </h6>
+													<h6>
+														<a class="iconfont icon-dianzan" href="javascript:" data-rateid="1420382"
+															data-islike="" data-eid="qd_G112"><b>0</b><em
+															class="iconfont "></em></a><a class="blue"
+															href="https://me.qidian.com/friendIndex.aspx?id=301346563"
+															target="_blank">有妖汽</a><i>评</i><span
+															class="score-min star5"></span>
+													</h6>
 
-                                                <p class="normal">
-                                                    <cite class="iconfont blue j_unfold" title="展开评论"></cite>
-                                                </p>
-                                                <p>2019-02-26 13:15</p>
-                                            </div>
-                                        </dd>
+													<p class="normal">
+														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
+													</p>
+													<p>2019-02-26 13:15</p>
+												</div>
+											</dd>
 
-                                        <dd>
-                                            <div class="user-photo">
-                                                <a
-                                                        href="https://me.qidian.com/friendIndex.aspx?id=318520775"
-                                                        target="_blank"> <img
-                                                        src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(2)"> <span
-                                                        class="user-level lv0"></span>
-                                                </a>
-                                            </div>
-                                            <div class="comment-info">
+											<dd>
+												<div class="user-photo">
+													<a
+														href="https://me.qidian.com/friendIndex.aspx?id=318520775"
+														target="_blank"> <img
+														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(2)"> <span
+														class="user-level lv0"></span>
+													</a>
+												</div>
+												<div class="comment-info">
 
-                                                <h6>
-                                                    <a class="zan " href="javascript:" data-rateid="1415215"
-                                                       data-islike="" data-eid="qd_G112"><b>2</b><em
-                                                            class="iconfont"></em></a><a class="blue"
-                                                                                          href="https://me.qidian.com/friendIndex.aspx?id=318520775"
-                                                                                          target="_blank">书友20180708125110825</a><i>评</i><span
-                                                        class="score-min star5"></span>
-                                                </h6>
+													<h6>
+														<a class="zan " href="javascript:" data-rateid="1415215"
+															data-islike="" data-eid="qd_G112"><b>2</b><em
+															class="iconfont"></em></a><a class="blue"
+															href="https://me.qidian.com/friendIndex.aspx?id=318520775"
+															target="_blank">书友20180708125110825</a><i>评</i><span
+															class="score-min star5"></span>
+													</h6>
 
-                                                <p class="normal">
-                                                    <cite class="iconfont blue j_unfold" title="展开评论"></cite>
-                                                </p>
-                                                <p>2019-02-16 17:38</p>
-                                            </div>
-                                        </dd>
+													<p class="normal">
+														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
+													</p>
+													<p>2019-02-16 17:38</p>
+												</div>
+											</dd>
 
-                                        <dd>
-                                            <div class="user-photo">
-                                                <a
-                                                        href="https://me.qidian.com/friendIndex.aspx?id=20460024"
-                                                        target="_blank"> <img
-                                                        src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(3)"> <span
-                                                        class="user-level lv0"></span>
-                                                </a>
-                                            </div>
-                                            <div class="comment-info">
+											<dd>
+												<div class="user-photo">
+													<a
+														href="https://me.qidian.com/friendIndex.aspx?id=20460024"
+														target="_blank"> <img
+														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(3)"> <span
+														class="user-level lv0"></span>
+													</a>
+												</div>
+												<div class="comment-info">
 
-                                                <h6>
-                                                    <a class="zan " href="javascript:" data-rateid="1420173"
-                                                       data-islike="" data-eid="qd_G112"><b>0</b><em
-                                                            class="iconfont"></em></a><a class="blue"
-                                                                                          href="https://me.qidian.com/friendIndex.aspx?id=20460024"
-                                                                                          target="_blank">突破重圍</a><i>评</i><span
-                                                        class="score-min star3"></span>
-                                                </h6>
+													<h6>
+														<a class="zan " href="javascript:" data-rateid="1420173"
+															data-islike="" data-eid="qd_G112"><b>0</b><em
+															class="iconfont"></em></a><a class="blue"
+															href="https://me.qidian.com/friendIndex.aspx?id=20460024"
+															target="_blank">突破重圍</a><i>评</i><span
+															class="score-min star3"></span>
+													</h6>
 
-                                                <p class="normal">
-                                                    <cite class="iconfont blue j_unfold" title="展开评论"></cite>
-                                                </p>
-                                                <p>2019-02-25 23:29</p>
-                                            </div>
-                                        </dd>
+													<p class="normal">
+														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
+													</p>
+													<p>2019-02-25 23:29</p>
+												</div>
+											</dd>
 
-                                        <dd>
-                                            <div class="user-photo">
-                                                <a
-                                                        href="https://me.qidian.com/friendIndex.aspx?id=159770170"
-                                                        target="_blank"> <img
-                                                        src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(4)"> <span
-                                                        class="user-level lv0"></span>
-                                                </a>
-                                            </div>
-                                            <div class="comment-info">
+											<dd>
+												<div class="user-photo">
+													<a
+														href="https://me.qidian.com/friendIndex.aspx?id=159770170"
+														target="_blank"> <img
+														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(4)"> <span
+														class="user-level lv0"></span>
+													</a>
+												</div>
+												<div class="comment-info">
 
-                                                <h6>
-                                                    <a class="zan " href="javascript:" data-rateid="1419727"
-                                                       data-islike="" data-eid="qd_G112"><b>0</b><em
-                                                            class="iconfont"></em></a><a class="blue"
-                                                                                          href="https://me.qidian.com/friendIndex.aspx?id=159770170"
-                                                                                          target="_blank">藏珍楼主</a><i>评</i><span
-                                                        class="score-min star5"></span>
-                                                </h6>
+													<h6>
+														<a class="zan " href="javascript:" data-rateid="1419727"
+															data-islike="" data-eid="qd_G112"><b>0</b><em
+															class="iconfont"></em></a><a class="blue"
+															href="https://me.qidian.com/friendIndex.aspx?id=159770170"
+															target="_blank">藏珍楼主</a><i>评</i><span
+															class="score-min star5"></span>
+													</h6>
 
-                                                <p class="normal">
-                                                    加油<cite class="iconfont blue j_unfold" title="展开评论"></cite>
-                                                </p>
-                                                <p>2019-02-25 09:24</p>
-                                            </div>
-                                        </dd>
+													<p class="normal">
+														加油<cite class="iconfont blue j_unfold" title="展开评论"></cite>
+													</p>
+													<p>2019-02-25 09:24</p>
+												</div>
+											</dd>
 
-                                        <dd>
-                                            <div class="user-photo">
-                                                <a
-                                                        href="https://me.qidian.com/friendIndex.aspx?id=115781149"
-                                                        target="_blank"> <img
-                                                        src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50"> <span
-                                                        class="user-level lv0"></span>
-                                                </a>
-                                            </div>
-                                            <div class="comment-info">
+											<dd>
+												<div class="user-photo">
+													<a
+														href="https://me.qidian.com/friendIndex.aspx?id=115781149"
+														target="_blank"> <img
+														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50"> <span
+														class="user-level lv0"></span>
+													</a>
+												</div>
+												<div class="comment-info">
 
-                                                <h6>
-                                                    <a class="zan " href="javascript:" data-rateid="1409103"
-                                                       data-islike="" data-eid="qd_G112"><b>2</b><em
-                                                            class="iconfont"></em></a><a class="blue"
-                                                                                          href="https://me.qidian.com/friendIndex.aspx?id=115781149"
-                                                                                          target="_blank">星尘的思念</a><i>评</i><span
-                                                        class="score-min star5"></span>
-                                                </h6>
+													<h6>
+														<a class="zan " href="javascript:" data-rateid="1409103"
+															data-islike="" data-eid="qd_G112"><b>2</b><em
+															class="iconfont"></em></a><a class="blue"
+															href="https://me.qidian.com/friendIndex.aspx?id=115781149"
+															target="_blank">星尘的思念</a><i>评</i><span
+															class="score-min star5"></span>
+													</h6>
 
-                                                <p class="normal">
-                                                    <cite class="iconfont blue j_unfold" title="展开评论"></cite>
-                                                </p>
-                                                <p>2019-02-10 19:32</p>
-                                            </div>
-                                        </dd>
+													<p class="normal">
+														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
+													</p>
+													<p>2019-02-10 19:32</p>
+												</div>
+											</dd>
 
-                                        <dd>
-                                            <div class="user-photo">
-                                                <a href="https://me.qidian.com/friendIndex.aspx?id=43945"
-                                                   target="_blank"> <img
-                                                        src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(5)"> <span
-                                                        class="user-level lv0"></span>
-                                                </a>
-                                            </div>
-                                            <div class="comment-info">
+											<dd>
+												<div class="user-photo">
+													<a href="https://me.qidian.com/friendIndex.aspx?id=43945"
+														target="_blank"> <img
+														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(5)"> <span
+														class="user-level lv0"></span>
+													</a>
+												</div>
+												<div class="comment-info">
 
-                                                <h6>
-                                                    <a class="zan " href="javascript:" data-rateid="1408989"
-                                                       data-islike="" data-eid="qd_G112"><b>1</b><em
-                                                            class="iconfont"></em></a><a class="blue"
-                                                                                          href="https://me.qidian.com/friendIndex.aspx?id=43945"
-                                                                                          target="_blank">火火</a><i>评</i><span
-                                                        class="score-min star3"></span>
-                                                </h6>
+													<h6>
+														<a class="zan " href="javascript:" data-rateid="1408989"
+															data-islike="" data-eid="qd_G112"><b>1</b><em
+															class="iconfont"></em></a><a class="blue"
+															href="https://me.qidian.com/friendIndex.aspx?id=43945"
+															target="_blank">火火</a><i>评</i><span
+															class="score-min star3"></span>
+													</h6>
 
-                                                <p class="normal">
-                                                    <cite class="iconfont blue j_unfold" title="展开评论"></cite>
-                                                </p>
-                                                <p>2019-02-10 14:50</p>
-                                            </div>
-                                        </dd>
+													<p class="normal">
+														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
+													</p>
+													<p>2019-02-10 14:50</p>
+												</div>
+											</dd>
 
-                                        <dd>
-                                            <div class="user-photo">
-                                                <a
-                                                        href="https://me.qidian.com/friendIndex.aspx?id=225727382"
-                                                        target="_blank"> <img
-                                                        src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(6)"> <span
-                                                        class="user-level lv0"></span>
-                                                </a>
-                                            </div>
-                                            <div class="comment-info">
+											<dd>
+												<div class="user-photo">
+													<a
+														href="https://me.qidian.com/friendIndex.aspx?id=225727382"
+														target="_blank"> <img
+														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(6)"> <span
+														class="user-level lv0"></span>
+													</a>
+												</div>
+												<div class="comment-info">
 
-                                                <h6>
-                                                    <a class="zan " href="javascript:" data-rateid="1398367"
-                                                       data-islike="" data-eid="qd_G112"><b>1</b><em
-                                                            class="iconfont"></em></a><a class="blue"
-                                                                                          href="https://me.qidian.com/friendIndex.aspx?id=225727382"
-                                                                                          target="_blank">hjhkyui</a><i>评</i><span
-                                                        class="score-min star5"></span>
-                                                </h6>
+													<h6>
+														<a class="zan " href="javascript:" data-rateid="1398367"
+															data-islike="" data-eid="qd_G112"><b>1</b><em
+															class="iconfont"></em></a><a class="blue"
+															href="https://me.qidian.com/friendIndex.aspx?id=225727382"
+															target="_blank">hjhkyui</a><i>评</i><span
+															class="score-min star5"></span>
+													</h6>
 
-                                                <p class="normal">
-                                                    <cite class="iconfont blue j_unfold" title="展开评论"></cite>
-                                                </p>
-                                                <p>2019-01-17 13:50</p>
-                                            </div>
-                                        </dd>
+													<p class="normal">
+														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
+													</p>
+													<p>2019-01-17 13:50</p>
+												</div>
+											</dd>
 
-                                        <dd>
-                                            <div class="user-photo">
-                                                <a
-                                                        href="https://me.qidian.com/friendIndex.aspx?id=186479385"
-                                                        target="_blank"> <img
-                                                        src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50"> <span
-                                                        class="user-level lv0"></span>
-                                                </a>
-                                            </div>
-                                            <div class="comment-info">
+											<dd>
+												<div class="user-photo">
+													<a
+														href="https://me.qidian.com/friendIndex.aspx?id=186479385"
+														target="_blank"> <img
+														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50"> <span
+														class="user-level lv0"></span>
+													</a>
+												</div>
+												<div class="comment-info">
 
-                                                <h6>
-                                                    <a class="zan " href="javascript:" data-rateid="1397730"
-                                                       data-islike="" data-eid="qd_G112"><b>1</b><em
-                                                            class="iconfont"></em></a><a class="blue"
-                                                                                          href="https://me.qidian.com/friendIndex.aspx?id=186479385"
-                                                                                          target="_blank">书友140429021744617</a><i>评</i><span
-                                                        class="score-min star4"></span>
-                                                </h6>
+													<h6>
+														<a class="zan " href="javascript:" data-rateid="1397730"
+															data-islike="" data-eid="qd_G112"><b>1</b><em
+															class="iconfont"></em></a><a class="blue"
+															href="https://me.qidian.com/friendIndex.aspx?id=186479385"
+															target="_blank">书友140429021744617</a><i>评</i><span
+															class="score-min star4"></span>
+													</h6>
 
-                                                <p class="normal">
-                                                    <cite class="iconfont blue j_unfold" title="展开评论"></cite>
-                                                </p>
-                                                <p>2019-01-16 11:48</p>
-                                            </div>
-                                        </dd>
+													<p class="normal">
+														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
+													</p>
+													<p>2019-01-16 11:48</p>
+												</div>
+											</dd>
 
-                                        <dd>
-                                            <div class="user-photo">
-                                                <a
-                                                        href="https://me.qidian.com/friendIndex.aspx?id=209502100"
-                                                        target="_blank"> <img
-                                                        src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(6)"> <span
-                                                        class="user-level lv4"></span>
-                                                </a>
-                                            </div>
-                                            <div class="comment-info">
+											<dd>
+												<div class="user-photo">
+													<a
+														href="https://me.qidian.com/friendIndex.aspx?id=209502100"
+														target="_blank"> <img
+														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(6)"> <span
+														class="user-level lv4"></span>
+													</a>
+												</div>
+												<div class="comment-info">
 
-                                                <h6>
-                                                    <a class="zan " href="javascript:" data-rateid="1371293"
-                                                       data-islike="" data-eid="qd_G112"><b>2</b><em
-                                                            class="iconfont"></em></a><a class="blue"
-                                                                                          href="https://me.qidian.com/friendIndex.aspx?id=209502100"
-                                                                                          target="_blank">独走一匹猫</a><i>评</i><span
-                                                        class="score-min star5"></span>
-                                                </h6>
+													<h6>
+														<a class="zan " href="javascript:" data-rateid="1371293"
+															data-islike="" data-eid="qd_G112"><b>2</b><em
+															class="iconfont"></em></a><a class="blue"
+															href="https://me.qidian.com/friendIndex.aspx?id=209502100"
+															target="_blank">独走一匹猫</a><i>评</i><span
+															class="score-min star5"></span>
+													</h6>
 
-                                                <p class="normal">
-                                                    <cite class="iconfont blue j_unfold" title="展开评论"></cite>
-                                                </p>
-                                                <p>2018-12-07 12:23</p>
-                                            </div>
-                                        </dd>
+													<p class="normal">
+														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
+													</p>
+													<p>2018-12-07 12:23</p>
+												</div>
+											</dd>
 
-                                        <dd>
-                                            <div class="user-photo">
-                                                <a
-                                                        href="https://me.qidian.com/friendIndex.aspx?id=199477261"
-                                                        target="_blank"> <img
-                                                        src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50"> <span
-                                                        class="user-level lv0"></span>
-                                                </a>
-                                            </div>
-                                            <div class="comment-info">
+											<dd>
+												<div class="user-photo">
+													<a
+														href="https://me.qidian.com/friendIndex.aspx?id=199477261"
+														target="_blank"> <img
+														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50"> <span
+														class="user-level lv0"></span>
+													</a>
+												</div>
+												<div class="comment-info">
 
-                                                <h6>
-                                                    <a class="zan " href="javascript:" data-rateid="1371499"
-                                                       data-islike="" data-eid="qd_G112"><b>2</b><em
-                                                            class="iconfont"></em></a><a class="blue"
-                                                                                          href="https://me.qidian.com/friendIndex.aspx?id=199477261"
-                                                                                          target="_blank">元谋啊啊啊</a><i>评</i><span
-                                                        class="score-min star5"></span>
-                                                </h6>
+													<h6>
+														<a class="zan " href="javascript:" data-rateid="1371499"
+															data-islike="" data-eid="qd_G112"><b>2</b><em
+															class="iconfont"></em></a><a class="blue"
+															href="https://me.qidian.com/friendIndex.aspx?id=199477261"
+															target="_blank">元谋啊啊啊</a><i>评</i><span
+															class="score-min star5"></span>
+													</h6>
 
-                                                <p class="normal">
-                                                    <cite class="iconfont blue j_unfold" title="展开评论"></cite>
-                                                </p>
-                                                <p>2018-12-07 16:08</p>
-                                            </div>
-                                        </dd>
+													<p class="normal">
+														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
+													</p>
+													<p>2018-12-07 16:08</p>
+												</div>
+											</dd>
 
-                                        <dd>
-                                            <div class="user-photo">
-                                                <a
-                                                        href="https://me.qidian.com/friendIndex.aspx?id=171228713"
-                                                        target="_blank"> <img
-                                                        src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50"> <span
-                                                        class="user-level lv0"></span>
-                                                </a>
-                                            </div>
-                                            <div class="comment-info">
+											<dd>
+												<div class="user-photo">
+													<a
+														href="https://me.qidian.com/friendIndex.aspx?id=171228713"
+														target="_blank"> <img
+														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50"> <span
+														class="user-level lv0"></span>
+													</a>
+												</div>
+												<div class="comment-info">
 
-                                                <h6>
-                                                    <a class="zan " href="javascript:" data-rateid="1350061"
-                                                       data-islike="" data-eid="qd_G112"><b>3</b><em
-                                                            class="iconfont"></em></a><a class="blue"
-                                                                                          href="https://me.qidian.com/friendIndex.aspx?id=171228713"
-                                                                                          target="_blank">九州苍茫</a><i>评</i><span
-                                                        class="score-min star5"></span>
-                                                </h6>
+													<h6>
+														<a class="zan " href="javascript:" data-rateid="1350061"
+															data-islike="" data-eid="qd_G112"><b>3</b><em
+															class="iconfont"></em></a><a class="blue"
+															href="https://me.qidian.com/friendIndex.aspx?id=171228713"
+															target="_blank">九州苍茫</a><i>评</i><span
+															class="score-min star5"></span>
+													</h6>
 
-                                                <p class="normal">
-                                                    <cite class="iconfont blue j_unfold" title="展开评论"></cite>
-                                                </p>
-                                                <p>2018-10-30 11:37</p>
-                                            </div>
-                                        </dd>
+													<p class="normal">
+														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
+													</p>
+													<p>2018-10-30 11:37</p>
+												</div>
+											</dd>
 
-                                    </dl>
-                                    <!-- end 有数据状态 -->
+										</dl>
+										<!-- end 有数据状态 -->
 
-                                    <!-- start 热门分页 -->
-                                    <div class="page-box cf">
-                                        <div class="pagination fr" data-eid="qd_G34"
-                                             id="page-container" data-pagemax="1" data-page="1">
-                                            <div class="lbf-pagination">
-                                                <ul class="lbf-pagination-item-list">
-                                                    <li class="lbf-pagination-item"><a
-                                                            href="javascript:;"
-                                                            class="lbf-pagination-prev lbf-pagination-disabled">&lt;</a>
-                                                    </li>
-                                                    <li class="lbf-pagination-item"><a data-page="1"
-                                                                                       href="javascript:;"
-                                                                                       class="lbf-pagination-page  lbf-pagination-current">1</a>
-                                                    </li>
-                                                    <li class="lbf-pagination-item"><a
-                                                            href="javascript:;"
-                                                            class="lbf-pagination-next lbf-pagination-disabled">&gt;</a>
-                                                    </li>
-                                                </ul>
-                                                <div class="lbf-pagination-jump">
-                                                    <input type="text" class="lbf-pagination-input" value="1"><a
-                                                        href="javascript:;" class="lbf-pagination-go">GO</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end 热门分页 -->
+										<!-- start 热门分页 -->
+										<div class="page-box cf">
+											<div class="pagination fr" data-eid="qd_G34"
+												id="page-container" data-pagemax="1" data-page="1">
+												<div class="lbf-pagination">
+													<ul class="lbf-pagination-item-list">
+														<li class="lbf-pagination-item"><a
+															href="javascript:;"
+															class="lbf-pagination-prev lbf-pagination-disabled">&lt;</a></li>
+														<li class="lbf-pagination-item"><a data-page="1"
+															href="javascript:;"
+															class="lbf-pagination-page  lbf-pagination-current">1</a></li>
+														<li class="lbf-pagination-item"><a
+															href="javascript:;"
+															class="lbf-pagination-next lbf-pagination-disabled">&gt;</a></li>
+													</ul>
+													<div class="lbf-pagination-jump">
+														<input type="text" class="lbf-pagination-input" value="1"><a
+															href="javascript:;" class="lbf-pagination-go">GO</a>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- end 热门分页 -->
 
-                                </div>
-                                <!-- end 热门评论数据 -->
+									</div>
+									<!-- end 热门评论数据 -->
 
-                            </div>
-                            <!-- end 书友评价 -->
-                        </div>
-                        <div class="user-discuss" id="userDiscuss" data-l1="8">
-                            <div class="book-discuss-wrap">
-                                <div class="discuss-list">
-                                    <!-- start 有数据状态 -->
-                                    <ul>
-                                        <!--start 置顶广告-->
-                                        <!--end 置顶广告-->
-                                        <!-- 置顶帖  两个 -->
-                                        <th:block th:each="qr,status:${queryReviewbook}">
-                                            <th:bolock th:if="${status.index lt 14}">
-                                                <li class="cf " data-rid="1">
-                                                    <div class="user-photo">
-                                                        <a href="https://my.qidian.com/user/157804031" target="_blank">
-                                                            <img th:src="${qr.icon}">
-                                                        </a>
-                                                    </div>
-                                                    <div class="discuss-info">
-                                                        <p class="users">
-                                                            <a class="blue" href="https://my.qidian.com/user/157804031"
-                                                               target="_blank">
-                                                                <b th:text="${qr.uname}">浮生盼有钱</b>
+								</div>
+								<!-- end 书友评价 -->
+							</div>
+							<div class="user-discuss" id="userDiscuss" data-l1="8">
+								<div class="book-discuss-wrap">
+									<div class="discuss-list">
+										<!-- start 有数据状态 -->
+										<ul>
+											<!--start 置顶广告-->
+											<!--end 置顶广告-->
+											<!-- 置顶帖  两个 -->
+                                            <th:block th:each="qr,status:${queryReviewbook}">
+                                                <th:bolock th:if="${status.index lt 14}">
+                                                    <li class="cf " data-rid="1">
+                                                        <div class="user-photo">
+                                                            <a href="https://my.qidian.com/user/157804031" target="_blank">
+                                                                <img th:src="${qr.icon}">
                                                             </a>
-                                                            <span class="gray">发表了帖子</span>
-                                                        </p>
-                                                        <h5 class="text">
-                                                            <a class=""
-                                                               href="https://forum.qidian.com/post/12073675103859503/1244484136"
-                                                               target="_blank" data-eid="qd_G37"
-                                                               th:utext="${qr.revvlue}">
-                                                                <i class="icon icon-topfix"></i>
-                                                                <i class="icon icon-jinghua"></i>
-                                                                书只看了几章，请问一下，九品等级是：九品力士八品勇士七品下甲士六品上甲士五品武士，四到一品
-                                                            </a>
-                                                        </h5>
-                                                        <p class="info dib-wrap" data-id="1244484136">
-                                                            <span class="mr20" th:text="|${qr.commenttime}发布|">2019-02-15发布</span>
-                                                            <a th:href="@{/reviewbook/queryById(bookid=${queryBookById[0].bookid},revid=${qr.revid})}"
-                                                               class="info-tab mr20" target="_blank">
-                                                                <i class="iconfont icon-xiaoxi"></i>
-                                                                <span th:text="|${qr.rqcount}条回复|">1条回复</span>
-                                                            </a>
-                                                            <th:block th:if="${queryZanById.size()} eq 0">
-                                                                <a href="javascript:;"
-                                                                   th:onclick="'javascript:dianzan(this,'+${qr.revid}+')'"
-                                                                   class="info-tab like-btn">
-                                                                    <i class="iconfont icon-dianzan"></i>
-                                                                    <span th:text="|${qr.zan}赞|">4赞</span>
+                                                        </div>
+                                                        <div class="discuss-info">
+                                                            <p class="users">
+                                                                <a class="blue" href="https://my.qidian.com/user/157804031" target="_blank">
+                                                                    <b th:text="${qr.uname}">浮生盼有钱</b>
                                                                 </a>
-                                                            </th:block>
-                                                            <th:block th:if="${queryZanById.size()} gt 0">
-                                                                <th:block th:each="qz : ${queryZanById}">
-                                                                    <th:block th:if="${qz.reviewid} eq ${qr.revid}">
-                                                                        <th:block th:if="${qz.zstate} eq 0">
-                                                                            <a href="javascript:;"
-                                                                               th:onclick="'javascript:dianzan(this,'+${qr.revid}+')'"
-                                                                               class="info-tab like-btn">
-                                                                                <i class="iconfont icon-dianzan"></i>
-                                                                                <span th:text="|${qr.zan}赞|">4赞</span>
-                                                                            </a>
-                                                                        </th:block>
-                                                                        <th:block th:if="${qz.zstate} eq 1">
-                                                                            <a href="javascript:;"
-                                                                               th:onclick="'javascript:dianzan(this,'+${qr.revid}+')'"
-                                                                               class="info-tab like-btn act">
-                                                                                <i class="iconfont icon-dianzan"></i>
-                                                                                <span th:text="|${qr.zan}赞|">4赞</span>
-                                                                            </a>
-                                                                        </th:block>
-                                                                    </th:block>
-                                                                    <th:block th:if="${qr.revid} ne ${qz.reviewid}">
-                                                                        <th:block th:if="${qz.zstate} ne 0">
-                                                                            <a href="javascript:;"
-                                                                               th:onclick="'javascript:dianzan(this,'+${qr.revid}+')'"
-                                                                               class="info-tab like-btn">
-                                                                                <i class="iconfont icon-dianzan"></i>
-                                                                                <span th:text="|${qr.zan}赞|">4赞</span>
-                                                                            </a>
-                                                                        </th:block>
-                                                                    </th:block>
-                                                                </th:block>
-                                                            </th:block>
-                                                        </p>
-                                                    </div>
-                                                </li>
-                                            </th:bolock>
+                                                                <span class="gray">发表了帖子</span>
+                                                            </p>
+                                                            <h5 class="text">
+                                                                <a class="" href="https://forum.qidian.com/post/12073675103859503/1244484136"
+                                                                   target="_blank" data-eid="qd_G37" th:utext="${qr.revvlue}">
+                                                                    <i class="icon icon-topfix"></i>
+                                                                    <i class="icon icon-jinghua"></i>
+                                                                    书只看了几章，请问一下，九品等级是：九品力士八品勇士七品下甲士六品上甲士五品武士，四到一品
+                                                                </a>
+                                                            </h5>
+                                                            <p class="info dib-wrap" data-id="1244484136">
+                                                                <span class="mr20" th:text="|${qr.commenttime}发布|">2019-02-15发布</span>
+                                                                <a th:href="@{/reviewbook/queryById(bookid=${queryBookById[0].bookid},revid=${qr.revid})}"
+                                                                   class="info-tab mr20" target="_blank">
+                                                                    <i class="iconfont icon-xiaoxi"></i>
+                                                                    <span th:text="|${qr.rqcount}条回复|"></span>
+                                                                </a>
+																<a href="javascript:;" th:onclick="'javascript:dianzan(this,'+${qr.revid}+')'"
+																   th:class="${qr.z} gt -1 ? 'info-tab like-btn act' : 'info-tab like-btn '">
+																	<i class="iconfont icon-dianzan"></i>
+																	<span th:text="|${qr.zan}赞|">4赞</span>
+																</a>
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                </th:bolock>
+                                            </th:block>
+											<!-- 置顶帖 end -->
+										</ul>
+										<!--如果还有数据就跳转页面查看更多的评论-->
+                                        <th:block th:if="${queryReviewbook.size()} gt 15">
+                                            <p class="go-discuss">
+                                                <a class="blue" href="https://forum.qidian.com/index/12073675103859503"
+                                                   target="_blank" data-eid="qd_G36">
+                                                    去讨论区
+                                                    <em class="iconfont icon-xiayige"></em>
+                                                </a>
+                                            </p>
                                         </th:block>
-                                        <!-- 置顶帖 end -->
-                                    </ul>
-                                    <!--如果还有数据就跳转页面查看更多的评论-->
-                                    <th:block th:if="${queryReviewbook.size()} gt 15">
-                                        <p class="go-discuss">
-                                            <a class="blue" href="https://forum.qidian.com/index/12073675103859503"
-                                               target="_blank" data-eid="qd_G36">
-                                                去讨论区
-                                                <em class="iconfont icon-xiayige"></em>
-                                            </a>
-                                        </p>
-                                    </th:block>
-                                    <!-- end 有数据状态 -->
-                                </div>
+										<!-- end 有数据状态 -->
+									</div>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
+								</div>
+							</div>
+						</div>
+					</div>
 
-            </div>
-            <div class="right-wrap fr">
+				</div>
+				<div class="right-wrap fr">
 
-                <div class="author-state mb10">
-                    <div class="author-info">
-                        <div class="info-wrap nobt" data-l1="9">
-                            <div class="author-photo" id="authorId" data-authorid="4242192">
-                                <a href="https://my.qidian.com/author/4242192" target="_blank"
-                                   data-eid="qd_G38">
-                                    <img th:src="|/img/${queryUsers[0].icon}|">
-                                </a>
-                                <span class="lv">Lv.1</span>
-                            </div>
-                            <p>
-                                <a href="https://my.qidian.com/author/4242192" target="_blank"
-                                   th:text="${queryBookById[0].pen}"></a>
-                            </p>
+					<div class="author-state mb10">
+						<div class="author-info">
+							<div class="info-wrap nobt" data-l1="9">
+								<div class="author-photo" id="authorId" data-authorid="4242192">
+									<a href="https://my.qidian.com/author/4242192" target="_blank"
+										data-eid="qd_G38">
+										<img th:src="${queryUsers[0].icon}">
+									</a>
+									<span class="lv">Lv.1</span>
+								</div>
+								<p>
+									<a href="https://my.qidian.com/author/4242192" target="_blank" th:text="${queryUsers[0].uname}"></a>
+								</p>
 
-                        </div>
-                        <div class="info-wrap" data-l1="9">
-                            <ul class="work-state cf">
-                                <li><span class="book"></span>
-                                    <p>作品总数</p> <em th:text="${queryUsers[0].bookcount}">2</em></li>
-                                <li><span class="word"></span>
-                                    <p>累计字数</p> <em th:text="|${queryUsers[0].chaptercount}万|">279.02万</em></li>
-                                <li><span class="coffee"></span>
-                                    <p>本月更新</p> <em th:text="|${queryUsers[0].days}天|"></em></li>
-                            </ul>
-                        </div>
+							</div>
+							<div class="info-wrap" data-l1="9">
+								<ul class="work-state cf">
+									<li><span class="book"></span>
+										<p>作品总数</p> <em th:text="${queryUsers[0].bookcount}">2</em></li>
+									<li><span class="word"></span>
+										<p>累计字数</p> <em th:text="|${queryUsers[0].chaptercount}万|">279.02万</em></li>
+									<li><span class="coffee"></span>
+										<p>本月更新</p> <em th:text="|${queryUsers[0].days}天|"></em></li>
+								</ul>
+							</div>
 
-                    </div>
-                </div>
+						</div>
+					</div>
 
-                <div class="fansRankWrap mb10" id="fansRankWrap" data-l1="12">
+					<div class="fansRankWrap mb10" id="fansRankWrap" data-l1="12">
 
 
-                    <div class="fans-rank-list">
-                        <div class="rank-list">
-                            <h3 class="wrap-title lang">
-                                <a class="blue"
-                                   href="https://book.qidian.com/fansrank/1013432619"
-                                   target="_blank" data-eid="qd_G71">更多<em class="iconfont icon-xiayige"></em></a>粉丝排行榜
-                            </h3>
-                            <div class="book-list">
-                                <ul>
+						<div class="fans-rank-list">
+							<div class="rank-list">
+								<h3 class="wrap-title lang">
+									<a class="blue"
+										href="https://book.qidian.com/fansrank/1013432619"
+										target="_blank" data-eid="qd_G71">更多<em class="iconfont icon-xiayige"></em></a>粉丝排行榜
+								</h3>
+								<div class="book-list">
+									<ul >
+										<th:block th:each="q,s : ${queryFansByBookid}">
+											<th:block th:if="${s.index} lt 10">
+												<th:block th:if="${s.index} lt 3">
+												<li class="top">
+													<div class="num-box">
+														<span th:class="|num${s.index+1}|" th:text="${s.index+1}">1</span>
+													</div>
+													<div class="top-name-box">
+														<h4>
+															<a href="https://me.qidian.com/friendIndex.aspx?id=209502100"
+															   class="name" target="_blank"
+															   th:title="${q.uname}" th:text="${q.uname}">独走一匹猫</a>
+														</h4>
+														<p>
+															<span th:text="${q.sums}">70000</span>粉丝值
+														</p>
+													</div>
 
-                                    <li class="top" data-rid="1">
-                                        <div class="num-box">
-                                            <span class="num1">1</span>
-                                        </div>
-                                        <div class="top-name-box">
-                                            <h4>
-                                                <a
-                                                        href="https://me.qidian.com/friendIndex.aspx?id=209502100"
-                                                        class="name" target="_blank" data-eid="qd_G50"
-                                                        title="独走一匹猫">独走一匹猫</a>
-                                            </h4>
-                                            <p>
-                                                <span>70000</span>粉丝值
-                                            </p>
-                                        </div>
-                                        <div class="fans-img">
-                                            <a
-                                                    href="https://me.qidian.com/friendIndex.aspx?id=209502100"
-                                                    target="_blank" data-eid=""><img
-                                                    src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(6)"></a> <span
-                                                class="user-level lv9"></span>
-                                        </div>
-                                    </li>
+														<div class="fans-img">
+															<a href="https://me.qidian.com/friendIndex.aspx?id=209502100"
+															   target="_blank">
+																<img th:src="${q.icon}"></a>
+															<span class="user-level lv9"></span>
+														</div>
+													</th:block>
+													<th:block th:if="${s.index} gt 2">
+														<li data-rid="4">
+															<div class="num-box">
+																<span th:class="|num${s.index+1}|" th:text="${s.index+1}">4</span>
+															</div>
+															<div class="name-box">
+																<a class="name"
+																   href="https://me.qidian.com/friendIndex.aspx?id=178815105"
+																   target="_blank" th:title="${q.uname}" th:text="${q.uname}">飞在天中的鱼</a>
+																<i class="total" th:text="${q.sums}">4220</i>
+															</div>
+														</li>
+													</th:block>
+												</li>
+											</th:block>
+										</th:block>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                                    <li class="top" data-rid="2">
-                                        <div class="num-box">
-                                            <span class="num2">2</span>
-                                        </div>
-                                        <div class="top-name-box">
-                                            <h4>
-                                                <a
-                                                        href="https://me.qidian.com/friendIndex.aspx?id=193460550"
-                                                        class="name" target="_blank" data-eid="qd_G50"
-                                                        title="章雨0509">章雨0509</a>
-                                            </h4>
-                                            <p>
-                                                <span>6309</span>粉丝值
-                                            </p>
-                                        </div>
-                                        <div class="fans-img">
-                                            <a
-                                                    href="https://me.qidian.com/friendIndex.aspx?id=193460550"
-                                                    target="_blank" data-eid=""><img
-                                                    src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(19)"></a> <span
-                                                class="user-level lv3"></span>
-                                        </div>
-                                    </li>
+				</div>
+			</div>
 
-                                    <li class="top" data-rid="3">
-                                        <div class="num-box">
-                                            <span class="num3">3</span>
-                                        </div>
-                                        <div class="top-name-box">
-                                            <h4>
-                                                <a
-                                                        href="https://me.qidian.com/friendIndex.aspx?id=201973404"
-                                                        class="name" target="_blank" data-eid="qd_G50"
-                                                        title="帝舜传人">帝舜传人</a>
-                                            </h4>
-                                            <p>
-                                                <span>4445</span>粉丝值
-                                            </p>
-                                        </div>
-                                        <div class="fans-img">
-                                            <a
-                                                    href="https://me.qidian.com/friendIndex.aspx?id=201973404"
-                                                    target="_blank" data-eid=""><img
-                                                    src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50"></a> <span
-                                                class="user-level lv2"></span>
-                                        </div>
-                                    </li>
-
-
-                                    <li data-rid="4">
-                                        <div class="num-box">
-                                            <span class="num4">4</span>
-                                        </div>
-                                        <div class="name-box">
-                                            <a class="name"
-                                               href="https://me.qidian.com/friendIndex.aspx?id=178815105"
-                                               target="_blank" title="飞在天中的鱼" data-eid="qd_G50">飞在天中的鱼</a>
-                                            <i class="total">4220</i>
-                                        </div>
-                                    </li>
-
-                                    <li data-rid="5">
-                                        <div class="num-box">
-                                            <span class="num5">5</span>
-                                        </div>
-                                        <div class="name-box">
-                                            <a class="name"
-                                               href="https://me.qidian.com/friendIndex.aspx?id=191436087"
-                                               target="_blank" title="纳兹·多拉格尼尔" data-eid="qd_G50">纳兹·多拉格尼尔</a>
-                                            <i class="total">3306</i>
-                                        </div>
-                                    </li>
-
-                                    <li data-rid="6">
-                                        <div class="num-box">
-                                            <span class="num6">6</span>
-                                        </div>
-                                        <div class="name-box">
-                                            <a class="name"
-                                               href="https://me.qidian.com/friendIndex.aspx?id=307449289"
-                                               target="_blank" title="诱人妻女" data-eid="qd_G50">诱人妻女</a> <i
-                                                class="total">3094</i>
-                                        </div>
-                                    </li>
-
-                                    <li data-rid="7">
-                                        <div class="num-box">
-                                            <span class="num7">7</span>
-                                        </div>
-                                        <div class="name-box">
-                                            <a class="name"
-                                               href="https://me.qidian.com/friendIndex.aspx?id=317338996"
-                                               target="_blank" title="牧守众生" data-eid="qd_G50">牧守众生</a> <i
-                                                class="total">2818</i>
-                                        </div>
-                                    </li>
-
-                                    <li data-rid="8">
-                                        <div class="num-box">
-                                            <span class="num8">8</span>
-                                        </div>
-                                        <div class="name-box">
-                                            <a class="name"
-                                               href="https://me.qidian.com/friendIndex.aspx?id=324706334"
-                                               target="_blank" title="乾为天潜龙勿用" data-eid="qd_G50">乾为天潜龙勿用</a>
-                                            <i class="total">2793</i>
-                                        </div>
-                                    </li>
-
-                                    <li data-rid="9">
-                                        <div class="num-box">
-                                            <span class="num9">9</span>
-                                        </div>
-                                        <div class="name-box">
-                                            <a class="name"
-                                               href="https://me.qidian.com/friendIndex.aspx?id=200279448"
-                                               target="_blank" title="？爷爷" data-eid="qd_G50">？爷爷</a> <i
-                                                class="total">2721</i>
-                                        </div>
-                                    </li>
-
-                                    <li data-rid="10">
-                                        <div class="num-box">
-                                            <span class="num10">10</span>
-                                        </div>
-                                        <div class="name-box">
-                                            <a class="name"
-                                               href="https://me.qidian.com/friendIndex.aspx?id=302357979"
-                                               target="_blank" title="暮行空城" data-eid="qd_G50">暮行空城</a> <i
-                                                class="total">2613</i>
-                                        </div>
-                                    </li>
-
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="topFansWrap mb10" id="topFansWrap" data-l1="12">
-
-
-                    <div class="famous-fans-list">
-                        <div class="rank-list">
-                            <h3 class="wrap-title lang">本书名人榜</h3>
-                            <div class="fans-list">
-                                <ul>
-
-                                    <li data-rid="1" class="">
-                                        <div class="fans-info">
-                                            <h4>
-                                                <a
-                                                        href="https://me.qidian.com/friendIndex.aspx?id=193460550"
-                                                        class="name" target="_blank">章雨0509</a>
-                                            </h4>
-                                            <p>
-                                                <span>3178</span>粉丝值
-                                            </p>
-                                        </div>
-                                        <div class="fans-img">
-                                            <a
-                                                    href="https://me.qidian.com/friendIndex.aspx?id=193460550"
-                                                    target="_blank"><img
-                                                    src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(19)"></a> <span
-                                                class="fans-level icon-fans-first"></span>
-                                        </div>
-                                    </li>
-                                    <li data-rid="2" class="hide-hover">
-                                        <div class="fans-info">
-                                            <h4>
-                                                <a href="javascript:" class="name">暂时空缺</a>
-                                            </h4>
-                                            <p>上月投票值第一名</p>
-                                        </div>
-                                        <div class="fans-img">
-                                            <a href="javascript:"><img
-                                                    src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/user.f22d3.png"></a> <span
-                                                class="fans-level icon-fans-second"></span>
-                                        </div>
-                                    </li>
-                                    <li data-rid="3" class="hide-hover hidden">
-                                        <div class="fans-info">
-                                            <h4>
-                                                <a href="javascript:" class="name">暂时空缺</a>
-                                            </h4>
-                                            <p>上月书评最活跃用户</p>
-                                        </div>
-                                        <div class="fans-img">
-                                            <a href="javascript:"><img
-                                                    src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/user.f22d3.png"></a> <span
-                                                class="fans-level icon-fans-third"></span>
-                                        </div>
-                                    </li>
-                                    <li data-rid="4" class="hide-hover">
-                                        <div class="fans-info">
-                                            <h4>
-                                                <a href="javascript:" class="name">暂时空缺</a>
-                                            </h4>
-                                            <p>首个一次性打赏千万的用户</p>
-                                        </div>
-                                        <div class="fans-img">
-                                            <a href="javascript:"><img
-                                                    src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/user.f22d3.png"></a> <span
-                                                class="fans-level icon-fans-fourth"></span>
-                                        </div>
-                                    </li>
-                                    <li data-rid="5" class="hide-hover">
-                                        <div class="fans-info">
-                                            <h4>
-                                                <a href="javascript:" class="name">暂时空缺</a>
-                                            </h4>
-                                            <p>首个一次性打赏百万的用户</p>
-                                        </div>
-                                        <div class="fans-img">
-                                            <a href="javascript:"><img
-                                                    src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/user.f22d3.png"></a> <span
-                                                class="fans-level icon-fans-fifth"></span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="break-rules-report cf">
-                    <i class="icon-warning"></i> <a href="https://jubao.yuewen.com/"
-                                                    target="_blank">举报违规有奖</a>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-    <div class="footer">
-        <div class="box-center cf">
-            <div class="friend-link">
-                <em><a class="yuewen" href="https://www.yuewen.com/"
-                       target="_blank">阅文集团</a><cite>旗下网站：</cite></em> <a
-                    href="https://www.qidian.com/">起点中文网</a> <a
-                    href="https://www.qdmm.com/" target="_blank">起点女生网</a> <a
-                    href="http://chuangshi.qq.com/" target="_blank">创世中文网</a> <a
-                    href="http://yunqi.qq.com/" target="_blank">云起书院</a>
-                <!--<a href="http://www.rongshuxia.com" target="_blank">榕树下</a>-->
-                <a href="https://www.hongxiu.com/" target="_blank">红袖添香</a> <a
-                    href="https://www.readnovel.com/" target="_blank">小说阅读网</a> <a
-                    href="https://www.xs8.cn/" target="_blank">言情小说吧</a> <a
-                    href="http://www.xxsy.net/" target="_blank">潇湘书院</a> <a
-                    href="http://www.tingbook.com/" target="_blank">天方听书网</a> <a
-                    href="http://www.lrts.me/" target="_blank">懒人听书</a> <a
-                    href="http://yuedu.yuewen.com/" target="_blank">阅文悦读</a> <a
-                    href="https://www.yuewen.com/app.html#appqq" target="_blank">QQ阅读</a>
-                <a href="https://www.yuewen.com/app.html#appqd" target="_blank">起点读书</a>
-                <a href="https://www.yuewen.com/app.html#appzj" target="_blank">作家助手</a>
-                <a href="https://www.webnovel.com/" target="_blank"
-                   title="Qidian International">起点国际版</a>
-            </div>
-            <div class="footer-menu dib-wrap">
-                <a href="https://www.qidian.com/about/intro" target="_blank">关于起点</a>
-                <a href="https://www.qidian.com/about/contact" target="_blank">联系我们</a>
-                <a href="https://join.yuewen.com/" target="_blank">加入我们</a> <a
-                    href="https://www.qidian.com/help/index/2" target="_blank">帮助中心</a>
-                <a href="http://123.206.70.240/online/?cid=0&amp;uid=10&amp;code=0"
-                   class="advice" target="_blank">提交建议</a>
-                <!--<a href="http://bbs.qidian.com" target="_blank">起点论坛</a>-->
-                <!--<a href="http://comic.qidian.com" target="_blank">动漫频道</a>-->
-                <a href="https://jubao.yuewen.com/" target="_blank">举报中心</a>
-            </div>
-            <div class="copy-right">
-                <p>
+		</div>
+		<div class="footer">
+			<div class="box-center cf">
+				<div class="friend-link">
+					<em><a class="yuewen" href="https://www.yuewen.com/"
+						target="_blank">阅文集团</a><cite>旗下网站：</cite></em> <a
+						href="https://www.qidian.com/">起点中文网</a> <a
+						href="https://www.qdmm.com/" target="_blank">起点女生网</a> <a
+						href="http://chuangshi.qq.com/" target="_blank">创世中文网</a> <a
+						href="http://yunqi.qq.com/" target="_blank">云起书院</a>
+					<!--<a href="http://www.rongshuxia.com" target="_blank">榕树下</a>-->
+					<a href="https://www.hongxiu.com/" target="_blank">红袖添香</a> <a
+						href="https://www.readnovel.com/" target="_blank">小说阅读网</a> <a
+						href="https://www.xs8.cn/" target="_blank">言情小说吧</a> <a
+						href="http://www.xxsy.net/" target="_blank">潇湘书院</a> <a
+						href="http://www.tingbook.com/" target="_blank">天方听书网</a> <a
+						href="http://www.lrts.me/" target="_blank">懒人听书</a> <a
+						href="http://yuedu.yuewen.com/" target="_blank">阅文悦读</a> <a
+						href="https://www.yuewen.com/app.html#appqq" target="_blank">QQ阅读</a>
+					<a href="https://www.yuewen.com/app.html#appqd" target="_blank">起点读书</a>
+					<a href="https://www.yuewen.com/app.html#appzj" target="_blank">作家助手</a>
+					<a href="https://www.webnovel.com/" target="_blank"
+						title="Qidian International">起点国际版</a>
+				</div>
+				<div class="footer-menu dib-wrap">
+					<a href="https://www.qidian.com/about/intro" target="_blank">关于起点</a>
+					<a href="https://www.qidian.com/about/contact" target="_blank">联系我们</a>
+					<a href="https://join.yuewen.com/" target="_blank">加入我们</a> <a
+						href="https://www.qidian.com/help/index/2" target="_blank">帮助中心</a>
+					<a href="http://123.206.70.240/online/?cid=0&amp;uid=10&amp;code=0"
+						class="advice" target="_blank">提交建议</a>
+					<!--<a href="http://bbs.qidian.com" target="_blank">起点论坛</a>-->
+					<!--<a href="http://comic.qidian.com" target="_blank">动漫频道</a>-->
+					<a href="https://jubao.yuewen.com/" target="_blank">举报中心</a>
+				</div>
+				<div class="copy-right">
+					<p>
 						<span>Copyright © 2002-2019 www.qidian.com All Rights
 							Reserved</span>版权所有 上海玄霆娱乐信息科技有限公司
                 </p>

@@ -26,14 +26,18 @@ public class BooktypeController {
     @GetMapping("queryAll")
     public String queryAll(Model m) {
         m.addAttribute("queryAll", bs.queryAll());
-        m.addAttribute("queryRecommend", bks.queryRecommend(1, 0, 18));
-        m.addAttribute("queryRecommend2", bks.queryRecommend(2, 0, 18));
-        m.addAttribute("queryRecommend3", bks.queryRecommend(3, 0, 12));
+        m.addAttribute("queryRecommend", bks.queryRecommend());
+        m.addAttribute("queryRecommend2", bks.newBookClick());
+        m.addAttribute("queryRecommend3", bks.querybrnum());
+        m.addAttribute("cankNewBook",bks.cankNewBook(0,-1));
+        m.addAttribute("cankHotsell",bks.cankHotsell(0,-1));
+        m.addAttribute("cankQueryVote",bks.cankQueryVote(1,0,-1));
         m.addAttribute("queryClick", bks.queryClick());
         m.addAttribute("queryNewBooks", bks.queryNewBooks());
-        m.addAttribute("queryQianli", bks.queryQianli());
+        m.addAttribute("queryQianli", bks.cankNewPenBook(0,-1));
         m.addAttribute("queryWanben", bks.queryWanben());
         m.addAttribute("queryJingwan", bks.queryJingwan());
+        m.addAttribute("recentUpdates",bks.recentUpdates());
         return "index";
     }
     @RequestMapping("query")
