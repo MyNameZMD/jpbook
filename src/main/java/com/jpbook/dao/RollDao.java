@@ -17,8 +17,8 @@ public interface RollDao {
     Integer add(Roll roll);
     @Select("select rollnum from roll where bookid=#{bookid} ORDER BY rollnum desc LIMIT 1")
     Integer getRollnum(Integer bookid);
-    @Select("select * from roll where rollname=#{rollname}")
-    List<Map<String,Object>> getByRollname(String rollname);
+    @Select("select * from roll where rollname=#{param1} and bookid=#{param2}")
+    List<Map<String,Object>> getByRollname(String rollname,Integer bookid);
     @Select("select * from roll  where bookid=#{bookid}")
     List<Map<String,Object>> getByBookid(Integer bookid);
     @Select("select url from roll where rollid=#{rollid}\n")

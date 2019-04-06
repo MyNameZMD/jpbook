@@ -16,7 +16,7 @@ public class RollService {
     RollDao rd;
     public Integer addNew(){return rd.addNew();}
     public Integer add(Roll roll){return rd.add(roll);}
-    public List<Map<String,Object>> getByRollname(String rollname){return rd.getByRollname(rollname);}
+    public List<Map<String,Object>> getByRollname(String rollname,Integer bookid){return rd.getByRollname(rollname,bookid);}
     public List<Map<String,Object>> getByBookid(Integer bookid){return rd.getByBookid(bookid);}
     public Integer getRollnum(Integer bookid){return rd.getRollnum(bookid);}
     public String geturl(Integer bookid){return rd.geturl(bookid);}

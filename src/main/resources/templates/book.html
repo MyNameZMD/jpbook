@@ -462,7 +462,7 @@
                         </a>
                     </li>
                     <li class="j_discussion_block">
-                        <a class="lang" href="https://forum.qidian.com/index/12073675103859503" target="_blank">作品讨论
+                        <a class="lang" th:href="@{/reviewbook/queryAll(bookid=${queryBookById[0].bookid})}" target="_blank">作品讨论
                             <i>
                                 <span id="J-discusCount" th:text="|(${queryBookById[0].reviewcount}条)|">(301条)</span>
                             </i>
@@ -610,9 +610,9 @@
 								<dd>
 									<h4 id="ticket-Tab">
 
-										<a class="lang act" href="javascript:" data-eid="qd_G20">月票</a><em>|</em>
+										<a class="lang act" href="javascript:walletTab('qd_G20', 'month-ticket')" data-eid="qd_G20">月票</a><em>|</em>
 
-										<a class="lang " href="javascript:" data-eid="qd_G21">推荐票
+										<a class="lang " href="javascript:walletTab('qd_G21', 'rec-ticket')" data-eid="qd_G21">推荐票
 
                                     </a>
                                 </h4>
@@ -641,9 +641,6 @@
 											</div>
 											<a class="red-radius-btn" id="monthBtn" href="javascript:"
 												data-showtype="1" data-eid="qd_G22"><em class="iconfont"></em>投月票</a>
-											<p class="tip">
-												<cite>1</cite>张月票=<cite>100</cite>点粉丝值
-											</p>
 										</div>
 
 										<div class="ticket rec-ticket hidden">
@@ -867,7 +864,7 @@
                 </div>
 
                 <!--喜欢这本书的还喜欢-->
-                <div class="like-more mb30 cf" data-l1="6">
+                <!--<div class="like-more mb30 cf" data-l1="6">
                     <h3 class="lang">喜欢这本书的人还喜欢</h3>
                     <div class="like-more-list">
                         <ul class="cf">
@@ -970,24 +967,7 @@
 
                         </ul>
                     </div>
-                </div>
-                <!--作品讨论区-->
-                <div class="user-commentWrap" data-l1="8">
-                    <div class="user-comment-wrap book-friend">
-                        <div class="comment-head cf">
-                            <h3 class="lang">
-                                <a class="send blue j_forumBtn" href=""
-                                >我要发帖
-                                </a>
-                                <a class="comment-btn blue j_commentBtn hidden" id="goComment"
-                                   href="javascript:" data-comment="1" data-eid="qd_G33">我要评价
-                                </a>
-                                <span class="j_godiscuss act">
-									</div>
-								</dd>
-							</dl>
-						</div>
-					</div>
+                </div>-->
 					<!--作品讨论区-->
 					<div class="user-commentWrap" data-l1="8">
 						<div class="user-comment-wrap book-friend">
@@ -1463,7 +1443,7 @@
 									<span class="lv">Lv.1</span>
 								</div>
 								<p>
-									<a href="https://my.qidian.com/author/4242192" target="_blank" th:text="${queryUsers[0].uname}"></a>
+									<a href="https://my.qidian.com/author/4242192" target="_blank" th:text="${queryUsers[0].pen}"></a>
 								</p>
 
 							</div>

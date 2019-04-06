@@ -18,4 +18,5 @@ public class BuyrecordService {
     public Integer buyrecordChap(Integer chapid,Integer uuid){return bd.buyrecordChap(chapid,uuid);}
     public List<Map<String,Object>> getByChapidAndUuid(Integer chapid,Integer uuid){return bd.getByChapidAndUuid(chapid,uuid);}
     public Integer[] getUnpurchasedGoodwillMethodByUuid(Integer bookid,Integer uuid){return bd.getUnpurchasedGoodwillMethodByUuid(bookid,uuid);}
+    public List<Map<String,Object>> getBooksBuyTopThree(){return bd.getBooksBuyTopThree();}
 }

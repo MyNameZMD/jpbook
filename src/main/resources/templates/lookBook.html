@@ -519,13 +519,6 @@
                     </div>
                 </div>
             </dd>
-            <dd id="j_phoneRead" data-eid="qd_R83">
-                <a href="javascript:"><i><em class="iconfont"></em><span>手机</span></i></a>
-                <div class="guide-box">
-                    <cite></cite>
-                    手机阅读
-                </div>
-            </dd>
             <dd data-eid="qd_R84">
                 <a class="add-book" th:href="${ibc[0].brid==-1}?'javascript:addBookrack()':'javascript:void(0)'" data-bookid="1012730372"><i><em class="iconfont"></em><span th:text="${ibc[0].brid==-1}?'加入书架':'已在书架'" id="bookrackset">书架</span></i></a>
                 <div class="guide-box">
@@ -596,14 +589,6 @@
                     返回书页
                 </div>
             </dd>
-            <dd id="j_navGameBtn" data-eid="qd_R86">
-
-                <a href="javascript:"><i><em class="iconfont"></em><span>游戏</span></i></a>
-                <div class="guide-box">
-                    <cite></cite>
-                    起点游戏
-                </div>
-            </dd>
 
         </dl>
     </div>
@@ -621,14 +606,6 @@
                 <div class="guide-box">
                     <cite></cite>
                     投票
-                </div>
-            </dd>
-            <dd id="j_discussHref" data-eid="qd_R89">
-
-                <a href="https://forum.qidian.com/NewForum/List.aspx?forumId=1012730372" target="_blank"><i><em class="iconfont"></em><span>评论</span></i></a>
-                <div class="guide-box">
-                    <cite></cite>
-                    评论
                 </div>
             </dd>
             <dd class="go-top" id="j_goTop" title="返回顶部" data-eid="qd_R90" style="display: block;">
@@ -1309,7 +1286,7 @@
             data: {"bookid": $("#bookid").val(),"money":$(".sub-content").find("span").html()},
             success: function (data) {
                 closePanl();
-                window.location.reload();
+                read($("#chapid").val());
             }, type: "post",
             traditional: true
         })

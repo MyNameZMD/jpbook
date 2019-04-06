@@ -25,4 +25,9 @@ public class AdvertisingService {
         return lp;
     }
     public Integer addAdvertising(Advertising advertising){return ad.addAdvertising(advertising);}
+    public List<Map<String,Object>> queryAllTopFive(){
+        LayuiPage lp=new LayuiPage();
+        lp.setLimit(5);
+        return ad.queryAll(lp);
+    }
 }

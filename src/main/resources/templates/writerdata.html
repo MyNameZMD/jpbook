@@ -22,22 +22,14 @@
             </a>
             <div class="headUser fr">
                 <ul class="cf">
-                    <li id="msgBox" class="bell">
-                        <a href="https://write.qq.com/authors/authorconsultlist.html">
-              <span class="icon">
-                <cite id="msgCount" class="icon" style="display:none;"></cite>
-              </span></a><a href="https://write.qq.com/authors/authorconsultlist.html">通知</a>
-
-                        <dl id="msgList" class="msgBox" style="display:none;"></dl>
-                    </li>
                     <li class="line"></li>
                     <li id="headPhotoBox" class="headPhoto">
-                        <p><em><img src="./css/photo_default.png" width="36" height="36" alt=""></em><a class="userName" href="javascript:" th:text="${session.users.get(0).getPen()}"></a></p>
+                        <p><em><img th:src="${session.users[0].getIcon()}" width="36" height="36" alt=""></em><a class="userName" href="javascript:" th:text="${session.users[0].getPen()}">爱色鬼</a></p>
                         <dl class="userBox">
                             <cite class="icon whiteSj"></cite>
                             <dd class="userInfo hidden">
                                 <!-- 增加身份标识"ico-level",silver为白金作家，dashen为大神作家 -->
-                                <p class="name"  th:title="${session.users.get(0).getPen()}" th:text="${session.users.get(0).getPen()}">爱色鬼
+                                <p class="name" th:title="${session.users[0].getPen()}" th:text="${session.users[0].getPen()}">爱色鬼
 
                                 </p>
                                 <p class="level">
@@ -45,7 +37,7 @@
                                     <span><em style="width:70%">0/0</em></span></p>
                             </dd>
                             <dd class="link"><a href="writerdata.html">作家资料</a></dd>
-                            <dd class="link end"><a href="https://write.qq.com/public/logout.html">退出登录</a></dd>
+                            <dd class="link end"><a href="/jbook/login/emptySession">退出登录</a></dd>
                         </dl>
                     </li>
                 </ul>

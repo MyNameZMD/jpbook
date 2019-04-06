@@ -26,11 +26,11 @@ public class RollController {
     @RequestMapping("addRoll")
     @ResponseBody
     public int addRoll(Roll roll,HttpSession session){
-        List<Map<String, Object>> byRollname = rs.getByRollname(roll.getRollname());
+        Map<String,Object>  bookpresent = (Map<String,Object> )session.getAttribute("bookpresent");
+        List<Map<String, Object>> byRollname = rs.getByRollname(roll.getRollname(),Integer.parseInt(bookpresent.get("bookid").toString()));
         if (byRollname.size()>0){
             return 0;
         }
-        Map<String,Object>  bookpresent = (Map<String,Object> )session.getAttribute("bookpresent");
         String url = bs.geturl(Integer.parseInt(bookpresent.get("bookid").toString())).get(0).get("url").toString();
         FileUtil.File(url+"\\"+roll.getRollname());
         roll.setRollnum(rs.getRollnum(Integer.parseInt(bookpresent.get("bookid").toString()))+1);

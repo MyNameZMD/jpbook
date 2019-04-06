@@ -30,4 +30,7 @@ public interface BuyrecordDao {
             "select DISTINCT c.chapid from roll r INNER JOIN chapter c ON c.rollid=c.rollid LEFT JOIN buyrecord b on b.chapid=c.chapid LEFT JOIN users u on u.uuid=b.uuid  where r.bookid=#{param1} and b.uuid=#{param2}\n" +
             ") and c.chapstate=1")
     Integer[] getUnpurchasedGoodwillMethodByUuid(Integer bookid,Integer uuid);
+    @Select("select bs.bookid,count(buy.buyid) count from books bs LEFT JOIN roll r on bs.bookid=r.bookid LEFT JOIN chapter c on r.rollid=c.rollid LEFT JOIN (\n" +
+            "select * from buyrecord where buydate=DATE(CURDATE()-1)) buy on c.chapid=buy.chapid GROUP BY bs.bookid ORDER BY count(buy.buyid) desc,bs.bookid LIMIT 3\n")
+    List<Map<String,Object>> getBooksBuyTopThree();
 }

@@ -84,4 +84,7 @@ public class BuyrecordController {
         }
         return money;
     }
+    @RequestMapping("getBooksBuyTopThree")
+    @ResponseBody
+    public List<Map<String,Object>> getBooksBuyTopThree(){return bs.getBooksBuyTopThree();}
 }

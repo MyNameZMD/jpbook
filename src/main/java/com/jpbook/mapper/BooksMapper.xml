@@ -25,7 +25,8 @@
     <select id = "queryNewBooks" resultType="map">
         select b.bookname,b.icon,b.bookreferral,u.pen,u.uname,bt.btid,rpad(SUBSTRING(c.chapcount,1,1),CHAR_LENGTH(SUBSTRING(c.chapcount,1)),0) chapcount
         from books b inner join booktype bt on b.btid = bt.btid inner join users u on u.uuid = b.uuid inner join roll r on r.bookid = b.bookid
-        inner join chapter c on c.rollid = r.rollid WHERE b.bookstate=0 and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(b.createtime)
+        inner join (select c.chapid,r.rollid,sum(c.chapcount) chapcount from chapter c,roll r where c.rollid=r.rollid GROUP BY r.bookid
+        ) c on c.rollid = r.rollid WHERE b.bookstate=0 and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(b.createtime) GROUP BY b.bookid ORDER BY c.chapid desc
     </select>
     <select id = "queryQianli" resultType="map">
         select b.bookname,b.bookid,bt.btid,bt.btname,u.pen,u.uname,u.uuid,b.icon,sum(c.cnum*5) qianli from books b inner join booktype bt on b.btid = bt.btid inner join users u on b.uuid = u.uuid right join click c on c.bookid = b.bookid
@@ -164,7 +165,7 @@
                 and s.sum&lt;#{param8}
             </if>
         </where>
-        ORDER BY ${param9}
+        ORDER BY ${param9} desc
         LIMIT #{param1},#{param2}
     </select>
     <select id = "cankNewBook" parameterType="Integer" resultType="map">

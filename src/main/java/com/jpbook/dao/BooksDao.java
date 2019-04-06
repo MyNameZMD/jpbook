@@ -251,17 +251,17 @@ public interface BooksDao {
     @Select("select month.bookid,IFNULL(month.votemonth,0) votemonth,IFNULL(month.todaymonth,0) todaymonth,\n" +
             "IFNULL(rec.voterec,0) voterec,IFNULL(rec.todayrec,0) todayrec,IFNULL(reward.rewanumrec,0) rewanumrec,\n" +
             "IFNULL(reward.rewanumtoday,0) rewanumtoday from (\n" +
-            "SELECT a.bookid,IFNULL(a.votenum,0) votemonth,IFNULL(b.todaymonth,0) todaymonth from (\n" +
+            "SELECT 1 bookid,IFNULL(a.votenum,0) votemonth,IFNULL(b.todaymonth,0) todaymonth from (\n" +
             "select bookid,sum(votenum) votenum from vote where bookid=#{bookid} and wtid=2 and date_format(votetime, '%Y%m') = date_format(curdate() , '%Y%m')\n" +
             "GROUP BY bookid) a LEFT JOIN (\n" +
             "select bookid,sum(votenum) todaymonth from vote where bookid=#{bookid} and wtid=2 and date_format(votetime, '%Y%m%d') = date_format(curdate() , '%Y%m%d')) b\n" +
             "on a.bookid=b.bookid) month LEFT JOIN (\n" +
-            "SELECT a.bookid,IFNULL(a.votenum,0) voterec,IFNULL(b.number,0) todayrec from (\n" +
+            "SELECT 1 bookid,IFNULL(a.votenum,0) voterec,IFNULL(b.number,0) todayrec from (\n" +
             "select bookid,sum(votenum) votenum from vote where bookid=#{bookid} and wtid=1 and YEARWEEK(date_format(votetime,'%Y-%m-%d')) = YEARWEEK(now())\n" +
             "GROUP BY bookid) a left JOIN (\n" +
             "select bookid,sum(votenum) number from vote where bookid=#{bookid} and wtid=1 and date_format(votetime, '%Y%m%d') = date_format(curdate() , '%Y%m%d')) b\n" +
             "on a.bookid=b.bookid) rec on MONTH.bookid=rec.bookid LEFT JOIN (\n" +
-            "SELECT a.bookid,IFNULL(a.number,0) rewanumrec,IFNULL(b.number,0) rewanumtoday from (\n" +
+            "SELECT 1 bookid,IFNULL(a.number,0) rewanumrec,IFNULL(b.number,0) rewanumtoday from (\n" +
             "SELECT bookid,count(*) number from reward where bookid=#{bookid} and YEARWEEK(date_format(rewatime,'%Y-%m-%d')) = YEARWEEK(now())) a LEFT JOIN (\n" +
             "SELECT bookid,count(*) number from reward where bookid=#{bookid} and date_format(rewatime, '%Y%m%d') = date_format(curdate() , '%Y%m%d')) b on a.bookid=b.bookid) reward on rec.bookid=reward.bookid")
     List<Map<String,Object>> getMonthAndRecAndReward(Integer bookid);

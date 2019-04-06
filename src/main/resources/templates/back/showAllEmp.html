@@ -150,8 +150,9 @@
                 url:"/jpbook/Emp/addEmp",
                 data:data.field,
                 success:function (data) {
-                    layer.msg('添加成功。');
-                    tab.render();
+                    layer.msg('添加成功');
+                    tab.reload();
+                    window.parent.layer.closeAll();
                 }
             })
             return false;

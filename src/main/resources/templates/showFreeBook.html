@@ -92,10 +92,7 @@
                         <div th:class="${session.users[0] } ? 'sign-in' : 'sign-in hidden'">
                             <span>你好，</span>
                             <a class="black" id="user-name"  href="../personal.html" target="_blank" th:text="${session.users[0].uname}"></a>
-                            <em>|</em><a class="black" id="msg-btn" href="//me.qidian.com/msg/systems.aspx?page=1" target="_blank">消息
-                            <cite id="msg-box">(<i></i>)
-                            </cite>
-                        </a><em>|</em>
+                            <em>|</em>
                             <a id="exit-btn" href="javascript:void(0);" onclick="removeu()">退出</a>
                         </div>
                     </th:block>
@@ -106,12 +103,7 @@
                 </div>
             </div>
             <div class="nav-link fl">
-                <a class="act" href="https://www.qidian.com/" data-eid="qd_A01">起点中文网</a>
-                <a href="https://www.qdmm.com/" target="_blank" data-eid="qd_A02">起点女生网</a><em>|</em>
-                <a href="http://chuangshi.qq.com/" target="_blank" data-eid="qd_A03">创世中文网</a><em>|</em>
-                <a href="http://yunqi.qq.com/" target="_blank" data-eid="qd_A04">云起书院</a><em>|</em>
-
-                <a href="javascript:" id="switchEl" data-eid="qd_A182">繁体版</a>
+                <a class="act" href="/jpbook/booktype/queryAll" data-eid="qd_A01">江派中文网</a>
                 <!--<em>|</em>
                 <a class="black" id="back-old" href="javascript:" data-eid="qd_A05">返回旧版</a>-->
             </div>
@@ -328,189 +320,6 @@
                 <li class="nav-li"><a href="showEndBook.html" data-eid="qd_A17">完本</a></li>
                 <li class="nav-li"><a href="showFreeBook.html" data-eid="qd_A18" class="act">免费</a></li>
                 <li class="nav-li"><a href="/jpbook/users/openwriter" target="_blank" data-eid="qd_A19">作家专区</a>
-                </li>
-                <li class="nav-li"><a href="https://www.yuewen.com/app.html#appqd" target="_blank" data-eid="qd_A20"><b
-                        class="iconfont client"></b>客户端</a>
-                </li>
-                <li class="game phone" id="game-phone">
-                    <a class="phone-game" href="http://sy.qidian.com/" target="_blank" data-eid="qd_A22"><b
-                            class="iconfont webgame">
-                        </b>手游</a>
-                    <div class="game-dropdown hidden" id="phone-dropdown">
-                        <cite></cite>
-                        <dl class="phone-list">
-
-                            <dd>
-                                <h3>
-
-                                    <a href="https://www.qidian.com/all" data-eid="qd_A39" target="_blank">斩月屠龙</a><i>和大哥组队</i>
-                                </h3>
-                                <p>
-                                    <a href="http://collect.game.qidian.com/Home/Stat/Index?gourl=aHR0cDovL3N5LnFpZGlhbi5jb20vSG9tZS9QYy9JbmRleC9kZXRhaWwvZ2FtZWlkLzIwMDg4Mg==&amp;code=5733ed85f2cd0"
-                                       target="_blank" data-eid="qd_A39"><img
-                                            src="./css/20190320102213bm9p5o00ow.jpg"><i class="op-tag"></i></a>
-                                </p>
-                            </dd>
-
-                            <dd>
-                                <h3>
-
-                                    <a href="https://www.qidian.com/all" data-eid="qd_A40" target="_blank">怒火一刀</a><i>血战天门
-                                    激情无限</i></h3>
-                                <p>
-                                    <a href="http://collect.game.qidian.com/Home/Stat/Index?gourl=aHR0cDovL3N5LnFpZGlhbi5jb20vSG9tZS9QYy9JbmRleC9kZXRhaWwvZ2FtZWlkLzIwMDg4MQ==&amp;code=5733edc4a3435"
-                                       target="_blank" data-eid="qd_A40"><img
-                                            src="./css/20190320101348waldtrtqju.jpg"><i class="op-tag"></i></a>
-                                </p>
-                            </dd>
-
-                            <dd>
-                                <h3>
-
-                                    <a href="https://www.qidian.com/all" data-eid="qd_A41" target="_blank">刀剑天下</a><i>纯正武侠
-                                    唯美国风</i></h3>
-                                <p>
-                                    <a href="http://collect.game.qidian.com/Home/Stat/Index?gourl=aHR0cDovL3N5LnFpZGlhbi5jb20vSG9tZS9QYy9JbmRleC9kZXRhaWwvZ2FtZWlkLzIwMDg3OQ==&amp;code=5769f94031529"
-                                       target="_blank" data-eid="qd_A41"><img
-                                            src="./css/20190321102945bx7upbqswp.jpg"><i class="op-tag"></i></a>
-                                </p>
-                            </dd>
-
-                        </dl>
-                        <div class="bottom">
-                            <h4>新游|暴走英雄坛</h4>
-                            <p>
-                                <a href="http://sy.qidian.com/Home/Pc/Index/detail/gameid/200885?qd_game_key=192x86&amp;qd_dd_p1=10655"
-                                   data-eid="qd_A42" target="_blank"><img src="./css/0(1)" alt=""><i
-                                        class="op-tag"></i></a></p>
-                        </div>
-                    </div>
-                </li>
-                <li class="game web" id="game-web">
-                    <a class="web-game" href="http://game.qidian.com/" target="_blank" data-eid="qd_A21"><b
-                            class="iconfont">
-                        </b>页游</a>
-                    <div class="game-dropdown hidden" id="web-dropdown">
-                        <cite></cite>
-                        <div class="web-game-list">
-                            <dl class="lately" id="lately">
-                                <dt>最近玩过</dt>
-                                <dd data-rid="1"><a class="name" href="javascript:" target="_blank"
-                                                    data-eid="qd_A29"></a><strong></strong><a class="link"
-                                                                                              href="javascript:"
-                                                                                              target="_blank"
-                                                                                              data-eid="qd_A29">GO<i>&gt;</i></a>
-                                </dd>
-                                <dd data-rid="2"><a class="name" href="javascript:" target="_blank"
-                                                    data-eid="qd_A30"></a><strong></strong><a class="link"
-                                                                                              href="javascript:"
-                                                                                              target="_blank"
-                                                                                              data-eid="qd_A30">GO<i>&gt;</i></a>
-                                </dd>
-                            </dl>
-                            <dl class="web-list" id="log-web-list">
-                                <dt>今日开服</dt>
-                                <dd class="act" data-rid="1">
-                                    <h3>
-
-                                        <span></span>
-
-                                        <i>03-21</i><a
-                                            href="http://cpgame.qd.game.qidian.com/Home/GameServer/lists?name=tmld3d"
-                                            data-eid="qd_A31" target="_blank">唐门六道3D</a><strong>7区</strong></h3>
-                                    <p><a href="http://cpgame.qd.game.qidian.com/Home/GameServer/lists?name=tmld3d"
-                                          data-eid="qd_A31" target="_blank"><img
-                                            src="./css/tmld3d192x46.jpg"><i class="op-tag"></i></a></p>
-                                </dd>
-
-                                <dd data-rid="2">
-                                    <h3>
-
-                                        <span></span>
-
-                                        <i>03-21</i><a
-                                            href="http://cpgame.qd.game.qidian.com/Home/GameServer/lists?name=xmry"
-                                            data-eid="qd_A32" target="_blank">血盟荣耀</a><strong>36区</strong></h3>
-                                    <p><a href="http://cpgame.qd.game.qidian.com/Home/GameServer/lists?name=xmry"
-                                          data-eid="qd_A32" target="_blank"><img
-                                            src="./css/xmry192x46.jpg"><i class="op-tag"></i></a></p>
-                                </dd>
-
-                                <dd data-rid="3">
-                                    <h3>
-
-                                        <span></span>
-
-                                        <i>03-21</i><a
-                                            href="http://cpgame.qd.game.qidian.com/Home/GameServer/lists?name=jpsgz"
-                                            data-eid="qd_A33" target="_blank">极品三国志</a><strong>62区</strong></h3>
-                                    <p><a href="http://cpgame.qd.game.qidian.com/Home/GameServer/lists?name=jpsgz"
-                                          data-eid="qd_A33" target="_blank"><img
-                                            src="./css/jpsgz192x46.jpg"><i class="op-tag"></i></a></p>
-                                </dd>
-
-                                <dd data-rid="4">
-                                    <h3>
-
-                                        <span></span>
-
-                                        <i>03-21</i><a
-                                            href="http://cpgame.qd.game.qidian.com/Home/GameServer/lists?name=dhhj"
-                                            data-eid="qd_A34" target="_blank">大航海家</a><strong>159区</strong></h3>
-                                    <p><a href="http://cpgame.qd.game.qidian.com/Home/GameServer/lists?name=dhhj"
-                                          data-eid="qd_A34" target="_blank"><img
-                                            src="./css/dhhj192x46.jpg"><i class="op-tag"></i></a></p>
-                                </dd>
-
-                                <dd data-rid="5">
-                                    <h3>
-
-                                        <span></span>
-
-                                        <i>03-21</i><a
-                                            href="http://cpgame.qd.game.qidian.com/Home/GameServer/lists?name=wdcq"
-                                            data-eid="qd_A35" target="_blank">武动苍穹</a><strong>5区</strong></h3>
-                                    <p><a href="http://cpgame.qd.game.qidian.com/Home/GameServer/lists?name=wdcq"
-                                          data-eid="qd_A35" target="_blank"><img
-                                            src="./css/wdcq192x46.jpg"><i class="op-tag"></i></a></p>
-                                </dd>
-
-                                <dd data-rid="6">
-                                    <h3>
-
-                                        <span></span>
-
-                                        <i>03-21</i><a
-                                            href="http://cpgame.qd.game.qidian.com/Home/GameServer/lists?name=hyzj"
-                                            data-eid="qd_A36" target="_blank">黑域战界</a><strong>92区</strong></h3>
-                                    <p><a href="http://cpgame.qd.game.qidian.com/Home/GameServer/lists?name=hyzj"
-                                          data-eid="qd_A36" target="_blank"><img
-                                            src="./css/hyzj192x46.jpg"><i class="op-tag"></i></a></p>
-                                </dd>
-
-                                <dd data-rid="7">
-                                    <h3>
-
-                                        <span></span>
-
-                                        <i>03-21</i><a
-                                            href="http://cpgame.qd.game.qidian.com/Home/GameServer/lists?name=hxly"
-                                            data-eid="qd_A37" target="_blank">虎啸龙吟</a><strong>196区</strong></h3>
-                                    <p><a href="http://cpgame.qd.game.qidian.com/Home/GameServer/lists?name=hxly"
-                                          data-eid="qd_A37" target="_blank"><img
-                                            src="./css/hxly192x46.jpg"><i class="op-tag"></i></a></p>
-                                </dd>
-
-                            </dl>
-                            <div class="bottom">
-                                <h4>悬赏</h4>
-                                <p>
-                                    <a href="http://act.yy.game.qidian.com/ActivityLibrary/CommonIndex/Index?pageCode=e357c440af7242bf72c3c49667b73019&amp;qd_game_key=192x86&amp;qd_dd_p1=124"
-                                       data-eid="qd_A38" target="_blank"><img src="./css/0(2)"><span
-                                            class="op-tag"></span></a></p>
-                            </div>
-                        </div>
-                    </div>
                 </li>
             </ul>
         </div>
