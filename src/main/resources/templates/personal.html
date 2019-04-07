@@ -1699,7 +1699,7 @@
 							if(data[j].brid != -1){
                             	r1 += "<td class='col5 shlef-menu'><a href='javascript:' class='gray iconfont icon-book jsTips font12 disabled' title='已在书架'></a></td>"+"</tr>";
 							}else{
-                                r1 += "<td class='col5 shlef-menu'><a href='javascript:' class='blue iconfont icon-book jsTips elInBookShelf font12' title='加入书架'></a></td>"+"</tr>";
+                                r1 += "<td class='col5 shlef-menu'><a href='javascript:addBookrack("+data[0].bookid+")' class='blue iconfont icon-book jsTips elInBookShelf font12' title='加入书架'></a></td>"+"</tr>";
 							}
 					}
 					$("#tbo").html(r1);
@@ -1708,6 +1708,18 @@
             }
         });
 	}
+
+	//最近阅读加入书架
+    function addBookrack(bookid) {
+        $.ajax({
+            url: "/jpbook/pc/add",
+            data: {"bookid": bookid},
+            success: function (data) {
+                swal("已加入书架", "", "success");
+                m1();
+			}
+        })
+    }
 
 	//我的书架
 	function m2() {
