@@ -166,9 +166,6 @@
                                 "<i class=\"iconfont icon-dianzan\"></i>" +
                                 "<span >0赞</span>" +
                                 "</a>" +
-                                "<a href=\"javascript:;\" class=\"report-btn info-tab fr\">" +
-                                "<span>举报</span>" +
-                                "</a>" +
                                 " </div>" +
                                 "<form class=\"reply-form\" onsubmit=\"return huifu(this,"+data[0].repid+","+bookid+")\" style = \"display: none\">" +
                                 "<input type =\"hidden\" name = \"replytype\" value=\"2\">" +
@@ -261,9 +258,6 @@
                             "<a href=\"javascript:\" onclick='show(this)'  class=\"reply-btn info-tab\">" +
                             "<i class=\"iconfont icon-xiaoxi\"></i>" +
                             "<span>回复</span>" +
-                            "</a>" +
-                            "<a href=\"javascript:;\" class=\"report-btn info-tab fr\">" +
-                            "<span>举报</span>" +
                             "</a>" +
                             "</p>" +
                             "<form class=\"reply-form\" onsubmit=\"return huifu(this,"+repid+","+bookid+")\" style='display: none'>" +
@@ -464,9 +458,6 @@
                                 <i class="iconfont icon-dianzan"></i>
                                 <span th:text="|${queryByRevid[0].zan}赞|"></span>
                             </a>
-                            <a href="javascript:;" class="report-btn info-tab mr20 fr">
-                                <span>举报</span>
-                            </a>
                     </div>
                 </div>
                 </div>
@@ -497,9 +488,6 @@
                                        th:class="${q.z} eq -1 ? 'info-tab like-btn' : 'info-tab like-btn act'">
                                         <i class="iconfont icon-dianzan"></i>
                                         <span th:text="|${q.zan}赞|">0赞</span>
-                                    </a>
-                                    <a href="javascript:;" class="report-btn info-tab fr">
-                                        <span>举报</span>
                                     </a>
                                 </div>
                                 <th:block th:if="${q.rpcount} gt 0">

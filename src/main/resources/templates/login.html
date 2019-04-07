@@ -278,7 +278,9 @@
                                     if(f === fs){
                                         window.location.href='./booktype/queryAll';
                                     }else{
-                                        window.location.href = document.referrer;
+                                        window.location.href = f;
+                                        window.opener.location.reload();
+                                        window.close()
                                     }
 
                                 }
@@ -407,7 +409,6 @@
                                 width: "380px",
 
                                 onVerify: function (err, data) {
-
                                     if (data && falg ) {
                                          $("#successToken").val(data.validate);
                                         var f = document.referrer;
@@ -415,7 +416,9 @@
                                         if(f === fs){
                                             window.location.href='./booktype/queryAll';
 										}else{
-                                            window.location.href = document.referrer;
+                                            window.location.href = f;
+                                            window.opener.location.reload();
+                                            window.close()
 										}
 
                                      }else if(falg == false && data){

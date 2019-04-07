@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jpbook.dao.EvaluateDao">
+    <insert id="add" parameterType="com.jpbook.entity.Evaluate">
+        insert into evaluate values(null,#{bookid},#{uuid},#{evacontent},now(),#{evalv},now())
+    </insert>
+    <select id="queryByUuid" parameterType="Integer" resultType="com.jpbook.entity.Evaluate">
+        select * from evaluate where uuid = #{param1} and bookid = #{param2}
+    </select>
+    <update id="edit" parameterType="com.jpbook.entity.Evaluate">
+        update evaluate set evalv = #{evalv}
+        <if test="evacontent != null">
+            ,evacontent = #{evacontent}
+        </if>
+        ,edittime=now() where uuid = #{uuid} and bookid = #{bookid}
+    </update>
+    <select id="queryTime" parameterType="Integer" resultType="Integer">
+        SELECT
+        TIMESTAMPDIFF(MINUTE,date_format((select edittime from evaluate where uuid = #{param1} and bookid = #{param2}),'%Y-%m-%d %H:%i:%s'),DATE_FORMAT(now(),'%Y-%m-%d %H:%i:%s')) AS i
+        from dual
+    </select>
+    <select id="zEvaluate" resultType="map" parameterType="Integer">
+        select ifnull(round(sum(evalv*2)/count(uuid)),'无评价') evalv,count(uuid) unum from evaluate where bookid = #{param1}
+    </select>
+    <select id="queryAllByBookid" parameterType="Integer" resultType="map">
+        select e.*,ifnull(u.icon,'default_user.0.2.png') icon,u.uname,ifnull(u.exp,0) exp from evaluate e inner join users u on e.uuid = u.uuid
+        and e.bookid = #{param1}
+        <if test="param2 != null">
+            limit #{param2},15
+        </if>
+    </select>
+</mapper>

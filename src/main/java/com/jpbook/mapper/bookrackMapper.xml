@@ -28,7 +28,8 @@
         and (b.bookname like concat('%',#{param2},'%') or u.uname like concat('%',#{param2},'%'))
         group by b.bookid order by c.chaptime desc
     </select>
-
-
+    <select id="bookidExits" resultType="com.jpbook.entity.Bookrack" parameterType="Integer">
+        select * from bookrack where uuid = #{param1} and bookid = #{param2}
+    </select>
 
 </mapper>

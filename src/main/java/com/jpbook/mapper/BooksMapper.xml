@@ -33,9 +33,10 @@
         group by b.bookname order by qianli desc
     </select>
     <select id="queryWanben" resultType="map">
-        select b.bookid,b.bookname,b.icon,b.bookreferral,u.pen,u.uname,bt.btid,bt.btname,
+        select b.bookid,b.bookname,b.icon,b.bookreferral,u.pen,u.uname,bt.btid,bt.btname,sum(c.chapcount),
         case CHAR_LENGTH(SUBSTRING(sum(c.chapcount),2))
         when 0 then 0
+        when 1 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'十')
         when 3 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'千')
         when 2 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'百')
         when 4 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'万')
@@ -58,8 +59,9 @@
         group by b.bookid order by chapcount desc
     </select>
     <select id="queryBookById" parameterType="Integer" resultType="map">
-        select b.bookid,b.bookname,ifnull(b.icon,'/img/0.jpg') icon,u.uname,b.bookreferral,case bookstate when 0 then '连载' when 1 then '完本' end bookstate,bt.btid,bt.btname,ifnull(case CHAR_LENGTH(SUBSTRING(sum(c.chapcount),2))
+        select b.bookid,b.bookname,ifnull(b.icon,'/img/0.jpg') icon,u.uname,u.pen,b.bookreferral,case bookstate when 0 then '连载' when 1 then '完本' end bookstate,bt.btid,bt.btname,ifnull(case CHAR_LENGTH(SUBSTRING(sum(c.chapcount),2))
         when 0 then 0
+        when 1 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'十')
         when 3 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'千')
         when 2 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'百')
         when 4 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'万')
@@ -73,7 +75,7 @@
         group by re.bookid
     </select>
     <select id="queryUsers" parameterType="Integer" resultType="map">
-        select ifnull(u.icon,'../images/0.jpg') icon,u.uuid,u.uname,u.pen,ifnull(u.self,'谁知道他很懒，没有想告诉你们的呢...') self,c.bookcount,f.chaptercount,t.days from users u,(select *,count(bookid) bookcount from books where uuid = (select uuid from users where uuid = (select uuid from books where bookid = #{param1}))) c,(select round(sum(chapcount)/10000,2) chaptercount from chapter where rollid in (select rollid from roll where bookid in (select bookid from books where uuid = (select uuid from users where uuid = (select uuid from books where bookid = #{param1}))))) f,(select count(c.chaptime) days from books b left join roll r on r.bookid = b.bookid left join chapter c on c.rollid = r.rollid
+        select ifnull(u.icon,'../images/0.jpg') icon,u.uuid,u.uname,u.pen,ifnull(u.self,'谁知道他很懒，没有想告诉你们的呢...') self,c.bookcount,f.chaptercount,t.days from users u,(select *,count(bookid) bookcount from books where uuid = (select uuid from users where uuid = (select uuid from books where bookid = #{param1}))) c,(select ifnull(round(sum(chapcount)/10000,2),0) chaptercount from chapter where rollid in (select rollid from roll where bookid in (select bookid from books where uuid = (select uuid from users where uuid = (select uuid from books where bookid = #{param1}))))) f,(select count(c.chaptime) days from books b left join roll r on r.bookid = b.bookid left join chapter c on c.rollid = r.rollid
         where b.bookid = #{param1} and date_format(c.chaptime,'%Y%m') = date_format(curdate(),'%Y%m')) t
         where c.uuid = u.uuid
     </select>
