@@ -12,11 +12,11 @@
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.15.css">
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.16.css">
 
-	<link rel="stylesheet" href="./layui/layui.css" media="all">
+	<link rel="stylesheet" href="./layui/layui-v2.4.5/layui/css/layui.css" media="all">
 
 	<script src="./js/jquery-3.3.1.js"></script>
 
-	<script src="./layui/layui.js"></script>
+	<script src="./layui/layui-v2.4.5/layui/layui.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="./css/sweet-alert.css" />
 	<script src="./js/sweet-alert.js"></script>
@@ -340,18 +340,19 @@
 		<div class="qdp-content" data-l1="3" style="display:none;" id="s10" >
 			<h2 class="qdp-title">经验值等级</h2>
 			<div class="qdp-border exp-level-bg" data-l2="6" >
-				<!--<a href="javascript:;" class="elOldLevel blue" id="elOldexp">旧经验值领取</a>-->
 				<h3 class="exp-level-logo">经验值等级</h3>
 				<div class="exp-level exp-level-border" data-l3="17">
 					<div class="exp-level-title">当前等级&nbsp;·&nbsp;Lv<span id="grade2">1</span></div>
 					<div>
 						<span class="mr12">当前<strong class="dark mlr4" id="exp2">0</strong>经验值</span><span class="ml12" >升到下一级还需<span id="expnext">0</span>经验值</span>
 					</div>
-					<!--<a href="javascript:;" class="exp-level-get blue" id="elTaskButton" data-eid="qd_M82">获得记录</a>-->
+
+					<a href="javascript:;" class="exp-level-get blue" id="elTaskButton" data-eid="qd_M82">升级到三级(300经验)</a>
+
 				</div>
 				<div class="exp-level" data-l3="17">
 					<div class="exp-level-title">当前特权</div>
-					<div><span class="mr12" id="mr12">暂无</span><a href="//www.qidian.com/help/index/14" class="blue ml12" target="_blank">了解经验等级特权»</a></div>
+					<div><span class="mr12" id="mr12">暂无</span></div>
 				</div>
 			</div>
 			<div class="qdp-border bg-white mt20" data-l2="6" >
@@ -1347,19 +1348,43 @@
         var uname = $("#uname2").val()
         var birthday = $("#iptBorth").val();
         var self = $("#forIntroArea").val();
-		var sex = 0;
-		if($("#radioSex1").prop("checked")){
-			sex = 0;
-		}else {
+        var sex = 0;
+        if($("#radioSex1").prop("checked")){
+            sex = 0;
+        }else {
             sex = 1;
-		}
+        }
 
+        if ($("#uname2").val() == ""){
+            $("#uname2").focus();
+            $("#uname2").css("border","1px solid red");
+            return false;
+        }
         $.ajax({
-            url:'per/editusers',
-            data:{"uname":uname,"birthday":birthday,"self":self,"sex":sex},
+            url:'per/getuname',
+            data:{"uname":$("#uname2").val()},
             success:function (data) {
-				u8();
-                swal("保存信息成功", "", "success");
+                if (data > 0){
+                    swal("用户名已存在", "", "error");
+                    return false;
+                }
+                if(birthday > getNowFormatDate()){
+                    swal("生日选择有误", "", "error");
+                    return false;
+                }
+                $.ajax({
+                    url:'per/editusers',
+                    data:{"uname":uname,"birthday":birthday,"self":self,"sex":sex},
+                    success:function (data) {
+                        $("#btnEditName").text("修改昵称");
+                        $("#uname2").css("border","");
+                        $("#uname2").prop("disabled","disabled");
+
+                        u8();
+                        swal("保存信息成功", "", "success");
+                    }
+                })
+
             }
         })
 
@@ -1377,9 +1402,20 @@
             $("#uname2").css("border","1px solid lightgray");
             $("#uname2").prop("disabled","");
 		}else {
-            $("#btnEditName").text("修改昵称");
-            $("#uname2").css("border","");
-            $("#uname2").prop("disabled","disabled");
+            $.ajax({
+                url:'per/getuname',
+                data:{"uname":$("#uname2").val()},
+                success:function (data) {
+                    if (data > 0){
+                        swal("用户名已存在", "", "error");
+                        return false;
+					}else {
+                        $("#btnEditName").text("修改昵称");
+                        $("#uname2").css("border","");
+                        $("#uname2").prop("disabled","disabled");
+					}
+                }
+            })
 		}
     })
 
@@ -1592,10 +1628,26 @@
 			data:{"exp":exp},
             success:function (data) {
                 u10();
-                swal("领取成功", "", "success");
+                if (data == 1){
+                    swal("领取成功", "", "success");
+                }
+                if (data == 2){
+                    swal("恭喜你升级啦", "", "success");
+                }
             }
 		});
     }
+
+    $("#elTaskButton").click(function () {
+        $.ajax({
+            url:"per/exp",
+            data:{"exp":300},
+            success:function (data) {
+                u10();
+				swal("恭喜你升级啦", "", "success");
+            }
+        });
+    })
 
     //var maxtime = indexSecond; //60 * 60; //一个小时，按秒计算!
     function CountDown() {
@@ -1771,6 +1823,23 @@
 		var minute = dt.getMinutes();
 		var second = dt.getSeconds();
 		return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+    }
+
+	//当前时间 YYYY-MM-DD
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
     }
 
 </script>

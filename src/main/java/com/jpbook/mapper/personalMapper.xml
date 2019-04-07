@@ -35,14 +35,14 @@
     </update>
 
     <update id="editexp">
-        update users set exp=exp+#{param1},grade=((exp+#{param1})/100+1) where uuid = #{param2};
+        update users set grade=FLOOR(((exp+#{param1})/100+1)),exp=exp+#{param1} where uuid = #{param2};
     </update>
 
     <update id="upnum" parameterType="Integer">
         update signexp set num=num+1,signlong=0 where uuid = #{uuid}
     </update>
 
-    <select id="queryusers" resultType="map">
+    <select id="queryusers" resultType="com.jpbook.entity.Users">
         select * from users where uuid=#{uuid}
     </select>
 

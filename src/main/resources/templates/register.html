@@ -146,7 +146,6 @@
         });
     });
 
-    var yzm = "";
     $("#btnPhoneRegister").click(function(){
         var txtphonenumber = $("#txtphonenumber").val();
         var regPhone = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
@@ -174,7 +173,7 @@
             $("#etip").hide();
         }
 
-        if($("#txtphonecode").val() != yzm || $("#txtphonecode").val() == ""){
+        if($("#txtphonecode").val() == ""){
             $("#txtphonecode").focus();
             $("#phonecode").prop("class","error");
             $("#er").show();
@@ -214,7 +213,7 @@
 
         $.ajax({
             url: "login/landing",
-            data: {"pwd":txtphonepwd,"phone":txtphonenumber},
+            data: {"pwd":txtphonepwd,"phone":txtphonenumber,"yzm":$("#txtphonecode").val()},
             type: "post",
             dataType: "json",
             success: function (data) {
@@ -224,6 +223,15 @@
                     $("#su2").show();
                     $("#xian").text(txtphonenumber);
                     jumpBackUrl();
+                }
+                if (data == -1){
+                    $("#txtphonecode").focus();
+                    $("#phonecode").prop("class","error");
+                    $("#er").show();
+                    return false;
+                }else {
+                    $("#phonecode").prop("class","");
+                    $("#er").hide();
                 }
             }
         });
@@ -318,7 +326,7 @@
                 type: "post",
                     dataType: "json",
                     success: function (data) {
-                    yzm = data;
+                    console.log(data);
                 }
             });
         }

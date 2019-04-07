@@ -71,5 +71,8 @@ public class PersonageService {
         return pd.usersBooks(someuuid,uuid);
     }
 
+    public Integer addBookrack(Integer uuid, Integer bookid){
+        return pd.addBookrack(uuid,bookid);
+    }
 
 }
