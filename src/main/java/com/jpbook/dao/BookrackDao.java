@@ -1,6 +1,11 @@
 package com.jpbook.dao;
 
 import org.apache.ibatis.annotations.*;
+import com.jpbook.entity.Bookrack;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Insert;
 
 import java.util.List;
 import java.util.Map;
@@ -21,4 +26,10 @@ public interface BookrackDao {
     @Select("select * from bookrack where uuid=#{param1} and bookid=#{param2}")
     List<Map<String,Object>> ckBookrackExist(Integer uuid, Integer bookid);
 
+
+    /**
+     * 查询用户对某本书是否已经添加进书架
+     * @return
+     */
+    public Bookrack bookidExits(Integer uuid, Integer bookid);
 }

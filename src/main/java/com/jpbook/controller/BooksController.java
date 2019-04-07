@@ -43,6 +43,8 @@ public class BooksController {
     UsersService us;
     @Autowired
     BooktypeService bts;
+    @Autowired
+    EvaluateService evaluateService;
 
     @RequestMapping("query")
     public String query(){
@@ -63,6 +65,10 @@ public class BooksController {
         m.addAttribute("queryChapters",bs.queryChapters(bookid,uuid));
         m.addAttribute("queryZanById",bs.queryZanById(uuid));
         m.addAttribute("queryFansByBookid",bs.queryFansByBookid(bookid));
+        m.addAttribute("queryByUuid",evaluateService.queryByUuid(uuid,bookid));
+        m.addAttribute("zEvaluate",evaluateService.zEvaluate(bookid));
+        m.addAttribute("queryAllByBookid",evaluateService.queryAllByBookid(bookid,0));
+        m.addAttribute("pagecount",evaluateService.queryAllByBookid(bookid,null));
         return "book";
     }
     @RequestMapping("getMoneyBookByBookid")

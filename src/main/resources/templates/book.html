@@ -23,6 +23,7 @@
 <link data-ignore="true" rel="stylesheet" href="../css/Popup.css">
 <link data-ignore="true" rel="stylesheet" href="../css/Drag.css">
 <link rel="stylesheet" data-ignore="true" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../js/layui/css/modules/layer/default/layer.css">
     <link rel="stylesheet" data-ignore="true" href="../css/iconfonts.css">
     <script src="../js/jquery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/sweet-alert.js"></script>
@@ -36,6 +37,7 @@
         }
     </style>
     <script src="../js/jquery-3.3.1.js"></script>
+	<script src="../js/layui/layui.js"></script>
     <script type="text/javascript">
         function removeu(){
             jQuery.ajax({
@@ -152,6 +154,164 @@
             $(".site").nextAll().mouseout(function () {
                 $(this).removeClass("act");
             });
+            $("#scoreBtn > img").mouseover(function () {
+                $(this).attr("src","../images/star-on.02731.png");
+				$(this).prevAll().attr("src","../images/star-on.02731.png");
+            })
+            $("#scoreBtn > img").mouseout(function () {
+                $(this).attr("src","../images/star-off.b2a1b.png");
+                $(this).nextAll().attr("src","../images/star-off.b2a1b.png");
+            })
+            $("#scoreBtn").mouseout(function () {
+                $.ajax({
+                    url:'./userExist',
+					success:function (data) {
+						if(0 == data){
+                            $(this).children("img").attr("src","../images/star-off.b2a1b.png");
+						}else{
+							$.ajax({
+								url:'/jpbook/evaluate/queryByUuid',
+								data:{"bookid":$("#bookid").val()},
+								type:'post',
+								success:function (data) {
+								    $("#scoreBtn > img").each(function (index) {
+										if(index < data.evalv){
+										    $(this).attr("src","../images/star-on.02731.png");
+										}
+                                    })
+                                }
+							});
+						}
+                    }
+                    });
+            })
+            $("#scoreBtn > img").click(function () {
+                var len = $(this).prevAll().length;
+                jQuery.ajax({
+                    url:'./userExist',
+                    success:function(data){
+                        if(0 == data){
+                            /*window.open("../login.html")*/
+                            layui.use('layer', function() { //独立版的layer无需执行这一句
+                                var layer = layui.layer;
+                                layer.open({
+                                    type: 1
+                                    ,title: false //不显示标题栏
+                                    ,closeBtn: false
+                                    ,area: '300px;'
+                                    ,shade: 0.8
+                                    ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                                    ,btn: ['火速登录', '残忍拒绝']
+                                    ,btnAlign: 'c'
+                                    ,moveType: 1 //拖拽模式，0或者1
+                                    ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">你知道吗？亲！<br><br>如果您登录了，那么你就可以尽情的享受小说带您的乐趣</div>'
+                                    ,success: function(layero){
+                                        var btn = layero.find('.layui-layer-btn');
+                                        btn.find('.layui-layer-btn0').attr({
+                                            href: '../login.html'
+                                            ,target: '_blank'
+                                        });
+                                    }
+								})
+                            })
+                        }else{
+                            $(".lbf-overlay").removeClass("hidden");
+                            $(".lbf-panel").removeClass("hidden");
+                            $("#hint").html($(this).attr("title"));
+                            $("#starBig > img").each(function (index) {
+                                if(index <= len){
+                                    $(this).attr("src","../images/star-on.02731.png")
+                                }
+                            })
+                        }
+                    }
+                });
+            })
+            $("#starBig > img").mouseover(function () {
+                $(this).removeClass("clickLi");
+                $(this).attr("src","../images/star-on.02731.png");
+                $(this).prevAll().attr("src","../images/star-on.02731.png");
+                $("#hint").html($(this).attr("title"))
+            })
+            $("#starBig > img").click(function () {
+                $(this).addClass("clickLi");
+                $(this).attr("src","../images/star-on.02731.png");
+                $("#hint").html($(this).attr("title"))
+            })
+            $("#starBig > img").mouseout(function () {
+                if($(this).attr("class") == ''){
+                    $(this).attr("src","../images/star-off.b2a1b.png");
+                    $(this).nextAll().attr("src","../images/star-off.b2a1b.png");
+				}
+            })
+
+			$("#sendComment").click(function () {
+			    var len = 0;
+                $("#starBig > img").each(function (index) {
+					if($(this).attr("src") == "../images/star-on.02731.png"){
+					    len += 1;
+					}
+                })
+                /*alert($("#evaMsgText").val())*/
+				$.ajax({
+					url:'/jpbook/evaluate/add',
+					data:{'bookid':$("#bookid").val(),'evacontent':$("#evaMsgText").val(),"evalv":len},
+					type:'post',
+					success:function (data) {
+					    if(data == 1){
+                            layui.use('layer', function(){
+                                var layer = layui.layer;
+                                layer.alert('评价成功，感谢您的参与！', {time: 2000,title: false,closeBtn: false,btn:false});
+                            });
+                            $(".lbf-overlay").addClass("hidden");
+							$(".lbf-panel").addClass("hidden");
+                            setTimeout(function () {
+                                window.location.reload()
+                            },2000)
+						}else if(data == 2){
+                            layui.use('layer', function(){
+                                var layer = layui.layer;
+                                layer.alert('修改评价成功，感谢您的参与！', {time: 2000,title: false,closeBtn: false,btn:false});
+                            });
+                            $(".lbf-overlay").addClass("hidden");
+                            $(".lbf-panel").addClass("hidden");
+                            setTimeout(function () {
+                                window.location.reload()
+                            },2000)
+						}else if(data == 3){
+							//不可以评论
+							/*$(".lbf-panel-head").attr("style","display:block")*/
+							$("#evaStarWrap").append("<div class=\"warning-tip\" style=\"top: 0px;\">评论过于频繁，请稍后再试</div>");
+					    }else{
+                            $("#evaStarWrap").append("<div class=\"warning-tip\" style=\"top: 0px;\">书籍没有书架中，请加入书籍再进行操作</div>");
+						}
+
+                    }
+				});
+            })
+            $('#evaMsgText').bind('input propertychange', function() {
+                $("#evaCounter").html($(this).val().length);
+                if($(this).val().length > 350){
+                    layui.use('layer', function(){
+                        var layer = layui.layer;
+                        layer.alert('评论字数应为1-350之间', {time: 2000,title: false,closeBtn: false,btn:false});
+                    });
+				}
+            });
+
+            $(".j_godiscuss").click(function () {
+				$(this).addClass("act");
+				$(".j_gocomment").removeClass("act")
+                $("#userCommentWrap").attr("style","display:none");
+                $("#userDiscuss").attr("style","display:block");
+            })
+            $(".j_gocomment").click(function () {
+                $(this).addClass("act");
+                $(".j_godiscuss").removeClass("act")
+				$("#userDiscuss").attr("style","display:none");
+				$("#userCommentWrap").attr("style","display:block");
+            })
+
         });
     </script>
 
@@ -201,13 +361,13 @@
 								method="get" target="_blank">
 								<label id="pin-search" for="topSearchSubmit" data-eid="qd_A62"><i class="iconfont icon-dashujukeshihuaico-"></i></label> <input id="pin-input"
 									class="pin-input hide" type="text" name="kw"
-									placeholder="我修的可能是假仙"> <input class="submit-input"
+									placeholder="请输入作者名或书名"> <input class="submit-input"
 									type="submit" id="topSearchSubmit" data-eid="qd_A62">
 							</form>
 						</li>
 						<li class="line"></li>
 						<li th:class="${session.users} ? 'sign-out hidden' : 'sign-out'">
-							<a id="pin-login" href="../login.html">登录</a>
+							<a id="pin-login" href="../login.html" target="_blank">登录</a>
 							<a class="reg" href="../register.html" target="_blank">注册</a>
 						</li>
 						<th:block th:if="${session}">
@@ -219,9 +379,6 @@
 										<span></span>
 									</a>
 									<div class="dropdown">
-										<a href="https://me.qidian.com/msg/lists.aspx?page=1" target="_blank" data-eid="qd_A66">
-											消息(<i id="top-msg">0</i>)
-										</a>
 										<a href="https://www.qidian.com/charge/meRedirect" target="_blank">充值</a>
 										<a href="../personal.html" target="_blank">个人中心</a>
 										<a href="https://www.qidian.com/help/kf" target="_blank">客服中心</a>
@@ -246,10 +403,10 @@
 		<div id="j-topHeadBox" class="top-bg-op-box " data-cookie="1" style="background-image: url(&quot;//qidian.qpic.cn/qidian_common/349573/13d0351cb3cc62ac95a0ddfc7376be8a/0&quot;); display: none;" data-l1="1">
 			<a class="jumpWrap"
 				href="http://cpgame.qd.game.qidian.com/Home/Index/directLogin/name/hlw/way/1?qd_game_key=hlw2560x450&amp;qd_dd_p1=1292"
-				target="_blank" data-eid="qd_G100" data-qd_dd_p1="1"> <span
+				target="_blank"> <span
 				class="op-tag" style="display: none;"></span>
-			</a> <a class="close-game-op" id="closeTopGame" href="javascript:"
-				data-eid="qd_G101">关闭广告</a>
+			</a>
+			<a class="close-game-op" id="closeTopGame" href="javascript:">关闭广告</a>
 
 		</div>
 		<div class="top-bg-box " id="j-topBgBox"
@@ -284,7 +441,7 @@
 						<em th:text="${queryBookById[0].bookname}">人皇在上</em>
 						<span>
 							<a class="writer" href="https://me.qidian.com/authorIndex.aspx?id=4242192"
-                               target="_blank" th:text="${queryBookById[0].pen}">九州方圆</a> 著</span>
+							target="_blank" th:text="${queryBookById[0].pen}">九州方圆</a> 著</span>
 
 					</h1>
 					<p class="tag">
@@ -302,11 +459,6 @@
 						<span th:text="${queryBookById[0].cnum}"></span>
 						</em>
 						<cite>阅文总点击</cite><i>|</i>
-						<!--<em>
-							<span class="EpImtlYe"></span>
-						</em>
-
-						<cite>万会员周点击</cite><i>|</i>-->
 						<em>
 							<span th:text="${queryBookById[0].zvote}"></span>
 						</em>
@@ -388,29 +540,61 @@
 
 						<div class="j_getData hidden" style="display: block;">
 							<h4 id="j_bookScore">
-								<span><cite id="score1">8</cite><em>.</em></span><i id="score2">5</i>
+								<span><cite id="score1" th:text="${zEvaluate.evalv}"></cite><i id = "score2">分</i></span>
 							</h4>
 							<p id="j_userCount">
-								<span>14</span>人评价
+								<span th:text="${zEvaluate.unum}"></span>人评价
 							</p>
 						</div>
 					</div>
 					<h5>我要评价</h5>
-					<div class="score-mid" id="scoreBtn" data-score="0"
-						data-comment="0" data-eid="qd_G12"
-						style="cursor: pointer; width: 116px;">
-
-
-						<img src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/star-off.b2a1b.png"
-							alt="1" title="不知所云">&nbsp;<img
-							src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/star-off.b2a1b.png" alt="2"
-							title="随便看看">&nbsp;<img
-							src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/star-off.b2a1b.png" alt="3"
-							title="值得一读">&nbsp;<img
-							src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/star-off.b2a1b.png" alt="4"
-							title="不容错过">&nbsp;<img
-							src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/star-off.b2a1b.png" alt="5"
-							title="经典必读"><input type="hidden" name="score">
+					<div class="score-mid" id="scoreBtn" style="cursor: pointer; width: 116px;">
+						<th:block th:if="${queryByUuid} eq null">
+							<img src="../images/star-off.b2a1b.png" alt="1" title="不知所云">&nbsp;
+							<img src="../images/star-off.b2a1b.png" alt="2" title="随便看看">&nbsp;
+							<img src="../images/star-off.b2a1b.png" alt="3" title="值得一读">&nbsp;
+							<img src="../images/star-off.b2a1b.png" alt="4" title="不容错过">&nbsp;
+							<img src="../images/star-off.b2a1b.png" alt="5" title="经典必读">
+							<input type="hidden" name="score">
+						</th:block>
+						<th:block th:if="${queryByUuid} ne null">
+							<th:block th:each="k,s : ${#numbers.sequence(0,5)}">
+								<th:block th:if="${s.index} lt ${queryByUuid.getEvalv()}">
+									<th:block th:if="${s.index} eq 0">
+										<img src="../images/star-on.02731.png" th:alt="${s.index+1}" title="不知所云">&nbsp;
+									</th:block>
+									<th:block th:if="${s.index} eq 1">
+										<img src="../images/star-on.02731.png" th:alt="${s.index+1}" title="随便看看">&nbsp;
+									</th:block>
+									<th:block th:if="${s.index} eq 2">
+										<img src="../images/star-on.02731.png" th:alt="${s.index+1}" title="值得一读">&nbsp;
+									</th:block>
+									<th:block th:if="${s.index} eq 3">
+										<img src="../images/star-on.02731.png" th:alt="${s.index+1}" title="不容错过">&nbsp;
+									</th:block>
+									<th:block th:if="${s.index} eq 4">
+										<img src="../images/star-on.02731.png" th:alt="${s.index+1}" title="经典必读">&nbsp;
+									</th:block>
+								</th:block>
+								<th:block th:if="${s.index} gt ${queryByUuid.getEvalv()-1}">
+									<th:block th:if="${s.index} eq 0">
+										<img src="../images/star-off.b2a1b.png" th:alt="${s.index+1}" title="不知所云">&nbsp;
+									</th:block>
+									<th:block th:if="${s.index} eq 1">
+										<img src="../images/star-off.b2a1b.png" th:alt="${s.index+1}" title="随便看看">&nbsp;
+									</th:block>
+									<th:block th:if="${s.index} eq 2">
+										<img src="../images/star-off.b2a1b.png" th:alt="${s.index+1}" title="值得一读">&nbsp;
+									</th:block>
+									<th:block th:if="${s.index} eq 3">
+										<img src="../images/star-off.b2a1b.png" th:alt="${s.index+1}" title="不容错过">&nbsp;
+									</th:block>
+									<th:block th:if="${s.index} eq 4">
+										<img src="../images/star-off.b2a1b.png" th:alt="${s.index+1}" title="经典必读">&nbsp;
+									</th:block>
+								</th:block>
+							</th:block>
+						</th:block>
 					</div>
 				</div>
 				<div class="take-wrap">
@@ -551,40 +735,6 @@
 						</div>
 						<div class="book-state" data-l1="4">
 							<ul>
-
-								<!--<li><b>作者自定义标签</b>
-									<div class="detail">
-										<p class="tag-wrap" data-l1="4">
-
-
-											<a class="tags"
-												href="https://www.qidian.com/all?tag=%E4%BA%89%E9%9C%B8%E6%B5%81"
-												target="_blank" data-eid="qd_G70">争霸流</a> <a class="tags"
-												href="https://www.qidian.com/all?tag=%E5%AD%A4%E5%84%BF"
-												target="_blank" data-eid="qd_G70">孤儿</a> <a class="tags"
-												href="https://www.qidian.com/all?tag=%E5%AE%A0%E7%89%A9"
-												target="_blank" data-eid="qd_G70">宠物</a> <a class="tags"
-												href="https://www.qidian.com/all?tag=%E8%BD%BB%E6%9D%BE"
-												target="_blank" data-eid="qd_G70">轻松</a>
-
-
-										</p>
-									</div></li>
-								<li class="honor" id="honor"><b>荣誉动态</b>
-									<div class="detail">
-										<strong>2019-02-12 累积获得五千个收藏</strong>
-
-										<p class="honor-icon cf">
-
-											<img
-												src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/gengshangyicenglou.png">
-
-											<a class="blue collect"
-												href="https://book.qidian.com/honor/1013432619"
-												target="_blank" data-eid="qd_G18">荣誉殿堂</a>
-										</p>
-									</div></li>-->
-
 								<li class="update">
 									<b>最近更新</b>
 									<div class="detail">
@@ -976,383 +1126,79 @@
 									<a class="send blue j_forumBtn" href = "javascript:void(0);" th:onclick="|faties(${queryBookById[0].bookid})|">我要发帖
 									</a>
 									<a class="comment-btn blue j_commentBtn hidden" id="goComment"
-										href="javascript:" data-comment="1" data-eid="qd_G33">我要评价
+										href="javascript:">我要评价
 									</a>
 									<span class="j_godiscuss act">
 										作品讨论区
 									</span><i class="grey">|</i>
-									<span class="j_gocomment" data-eid="qd_G113">
+									<span class="j_gocomment">
 										书友评价
 									</span>
 								</h3>
-								<div class="sort-box hidden" id="sortBox">
-									<a class="act" href="javascript:" data-order="2" data-eid="qd_G31">
-										热门
-									</a>
-									<span>·</span>
-									<a href="javascript:" data-order="0" data-eid="qd_G32">
-										最新
-									</a>
-									<span class="grey">|</span>
-								</div>
 							</div>
-							<div class="userCommentWrap" id="userCommentWrap" data-l1="7">
+							<div class="userCommentWrap" id="userCommentWrap">
 
-                            <!-- start 书友评价 -->
-                            <div id="commentList">
-                                <!-- start 热门评论数据 -->
-                                <div class="comment-list">
-                                    <!-- start 有数据状态 -->
-                                    <dl>
-                                        <dd>
-                                            <div class="user-photo">
-                                                <a
-                                                        href="https://me.qidian.com/friendIndex.aspx?id=112416992"
-                                                        target="_blank"> <img
-                                                        src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50"> <span
-                                                        class="user-level lv1"></span>
-                                                </a>
-                                            </div>
-                                            <div class="comment-info">
-
-													<h6>
-														<a class="zan " href="javascript:" data-rateid="1416105"
-															data-islike="" data-eid="qd_G112"><b>2</b><em
-															class="iconfont icon-dianzan"></em></a><a class="blue"
-															href="https://me.qidian.com/friendIndex.aspx?id=112416992"
-															target="_blank">古道西风笑</a><i>评</i><span
-															class="score-min star5"></span>
-													</h6>
-
-													<p class="normal">
-														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
-													</p>
-													<p>2019-02-18 15:01</p>
-												</div>
-											</dd>
-
-											<dd>
+								<!-- start 书友评价 -->
+								<div id="commentList">
+									<!-- start 热门评论数据 -->
+									<div class="comment-list">
+										<!-- start 有数据状态 -->
+										<dl>
+											<dd th:each="q,s : ${queryAllByBookid}">
 												<div class="user-photo">
-													<a
-														href="https://me.qidian.com/friendIndex.aspx?id=301346563"
-														target="_blank"> <img
-														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(1)"> <span
-														class="user-level lv1"></span>
+													<a href="https://me.qidian.com/friendIndex.aspx?id=112416992" target="_blank">
+														<img th:src="|../images/${q.icon}|">
 													</a>
 												</div>
 												<div class="comment-info">
-
 													<h6>
-														<a class="iconfont icon-dianzan" href="javascript:" data-rateid="1420382"
-															data-islike="" data-eid="qd_G112"><b>0</b><em
-															class="iconfont "></em></a><a class="blue"
-															href="https://me.qidian.com/friendIndex.aspx?id=301346563"
-															target="_blank">有妖汽</a><i>评</i><span
-															class="score-min star5"></span>
+														<a class="blue" href="https://me.qidian.com/friendIndex.aspx?id=112416992"
+															target="_blank" th:text="${q.uname}">古道西风笑</a>
+														<i>评</i>
+														<span th:class="|score-min star${q.evalv}|"></span>
 													</h6>
 
 													<p class="normal">
-														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
+														<cite class="iconfont blue j_unfold" title="展开评论"
+														th:text="${evacontent}"></cite>
 													</p>
-													<p>2019-02-26 13:15</p>
-												</div>
-											</dd>
+													<p th:text="${q.evatime}">2019-02-18 15:01</p>
 
-											<dd>
-												<div class="user-photo">
-													<a
-														href="https://me.qidian.com/friendIndex.aspx?id=318520775"
-														target="_blank"> <img
-														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(2)"> <span
-														class="user-level lv0"></span>
-													</a>
-												</div>
-												<div class="comment-info">
-
-													<h6>
-														<a class="zan " href="javascript:" data-rateid="1415215"
-															data-islike="" data-eid="qd_G112"><b>2</b><em
-															class="iconfont"></em></a><a class="blue"
-															href="https://me.qidian.com/friendIndex.aspx?id=318520775"
-															target="_blank">书友20180708125110825</a><i>评</i><span
-															class="score-min star5"></span>
-													</h6>
-
-													<p class="normal">
-														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
-													</p>
-													<p>2019-02-16 17:38</p>
-												</div>
-											</dd>
-
-											<dd>
-												<div class="user-photo">
-													<a
-														href="https://me.qidian.com/friendIndex.aspx?id=20460024"
-														target="_blank"> <img
-														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(3)"> <span
-														class="user-level lv0"></span>
-													</a>
-												</div>
-												<div class="comment-info">
-
-													<h6>
-														<a class="zan " href="javascript:" data-rateid="1420173"
-															data-islike="" data-eid="qd_G112"><b>0</b><em
-															class="iconfont"></em></a><a class="blue"
-															href="https://me.qidian.com/friendIndex.aspx?id=20460024"
-															target="_blank">突破重圍</a><i>评</i><span
-															class="score-min star3"></span>
-													</h6>
-
-													<p class="normal">
-														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
-													</p>
-													<p>2019-02-25 23:29</p>
-												</div>
-											</dd>
-
-											<dd>
-												<div class="user-photo">
-													<a
-														href="https://me.qidian.com/friendIndex.aspx?id=159770170"
-														target="_blank"> <img
-														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(4)"> <span
-														class="user-level lv0"></span>
-													</a>
-												</div>
-												<div class="comment-info">
-
-													<h6>
-														<a class="zan " href="javascript:" data-rateid="1419727"
-															data-islike="" data-eid="qd_G112"><b>0</b><em
-															class="iconfont"></em></a><a class="blue"
-															href="https://me.qidian.com/friendIndex.aspx?id=159770170"
-															target="_blank">藏珍楼主</a><i>评</i><span
-															class="score-min star5"></span>
-													</h6>
-
-													<p class="normal">
-														加油<cite class="iconfont blue j_unfold" title="展开评论"></cite>
-													</p>
-													<p>2019-02-25 09:24</p>
-												</div>
-											</dd>
-
-											<dd>
-												<div class="user-photo">
-													<a
-														href="https://me.qidian.com/friendIndex.aspx?id=115781149"
-														target="_blank"> <img
-														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50"> <span
-														class="user-level lv0"></span>
-													</a>
-												</div>
-												<div class="comment-info">
-
-													<h6>
-														<a class="zan " href="javascript:" data-rateid="1409103"
-															data-islike="" data-eid="qd_G112"><b>2</b><em
-															class="iconfont"></em></a><a class="blue"
-															href="https://me.qidian.com/friendIndex.aspx?id=115781149"
-															target="_blank">星尘的思念</a><i>评</i><span
-															class="score-min star5"></span>
-													</h6>
-
-													<p class="normal">
-														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
-													</p>
-													<p>2019-02-10 19:32</p>
-												</div>
-											</dd>
-
-											<dd>
-												<div class="user-photo">
-													<a href="https://me.qidian.com/friendIndex.aspx?id=43945"
-														target="_blank"> <img
-														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(5)"> <span
-														class="user-level lv0"></span>
-													</a>
-												</div>
-												<div class="comment-info">
-
-													<h6>
-														<a class="zan " href="javascript:" data-rateid="1408989"
-															data-islike="" data-eid="qd_G112"><b>1</b><em
-															class="iconfont"></em></a><a class="blue"
-															href="https://me.qidian.com/friendIndex.aspx?id=43945"
-															target="_blank">火火</a><i>评</i><span
-															class="score-min star3"></span>
-													</h6>
-
-													<p class="normal">
-														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
-													</p>
-													<p>2019-02-10 14:50</p>
-												</div>
-											</dd>
-
-											<dd>
-												<div class="user-photo">
-													<a
-														href="https://me.qidian.com/friendIndex.aspx?id=225727382"
-														target="_blank"> <img
-														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(6)"> <span
-														class="user-level lv0"></span>
-													</a>
-												</div>
-												<div class="comment-info">
-
-													<h6>
-														<a class="zan " href="javascript:" data-rateid="1398367"
-															data-islike="" data-eid="qd_G112"><b>1</b><em
-															class="iconfont"></em></a><a class="blue"
-															href="https://me.qidian.com/friendIndex.aspx?id=225727382"
-															target="_blank">hjhkyui</a><i>评</i><span
-															class="score-min star5"></span>
-													</h6>
-
-													<p class="normal">
-														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
-													</p>
-													<p>2019-01-17 13:50</p>
-												</div>
-											</dd>
-
-											<dd>
-												<div class="user-photo">
-													<a
-														href="https://me.qidian.com/friendIndex.aspx?id=186479385"
-														target="_blank"> <img
-														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50"> <span
-														class="user-level lv0"></span>
-													</a>
-												</div>
-												<div class="comment-info">
-
-													<h6>
-														<a class="zan " href="javascript:" data-rateid="1397730"
-															data-islike="" data-eid="qd_G112"><b>1</b><em
-															class="iconfont"></em></a><a class="blue"
-															href="https://me.qidian.com/friendIndex.aspx?id=186479385"
-															target="_blank">书友140429021744617</a><i>评</i><span
-															class="score-min star4"></span>
-													</h6>
-
-													<p class="normal">
-														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
-													</p>
-													<p>2019-01-16 11:48</p>
-												</div>
-											</dd>
-
-											<dd>
-												<div class="user-photo">
-													<a
-														href="https://me.qidian.com/friendIndex.aspx?id=209502100"
-														target="_blank"> <img
-														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50(6)"> <span
-														class="user-level lv4"></span>
-													</a>
-												</div>
-												<div class="comment-info">
-
-													<h6>
-														<a class="zan " href="javascript:" data-rateid="1371293"
-															data-islike="" data-eid="qd_G112"><b>2</b><em
-															class="iconfont"></em></a><a class="blue"
-															href="https://me.qidian.com/friendIndex.aspx?id=209502100"
-															target="_blank">独走一匹猫</a><i>评</i><span
-															class="score-min star5"></span>
-													</h6>
-
-													<p class="normal">
-														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
-													</p>
-													<p>2018-12-07 12:23</p>
-												</div>
-											</dd>
-
-											<dd>
-												<div class="user-photo">
-													<a
-														href="https://me.qidian.com/friendIndex.aspx?id=199477261"
-														target="_blank"> <img
-														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50"> <span
-														class="user-level lv0"></span>
-													</a>
-												</div>
-												<div class="comment-info">
-
-													<h6>
-														<a class="zan " href="javascript:" data-rateid="1371499"
-															data-islike="" data-eid="qd_G112"><b>2</b><em
-															class="iconfont"></em></a><a class="blue"
-															href="https://me.qidian.com/friendIndex.aspx?id=199477261"
-															target="_blank">元谋啊啊啊</a><i>评</i><span
-															class="score-min star5"></span>
-													</h6>
-
-													<p class="normal">
-														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
-													</p>
-													<p>2018-12-07 16:08</p>
-												</div>
-											</dd>
-
-											<dd>
-												<div class="user-photo">
-													<a
-														href="https://me.qidian.com/friendIndex.aspx?id=171228713"
-														target="_blank"> <img
-														src="./《人皇在上》_九州方圆著_玄幻_起点中文网_files/50"> <span
-														class="user-level lv0"></span>
-													</a>
-												</div>
-												<div class="comment-info">
-
-													<h6>
-														<a class="zan " href="javascript:" data-rateid="1350061"
-															data-islike="" data-eid="qd_G112"><b>3</b><em
-															class="iconfont"></em></a><a class="blue"
-															href="https://me.qidian.com/friendIndex.aspx?id=171228713"
-															target="_blank">九州苍茫</a><i>评</i><span
-															class="score-min star5"></span>
-													</h6>
-
-													<p class="normal">
-														<cite class="iconfont blue j_unfold" title="展开评论"></cite>
-													</p>
-													<p>2018-10-30 11:37</p>
+													<th:block th:if="${session} ne null">
+														<th:block th:if="${session.users} ne null">
+															<th:block th:if="${q.uuid} eq ${session.users[0].uuid}">
+																<div class="icon-my-comment"></div>
+															</th:block>
+														</th:block>
+													</th:block>
 												</div>
 											</dd>
 
 										</dl>
 										<!-- end 有数据状态 -->
 
-										<!-- start 热门分页 -->
-										<div class="page-box cf">
-											<div class="pagination fr" data-eid="qd_G34"
-												id="page-container" data-pagemax="1" data-page="1">
+										<!-- start 分页 -->
+										<!--<div class="page-box cf">
+											<div class="pagination fr" id="page-container">
 												<div class="lbf-pagination">
 													<ul class="lbf-pagination-item-list">
-														<li class="lbf-pagination-item"><a
-															href="javascript:;"
-															class="lbf-pagination-prev lbf-pagination-disabled">&lt;</a></li>
-														<li class="lbf-pagination-item"><a data-page="1"
-															href="javascript:;"
-															class="lbf-pagination-page  lbf-pagination-current">1</a></li>
-														<li class="lbf-pagination-item"><a
-															href="javascript:;"
-															class="lbf-pagination-next lbf-pagination-disabled">&gt;</a></li>
+														<li class="lbf-pagination-item">&lt;!&ndash;可用lbf-pagination-prev&ndash;&gt;
+															<a th:href="${page} ne 1 ? './queryById?bookid='+${books[0].bookid}+'&page='+${page-1}+'&revid='+${queryByRevid[0].revid} : 'javascript:;'" th:class="${page} ne 1 ? 'lbf-pagination-prev' : 'lbf-pageination-next lbf-pagination-disabled'">上一页</a>
+														</li>
+														<li class="lbf-pagination-item">
+															<a th:href="${page eq pagecount} ? 'javascript:;' : './queryById?bookid='+${books[0].bookid}+'&page='+${page+1}+'&revid='+${queryByRevid[0].revid}" th:class="${page eq pagecount} ? 'lbf-pagination-prev  lbf-pagination-disabled' : 'lbf-pageination-next'">下一页</a>
+														</li>
+														<li class="lbf-pagination-item">
+															<a href="javascript:;" id = "pagecount" class="lbf-pageination-next lbf-pagination-disabled" th:text="|第${page}页/共${pagecount}页|"></a>
+														</li>
 													</ul>
 													<div class="lbf-pagination-jump">
-														<input type="text" class="lbf-pagination-input" value="1"><a
-															href="javascript:;" class="lbf-pagination-go">GO</a>
+														<input type="text" style="border: 1px solid gray;width:25px;text-align: center;" class="lbf-pagination-input" value="1" th:max="${pagecount}">
+														<a href="javascript:;" class="lbf-pagination-go">GO</a>
 													</div>
 												</div>
 											</div>
-										</div>
+										</div>-->
 										<!-- end 热门分页 -->
 
 									</div>
@@ -1361,7 +1207,7 @@
 								</div>
 								<!-- end 书友评价 -->
 							</div>
-							<div class="user-discuss" id="userDiscuss" data-l1="8">
+							<div class="user-discuss" id="userDiscuss">
 								<div class="book-discuss-wrap">
 									<div class="discuss-list">
 										<!-- start 有数据状态 -->
@@ -1414,8 +1260,8 @@
 										<!--如果还有数据就跳转页面查看更多的评论-->
                                         <th:block th:if="${queryReviewbook.size()} gt 15">
                                             <p class="go-discuss">
-                                                <a class="blue" href="https://forum.qidian.com/index/12073675103859503"
-                                                   target="_blank" data-eid="qd_G36">
+                                                <a class="blue" th:href="@{/books/queryBookById(bookid=${queryBookById[0].bookid})}"
+                                                   target="_blank">
                                                     去讨论区
                                                     <em class="iconfont icon-xiayige"></em>
                                                 </a>
@@ -1475,7 +1321,7 @@
 									<ul >
 										<th:block th:each="q,s : ${queryFansByBookid}">
 											<th:block th:if="${s.index} lt 10">
-												<th:block th:if="${s.index} lt 3">
+												<th:block th:if="${s.index} lt 3 and ${q.sums} ne 0">
 												<li class="top">
 													<div class="num-box">
 														<span th:class="|num${s.index+1}|" th:text="${s.index+1}">1</span>
@@ -1498,7 +1344,7 @@
 															<span class="user-level lv9"></span>
 														</div>
 													</th:block>
-													<th:block th:if="${s.index} gt 2">
+													<th:block th:if="${s.index} gt 2 and ${q.sums} ne 0">
 														<li data-rid="4">
 															<div class="num-box">
 																<span th:class="|num${s.index+1}|" th:text="${s.index+1}">4</span>
@@ -2138,5 +1984,59 @@
             width="100%" height="100%" scrolling="no" frameborder="no">
     </iframe>
 </div>-->
+			</div>
+		</div>
+
+	</div>
+	<div class="lbf-panel hidden" style="z-index: 12668; width: 520px; top: 164px; left: 32.5%;">
+		<a href="javascript:;" class="lbf-panel-close lbf-icon lbf-icon-close" onclick="$('.lbf-panel').addClass('hidden');$('.lbf-overlay').addClass('hidden');$('#starBig').children('img').attr('src','../images/star-off.b2a1b.png');"></a>
+		<div class="lbf-panel-head" style="display: none;">提示</div>
+		<div class="lbf-panel-body"><!-- start 评价弹窗-->
+			<div class="book-popup evaluate-popup" id="evaluatePopup">
+				<!-- start 标题 -->
+				<div class="popup-title">
+					<h3 class="lang">评价本书</h3>
+				</div>
+				<!-- end 标题 -->
+
+				<!-- start 评价容器 -->
+				<div class="eva-star-wrap" id="evaStarWrap">
+					<div class="warning-tip">保存失败！请重新保存</div>
+					<div class="eva-box">
+						<h4>给个评分</h4>
+						<div class="star-big">
+							<span id="starBig" style="cursor: pointer; width: 210px;">
+								<img src="../images/star-off.b2a1b.png" alt="1" title="不知所云" class="">&nbsp;<img src="../images/star-off.b2a1b.png" alt="2" title="随便看看" class="">&nbsp;<img src="../images/star-off.b2a1b.png" alt="3" title="值得一读" class="">&nbsp;<img src="../images/star-off.b2a1b.png" alt="4" title="不容错过" class="">&nbsp;<img src="../images/star-off.b2a1b.png" alt="5" title="经典必读" class=""><input type="hidden" name="score" value="5"></span><em id="hint">经典必读</em>
+						</div>
+						<h4>简短评价</h4>
+						<input type = "hidden" id = "bookid" th:value="${queryBookById[0].bookid}">
+						<div class="count-text">
+							<span class="count"><em id="evaCounter">0</em>/350</span>
+							<textarea class="gray" id="evaMsgText" maxlength="350" placeholder="撰写高质量书评的建议：
+	1、喜欢不喜欢本书的原因；
+	2、与同类书籍的比较：故事风格、人物形象、环境描写；
+	3、可以从不同角度描述；"></textarea>
+						</div>
+					</div>
+					<!-- start 弹窗按钮 -->
+					<div class="popup-btn">
+						<a class="red-btn" id="sendComment" href="javascript:">保存</a>
+					</div>
+					<!-- end 弹窗按钮 -->
+				</div>
+				<!-- end 评价容器 -->
+			</div>
+			<!-- end 评价弹窗-->
+		</div>
+		<div class="lbf-panel-foot" style="display: none;">
+			<div class="lbf-panel-foot-l"></div>
+			<div class="lbf-panel-foot-r">
+				<a href="javascript:;" class="lbf-button lbf-button-primary lbf-button-default lbf-button-normal">确定</a>
+				<a href="javascript:;" class="lbf-button lbf-button-default lbf-button-normal" style="display: none;">否定</a>
+				<a href="javascript:;" class="lbf-button lbf-button-default lbf-button-normal">取消</a>
+			</div>
+		</div>
+	</div>
+	<div class="lbf-overlay hidden" style="background-color: black; opacity: 0.3; z-index: 8644; width: 100%; height: 3824px;"></div>
 </body>
 </html>

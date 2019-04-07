@@ -1,6 +1,7 @@
 package com.jpbook.service;
 
 import com.jpbook.dao.BookrackDao;
+import com.jpbook.entity.Bookrack;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,5 +27,8 @@ public class BookrackService {
         return bd.del(uuid,brid);
     }
     public Integer addBookrack(Integer uuid, Integer bookid){return bd.addBookrack(uuid,bookid);}
+    public Bookrack bookidExits(Integer uuid, Integer bookid){
+        return bd.bookidExits(uuid,bookid);
+    }
     public List<Map<String,Object>> ckBookrackExist(Integer uuid, Integer bookid){return bd.ckBookrackExist(uuid,bookid);}
 }

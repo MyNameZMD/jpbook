@@ -44,7 +44,7 @@
                     </th:block>
                 </th:block>
                 <div th:class="${session.users} ? 'sign-out hidden' : 'sign-out'">
-                    <a id="login-btn" class="black" href="../login.html">登录</a><em>|</em>
+                    <a id="login-btn" class="black" href="../login.html" target="_blank">登录</a><em>|</em>
                     <a id="reg-btn" href="../register.html" target="_blank">注册</a>
                 </div>
             </div>
@@ -325,7 +325,7 @@
                 <div id="container">
                     <div class="item" th:each="qr : ${queryRecommend3}">
                         <div class="pic">
-                            <a href="query"><img src="|..images/${qr.icon}|"/></a>
+                            <a th:href="@{/books/queryBookById(bookid=${qr.bookid})}"><img src="|..images/${qr.icon}|"/></a>
                         </div>
                         <div class="txt">
                             <dl>

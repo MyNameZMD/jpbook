@@ -138,7 +138,7 @@
                     </li>
                     <li class="line"></li>
                     <li th:class="${session.users} ? 'sign-out hidden' : 'sign-out'">
-                        <a id="pin-login" href="../login.html">登录</a>
+                        <a id="pin-login" href="../login.html"  target="_blank">登录</a>
                         <a class="reg" href="../register.html" target="_blank">注册</a>
                     </li>
                     <th:block th:if="${session}">
@@ -247,8 +247,8 @@
                                         <p><span th:text="${lb.cnum}"> 999.93万</span>总点击</p>
                                     </div>
                                     <p class="btn">
-                                        <a class="red-btn" th:href="@{../books/queryBookById(bookid=${lb.bookid})}" target="_blank">书籍详情</a>
-                                        <a class="blue-btn add-book" href="javascript:">加入书架</a>
+                                        <a class="red-btn" style="margin-left: 120px" th:href="@{../books/queryBookById(bookid=${lb.bookid})}" target="_blank">书籍详情</a>
+                                        <!--<a class="blue-btn add-book" href="javascript:">加入书架</a>-->
                                     </p>
                                 </div>
                             </li>
