@@ -3,7 +3,7 @@
 <mapper namespace="com.jpbook.dao.BookrackDao">
 
     <select id="read" resultType="map">
-        select b.* from
+        select b.*,ifnull(br.bookid,-1) brid from
         (select u.pen,b.*,bt.btname,c.chapid,chaptime,c.chapname
         from users u,books b,booktype bt,roll r,chapter c,
         (select b.bookid from browse br,books b,roll r,chapter c
@@ -19,6 +19,9 @@
         and br.uuid=#{uuid} and c.chapstate=1 order by c.chaptime desc)b
         group by b.bookid) bb
         on bb.time = b.chaptime
+        left join
+        (select bookid from bookrack where uuid = #{uuid})br
+        on br.bookid=b.bookid
     </select>
 
     <select id="rack" resultType="map">
