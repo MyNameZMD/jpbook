@@ -12,6 +12,8 @@
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.15.css">
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.16.css">
 
+	<link rel="stylesheet" data-ignore="true" href="./css/icon.css">
+
 	<link rel="stylesheet" href="./layui/layui-v2.4.5/layui/css/layui.css" media="all">
 
 	<script src="./js/jquery-3.3.1.js"></script>
@@ -61,7 +63,7 @@
 					<a href="javascript:init()" class="sideBar-list-a"><i class="iconfont icon-home"></i>首页</a>
 				</li>
 				<li class="" id="u2">
-					<a class="sideBar-list-a"><i class="iconfont icon-home"></i>好友</a>
+					<a class="sideBar-list-a"><i class="iconfont icon-haoyou"></i>好友</a>
 				</li>
 				<li id="u6" onclick="u6()">
 					<a class="sideBar-list-a" data-eid="qd_M12"><i class="iconfont  icon-finance"></i>账务中心</a>
@@ -821,7 +823,7 @@
             success: function (data) {
                 var yemian = "";
                 if (data.length > 0){
-                    for (var i=0; i<6; i++){
+                    for (var i=0; i<data.length; i++){
                         yemian+="<li class='recmd-list-item' style='margin-left: 15px'>"+
                             "<a href='/jpbook/books/queryBookById?bookid="+data[i].bookid+"' target='_blank' class='recmd-list-a' data-eid='qd_M42' data-bid='1004895204'>" +
                             "<div class='recmd-commet'>"+data[i].bookreferral.substring(0,30)+"</div>" +
@@ -1698,7 +1700,7 @@
 							if(data[j].brid != -1){
                             	r1 += "<td class='col5 shlef-menu'><a href='javascript:' class='gray iconfont icon-book jsTips font12 disabled' title='已在书架'></a></td>"+"</tr>";
 							}else{
-                                r1 += "<td class='col5 shlef-menu'><a href='javascript:addBookrack("+data[0].bookid+")' class='blue iconfont icon-book jsTips elInBookShelf font12' title='加入书架'></a></td>"+"</tr>";
+                                r1 += "<td class='col5 shlef-menu'><a href='javascript:addBookrack("+data[j].bookid+")' class='blue iconfont icon-book jsTips elInBookShelf font12' title='加入书架'></a></td>"+"</tr>";
 							}
 					}
 					$("#tbo").html(r1);
