@@ -66,4 +66,7 @@ public interface PersonalDao {
 
     public List<Map<String,Object>> fansquery(Integer uuid);
 
+    @Select("select count(uuid) from users where uname = #{param1} and uuid != #{param2}")
+    public Integer getuname(String uname ,Integer uuid);
+
 }

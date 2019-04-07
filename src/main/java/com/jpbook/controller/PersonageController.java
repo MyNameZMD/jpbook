@@ -1,5 +1,6 @@
 package com.jpbook.controller;
 
+import com.jpbook.entity.Users;
 import com.jpbook.service.PersonageService;
 import com.jpbook.util.Gs;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("pc")
@@ -61,5 +63,16 @@ public class PersonageController {
         }
         return 1;
     }
+
+    @RequestMapping("add")
+    @ResponseBody
+    public Integer add(Integer bookid,HttpSession session){
+        List<Users> list  = (List<Users>)session.getAttribute("users");
+        if (null == list){
+            return -1;
+        }
+        return ps.addBookrack(list.get(0).getUuid(), bookid);
+    }
+
 
 }

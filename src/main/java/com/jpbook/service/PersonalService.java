@@ -109,4 +109,8 @@ public class PersonalService {
         return pd.fansquery(uuid);
     }
 
+    public Integer getuname(String uname ,Integer uuid){
+        return pd.getuname(uname,uuid);
+    }
+
 }

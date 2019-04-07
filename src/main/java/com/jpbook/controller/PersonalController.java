@@ -3,12 +3,11 @@ package com.jpbook.controller;
 import com.jpbook.entity.Recharge;
 import com.jpbook.entity.Signexp;
 import com.jpbook.entity.Users;
+import com.jpbook.service.LoginService;
 import com.jpbook.service.PersonalService;
 import com.jpbook.util.DateUtil;
 import com.jpbook.util.Gs;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +26,9 @@ public class PersonalController {
 
     @Resource
     PersonalService ps;
+
+    @Resource
+    LoginService ls;
 
     @RequestMapping("fansByeye")
     public List<Map<String,Object>> fansByeye(HttpSession session){
@@ -68,10 +70,46 @@ public class PersonalController {
 
     @RequestMapping("addexp")
     public Integer addexp(Integer exp,HttpSession session){
-        //session.removeAttribute("newdate");
         session.setAttribute("newdate",new Date());
         ps.upnum(Gs.getsession(session));
         ps.editexp(exp,Gs.getsession(session));
+
+        List<Users> list = ps.queryusers(Gs.getsession(session));
+        Integer newgrade = list.get(0).getGrade();
+        List<Users> users = (List<Users>)session.getAttribute("users");
+        Integer oldgrade = users.get(0).getGrade();
+        if(newgrade > oldgrade){
+            if (newgrade >= 3 && newgrade < 13){
+                ls.editwallet(1,Gs.getsession(session));
+            }else if (newgrade >=13 && newgrade < 23){
+                ls.editwallet(2,Gs.getsession(session));
+            }else if (newgrade >= 23){
+                ls.editwallet(3,Gs.getsession(session));
+            }
+            return 2;
+        }
+
+        return 1;
+    }
+
+    @RequestMapping("exp")
+    public Integer exp(Integer exp,HttpSession session){
+        ps.editexp(exp,Gs.getsession(session));
+
+        List<Users> list = ps.queryusers(Gs.getsession(session));
+        Integer newgrade = list.get(0).getGrade();
+        List<Users> users = (List<Users>)session.getAttribute("users");
+        Integer oldgrade = users.get(0).getGrade();
+        if(newgrade > oldgrade){
+            if (newgrade >= 3 && newgrade < 13){
+                ls.editwallet(1,Gs.getsession(session));
+            }else if (newgrade >=13 && newgrade < 23){
+                ls.editwallet(2,Gs.getsession(session));
+            }else if (newgrade >= 23){
+                ls.editwallet(3,Gs.getsession(session));
+            }
+            return 2;
+        }
         return 1;
     }
 
@@ -135,9 +173,7 @@ public class PersonalController {
     }
 
     @RequestMapping("monthlyquery")
-    public List<Map<String,Object>> monthlyquery(HttpSession session){
-        return ps.monthlyquery(Gs.getsession(session));
-    }
+    public List<Map<String,Object>> monthlyquery(HttpSession session){ return ps.monthlyquery(Gs.getsession(session)); }
 
     @RequestMapping("recquery")
     public List<Map<String,Object>> recquery(HttpSession session){
@@ -168,5 +204,11 @@ public class PersonalController {
     public List<Map<String,Object>> fansquery(HttpSession session){
         return ps.fansquery(Gs.getsession(session));
     }
+
+    @RequestMapping("getuname")
+    public Integer getuname(String uname,HttpSession session){
+        return ps.getuname(uname,Gs.getsession(session));
+    }
+
 
 }

@@ -39,12 +39,38 @@
 
 
     <select id="userquery" parameterType="com.jpbook.entity.LayuiPage" resultType="map">
-        select * from users limit #{page},#{limit}
+        select *,
+        case
+        when(sex=0)
+        then '男'
+        when(sex=1)
+        then '女'
+        else 'X'
+        end as gender
+        from users limit #{page},#{limit}
     </select>
 
     <select id="authorquery" parameterType="com.jpbook.entity.LayuiPage" resultType="map">
-        select *,count(u.uuid) num from users u,books b
-        where u.uuid=b.uuid and pen!='' group by u.uuid limit #{page},#{limit}
+        select *,count(u.uuid)num ,case
+        when(u.sex=0)
+        then '男'
+        when(u.sex=1)
+        then '女'
+        ELSE 'X'
+        end as gender
+        from users u,books b
+        where u.uuid=b.uuid and pen!=''
+        and (u.pen like concat('%',#{searchContent},'%') or u.realname like concat('%',#{searchContent},'%'))
+        group by u.uuid
+        limit #{page},#{limit}
+    </select>
+
+    <select id="authorCount" resultType="Integer">
+        select count(auth.c) aCount
+        from (select count(*) c from users u,books b
+        where u.uuid=b.uuid and pen!=''
+        and (u.pen like concat('%',#{searchContent},'%') or u.realname like concat('%',#{searchContent},'%'))
+        group by u.uuid) auth
     </select>
 
     <select id="booksincome" resultType="map">

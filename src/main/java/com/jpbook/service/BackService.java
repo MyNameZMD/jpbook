@@ -36,10 +36,13 @@ public class BackService {
     }
 
     public LayuiPage authorquery(LayuiPage lp){
-        String tableName = "(select distinct u.uuid from users u,books b where u.uuid=b.uuid and pen!='') num";
-        lp.setCount(bd.count(tableName));
+        if(lp.getSearchContent() != null){
+            lp.setCount(bd.authorCount(lp.getSearchContent()));
+        }else {
+            String tableName = "(select distinct u.uuid from users u,books b where u.uuid=b.uuid and pen!='') num";
+            lp.setCount(bd.count(tableName));
+        }
         lp.setData(bd.authorquery(lp));
-        System.out.println(lp);
         return lp;
     }
 

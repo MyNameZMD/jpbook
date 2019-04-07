@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("reg")
@@ -27,8 +28,10 @@ public class RegController {
 
     @RequestMapping("yzm")
     @ResponseBody
-    public String yzm(String phone){
-        return ls.phongMessage(phone);
+    public String yzm(String phone, HttpSession session){
+        session.setAttribute("yzm",ls.phongMessage(phone));
+        session.setMaxInactiveInterval(60*2);
+        return "1231";
     }
 
 

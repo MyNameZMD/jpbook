@@ -22,6 +22,8 @@ public interface BackDao {
 
     public List<Map<String,Object>> authorquery(LayuiPage lp);
 
+    public Integer authorCount(String searchContent);
+
     public List<Map<String,Object>> booksincome();
 
     public List<Map<String,Object>> homepage();

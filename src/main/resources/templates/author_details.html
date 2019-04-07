@@ -8,6 +8,11 @@
 
     <link rel="stylesheet" data-ignore="true" href="../css/index.0.110.css">
 
+    <script src="../js/jquery-3.3.1.js" th:inline="none"></script>
+
+    <link rel="stylesheet" type="text/css" href="../css/sweet-alert.css" />
+    <script src="../js/sweet-alert.js" th:inline="none"></script>
+
 </head>
 <body class="author">
 
@@ -151,9 +156,9 @@
             <h2 class="author-title">火热连载</h2>
             <ul class="author-hot" data-l2="9">
                 <li class="author-item">
-                    <a href="//book.qidian.com/info/1013406185" target="_blank" class='author-item-book' data-eid="qd_M268"><img th:src="@{/imgicon/{icon}(icon = ${hot.icon})}" class='author-item-img'></a>
+                    <a th:href="'/jpbook/books/queryBookById?bookid='+${hot.bookid}" target="_blank" class='author-item-book' data-eid="qd_M268"><img th:src="@{/imgicon/{icon}(icon = ${hot.icon})}" class='author-item-img'></a>
                     <div class="author-item-msg">
-                        <div class="author-item-title"><a href="//book.qidian.com/info/1013406185" target="_blank" data-eid="qd_M269" data-bid="1013406185" th:text="${hot.bookname}">书名</a></div>
+                        <div class="author-item-title"><a th:href="'/jpbook/books/queryBookById?bookid='+${hot.bookid}" target="_blank" data-eid="qd_M269" data-bid="1013406185" th:text="${hot.bookname}">书名</a></div>
                         <div class="author-item-exp">
                             <a href="http://xuanhuan.qidian.com" target="_blank" th:text="${hot.btname}">类型</a>
                             <i class="author-item-line"></i>
@@ -167,9 +172,9 @@
                         </div>
 
                         <div class="author-item-button">
-                            <a href="//book.qidian.com/info/1013406185" target="_blank" class="ui-button" data-eid="qd_M270">书籍详情</a>
+                            <a th:href="'/jpbook/books/queryBookById?bookid='+${hot.bookid}" target="_blank" class="ui-button" data-eid="qd_M270">书籍详情</a>
                             <th:block th:if="${hot.sta} eq -1">
-                                <a href="javascript:;" class="ui-button ui-button-default elAddShelf">加入书架</a>
+                                <a th:href="|javascript:addBookrack(${hot.bookid});|" class="ui-button ui-button-default elAddShelf">加入书架</a>
                             </th:block>
                             <th:block th:if="${hot.sta} ne -1">
                                 <span class="ui-button ui-button-default disabled">已在书架</span>
@@ -195,19 +200,19 @@
                             <span>至今</span>
                         </th:block>
                     </div>
-                    <a href="//book.qidian.com/info/8361" target="_blank" class='author-item-book' data-eid="qd_M268"><img th:src="@{/imgicon/{icon}(icon = ${q.icon})}" class='author-item-img'></a>
+                    <a th:href="'/jpbook/books/queryBookById?bookid='+${q.bookid}" target="_blank" class='author-item-book' data-eid="qd_M268"><img th:src="@{/imgicon/{icon}(icon = ${q.icon})}" class='author-item-img'></a>
                     <div class="author-item-msg">
-                        <div class="author-item-title"><a href="//book.qidian.com/info/8361" target="_blank" data-eid="qd_M269" data-bid="8361" th:text="${q.bookname}">书名</a></div>
-                        <div class="author-item-exp"><a href="http://qihuan.qidian.com" target="_blank"><span th:text="${q.btname}">类型</span></a><i class="author-item-line"></i><a href="//read.qidian.com/chapter/L10xRG3CFQc1/TgjliRzz0Qcex0RJOkJclQ2" target="_blank"><span th:text="${q.bookstate == 0 ? '连载':'完本'}">状态</span></a><i class="author-item-line"></i><span th:text="${q.num}">0</span>万字</div>
+                        <div class="author-item-title"><a th:href="'/jpbook/books/queryBookById?bookid='+${q.bookid}" target="_blank" data-eid="qd_M269" data-bid="8361" th:text="${q.bookname}">书名</a></div>
+                        <div class="author-item-exp"><a href="http://qihuan.qidian.com" target="_blank"><span th:text="${q.btname}">类型</span></a><i class="author-item-line"></i><a href="//read.qidian.com/chapter/" target="_blank"><span th:text="${q.bookstate == 0 ? '连载':'完本'}">状态</span></a><i class="author-item-line"></i><span th:text="${q.num}">0</span>万字</div>
                         <div class="author-item-content" th:text="${q.bookreferral}">简介</div>
                         <div class="author-item-update">
                             <a href="//read.qidian.com/chapter/" class="blue" target="_blank" th:title="${q.chapname}">最近更新&nbsp;<b th:text="${q.chapname}"></b></a>
                             <span>&nbsp;&nbsp;·&nbsp;&nbsp;<i th:text="${#strings.substring(q.chaptime,0,19)}"></i></span>
                         </div>
                         <div class="author-item-button">
-                            <a href="//book.qidian.com/info/8361" target="_blank" class="ui-button" data-eid="qd_M270" data-bid="8361">书籍详情</a>
+                            <a th:href="'/jpbook/books/queryBookById?bookid='+${q.bookid}" target="_blank" class="ui-button" data-eid="qd_M270" data-bid="8361">书籍详情</a>
                             <th:block th:if="${q.sta} eq -1">
-                                <a href="javascript:;" class="ui-button ui-button-default elAddShelf">加入书架</a>
+                                <a th:href="|javascript:addBookrack(${q.bookid});|" class="ui-button ui-button-default elAddShelf">加入书架</a>
                             </th:block>
                             <th:block th:if="${q.sta} ne -1">
                                 <span class="ui-button ui-button-default disabled">已在书架</span>
@@ -261,6 +266,24 @@
         <p>本站所收录作品、社区话题、书库评论及本站所做之广告均属其个人行为，与本站立场无关</p>
     </div>
 </div>
+
+    <script>
+        function addBookrack(bookid) {
+            $.ajax({
+                url: "/jpbook/pc/add",
+                data: {"bookid": bookid},
+                success: function (data) {
+                    if (data == -1) {
+                        window.location.href = "/jpbook/login";
+                    }else {
+                        swal("已加入书架", "", "success");
+                        setTimeout(function(){ window.location.reload();},1000);
+                    }
+                }
+            })
+        }
+
+    </script>
 
 </body>
 </html>

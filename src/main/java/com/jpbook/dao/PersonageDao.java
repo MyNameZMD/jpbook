@@ -1,5 +1,6 @@
 package com.jpbook.dao;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -27,5 +28,8 @@ public interface PersonageDao {
     public Integer  delFans(Integer uuid,Integer buuid);
 
     public List<Map<String,Object>> usersBooks(Integer someuuid,Integer uuid);
+
+    @Insert("insert into bookrack values(null,#{param1},#{param2})\n")
+    public Integer addBookrack(Integer uuid, Integer bookid);
 
 }

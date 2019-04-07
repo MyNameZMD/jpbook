@@ -8,7 +8,7 @@
     <script src="../js/jquery-3.3.1.js"  th:inline="none"></script>
     <script src="../layui/layui.js" charset="utf-8"  th:inline="none"></script>
 </head>
-<body>
+<body style="margin-left: 50px;margin-right: 50px">
     <table class="layui-hide" id="users"></table>
 </body>
     <script type="text/javascript" th:inline="none">
@@ -20,11 +20,14 @@
                 ,url:'/jpbook/back/userquery'
 
                 ,cols: [[
-                    {field:'uname', width:180, title: '用户名'}
-                    ,{field:'exp', width:100, title: '经验'}
-                    ,{field:'grade', width:100, title: '等级'}
-                    ,{field:'money', width:120, title: '书币'}
-                    ,{field:'icon', width:100, title: '头像',templet:function (d) { return '<img src="/jpbook/imgicon/'+d.icon+'">'}}
+                     {field:'uuid', title: 'ID',align:'center'}
+                    ,{field:'uname', title: '用户名'}
+                    ,{field:'gender',  title: '性别',align:'center'}
+                    ,{field:'phone', title: '电话'}
+                    ,{field:'exp', title: '经验',align:'center'}
+                    ,{field:'grade',  title: '等级',align:'center'}
+                    ,{field:'money', title: '剩余书币',align:'center'}
+                    ,{field:'icon', title: '头像',templet:function (d) { return '<img src="/jpbook/imgicon/'+d.icon+'">'}}
                 ]]
                 ,page: true
                 ,done:function(res,curr,count){
