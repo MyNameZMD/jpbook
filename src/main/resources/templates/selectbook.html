@@ -100,28 +100,34 @@
         <div class="box-center cf">
             <div class="nav-list site-nav fl">
                 <ul>
-                    <li class="site">
-                        <a class="pin-logo" href="/jpbook/booktype/queryAll" style = "font-size: 18px;font-family: 'Courier New', Courier, monospace">江派中文网</a>
+
+                    <li class="line"></li>
+                    <li th:class="${session.users} ? 'sign-out hidden' : 'sign-out'">
+                        <a id="pin-login" href="../login.html" target="_blank">登录</a>
+                        <a class="reg" href="../register.html" target="_blank">注册</a>
                     </li>
-                    <li><a href="https://www.qidian.com/xuanhuan" target="" data-eid="qd_A47">玄幻</a></li>
-                    <li><a href="https://www.qidian.com/dushi" target="" data-eid="qd_A48">都市</a></li>
-                    <li><a href="https://www.qidian.com/xianxia" target="" data-eid="qd_A49">仙侠</a></li>
-                    <li><a href="https://www.qidian.com/kehuan" target="" data-eid="qd_A50">科幻</a></li>
-                    <li><a href="https://www.qidian.com/youxi" target="" data-eid="qd_A56">游戏</a></li>
-                    <li><a href="https://www.qidian.com/lishi" target="" data-eid="qd_A52">历史</a></li>
-                    <li><a href="https://www.qidian.com/rank" target="_blank" data-eid="qd_A53">排行</a></li>
-                    <li class="more"><a href="javascript:" id="top-nav-more" target="" data-eid="qd_A54">更多<span></span></a>
-                        <div class="dropdown">
-                            <a href="https://www.qidian.com/all" target="_blank" data-eid="qd_A169">全部作品</a>
-                            <a href="https://www.qidian.com/2cy" target="" data-eid="qd_A55">二次元</a>
-                            <a href="https://www.qidian.com/qihuan" target="" data-eid="qd_A51">奇幻</a>
-                            <a href="https://www.qidian.com/wuxia" target="" data-eid="qd_A57">武侠</a>
-                            <a href="https://www.qidian.com/lingyi" target="" data-eid="qd_A58">悬疑灵异</a>
-                            <a href="https://www.qidian.com/junshi" target="" data-eid="qd_A59">军事</a>
-                            <a href="https://www.qidian.com/xianshi" target="" data-eid="qd_A60">现实</a>
-                            <a href="https://www.qidian.com/tiyu" target="" data-eid="qd_A61">体育</a>
-                            <a href="https://www.qidian.com/duanpian" target="" data-eid="qd_A196">短篇</a>
-                        </div>
+                    <th:block th:if="${session}">
+                        <th:block th:if="${session.users}">
+                            <li th:class="${session.users[0] } ? 'sign-in' : 'sign-in hidden'">
+                                <a href="../personal.html" target="_blank">
+                                    <span id = "uuid" style="display: none" th:text="${session.users[0].uuid}"></span>
+                                    <i id="nav-user-name" th:text="${session.users[0].uname}"></i>
+                                    <span></span>
+                                </a>
+                                <div class="dropdown">
+                                    <a href="/jpbook/topup" target="_blank">充值</a>
+                                    <a href="../personal.html" target="_blank">个人中心</a>
+                                    <a id="exit" href="javascript:void(0);" onclick="removeu()">退出</a>
+                                </div>
+                            </li>
+                        </th:block>
+                    </th:block>
+                    <li class="line"></li>
+                    <li class="book-shelf" id="top-book-shelf">
+                        <a th:href="${session.users} ? '../personal.html?key=i' : '../login.html'" target="_blank">
+                            <em class = "iconfont icon-book_icon"></em>
+                            <i>我的书架</i>
+                        </a>
                     </li>
                 </ul>
             </div>

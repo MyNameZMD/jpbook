@@ -129,7 +129,7 @@
 				    if(0 == data){
                         window.location.href = "../login.html";
 					}else{
-				        window.close();
+				        /*window.close();*/
                         window.open("/jpbook/books/queryBookByFatie?retype=1"+"&bookid="+bookid);
 					}
 				}
@@ -215,6 +215,8 @@
 								})
                             })
                         }else{
+                            $("#evaoverlay").css("display","block");
+                            $("#evadiv").css("display","block");
                             $(".lbf-overlay").removeClass("hidden");
                             $(".lbf-panel").removeClass("hidden");
                             $("#hint").html($(this).attr("title"));
@@ -327,44 +329,36 @@
 				<div class="nav-list site-nav fl">
 					<ul>
 						<li class="site"><a class="pin-logo"
-							href="booktype/queryAll" style = "font-size: 18px;font-family: 'Courier New', Courier, monospace">江派中文网</a>
+							href="/jpbook/booktype/queryAll" style = "font-size: 18px;font-family: 'Courier New', Courier, monospace">江派中文网</a>
 						</li>
-						<li><a href="https://www.qidian.com/xuanhuan" target="">玄幻</a></li>
-						<li><a href="https://www.qidian.com/dushi" target="">都市</a></li>
-						<li><a href="https://www.qidian.com/xianxia" target="">仙侠</a></li>
-						<li><a href="https://www.qidian.com/kehuan" target="">科幻</a></li>
-						<li><a href="https://www.qidian.com/youxi" target="">游戏</a></li>
-						<li><a href="https://www.qidian.com/lishi" target="">历史</a></li>
-						<li><a href="https://www.qidian.com/rank" target="_blank">排行</a></li>
+						<li><a href="/jpbook/showAllBook.html?btid=1" target="">玄幻</a></li>
+						<li><a href="/jpbook/showAllBook.html?btid=5" target="">都市</a></li>
+						<li><a href="/jpbook/showAllBook.html?btid=4" target="">仙侠</a></li>
+						<li><a href="/jpbook/showAllBook.html?btid=11" target="">科幻</a></li>
+						<li><a href="/jpbook/showAllBook.html?btid=9" target="">游戏</a></li>
+						<li><a href="/jpbook/showAllBook.html?btid=8" target="">历史</a></li>
+						<li><a href="/jpbook/books/rank" target="_blank">排行</a></li>
 						<li class="more">
 							<a href="javascript:" id="top-nav-more" target="">
 								更多<span></span>
 							</a>
 							<div class="dropdown">
-								<a href="https://www.qidian.com/all" target="_blank">全部作品</a>
-								<a href="https://www.qidian.com/2cy" target="">二次元</a>
-								<a href="https://www.qidian.com/qihuan" target="">奇幻</a>
-								<a href="https://www.qidian.com/wuxia" target="">武侠</a>
-								<a href="https://www.qidian.com/lingyi" target="">悬疑灵异</a>
-								<a href="https://www.qidian.com/junshi" target="">军事</a>
-								<a href="https://www.qidian.com/xianshi" target="">现实</a>
-								<a href="https://www.qidian.com/tiyu" target="">体育</a>
-								<a href="https://www.qidian.com/duanpian" target="">短篇</a>
+								<a href="/jpbook/showAllBook.html" target="_blank">全部作品</a>
+								<a href="/jpbook/showAllBook.html?btid=13" target="_blank">二次元</a>
+								<a href="/jpbook/showAllBook.html?btid=2" target="_blank">奇幻</a>
+								<a href="/jpbook/showAllBook.html?btid=3" target="_blank">武侠</a>
+								<a href="/jpbook/showAllBook.html?btid=12" target="_blank">灵异</a>
+								<a href="/jpbook/showAllBook.html?btid=7" target="_blank">军事</a>
+								<a href="/jpbook/showAllBook.html?btid=6" target="_blank">现实</a>
+								<a href="/jpbook/showAllBook.html?btid=10" target="_blank">体育</a>
+								<a href="/jpbook/showAllBook.html?btid=14" target="_blank">短篇</a>
 							</div>
 						</li>
 					</ul>
 				</div>
 				<div class="nav-list min-user fr">
 					<ul>
-						<li id="min-search">
-							<form id="formUrl" action="https://www.qidian.com/search"
-								method="get" target="_blank">
-								<label id="pin-search" for="topSearchSubmit" data-eid="qd_A62"><i class="iconfont icon-dashujukeshihuaico-"></i></label> <input id="pin-input"
-									class="pin-input hide" type="text" name="kw"
-									placeholder="请输入作者名或书名"> <input class="submit-input"
-									type="submit" id="topSearchSubmit" data-eid="qd_A62">
-							</form>
-						</li>
+
 						<li class="line"></li>
 						<li th:class="${session.users} ? 'sign-out hidden' : 'sign-out'">
 							<a id="pin-login" href="../login.html" target="_blank">登录</a>
@@ -379,9 +373,8 @@
 										<span></span>
 									</a>
 									<div class="dropdown">
-										<a href="https://www.qidian.com/charge/meRedirect" target="_blank">充值</a>
+										<a href="/jpbook/topup" target="_blank">充值</a>
 										<a href="../personal.html" target="_blank">个人中心</a>
-										<a href="https://www.qidian.com/help/kf" target="_blank">客服中心</a>
 										<a id="exit" href="javascript:void(0);" onclick="removeu()">退出</a>
 									</div>
 								</li>
@@ -416,11 +409,11 @@
 
 			<span>
 				<cite class="lt"></cite>
-				<a href="https://www.qidian.com/" data-eid="qd_G01">首页</a>
+				<a href="/jpbook/booktype/queryAll" data-eid="qd_G01">首页</a>
 				<em class="iconfont icon-xiayige"></em>
-				<a href="https://www.qidian.com/xuanhuan" target="_blank" th:text="|${queryBookById[0].btname}频道|"></a>
+				<a th:href="@{/showAllBook.html?btid={filename}(filename=${queryBookById[0].btid})}" target="_blank" th:text="|${queryBookById[0].btname}频道|"></a>
 				<em class="iconfont icon-xiayige"></em>
-				<a href="https://book.qidian.com/info/1013432619" th:text="${queryBookById[0].bookname}">人皇在上</a>
+				<a th:href="@{/showAllBook.html?btid={filename}(filename=${queryBookById[0].bookid})}" th:text="${queryBookById[0].bookname}">人皇在上</a>
 				<cite class="rt"></cite>
 			</span>
 		</div>
@@ -431,7 +424,7 @@
 			<div class="book-information cf" data-l1="2">
 				<div class="book-img">
 					<a class="J-getJumpUrl" id="bookImg" href="javascript:void(0)">
-						<img th:src="${queryBookById[0].icon}"/>
+						<img th:src="@{/img/{filename}(filename=${queryBookById[0].icon})}"/>
 					</a>
 				</div>
 
@@ -446,7 +439,7 @@
 					</h1>
 					<p class="tag">
 						<span class="blue" th:text="${queryBookById[0].bookstate}">连载</span>
-						<a href="https://www.qidian.com/xuanhuan" class="red" target="_blank" th:text="${queryBookById[0].btname}">玄幻</a>
+						<a th:href="@{/showAllBook.html?btid={filename}(filename=${queryBookById[0].btid})}" class="red" target="_blank" th:text="${queryBookById[0].btname}">玄幻</a>
 
 					</p>
 
@@ -470,10 +463,11 @@
 
                 <p>
                     <input type="hidden" id="atbookid" th:value="${queryBookById.get(0).get('bookid')}">
-                    <a class="red-btn J-getJumpUrl "
-                       th:href="@{/chapter/getInformationByChapid?chapid={filename}(filename=${queryChapters[0].chapid})}"
-                       id="readBtn" data-eid="qd_G03" data-bid="1013432619"
-                       data-firstchapterjumpurl="//read.qidian.com/chapter/80fNSWhNN9G-s-AXkdiqBQ2/MyzqB4YXKQlOBDFlr9quQA2">免费试读</a>
+
+						<a class="red-btn J-getJumpUrl "
+						   th:href="@{/chapter/getInformationByChapid?chapid={filename}(filename=${queryChapters[0].chapid})}"
+						   id="readBtn">免费试读</a>
+
                     <script type="text/javascript">
                         $(function () {
                             $.ajax({
@@ -1146,21 +1140,20 @@
 										<dl>
 											<dd th:each="q,s : ${queryAllByBookid}">
 												<div class="user-photo">
-													<a href="https://me.qidian.com/friendIndex.aspx?id=112416992" target="_blank">
+													<a th:href="|/jpbook/pc/home?uuid=${q.uuid}|" target="_blank">
 														<img th:src="|../images/${q.icon}|">
 													</a>
 												</div>
 												<div class="comment-info">
 													<h6>
-														<a class="blue" href="https://me.qidian.com/friendIndex.aspx?id=112416992"
+														<a class="blue" th:href="|/jpbook/pc/home?uuid=${q.uuid}|"
 															target="_blank" th:text="${q.uname}">古道西风笑</a>
 														<i>评</i>
 														<span th:class="|score-min star${q.evalv}|"></span>
 													</h6>
 
-													<p class="normal">
-														<cite class="iconfont blue j_unfold" title="展开评论"
-														th:text="${evacontent}"></cite>
+													<p class="normal" th:utext="|${q.evacontent}<cite class='iconfont blue j_unfold' title='展开评论'></cite>|">
+
 													</p>
 													<p th:text="${q.evatime}">2019-02-18 15:01</p>
 
@@ -1219,13 +1212,13 @@
                                                 <th:bolock th:if="${status.index lt 14}">
                                                     <li class="cf " data-rid="1">
                                                         <div class="user-photo">
-                                                            <a href="https://my.qidian.com/user/157804031" target="_blank">
-                                                                <img th:src="${qr.icon}">
+                                                            <a th:href="|/jpbook/pc/home?uuid=${qr.uuid}|" target="_blank">
+                                                                <img th:src="@{/images/{filename}(filename=${qr.icon})}">
                                                             </a>
                                                         </div>
                                                         <div class="discuss-info">
                                                             <p class="users">
-                                                                <a class="blue" href="https://my.qidian.com/user/157804031" target="_blank">
+                                                                <a class="blue"  th:href="|/jpbook/pc/home?uuid=${qr.uuid}|" target="_blank">
                                                                     <b th:text="${qr.uname}">浮生盼有钱</b>
                                                                 </a>
                                                                 <span class="gray">发表了帖子</span>
@@ -1282,16 +1275,15 @@
 						<div class="author-info">
 							<div class="info-wrap nobt" data-l1="9">
 								<div class="author-photo" id="authorId" data-authorid="4242192">
-									<a href="https://my.qidian.com/author/4242192" target="_blank"
+									<a th:href="@{/pc/authorData?bid={filename}(filename=${queryUsers[0].uuid})}" target="_blank"
 										data-eid="qd_G38">
-										<img th:src="${queryUsers[0].icon}">
+										<img th:src="@{/images/{filename}(filename=${queryUsers[0].icon})}">
 									</a>
-									<span class="lv">Lv.1</span>
+									<span class="lv" th:text="|Lv.${queryUsers[0].grade}|">Lv.1</span>
 								</div>
 								<p>
 									<a href="https://my.qidian.com/author/4242192" target="_blank" th:text="${queryUsers[0].pen}"></a>
 								</p>
-
 							</div>
 							<div class="info-wrap" data-l1="9">
 								<ul class="work-state cf">
@@ -1340,7 +1332,7 @@
 														<div class="fans-img">
 															<a href="https://me.qidian.com/friendIndex.aspx?id=209502100"
 															   target="_blank">
-																<img th:src="${q.icon}"></a>
+																<img th:src="@{/images/{filename}(filename=${q.icon})}"></a>
 															<span class="user-level lv9"></span>
 														</div>
 													</th:block>
@@ -1433,7 +1425,7 @@
 </script>
 <!--投票投币弹框-->
 <div class="lbf-panel"
-     style="position:fixed;z-index: 62780; width: 520px; top: 65px; left: 432px;display: none;"><a
+     style="position:fixed;z-index: 62780; width: 520px;  top: 164px; left: 32.5%;display: none;"><a
         href="javascript:closePanel();"
         class="lbf-panel-close lbf-icon lbf-icon-close"></a>
     <div class="lbf-panel-head" style="display: none;">提示</div>
@@ -1988,8 +1980,8 @@
 		</div>
 
 	</div>
-	<div class="lbf-panel hidden" style="z-index: 12668; width: 520px; top: 164px; left: 32.5%;">
-		<a href="javascript:;" class="lbf-panel-close lbf-icon lbf-icon-close" onclick="$('.lbf-panel').addClass('hidden');$('.lbf-overlay').addClass('hidden');$('#starBig').children('img').attr('src','../images/star-off.b2a1b.png');"></a>
+	<div class="lbf-panel hidden" id="evadiv" style="position:fixed;z-index: 12668; width: 520px; top: 164px; left: 32.5%;">
+		<a href="javascript:;" class="lbf-panel-close lbf-icon lbf-icon-close" onclick="$('.lbf-panel').addClass('hidden');$('.lbf-overlay').addClass('hidden');$('#starBig').children('img').attr('src','../images/star-off.b2a1b.png');$('.lbf-panel').css('display', 'none'); $('.lbf-overlay').css('display', 'none');"></a>
 		<div class="lbf-panel-head" style="display: none;">提示</div>
 		<div class="lbf-panel-body"><!-- start 评价弹窗-->
 			<div class="book-popup evaluate-popup" id="evaluatePopup">
@@ -2037,6 +2029,6 @@
 			</div>
 		</div>
 	</div>
-	<div class="lbf-overlay hidden" style="background-color: black; opacity: 0.3; z-index: 8644; width: 100%; height: 3824px;"></div>
+	<div class="lbf-overlay hidden" id="evaoverlay" style="background-color: black; opacity: 0.3; z-index: 8644; width: 100%; height: 3824px;"></div>
 </body>
 </html>

@@ -96,7 +96,7 @@
             <dl class="cf" th:each="bt : ${queryAll}">
                 <dd th:class="${bt.btid % 2 == 0 ? 'left' : 'even'}"
                     th:style="${bt.btid % 2 == 0 ? 'margin-left:106.5px;margin-top:-60px;' : ''}">
-                    <a href="/xuanhuan" target="_blank"><cite><em class="iconfont" th:utext="${bt.btico}"></em><span
+                    <a th:href="|/jpbook/showAllBook.html?btid=${bt.btid}|" target="_blank"><cite><em class="iconfont" th:utext="${bt.btico}"></em><span
                             class="info"><i th:text="${bt.btname}"></i><b th:text="${bt.count}"></b></span></cite></a>
                 </dd>
             </dl>

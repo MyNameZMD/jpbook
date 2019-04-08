@@ -73,6 +73,7 @@
     <link data-ignore="true" rel="Bookmark" type="image/x-icon"
           href="https://qidian.gtimg.com/qd/favicon/qd_icon.c443c.ico">
 
+    <link  rel="stylesheet" href="./css/icon.css">
 
     <link rel="stylesheet" data-ignore="true" href="./css/Button.e5a3e.css">
 
@@ -98,8 +99,8 @@
                     </th:block>
                 </th:block>
                 <div th:class="${session.users} ? 'sign-out hidden' : 'sign-out'">
-                    <a id="login-btn" class="black" href="../login.html">登录</a><em>|</em>
-                    <a id="reg-btn" href="../register.html" target="_blank">注册</a>
+                    <a id="login-btn" class="black" href="./login.html">登录</a><em>|</em>
+                    <a id="reg-btn" href="./register.html" target="_blank">注册</a>
                 </div>
             </div>
             <div class="nav-link fl">
@@ -110,24 +111,13 @@
         </div>
     </div>
 
-    <div class="top-op-box" id="j-topOpBox"><!-- start 顶部随机广告 -->
 
-        <div class="top-game-op" id="topGameOp" data-l1="34" style="display: block;">
-            <div class="game-wrap">
-                <a class="close" id="closeTopGame" href="javascript:" data-eid="qd_A184"><em class="iconfont"></em></a>
-                <a href="http://cpgame.qd.game.qidian.com/Home/Index/directLogin/name/tmld3d/way/1?qd_game_key=tmld1200x60&amp;qd_dd_p1=553"
-                   target="_blank" data-eid="qd_B83" data-qd_dd_p1="1"><img src="./css/0"><span
-                        class="op-tag"></span></a>
-            </div>
-        </div>
-
-        <!-- end 顶部随机广告 --></div>
 
     <div class="logo-wrap box-center" data-l1="2">
         <div class="box-center cf">
             <div class="book-shelf fr">
-                <a href="https://me.qidian.com/bookCase/bookCase.aspx?caseId=-2" target="_blank" data-eid="qd_A14"><em
-                        class="iconfont shelf"></em><i>我的书架</i>
+                <a th:href="${session.users} ? './personal.html?key=i' : './login.html'" target="_blank"><em
+                        class="icon icon-book_icon"></em><i>我的书架</i>
                 </a>
             </div>
             <div class="logo fl">
@@ -138,8 +128,9 @@
                     <p><input class="search-box" id="s-box" name="kw" type="text" placeholder="伊森的奇幻漂流"
                               autocomplete="off"></p>
                     <input class="submit-input" type="submit" id="searchSubmit" data-eid="qd_A13">
-                    <label id="search-btn" class="search-btn" for="searchSubmit"><em class="iconfont" data-eid="qd_A13">
-                        </em></label>
+                    <label id="search-btn" class="search-btn" for="searchSubmit">
+                        <em class="iconfont">&#xe7fc;</em>
+                    </label>
                 </form>
             </div>
         </div>
@@ -316,7 +307,7 @@
             </em>作品分类</span>
                 </li>
                 <li class="nav-li"><a href="showAllBook.html" data-eid="qd_A15">全部作品</a></li>
-                <li class="nav-li"><a href="https://www.qidian.com/rank" data-eid="qd_A16">排行</a></li>
+                <li class="nav-li"><a href="/jpbook/books/rank" data-eid="qd_A16">排行</a></li>
                 <li class="nav-li"><a href="showEndBook.html" data-eid="qd_A17">完本</a></li>
                 <li class="nav-li"><a href="showFreeBook.html" data-eid="qd_A18" class="act">免费</a></li>
                 <li class="nav-li"><a href="/jpbook/users/openwriter" target="_blank" data-eid="qd_A19">作家专区</a>
@@ -558,18 +549,12 @@
         <div class="main-content-wrap fl" data-l1="5">
 
             <div class="tool-bar cf">
-                <div class="view-mode" id="view-mode">
-                    <a id="img-text" class="iconfont act"
-                       href="https://www.qidian.com/all?orderId=&amp;page=1&amp;style=1&amp;pageSize=20&amp;siteid=1&amp;pubflag=0&amp;hiddenField=0"
-                       data-eid="qd_B54"></a><em>|</em><a id="only-text" class="iconfont  "
-                                                           href="https://www.qidian.com/all?orderId=&amp;page=1&amp;style=2&amp;pageSize=20&amp;siteid=1&amp;pubflag=0&amp;hiddenField=0"
-                                                           data-eid="qd_B55"></a>
-                </div>
+
                 <div class="select-wrap">
                     <input type="hidden" id="order" name="order" value="updatetime">
                     <a data-id="5" class="act"
                        href="javascript:ordertab('更新时间',5,'updatetime')"
-                       data-eid="qd_B49">更新时间<cite class="iconfont"></cite></a>
+                       data-eid="qd_B49">更新时间</a>
                     <a data-id="3"
                        href="javascript:ordertab('总字数',3,'sum')"
                        data-eid="qd_B52">总字数</a>
@@ -578,7 +563,6 @@
                             $(".select-wrap").find("cite").remove();
                             $(".select-wrap").find("a").prop("class","");
                             $(".select-wrap").find("a[data-id="+obj+"]").prop("class","act");
-                            $(".select-wrap").find("a[data-id="+obj+"]").html(name+"<cite class=\"iconfont\"></cite>")
                             $("#order").val(order);
                             read();
                         }
@@ -586,10 +570,6 @@
                     <div class="sort-count count-info" id="sort-count">
                         <div class="count-text">共<span id="bookcount">1144714</span>本相关作品
                         </div>
-                        <div class="yiwen" id="yiwen">
-                            <div class="iconfont"></div>
-                        </div>
-                        <i>|</i>
                     </div>
                 </div>
             </div>
@@ -599,47 +579,6 @@
 
                 <div class="book-img-text">
                     <ul class="all-img-list cf" id="showbooks">
-
-                        <li data-rid="1">
-                            <div class="book-img-box">
-                                <a href="https://book.qidian.com/info/1010734492" data-bid="1010734492"
-                                   data-eid="qd_B57" target="_blank"><img src="./css/150"></a>
-                            </div>
-                            <div class="book-mid-info">
-                                <h4><a href="https://book.qidian.com/info/1010734492" target="_blank" data-eid="qd_B58"
-                                       data-bid="1010734492">凡人修仙之仙界篇</a></h4>
-                                <p class="author">
-                                    <img src="./css/user.f22d3.png"><a class="name"
-                                                                       href="https://my.qidian.com/author/4362771"
-                                                                       data-eid="qd_B59"
-                                                                       target="_blank">忘语</a><em>|</em><a
-                                        href="https://www.qidian.com/xianxia" target="_blank"
-                                        data-eid="qd_B60">仙侠</a><i>·</i><a class="go-sub-type" data-typeid="22"
-                                                                           data-subtypeid="207" href="javascript:"
-                                                                           data-eid="qd_B61">神话修真</a><em>|</em><span>连载中</span>
-
-                                </p>
-                                <p class="intro">
-                                    凡人修仙，风云再起时空穿梭，轮回逆转金仙太乙，大罗道祖三千大道，法则至尊《凡人修仙传》仙界篇，一个韩立叱咤仙界的故事，一个凡人小子修仙的不灭传说。特说明下，没有看过前传的书友，并不影响本书的阅读体验，
-                                </p>
-                                <p class="update"><span><style>@font-face {
-                                    font-family: wDcilLiv;
-                                    src: url('https://qidian.gtimg.com/qd_anti_spider/wDcilLiv.eot?') format('eot');
-                                    src: url('https://qidian.gtimg.com/qd_anti_spider/wDcilLiv.woff') format('woff'), url('https://qidian.gtimg.com/qd_anti_spider/wDcilLiv.ttf') format('truetype');
-                                }
-
-                                .wDcilLiv {
-                                    font-family: 'wDcilLiv' !important;
-                                    display: initial !important;
-                                    color: inherit !important;
-                                    vertical-align: initial !important;
-                                }</style><span class="wDcilLiv">𘡗𘡙𘡒𘡕𘡐𘡎</span>万字</span>
-
-                                </p>
-                            </div>
-                        </li>
-
-
                     </ul>
                 </div>
 

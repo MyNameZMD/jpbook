@@ -151,7 +151,7 @@
                 <p><input class="search-box" id="s-box" name="kw" type="text" placeholder="请输入作者名或书名" autocomplete="off"></p>
                 <input class="submit-input" type="submit" id="searchSubmit">
                 <label id="search-btn" class="search-btn" for="searchSubmit">
-                    <em class="iconfont"></em>
+                    <em class="iconfont">&#xe7fc;</em>
                 </label>
             </form>
         </div>
@@ -178,11 +178,11 @@
                 <i></i>
             </em>作品分类</span>
             </li>
-            <li class="nav-li"><a href="https://www.qidian.com/all">全部作品</a></li>
-            <li class="nav-li"><a href="../books/cank" class="act">排行</a></li>
-            <li class="nav-li"><a href="https://www.qidian.com/finish">完本</a></li>
-            <li class="nav-li"><a href="https://www.qidian.com/free">免费</a></li>
-            <li class="nav-li"><a href="https://write.qq.com/public/login.html" target="_blank">作家专区</a></li>
+            <li class="nav-li"><a href="/jpbook/showAllBook.html" data-eid="qd_A15">全部作品</a></li>
+            <li class="nav-li"><a href="/jpbook/books/rank" data-eid="qd_A16" class="act">排行</a></li>
+            <li class="nav-li"><a href="/jpbook/showEndBook.html" data-eid="qd_A17">完本</a></li>
+            <li class="nav-li"><a href="/jpbook/showFreeBook.html" data-eid="qd_A18">免费</a></li>
+            <li class="nav-li"><a href="/jpbook/users/openwriter" data-eid="qd_A19">作家专区</a>
         </ul>
     </div>
 </div>
@@ -190,7 +190,7 @@
         <div class="rank-nav-list fl">
     <ul>
 
-        <li class=""><a href="../books/rank">人气榜单</a><cite></cite></li>
+        <li class=""><a href="../rank">人气榜单</a><cite></cite></li>
     </ul>
     <p class="line"></p>
     <h4>热门作品排行</h4>
@@ -279,10 +279,10 @@
                                         <div class="book-mid-info">
                                             <h4><a th:href="@{/books/queryBookById(bookid=${l.bookid})}" target="_blank" th:text="${l.bookname}">斗罗大陆</a></h4>
                                             <p class="author">
-                                                <a class="name" href="https://me.qidian.com/authorIndex.aspx?id=4921" target="_blank"
+                                                <a class="name"  th:href="@{/pc/authorData?bid={filename}(filename=${l.uuid})}"  target="_blank"
                                                 th:text="${l.pen}">唐家三少</a>
                                                 <em>|</em>
-                                                <a href="https://www.qidian.com/xuanhuan" target="_blank"
+                                                <a  th:href="@{/showAllBook.html?btid={filename}(filename=${l.btid})}"  target="_blank"
                                                 th:text="${l.btname}">玄幻</a>
                                                 <em>|</em>
                                                 <th:block th:if="${type} ne 'fin'">
@@ -301,7 +301,7 @@
                                                     <a href="javascript:">暂时还没有更新</a>
                                                 </th:block>
                                                 <th:block th:unless="${l.chapid}eq -1">
-                                                    <a href="https://vipreader.qidian.com/chapter/1115277/26041662" target="_blank"
+                                                    <a  th:href="@{/chapter/getInformationByChapid?chapid={filename}(filename=${l.chapid})}"  target="_blank"
                                                        th:text="|最近更新 第${l.chapnum}章 ${l.chapname}|">
                                                         最新更新 第二百三十六章 大结局，最后一个条件（全书完）
                                                     </a>

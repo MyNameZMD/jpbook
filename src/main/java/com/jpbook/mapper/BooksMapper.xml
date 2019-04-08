@@ -76,7 +76,7 @@
         group by re.bookid
     </select>
     <select id="queryUsers" parameterType="Integer" resultType="map">
-        select ifnull(u.icon,'../images/0.jpg') icon,u.uuid,u.uname,u.pen,ifnull(u.self,'谁知道他很懒，没有想告诉你们的呢...') self,c.bookcount,f.chaptercount,t.days from users u,(select *,count(bookid) bookcount from books where uuid = (select uuid from users where uuid = (select uuid from books where bookid = #{param1}))) c,(select ifnull(round(sum(chapcount)/10000,2),0) chaptercount from chapter where rollid in (select rollid from roll where bookid in (select bookid from books where uuid = (select uuid from users where uuid = (select uuid from books where bookid = #{param1}))))) f,(select count(c.chaptime) days from books b left join roll r on r.bookid = b.bookid left join chapter c on c.rollid = r.rollid
+        select ifnull(u.icon,'../images/0.jpg') icon,u.grade,u.uuid,u.uname,u.pen,ifnull(u.self,'谁知道他很懒，没有想告诉你们的呢...') self,c.bookcount,f.chaptercount,t.days from users u,(select *,count(bookid) bookcount from books where uuid = (select uuid from users where uuid = (select uuid from books where bookid = #{param1}))) c,(select ifnull(round(sum(chapcount)/10000,2),0) chaptercount from chapter where rollid in (select rollid from roll where bookid in (select bookid from books where uuid = (select uuid from users where uuid = (select uuid from books where bookid = #{param1}))))) f,(select count(c.chaptime) days from books b left join roll r on r.bookid = b.bookid left join chapter c on c.rollid = r.rollid
         where b.bookid = #{param1} and date_format(c.chaptime,'%Y%m') = date_format(curdate(),'%Y%m')) t
         where c.uuid = u.uuid
     </select>
@@ -97,7 +97,7 @@
     </select>
     <select id = "queryChapters" parameterType="Integer" resultType="map">
         select b.bookid,r.rollid,r.rollname,c.chapid,c.chapnum,ifnull(c.chapname,'作者很懒还没有设置名字') chapname,c.chaptime,c.chapcount,ifnull(c.url,'javascript:void(0)') url,case r.rollmoney when 1 then '免费' when 2 then '收费' end vip,ifnull(bd.uuid,0) uuid from books b left join roll r on b.bookid = r.bookid left join chapter c on c.rollid = r.rollid left join buyrecord bd on bd.chapid = c.chapid and bd.uuid = #{param2}
-        where b.bookid = #{param1}
+        where b.bookid = #{param1} and c.chapstate=1
         order by r.rollid,c.chapnum
     </select>
     <select id = "queryBuy" resultType="map" parameterType="Integer">

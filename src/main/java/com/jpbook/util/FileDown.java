@@ -8,28 +8,31 @@ import java.net.URLEncoder;
 import java.io.File;
 
 import java.io.FileOutputStream;
+import java.text.DecimalFormat;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+
 public class FileDown {
 
-    public void createZIP(String bookname, String[] picname, HttpServletResponse resp, HttpServletRequest req) {
-        String filepath = "F:\\books\\";
+    public void createZIP(String Strategycity, String[] picname, HttpServletResponse resp, HttpServletRequest req) {
+        String filepath = "f:\\books\\";
         DataInputStream in = null;
         OutputStream out = null;
         try {
             resp.reset();// 清空输出流
-            String resultFileName = bookname + ".zip";
+            String resultFileName = Strategycity + ".zip";
             resultFileName = URLEncoder.encode(resultFileName, "UTF-8");
             resp.setCharacterEncoding("UTF-8");
             resp.setHeader("Content-disposition", "attachment; filename=" + resultFileName);// 设定输出文件头
             resp.setContentType("application/msexcel");// 定义输出类型
 
             // mafengworiben2 拼接城市准备输出到页面下载输出名字
-            File resultPath = new File(filepath + bookname + ".zip");
+            File resultPath = new File(filepath + Strategycity + ".zip");
 
 
             if(!resultPath.exists()) {
-                String imageFolderPath = "F:\\books";
+                String imageFolderPath = "f:\\BOOKS";
                 File sourceFile = new File(imageFolderPath);
                 FileInputStream fis = null;
                 BufferedInputStream bis = null;
@@ -49,26 +52,21 @@ public class FileDown {
                             byte[] bufs = new byte[1024 * 10];
                             // 添加正确顺序的循环
                             for(int j = 0; j < picname.length; j++){
-
-                                for (int i = 0; i < sourceFiles.length; i++) {
-                                    String thispic = sourceFiles[i].toString().substring(imageFolderPath.length() + 1);
                                     //判断是否是正确顺序对应的图片
-                                        System.out.println("picname"+picname[j]);
+                                    System.out.println("picname[j]"+picname[j]);
                                         //创建ZIP实体，并添加进压缩包
+                                        //修改文件名！
+                                        String thispicname = picname[j];
                                         // ZipEntry zipEntry = new ZipEntry(sourceFiles[i].getName());
-                                        ZipEntry zipEntry = new ZipEntry(picname[j]);
+                                        ZipEntry zipEntry = new ZipEntry(Strategycity+"\\"+picname[j].substring(picname[j].lastIndexOf("\\")+1));
                                         zos.putNextEntry(zipEntry);
                                         //读取待压缩的文件并写进压缩包里
-                                        fis = new FileInputStream(sourceFiles[i]);
-                                        bis = new BufferedInputStream(fis, 1024 * 100000);
+                                        fis = new FileInputStream("f:\\BOOKS\\"+thispicname);
+                                        bis = new BufferedInputStream(fis, 1024 * 10);
                                         int read = 0;
                                         while ((read = bis.read(bufs, 0, 1024 * 10)) != -1) {
                                             zos.write(bufs, 0, read);
                                         }
-                                        /*fis.close();
-                                        fs[i].delete();*/
-
-                                }
 
                             }
                         }
@@ -125,6 +123,7 @@ public class FileDown {
                 }
             }
         }
+
 
     }
 }

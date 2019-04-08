@@ -459,7 +459,11 @@ public class BooksController {
     public void download(Integer bookid,HttpSession session,HttpServletResponse resp, HttpServletRequest req){
         System.out.println(111);
         List<Map<String, Object>> download = bs.download(bookid, Gs.getsession(session));
-        String bookname = download.get(0).get("bookname").toString();
+        String bookname ="你没有权限下载";
+        if (download.size()>0){
+            bookname = download.get(0).get("bookname").toString();
+        }
+
         String[] picname=new String[download.size()];
         for (int i=0;i<download.size();i++){
             picname[i]=download.get(i).get("url").toString();
