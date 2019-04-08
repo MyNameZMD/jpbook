@@ -160,14 +160,14 @@
                     <div class="author-item-msg">
                         <div class="author-item-title"><a th:href="'/jpbook/books/queryBookById?bookid='+${hot.bookid}" target="_blank" data-eid="qd_M269" data-bid="1013406185" th:text="${hot.bookname}">书名</a></div>
                         <div class="author-item-exp">
-                            <a href="http://xuanhuan.qidian.com" target="_blank" th:text="${hot.btname}">类型</a>
+                            <a th:href="'/jpbook/showAllBook.html?btid='+${hot.btid}" target="_blank" th:text="${hot.btname}">类型</a>
                             <i class="author-item-line"></i>
-                            <a href="//vipreader.qidian.com/chapter/1013406185/458339144" target="_blank" th:text="${hot.bookstate == 0 ? '连载':'完本'}">状态</a>
+                            <a target="_blank" th:text="${hot.bookstate == 0 ? '连载':'完本'}">状态</a>
                             <i class="author-item-line"></i><span th:text="${hot.num}">0</span>万字
                         </div>
                         <div class="author-item-content" th:text="${hot.bookreferral}">简介</div>
                         <div class="author-item-update">
-                            <a href="//read.qidian.com/chapter/" class="blue" target="_blank" th:title="${hot.cname}">最近更新&nbsp;<b th:text="${hot.cname}"></b></a>
+                            <a th:href="'/jpbook/chapter/getInformationByChapid?chapid='+${hot.chapid}" class="blue" target="_blank" th:title="${hot.cname}">最近更新&nbsp;<b th:text="${hot.cname}"></b></a>
                             <span>&nbsp;&nbsp;·&nbsp;&nbsp;<i th:text="${#strings.substring(hot.time,0,19)}"></i></span>
                         </div>
 
@@ -203,10 +203,10 @@
                     <a th:href="'/jpbook/books/queryBookById?bookid='+${q.bookid}" target="_blank" class='author-item-book' data-eid="qd_M268"><img th:src="@{/imgicon/{icon}(icon = ${q.icon})}" class='author-item-img'></a>
                     <div class="author-item-msg">
                         <div class="author-item-title"><a th:href="'/jpbook/books/queryBookById?bookid='+${q.bookid}" target="_blank" data-eid="qd_M269" data-bid="8361" th:text="${q.bookname}">书名</a></div>
-                        <div class="author-item-exp"><a href="http://qihuan.qidian.com" target="_blank"><span th:text="${q.btname}">类型</span></a><i class="author-item-line"></i><a href="//read.qidian.com/chapter/" target="_blank"><span th:text="${q.bookstate == 0 ? '连载':'完本'}">状态</span></a><i class="author-item-line"></i><span th:text="${q.num}">0</span>万字</div>
+                        <div class="author-item-exp"><a th:href="'/jpbook/showAllBook.html?btid='+${q.bid}" target="_blank"><span th:text="${q.btname}">类型</span></a><i class="author-item-line"></i><a target="_blank"><span th:text="${q.bookstate == 0 ? '连载':'完本'}">状态</span></a><i class="author-item-line"></i><span th:text="${q.num}">0</span>万字</div>
                         <div class="author-item-content" th:text="${q.bookreferral}">简介</div>
                         <div class="author-item-update">
-                            <a href="//read.qidian.com/chapter/" class="blue" target="_blank" th:title="${q.chapname}">最近更新&nbsp;<b th:text="${q.chapname}"></b></a>
+                            <a th:href="'/jpbook/chapter/getInformationByChapid?chapid='+${q.chapid}" class="blue" target="_blank" th:title="${q.chapname}">最近更新&nbsp;<b th:text="${q.chapname}"></b></a>
                             <span>&nbsp;&nbsp;·&nbsp;&nbsp;<i th:text="${#strings.substring(q.chaptime,0,19)}"></i></span>
                         </div>
                         <div class="author-item-button">

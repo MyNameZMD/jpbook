@@ -11,6 +11,7 @@
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.14.css">
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.15.css">
 	<link rel="stylesheet" data-ignore="true" href="./css/index.0.16.css">
+	<link rel="stylesheet" type="text/css" href="./css/icon.css">
 
 	<link rel="stylesheet" href="./layui/layui-v2.4.5/layui/css/layui.css" media="all">
 
@@ -32,11 +33,11 @@
 			<ul class="header-nav">
 				<li class="header-nav-li" id="h1">
 					<a href="javascript:;" class="header-nav-a active" style="color: white">
-					<i class="iconfont icon-home" ></i>我的首页</a>
+					<i class="icon icon-shouye" ></i>&nbsp;&nbsp;我的首页</a>
 				</li>
 				<li class="header-nav-li" id="h2">
 					<a href="javascript:h2();" class="header-nav-a " style="color: white">
-					<i class="iconfont icon-book"></i>我的书架</a>
+					<i class="icon icon-book_icon"></i>&nbsp;&nbsp;我的书架</a>
 				</li>
 				<!--<li class="header-nav-li" id="h3">
 					<a href="javascript:;" class="header-nav-a " style="color: white">
@@ -58,31 +59,31 @@
 		<div class="personal-sideBar" data-l1="2">
 			<ul class="sideBar-group">
 				<li class="active" id="u1">
-					<a href="javascript:init()" class="sideBar-list-a"><i class="iconfont icon-home"></i>首页</a>
+					<a href="javascript:init()" class="sideBar-list-a"><i class="icon icon-shouye"></i>首页</a>
 				</li>
 				<li class="" id="u2">
-					<a class="sideBar-list-a"><i class="iconfont icon-home"></i>好友</a>
+					<a class="sideBar-list-a"><i class="icon icon-zhanghu"></i>好友</a>
 				</li>
 				<li id="u6" onclick="u6()">
-					<a class="sideBar-list-a" data-eid="qd_M12"><i class="iconfont  icon-finance"></i>账务中心</a>
+					<a class="sideBar-list-a" data-eid="qd_M12"><i class="icon icon-yemian"></i>账务中心</a>
 				</li>
 				<li id="u4" onclick="u4()">
-					<a  class="sideBar-list-a" data-eid="qd_M13"><i class="iconfont  icon-piaojia"></i>我的票夹</a>
+					<a  class="sideBar-list-a" data-eid="qd_M13"><i class="icon icon-qianbao"></i>我的票夹</a>
 				</li>
 				<li id="u3">
-					<a class="sideBar-list-a" data-eid="qd_M15"><i class="iconfont icon-comment"></i>我的书评</a>
+					<a class="sideBar-list-a" data-eid="qd_M15"><i class="icon icon-xiaoxi"></i>我的书评</a>
 				</li>
 
 			</ul>
 			<ul class="sideBar-group">
 				<li id="u10" onclick="u10()">
-					<a class="sideBar-list-a" data-eid="qd_M16"><i class="iconfont icon-level"></i>经验值等级</a>
+					<a class="sideBar-list-a" data-eid="qd_M16"><i class="icon icon-jingyan"></i>经验值等级</a>
 				</li>
 				<li id="u8" onclick="u8()">
-					<a class="sideBar-list-a" target="_blank" data-eid="qd_M20"><i class="iconfont icon-safety"></i>个人设置</a>
+					<a class="sideBar-list-a" target="_blank" data-eid="qd_M20"><i class="icon icon-shezhi"></i>个人设置</a>
 				</li>
 				<li id="u5">
-					<a href="/jpbook/users/openwriter" class="sideBar-list-a" target="_blank" data-eid="qd_M21"><i class="iconfont icon-author"></i>作家专区</a>
+					<a href="/jpbook/users/openwriter" class="sideBar-list-a" target="_blank" data-eid="qd_M21"><i class="icon icon-37"></i>作家专区</a>
 				</li >
 			</ul>
 
@@ -100,7 +101,7 @@
 					<div class="qdp-button">
 						<a href="javascript:;" id="homeurl" class="qdp-button-a mlr4" target="_blank" data-eid="qd_M23">个人主页</a>
 						<a href="javascript:u8()" class="qdp-button-a qdp-button-icon ml12" data-eid="qd_M22">
-							<i class="iconfont icon-gear"></i>
+							<i class="icon icon-shezhi"></i>
 						</a>
 					</div>
 					<h3>
@@ -113,14 +114,13 @@
 							<a href="https://my.qidian.com/friend" class="mr12" data-eid="qd_M27">关注<b class="home-user-b" id="eye">0</b></a>
 							<a href="https://my.qidian.com/friend?targetTab=tabTarget3" class="mr12 ml12" data-eid="qd_M28">粉丝<b class="home-user-b" id="fans">0</b></a>
 						</span>
-							<!-- <a href="https://my.qidian.com/light" class="ml12" data-eid="qd_M29">大神之光<b class="home-user-b">0</b></a> -->
 					</div>
 				</div>
 			</div>
 			<ul class="qdp-border home-msg-wrapper" data-l2="1">
 				<li class="home-msg" data-l3="1">
 					<div class="home-msg-title">
-						<i class="iconfont icon-price yellow"></i><b>账户余额</b>
+						<i class="icon icon-yue"></i><b>账户余额</b>
 					</div>
 					<div class="home-msg-data">
 						<a href="javascript:u6()" data-eid="qd_M30"><b class="home-msg-b" id="money">0</b>起点币</a>
@@ -130,7 +130,7 @@
 
 				<li class="home-msg" data-l3="2">
 					<div class="home-msg-title">
-						<i class="iconfont icon-book blue"></i><b>我的书架</b>
+						<i class="icon icon-book_icon blue"></i><b>我的书架</b>
 					</div>
 					<div class="home-msg-data">
 						<a href="javascript:h2()" data-eid="qd_M32"><b class="home-msg-b" id="shelves">0</b>本藏书</a>
@@ -140,7 +140,7 @@
 
 				<li class="home-msg" data-l3="2">
 					<div class="home-msg-title">
-						<i class="iconfont icon-piaojia green"></i><b>我的月票</b>
+						<i class="icon icon-toupiao green"></i><b>我的月票</b>
 					</div>
 					<div class="home-msg-data">
 						<a href="javascript:u4()" data-eid="qd_M31"><b class="home-msg-b home-msg-num" id="w2">0</b>月票</a>
@@ -149,7 +149,7 @@
 				</li>
 				<li class="home-msg" data-l3="2">
 					<div class="home-msg-title">
-						<i class="iconfont icon-piaojia green"></i><b>我的推荐票</b>
+						<i class="icon icon-toupiao green"></i><b>我的推荐票</b>
 					</div>
 					<div class="home-msg-data">
 						<a href="javascript:u4()" data-eid="qd_M31"><b class="home-msg-b home-msg-num" id="w1">0</b>推荐票</a>
@@ -1049,9 +1049,9 @@
                 if(data.length>0){
                     for (var i=0; i<data.length; i++){
                         tbom1 += "<tr>"+
-                        "<td class='col1 wbba'><a href='' class='blue' target='_blank' data-eid='qd_M76'>"+data[i].revvlue.substring(0,10)+"</a></td>"+
+                        "<td class='col1 wbba'><a href='/jpbook/reviewbook/queryById?revid="+data[i].revid+"' class='blue' target='_blank' data-eid='qd_M76'>"+data[i].revvlue.substring(0,10)+"</a></td>"+
                         "<td class='col4'>"+renderTime(data[i].commenttime).substring(0,10)+"</td>"+
-                        "<td class='col5 wbba'><a href='' class='blue' target='_blank' data-eid='qd_M77'>"+data[i].bookname+"</a></td>"+
+                        "<td class='col5 wbba'><a href='/jpbook/reviewbook/queryById?revid="+data[i].revid+"' class='blue' target='_blank' data-eid='qd_M77'>"+data[i].bookname+"</a></td>"+
                         "</tr>";
 					}
 					$("#tbom1").html(tbom1);
@@ -1073,9 +1073,9 @@
                 if(data.length>0){
                     for (var i=0; i<data.length; i++){
                         tbom2 += "<tr>"+
-                            "<td class='col1 wbba'><a href='' class='blue' target='_blank' data-eid='qd_M76'>"+data[i].revvlue.substring(0,10)+"</a></td>"+
+                            "<td class='col1 wbba'><a href='/jpbook/reviewbook/queryById?revid="+data[i].revid+"' class='blue' target='_blank' data-eid='qd_M76'>"+data[i].revvlue.substring(0,10)+"</a></td>"+
                             "<td class='col2 wbba'>"+data[i].repcontent.substring(0,10)+"</td>"+
-                            "<td class='col3 wbba'><a href='' class='blue' target='_blank' data-eid='qd_M77'>"+data[i].bookname+"</a></td>"+
+                            "<td class='col3 wbba'><a href='/jpbook/reviewbook/queryById?revid="+data[i].revid+"' class='blue' target='_blank' data-eid='qd_M77'>"+data[i].bookname+"</a></td>"+
                             "</tr>";
                     }
                     $("#tbom2").html(tbom2);
@@ -1697,9 +1697,9 @@
 							"<a href='/jpbook/pc/authorData?bid="+data[j].uuid+"' target='_blank' title='' class='shelf-table-author font12'>"+data[j].pen+"</a>"+
 							"</td>";
 							if(data[j].brid != -1){
-                            	r1 += "<td class='col5 shlef-menu'><a href='javascript:' class='gray iconfont icon-book jsTips font12 disabled' title='已在书架'></a></td>"+"</tr>";
+                            	r1 += "<td class='col5 shlef-menu'><a href='javascript:' class='gray icon icon-book_icon jsTips font12 disabled' title='已在书架'></a></td>"+"</tr>";
 							}else{
-                                r1 += "<td class='col5 shlef-menu'><a href='javascript:addBookrack("+data[j].bookid+")' class='blue iconfont icon-book jsTips elInBookShelf font12' title='加入书架'></a></td>"+"</tr>";
+                                r1 += "<td class='col5 shlef-menu'><a href='javascript:addBookrack("+data[j].bookid+")' class='blue icon icon-book_icon jsTips elInBookShelf font12' title='加入书架'></a></td>"+"</tr>";
 							}
 					}
 					$("#tbo").html(r1);
