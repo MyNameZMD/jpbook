@@ -17,10 +17,88 @@
 <link charset="utf-8" rel="stylesheet" href="../css/Autocomplete.css">
     <link charset="utf-8" rel="stylesheet" href="../css/iconfont.css">
     <script src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            jQuery("#s-box").keyup(function(){
+                jQuery(".lbf-autocomplete-suggestions").attr("style","position: absolute; max-height: 384px; z-index: 9999; width: 346px; top: 96px; left: 560.6px; display:block");
+                if(jQuery("#s-box").val() != ''){
+                    jQuery.ajax({
+                        url:'/jpbook/books/likeQuery',
+                        data:{"kw":jQuery("#s-box").val()},
+                        type:'post',
+                        datatype:"text",
+                        success:function(data){
+                            var ra = '';
+                            if(data[0] == null && data[1] != null){
+                                ra +="<div class=\"lbf-autocomplete-group lbf-autocomplete-group-a\">"+
+                                    "<strong>书名</strong>"+
+                                    "</div>";
+                                for(var i = 1 ;i<data.length;i++){
+                                    ra += "<div class=\"lbf-autocomplete-suggestion\">"+
+                                        "<a target=\"_blank\" href=\"/jpbook/books/queryBookById?bookid="+data[i].bookid+"\">"+
+                                        "<strong>"+jQuery("#s-box").val()+"</strong>"+data[i].bookname.substr(jQuery("#s-box").val().length,data[i].bookname.length)+
+                                        "</a>"+
+                                        "</div>";
+                                }
+                            }else if(data[0] != null && data[1] == null){
+                                /*查询作者创作的所有书籍*/
+                                ra += "<div class=\"lbf-autocomplete-group lbf-autocomplete-group-a\">" +
+                                    "<strong>作家</strong>" +
+                                    "</div>"+
+                                    "<div class=\"lbf-autocomplete-suggestion\">" +
+                                    "<a target=\"_blank\" href=\"/jpbook/books/queryBookByUuid?uuid="+data[0].uuid+"\">" +
+                                    "<strong>"+jQuery("#s-box").val()+"</strong>"+data[0].pen.substr(jQuery("#s-box").val().length,data[0].pen.length)+
+                                    "</a>" +
+                                    "</div>"
+                            }else if(data[0] != null && data[1] != null){
+                                ra += "<div class=\"lbf-autocomplete-group lbf-autocomplete-group-a\">" +
+                                    "<strong>作家</strong>" +
+                                    "</div>"+
+                                    "<div class=\"lbf-autocomplete-suggestion\">" +
+                                    "<a target=\"_blank\" href=\"/jpbook/books/queryBookByUuid?uuid="+data[0].uuid+"\">"+
+                                    "<strong>"+jQuery("#s-box").val()+"</strong>"+data[0].pen.substr(jQuery("#s-box").val().length,data[0].pen.length)+
+                                    "</a>" +
+                                    "</div>"+
+                                    "<div class=\"lbf-autocomplete-group lbf-autocomplete-group-a\">"+
+                                    "<strong>书名</strong>"+
+                                    "</div>";
+                                for(var i = 1 ;i<data.length;i++){
+                                    ra += "<div class=\"lbf-autocomplete-suggestion\">"+
+                                        "<a target=\"_blank\" href=\"/jpbook/books/queryBookById?bookid="+data[i].bookid+"\">"+
+                                        "<strong>"+jQuery("#s-box").val()+"</strong>"+data[i].bookname.substr(jQuery("#s-box").val().length,data[i].bookname.length)+
+                                        "</a>"+
+                                        "</div>";
+                                }
+                            }
+                            jQuery(".lbf-autocomplete-suggestions").html(ra);
+                            /**
+                             * 点击时和#s-box失去焦点是都隐藏
+                             */
+                            jQuery(".lbf-autocomplete-suggestion").click(function () {
+                                jQuery("#s-box").val('');
+                                jQuery(".lbf-autocomplete-suggestions").attr("style","position: absolute; max-height: 384px; z-index: 9999; width: 346px; top: 96px; left: 560.6px; display:none");
+                            })
+                            jQuery("#s-box").blur(function(){
+                                setTimeout(function() {  //进行延时处理，时间单位为千分之一秒
+                                    jQuery("#s-box").val('');
+                                    jQuery(".lbf-autocomplete-suggestions").attr("style","position: absolute; max-height: 384px; z-index: 9999; width: 346px; top: 96px; left: 560.6px; display:none");
+                                }, 100)
+                            });
+                        }
+                    });
+                }else{
+                    jQuery(".lbf-autocomplete-suggestions").html('');
+                    jQuery(".lbf-autocomplete-suggestions").attr("style","position: absolute; max-height: 384px; z-index: 9999; width: 346px; top: 96px; left: 560.6px; display:none");
+                }
+            })
+        })
+    </script>
 </head>
 <body style="zoom: 1;">
 
 <div class="wrap">
+    <div class="lbf-autocomplete-suggestions" style="position: absolute; max-height: 384px; z-index: 9999; width: 346px; top: 96px; left: 560.6px; display: none;">
+    </div>
     <div class="top-nav" data-l1="1">
     <div class="box-center cf">
         <div class="login-box fr">
@@ -54,11 +132,13 @@
             <a href="/jpbook/booktype/queryAll" data-eid="qd_A11"></a>
         </div>
         <div class="search-wrap fl">
-            <form id="formUrl" action="https://www.qidian.com/search" method="get" target="_blank">
-                <p><input class="search-box" id="s-box" name="kw" type="text" placeholder="请输入作者名或书名" autocomplete="off"></p>
-                <input class="submit-input" type="submit" id="searchSubmit" data-eid="qd_A13">
-                <label id="search-btn" class="search-btn" for="searchSubmit"><em class="iconfont" data-eid="qd_A13">
-                    </em></label>
+            <form id="formUrl" action="/jpbook/books/likeBooks" method="get" target="_blank">
+                <p>
+                    <input class="search-box" id="s-box" name="kw" type="text" placeholder="请输入作家名或书名">
+                </p>
+                <input class="submit-input" type="submit" id="searchSubmit">
+                <label id="search-btn" class="search-btn" for="searchSubmit" style="width:100px">
+                    <em class="iconfont">&#xe7fc;</em></label>
             </form>
         </div>
     </div>
@@ -97,7 +177,7 @@
         <div class="rank-nav-list fl" data-l1="4">
     <ul>
         
-        <li class=""><a href="./books/rank" data-eid="qd_C01">人气榜单</a><cite></cite></li>
+        <li class=""><a href="../books/rank">人气榜单</a><cite></cite></li>
     </ul>
     <p class="line"></p>
     <h4>热门作品排行</h4>
@@ -126,12 +206,12 @@
             <div class="rank-body">
                 <div class="fans-data-list">
                     <div class="rank-data-day cf">
-                        <th:block th:each="f,status : ${fans}">
-                            <th:block th:if="${status.index} eq 0 and ${status.index} lt 25">
-                                <div class="fans-list">
-                                    <h3><b class="col-1">排名</b><b class="col-2">粉丝昵称</b><b class="col-3">累计打赏(起点币)</b></h3>
-                                    <ul>
+                        <div class="fans-list">
+                            <h3><b class="col-1">排名</b><b class="col-2">粉丝昵称</b><b class="col-3">累计打赏(起点币)</b></h3>
+                            <ul>
+                                <th:block th:each="f,status : ${fans}">
 
+                                    <th:block th:if="${status.index} lt 25">
                                         <li>
                                             <em class="number">
                                                 <span th:class="|rank-tag no${status.index+1}|" th:text="${status.index+1}">1<cite></cite></span>
@@ -140,15 +220,8 @@
                                                th:title="${f.uname}" th:text="${f.uname}"></a>
                                             <i th:text="${f.rewanum}">3000000</i>
                                         </li>
-
-                                    </ul>
-                                </div>
-                            </th:block>
-                            <th:block th:if="${status.index} eq 25 and ${status.index} lt 50">
-                                <div class="fans-list">
-                                    <h3><b class="col-1">排名</b><b class="col-2">粉丝昵称</b><b class="col-3">累计打赏(起点币)</b></h3>
-                                    <ul>
-
+                                    </th:block>
+                                    <th:block th:if="${status.index} gt 24 and ${status.index} lt 50">
                                         <li>
                                             <em class="number">
                                                 <span th:class="|rank-tag no${status.index+1}|" th:text="${status.index+1}">1<cite></cite></span>
@@ -157,15 +230,8 @@
                                                th:title="${f.uname}" th:text="${f.uname}"></a>
                                             <i th:text="${f.rewanum}">3000000</i>
                                         </li>
-
-                                    </ul>
-                                </div>
-                            </th:block>
-                            <th:block th:if="${status.index} eq 50 and ${status.index} lt 75">
-                                <div class="fans-list">
-                                    <h3><b class="col-1">排名</b><b class="col-2">粉丝昵称</b><b class="col-3">累计打赏(起点币)</b></h3>
-                                    <ul>
-
+                                    </th:block>
+                                    <th:block th:if="${status.index} gt 49 and ${status.index} lt 75">
                                         <li>
                                             <em class="number">
                                                 <span th:class="|rank-tag no${status.index+1}|" th:text="${status.index+1}">1<cite></cite></span>
@@ -174,15 +240,8 @@
                                                th:title="${f.uname}" th:text="${f.uname}"></a>
                                             <i th:text="${f.rewanum}">3000000</i>
                                         </li>
-
-                                    </ul>
-                                </div>
-                            </th:block>
-                            <th:block th:if="${status.index} eq 75 and ${status.index} lt 100">
-                                <div class="fans-list mr0">
-                                    <h3><b class="col-1">排名</b><b class="col-2">粉丝昵称</b><b class="col-3">累计打赏(起点币)</b></h3>
-                                    <ul>
-
+                                    </th:block>
+                                    <th:block th:if="${status.index} gt 74 and ${status.index} lt 100">
                                         <li>
                                             <em class="number">
                                                 <span th:class="|rank-tag no${status.index+1}|" th:text="${status.index+1}">1<cite></cite></span>
@@ -191,11 +250,10 @@
                                                th:title="${f.uname}" th:text="${f.uname}"></a>
                                             <i th:text="${f.rewanum}">3000000</i>
                                         </li>
-
-                                    </ul>
-                                </div>
-                            </th:block>
-                        </th:block>
+                                    </th:block>
+                                </th:block>
+                            </ul>
+                        </div>
                     </div>
                     <div class="rank-data-total cf"></div>
                 </div>

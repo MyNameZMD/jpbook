@@ -20,7 +20,7 @@
         from dual
     </select>
     <select id="zEvaluate" resultType="map" parameterType="Integer">
-        select ifnull(round(sum(evalv*2)/count(uuid)),'无评价') evalv,count(uuid) unum from evaluate where bookid = #{param1}
+        select ifnull(round(sum(evalv*2)/count(uuid)),'暂无评') evalv,count(uuid) unum from evaluate where bookid = #{param1}
     </select>
     <select id="queryAllByBookid" parameterType="Integer" resultType="map">
         select e.*,ifnull(u.icon,'default_user.0.2.png') icon,u.uname,ifnull(u.exp,0) exp from evaluate e inner join users u on e.uuid = u.uuid

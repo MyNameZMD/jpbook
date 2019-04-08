@@ -89,7 +89,7 @@
                 url:'/jpbook/books/userExist',
                 success:function(data){
                     if(0 == data){
-                        window.location.href = "../login.html";
+                        window.location.open("../login.html");
                     }else{
                         window.close();
                         window.open("/jpbook/books/queryBookByFatie?retype=1"+"&bookid="+bookid);
