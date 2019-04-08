@@ -19,7 +19,7 @@
         group by b.btid order by sum desc limit 1) b
         where bs.btid=b.btid
         and bs.uuid != #{uuid} group by bs.bookid) bo
-        where bo.bookid not in(select bookid from bookrack where uuid=#{uuid})
+        where bo.bookid not in(select bookid from bookrack where uuid=#{uuid}) limit 6
     </select>
 
     <select id="findsigne" resultType="com.jpbook.entity.Signexp">
