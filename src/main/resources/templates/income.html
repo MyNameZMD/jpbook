@@ -17,8 +17,23 @@
     <link rel="stylesheet" href="./js/bootstrap/css/bootstrap.css">
     <script src="./js/sweet-alert.js"></script>
     <link rel="stylesheet" href="./css/sweet-alert.css">
+    <!--<script type="text/javascript">
+        function load() {
+            $.ajax({
+                url: "/jpbook/users/ckSession",
+                data: {"name": 'users'},
+                type: "post",
+                success: function (data) {
+                    if (data == 0) {
+                        window.location.href = "/jpbook/login";
+                    }
+                }
+            });
+        }
+    </script>-->
 </head>
-<body>
+
+<body onload="load()">
 <div class="wrap">
     <div class="header">
         <div class="headBox pageCenter cf">
@@ -113,8 +128,6 @@
                         <a class="min-link" href="statistics.html"><span class="icon reserve"></span></a>
                         <a class="expand" href="statistics.html">数据统计</a>
                     </li>
-
-
                     <li class="act">
                         <a class="min-link" href="income.html"><span class="icon income"></span></a>
                         <a class="expand" href="income.html">稿酬收入</a>
@@ -195,11 +208,10 @@
             </div>
         </form>
 
-        <div id="incomediv" class="incomeWrap div"  style="display:block;">
+        <div id="incomediv" class="incomeWrap div"  style="display:block;margin-top: -50px;">
             <h3 class="reserveTitle"> <em class="icon pie"></em>收入分布</h3>
 
             <div class="chartWrap">
-                <h2 id="bookTitle">2019年2月稿酬收入<br></h2>
 
                 <div  style="margin-top: 50px;margin: auto;" class="chartWrap">
             <table class="totalData" width="100%" border="0" cellspacing="0">
@@ -214,9 +226,22 @@
                         <input type="button" onclick="withdraw()" style="border-radius: 5px;width: 100px;height: 40px;background-color: #00ACF5 " th:value="提现">
                     </td>
                     <script type="text/javascript">
+                        $(function () {
+                            getSummoenyAndWithdrawmoney();
+                        });
+                        function getSummoenyAndWithdrawmoney() {
+                            $.ajax({
+                                url:"/jpbook/users/getSummoenyAndWithdrawmoney",
+                                success:function (data) {
+                                    $("#withdrawmoney").html(data.withdrawmoney);
+                                    $("#incomesum").html(data.summoney);
+                                }
+                            })
+                        }
                         function withdraw() {
                             var money=$("#incomesum").html();
-                            if(money<=0){
+                            var money2=$("#withdrawmoney").html();
+                            if((parseFloat(money)-parseFloat(money2))<=0){
                                 swal("操作失败!", "无收入，无法提现！", "warning");
                             }else{
                                 swal({
@@ -231,10 +256,11 @@
                                 function(){
                                     $.ajax({
                                         url:"/jpbook/users/withdraw",
-                                        data:{"money":money},
+                                        data:{"money":(parseFloat(money)-parseFloat(money2))},
                                         success:function (data) {
                                             $("#incomesum").html(0);
-                                            swal("提现成功!", "请注意查收！", "success");
+                                            swal("提现成功!", "成功提现"+(parseFloat(money)-parseFloat(money2))+"元,请注意查收！", "success");
+                                            getSummoenyAndWithdrawmoney();
                                         }
                                     })
                                 });
@@ -300,14 +326,12 @@
                 look();
             });
             function look() {
-                $("#incomesum").html(0);
                 copyrightsum=0;
                 rewardsum=0;
                 getRemuneration();
                 getReward();
             }
             function getRemuneration() {
-                $("#bookTitle").html($("#year").val()+"年"+$("#month").val()+"月稿酬收入");
                 $("#bookTitle2").html($("#year").val()+"年"+$("#month").val()+"月版权收入");
                 $.ajax({
                     url:"users/getRemuneration",
@@ -339,7 +363,6 @@
                                 copyrightsum+=data[i].remuneration;
                             }
                             str+="</tbody></table>";
-                            $("#incomesum").html(($("#incomesum").html()-1+1)+copyrightsum-($("#withdrawmoney").html()/2));
                             $("#incomeSumBox").html(str);
                             $("#noDataBox").css("display",'none');
                             $("#incomeSumBox").css("display",'block');
@@ -366,7 +389,6 @@
                                     "                    </tr>"
                                 rewardsum+=data[i].rewanum;
                             }
-                            $("#incomesum").html(($("#incomesum").html()-1+1)+(rewardsum/200)-($("#withdrawmoney").html()/2));
                             $("#rewardCount").html(rewardsum/200+"元");
                             $("#incomeList").html(str);
                         }

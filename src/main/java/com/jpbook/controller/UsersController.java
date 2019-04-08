@@ -98,4 +98,11 @@ public class UsersController {
         System.out.println(attribute);
         return attribute==null?0:1;
     }
+    @RequestMapping("getSummoenyAndWithdrawmoney")
+    @ResponseBody
+    public Map<String,Object> getSummoenyAndWithdrawmoney(HttpSession session){
+        List<Users> users1 = (List<Users>)session.getAttribute("users");
+        return us.getSummoenyAndWithdrawmoney(users1.get(0).getUuid());
+    }
+
 }

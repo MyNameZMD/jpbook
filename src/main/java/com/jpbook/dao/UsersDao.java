@@ -37,4 +37,17 @@ public interface UsersDao {
      * @return
      */
     public List<Map<String,Object>> likeQueryUsers(String uname);
+    @Select("select (a.remuneration+b.rewanum) summoney,(select withdrawmoney from users where uuid=#{uuid}) withdrawmoney from (\n" +
+            "\tselect sum(s1.chapcount/100000*s2.count) remuneration from \n" +
+            "\t(select DISTINCT c.chapid,bs.uuid,bs.bookid,bs.bookname,bs.btid,bs.bookstate,bs.createtime,bs.icon,\n" +
+            "\tbs.sex,bs.bookreferral,r.rollid,r.rollname,r.rollnum,r.updatetime rollupdatetime,\n" +
+            "\tc.chapvalue,c.chapnum,c.chapmoney,c.chapstate,c.chaptime,c.updatetime chapupdatetime,\n" +
+            "\tc.url,c.chapsum,c.chapname,c.chapcount,u.uname\n" +
+            "\tfrom books bs,roll r,chapter c,users u\n" +
+            "\twhere bs.uuid=u.uuid and r.rollid=c.rollid and bs.bookid=r.bookid  ) s1,(\n" +
+            "\tselect chapid,count(buyid) count from statistics GROUP BY chapid) s2\n" +
+            "\twhere s1.chapid=s2.chapid and s1.uuid=#{uuid}) a,(\n" +
+            "select sum(r.rewanum)/200 rewanum from reward r,users u,books b where r.bookid=b.bookid and u.uuid=r.uuid and r.bookid in(select bookid from books where uuid=#{uuid})\n" +
+            ") b")
+    Map<String,Object> getSummoenyAndWithdrawmoney(Integer uuid);
 }

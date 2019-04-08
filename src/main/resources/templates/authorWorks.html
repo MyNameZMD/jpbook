@@ -283,57 +283,61 @@
 
 <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
 <script type="application/javascript">
-    $.ajax({
-        url:"books/queryByUuid",
-        success:function(data){
-            var str="";
-            for(var i=0;i<data.length;i++){
-                str+="<tr class='active'>";
-                str+="<td></td>";
-                str+="<td class=\"tl\">";
-                str+="<div class=\"work-photo\">";
-                str+="<a href=\"http://chat.yuewen.com/book/13129224804944103\" target=\"_blank\">";
-                str+="<img src=\"./img/"+data[i].icon+"\" width=\"83\" height=\"108\" alt=\"作品封面\">";
-                str+="</a>";
-                str+="</div>";
-                str+="<p class=\"work-name\">";
-                str+="<a href=\"http://chat.yuewen.com/book/13129224804944103\" target=\"_blank\">"+data[i].bookname+"</a>";
-                str+="</p>";
-                str+="</td>";
-                str+="<td class=\"tl\">";
-                if(data[i].chapid==undefined){
-                    str+="<a href=\"javascript:void(0);\">无最新章节</a>";
-                }else{
-                    str+="<a href=\"javascript:void(0);\">"+data[i].chapname+"</a>"
-                    str+="<br>"
-                    str+="<em class=\"time\">"+jsonDateFormat(data[i].updatetime)+"</em>"
+    $(function () {
+        $.ajax({
+            url:"books/queryByUuid",
+            success:function(data){
+                var str="";
+                for(var i=0;i<data.length;i++){
+                    str+="<tr class='active'>";
+                    str+="<td></td>";
+                    str+="<td class=\"tl\">";
+                    str+="<div class=\"work-photo\">";
+                    str+="<a href=\"http://chat.yuewen.com/book/13129224804944103\" target=\"_blank\">";
+                    str+="<img src=\"./img/"+data[i].icon+"\" width=\"83\" height=\"108\" alt=\"作品封面\">";
+                    str+="</a>";
+                    str+="</div>";
+                    str+="<p class=\"work-name\">";
+                    str+="<a href=\"http://chat.yuewen.com/book/13129224804944103\" target=\"_blank\">"+data[i].bookname+"</a>";
+                    str+="</p>";
+                    str+="</td>";
+                    str+="<td class=\"tl\">";
+                    if(data[i].chapid==undefined){
+                        str+="<a href=\"javascript:void(0);\">无最新章节</a>";
+                    }else{
+                        str+="<a href=\"javascript:void(0);\">"+data[i].chapname+"</a>"
+                        str+="<br>"
+                        str+="<em class=\"time\">"+jsonDateFormat(data[i].updatetime)+"</em>"
+                    }
+                    str+="</td>";
+                    str+="<td>";
+                    str+="<em>"+data[i].btname+"分组</em>";
+                    str+="</td>";
+                    str+="<td>";
+                    str+="<em class=\"Num\">"+data[i].count+"</em>"
+                    str+="</td>";
+                    var state=data[i].bookstate==0?'连载中':'完结';
+                    str+="<td>"+state+"";
+                    str+="</td>";
+                    str+="<td>";
+                    str+="<div class=\"dib-wrap\">";
+
+                    if(data[i].bookstate==0){
+                        str+="<a class=\"button blue\" href=\"javascript:void(0);\" onclick=\"skip("+data[i].bookid+",'chapteradd')\"><span class=\"icon\"></span><i>写新章节</i></a>"
+                        str+="<a class=\"button white\" href=\"javascript:void(0);\" onclick=\"skip("+data[i].bookid+",'chaptersent')\"><span class=\"icon\"></span><i>已发布章节</i></a>";
+                        str+="<a class=\"button blue\" href=\"javascript:void(0);\" onclick=\"bookEnd("+data[i].bookid+")\"><span class=\"icon\"></span><i>完结</i></a>"
+                    }else{
+                        str+="<a class=\"button white\" href=\"javascript:void(0);\"><span class=\"icon\"></span><i>已完结</i></a>";
+                    }
+                    str+="</div>";
+                    str+="</td>";
+                    str+="</tr>";
                 }
-                str+="</td>";
-                str+="<td>";
-                str+="<em>"+data[i].btname+"分组</em>";
-                str+="</td>";
-                str+="<td>";
-                str+="<em class=\"Num\">"+data[i].count+"</em>"
-                str+="</td>";
-                var state=data[i].bookstate==0?'连载中':'完结';
-                str+="<td>"+state+"";
-                str+="</td>";
-                str+="<td>";
-                str+="<div class=\"dib-wrap\">";
-                str+="<a class=\"button blue\" href=\"javascript:void(0);\" onclick=\"skip("+data[i].bookid+",'chapteradd')\"><span class=\"icon\"></span><i>写新章节</i></a>"
-                str+="<a class=\"button white\" href=\"javascript:void(0);\" onclick=\"skip("+data[i].bookid+",'chaptersent')\"><span class=\"icon\"></span><i>已发布章节</i></a>";
-                if(data[i].bookstate==0){
-                    str+="<a class=\"button blue\" href=\"javascript:void(0);\" onclick=\"bookEnd("+data[i].bookid+")\"><span class=\"icon\"></span><i>完结</i></a>"
-                }else{
-                    str+="<a class=\"button white\" href=\"javascript:void(0);\"><span class=\"icon\"></span><i>已完结</i></a>";
-                }
-                str+="</div>";
-                str+="</td>";
-                str+="</tr>";
+                $("#novelList").html(str);
             }
-            $("#novelList").html(str);
-        }
+        })
     })
+
     function jsonDateFormat(date) {//json日期格式转换为正常格式
         var dateee = new Date(date).toJSON();
         return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')

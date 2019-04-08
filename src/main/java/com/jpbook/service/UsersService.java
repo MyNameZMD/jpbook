@@ -28,4 +28,5 @@ public class UsersService {
     public List<Map<String,Object>> likeQueryUsers(String uname){
         return ud.likeQueryUsers(uname);
     }
+    public Map<String,Object> getSummoenyAndWithdrawmoney(Integer uuid){return ud.getSummoenyAndWithdrawmoney(uuid);}
 }
