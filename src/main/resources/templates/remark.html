@@ -89,9 +89,8 @@
                 url:'/jpbook/books/userExist',
                 success:function(data){
                     if(0 == data){
-                        window.location.href = "../login.html";
+                        window.open("../login.html");
                     }else{
-                        window.close();
                         window.open("/jpbook/books/queryBookByFatie?retype=1"+"&bookid="+bookid);
                     }
                 }
@@ -194,10 +193,7 @@
                                 <span></span>
                             </a>
                             <div class="dropdown">
-                                <a href="https://me.qidian.com/msg/lists.aspx?page=1" target="_blank" data-eid="qd_A66">
-                                    消息(<i id="top-msg">0</i>)
-                                </a>
-                                <a href="https://www.qidian.com/charge/meRedirect" target="_blank">充值</a>
+                                <a href="/jpbook/topup" target="_blank">充值</a>
                                 <a href="../personal.html" target="_blank">个人中心</a>
                                 <a id="exit" href="javascript:void(0);" onclick="removeu()">退出</a>
                             </div>
@@ -235,7 +231,7 @@
                 </a>
             </li>-->
             <li class="fr">
-                <a target="_blank" href = "javascript:void(0);" th:onclick="|faties(${books[0].bookid})|" class="sendPost blue">
+                <a target="_blank" href = "javascript:;" th:onclick="|faties(${books[0].bookid})|" class="sendPost blue">
                     我要发帖
                 </a>
             </li>
@@ -255,7 +251,7 @@
                     </p>
                     
                     <p class="post-body">
-                        <a target="_blank" th:text="${q.revvlue}" href="https://forum.qidian.com/post/13062901703661303/325314867072598016" class="black">看看</a>
+                        <a target="_blank" th:text="${q.revvlue}" th:href="@{/reviewbook/queryById(bookid=${books[0].bookid},revid=${q.revid})}" class="black">看看</a>
                     </p>
                     
                     <p class="post-info dib-wrap" data-id="325314867072598016">

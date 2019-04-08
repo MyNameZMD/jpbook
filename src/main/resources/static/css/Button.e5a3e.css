@@ -178,14 +178,14 @@ p {
   font-family: FZZCYSK;
   font-weight: 400
 }
-.iconfont {
+/*.iconfont {
   font-family: qd_iconfont!important;
   font-size: 24px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: .1px;
   -moz-osx-font-smoothing: grayscale
-}
+}*/
 .icon-dushi:before {
   content: '\e600'
 }

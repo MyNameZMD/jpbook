@@ -20,6 +20,79 @@
     <link charset="utf-8" rel="stylesheet" href="../css/iconfont.css">
     <script src="../js/jquery-3.3.1.js"></script>
     <script type="text/javascript">
+        jQuery("#s-box").keyup(function () {
+            jQuery(".lbf-autocomplete-suggestions").attr("style", "position: absolute; max-height: 384px; z-index: 9999; width: 346px; top: 96px; left: 560.6px; display:block");
+            if (jQuery("#s-box").val() != '') {
+                jQuery.ajax({
+                    url: '/jpbook/books/likeQuery',
+                    data: {"kw": jQuery("#s-box").val()},
+                    type: 'post',
+                    datatype: "text",
+                    success: function (data) {
+                        var ra = '';
+                        if (data[0] == null && data[1] != null) {
+                            ra += "<div class=\"lbf-autocomplete-group lbf-autocomplete-group-a\">" +
+                                "<strong>书名</strong>" +
+                                "</div>";
+                            for (var i = 1; i < data.length; i++) {
+                                ra += "<div class=\"lbf-autocomplete-suggestion\">" +
+                                    "<a target=\"_blank\" href=\"/jpbook/books/queryBookById?bookid=" + data[i].bookid + "\">" +
+                                    "<strong>" + jQuery("#s-box").val() + "</strong>" + data[i].bookname.substr(jQuery("#s-box").val().length, data[i].bookname.length) +
+                                    "</a>" +
+                                    "</div>";
+                            }
+                        } else if (data[0] != null && data[1] == null) {
+                            /*查询作者创作的所有书籍*/
+                            ra += "<div class=\"lbf-autocomplete-group lbf-autocomplete-group-a\">" +
+                                "<strong>作家</strong>" +
+                                "</div>" +
+                                "<div class=\"lbf-autocomplete-suggestion\">" +
+                                "<a target=\"_blank\" href=\"/jpbook/books/queryBookByUuid?uuid=" + data[0].uuid + "\">" +
+                                "<strong>" + jQuery("#s-box").val() + "</strong>" + data[0].pen.substr(jQuery("#s-box").val().length, data[0].pen.length) +
+                                "</a>" +
+                                "</div>"
+                        } else if (data[0] != null && data[1] != null) {
+                            ra += "<div class=\"lbf-autocomplete-group lbf-autocomplete-group-a\">" +
+                                "<strong>作家</strong>" +
+                                "</div>" +
+                                "<div class=\"lbf-autocomplete-suggestion\">" +
+                                "<a target=\"_blank\" href=\"/jpbook/books/queryBookByUuid?uuid=" + data[0].uuid + "\">" +
+                                "<strong>" + jQuery("#s-box").val() + "</strong>" + data[0].pen.substr(jQuery("#s-box").val().length, data[0].pen.length) +
+                                "</a>" +
+                                "</div>" +
+                                "<div class=\"lbf-autocomplete-group lbf-autocomplete-group-a\">" +
+                                "<strong>书名</strong>" +
+                                "</div>";
+                            for (var i = 1; i < data.length; i++) {
+                                ra += "<div class=\"lbf-autocomplete-suggestion\">" +
+                                    "<a target=\"_blank\" href=\"/jpbook/books/queryBookById?bookid=" + data[i].bookid + "\">" +
+                                    "<strong>" + jQuery("#s-box").val() + "</strong>" + data[i].bookname.substr(jQuery("#s-box").val().length, data[i].bookname.length) +
+                                    "</a>" +
+                                    "</div>";
+                            }
+                        }
+                        jQuery(".lbf-autocomplete-suggestions").html(ra);
+                        /**
+                         * 点击时和#s-box失去焦点是都隐藏
+                         */
+                        jQuery(".lbf-autocomplete-suggestion").click(function () {
+                            jQuery("#s-box").val('');
+                            jQuery(".lbf-autocomplete-suggestions").attr("style", "position: absolute; max-height: 384px; z-index: 9999; width: 346px; top: 96px; left: 560.6px; display:none");
+                        })
+                        jQuery("#s-box").blur(function () {
+                            setTimeout(function () {  //进行延时处理，时间单位为千分之一秒
+                                jQuery("#s-box").val('');
+                                jQuery(".lbf-autocomplete-suggestions").attr("style", "position: absolute; max-height: 384px; z-index: 9999; width: 346px; top: 96px; left: 560.6px; display:none");
+                            }, 100)
+                        });
+                    }
+                });
+            } else {
+                jQuery(".lbf-autocomplete-suggestions").html('');
+                jQuery(".lbf-autocomplete-suggestions").attr("style", "position: absolute; max-height: 384px; z-index: 9999; width: 346px; top: 96px; left: 560.6px; display:none");
+            }
+        })
+
         $(document).ready(function () {
             $(".tab-wrap a").click(function () {
                 var ind = $($(this).parent().children('a')).index(this)+1;//获取当前点击的span下标
@@ -44,6 +117,9 @@
 <body style="zoom: 1;">
 
 <div class="wrap">
+    <div class="lbf-autocomplete-suggestions"
+         style="position: absolute; max-height: 384px; z-index: 9999; width: 346px; top: 96px; left: 560.6px; display: none;">
+    </div>
     <div class="top-nav">
         <div class="box-center cf">
             <div class="login-box fr">
@@ -80,12 +156,11 @@
         <div class="search-wrap fl">
             <form id="formUrl" action="/jpbook/books/likeBooks" method="get" target="_blank">
                 <p>
-                    <input class="search-box" id="s-box" name="kw" type="text" placeholder="请输入作者名或书名" autocomplete="off">
+                    <input class="search-box" id="s-box" name="kw" type="text" placeholder="请输入作家名或书名">
                 </p>
                 <input class="submit-input" type="submit" id="searchSubmit">
-                <label id="search-btn" class="search-btn" for="searchSubmit">
-                    <em class="iconfont">&#xe7fc;</em>
-                </label>
+                <label id="search-btn" class="search-btn" for="searchSubmit" style="width:100px">
+                    <em class="iconfont">&#xe7fc;</em></label>
             </form>
         </div>
     </div>
@@ -94,18 +169,24 @@
     
 <div class="main-nav-wrap">
     <div class="main-nav box-center cf" id="type-hover">
-        <div class="classify-list fl so-awesome" id="classify-list">
+        <div class="classify-list fl so-awesome" id="classify-list"  onmouseover="$(this).attr('style','display:block')" onmouseout="$(this).attr('style','display:none')">
             <dl class="cf" th:each="bt : ${queryAll}">
                 <dd th:class="${bt.btid % 2 == 0 ? 'left' : 'even'}"
                     th:style="${bt.btid % 2 == 0 ? 'margin-left:106.5px;margin-top:-60px;' : ''}">
-                    <a href="/xuanhuan" target="_blank"><cite><em class="iconfont" th:utext="${bt.btico}"></em><span
-                            class="info"><i th:text="${bt.btname}"></i><b th:text="${bt.count}"></b></span></cite></a>
+                    <a th:href="|/jpbook/showAllBook.html?btid=${bt.btid}|" target="_blank">
+                        <cite>
+                            <em class="iconfont" th:utext="${bt.btico}"></em>
+                            <span class="info"><i th:text="${bt.btname}"></i>
+                                <b th:text="${bt.count}"></b>
+                            </span>
+                        </cite>
+                    </a>
                 </dd>
             </dl>
         </div>
 
         <ul>
-            <li class="first"  onmouseover="$('#classify-list').attr('style','display:block')" onmouseout="$('#classify-list').attr('style','display:none')"><b><strong></strong></b><span><em>
+            <li class="first"  onmouseover="$('#classify-list').attr('style','display:block')"><b><strong></strong></b><span><em>
                 <i></i><i></i><i></i>
             </em>作品分类</span>
             </li>
@@ -123,7 +204,7 @@
         <div class="rank-nav-list fl" data-l1="4">
     <ul>
         
-        <li class="act"><a href="./rank" data-eid="qd_C01">人气榜单</a><cite></cite></li>
+        <li class="act"><a href="../books/rank" data-eid="qd_C01">人气榜单</a><cite></cite></li>
     </ul>
     <p class="line"></p>
     <h4>热门作品排行</h4>
@@ -138,7 +219,7 @@
     <p class="line"></p>
     <h4>社区排行</h4>
     <ul>
-        <li class=""><a href="./fans">打赏粉丝榜</a><cite></cite></li>
+        <li class=""><a href="../books/fans">打赏粉丝榜</a><cite></cite></li>
     </ul>
 </div>
         <div class="main-content-wrap fl">

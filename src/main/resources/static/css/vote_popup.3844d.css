@@ -245,7 +245,7 @@ p {
   -webkit-text-stroke-width: .1px;
   -moz-osx-font-smoothing: grayscale
 }
-.icon-dushi:before {
+/*.icon-dushi:before {
   content: '\e600'
 }
 .icon-jingji:before {
@@ -556,7 +556,7 @@ p {
 }
 .icon-money:before {
   content: '\e680'
-}
+}*/
 .error,
 .success {
   margin-right: 5px

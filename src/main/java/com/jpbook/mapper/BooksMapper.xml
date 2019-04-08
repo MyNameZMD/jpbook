@@ -297,7 +297,7 @@
         <if test="_parameter == 1">
             where to_days(rewatime) = to_days(now())
         </if>
-        group by uuid) r on u.uuid = r.uuid limit 0,100
+        group by uuid) r on u.uuid = r.uuid order by r.rewanum desc limit 0,100
     </select>
     <select id = "newBookClick" resultType="map">
         select u.uuid,u.uname,u.pen,b.bookid,b.bookname,bt.btid,bt.btname,ifnull(b.icon,'../images/2.jpg') icon,b.createtime,c.cnum from users u inner join books b on u.uuid = b.uuid inner join booktype bt on b.btid = bt.btid left join (select b.bookid,ifnull(sum(c.cnum),0) cnum from books b left join click c on b.bookid = c.bookid

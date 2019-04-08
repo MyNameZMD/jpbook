@@ -2200,11 +2200,7 @@ jQuery.validator.addMethod("phoneCheck", function (value, element, param) {
                     _topTip.show(json.info || '修改成功', function () {
                         _refreshCurrentPage();
                     });
-                } else {
-                    _topTip.show(json.info || '操作失败，请稍候再试');
                 }
-            }, error: function () {
-                _topTip.show('操作失败，请稍候再试');
             }, complete: function () {
                 _isSubmitting = 0;
             }
@@ -2317,9 +2313,6 @@ jQuery.validator.addMethod("phoneCheck", function (value, element, param) {
                     var tpl = _util.replaceTpl(_recommendBookItemTpl, {'bid': bid, 'title': bookTitle});
                     $recommendBookList.append(tpl);
                 }
-            },
-            error: function () {
-                _topTip.show('操作失败，请稍候再试');
             }
         });
     }
@@ -2344,9 +2337,6 @@ jQuery.validator.addMethod("phoneCheck", function (value, element, param) {
                 if (json.status) {
                     $('#recommendBookList').find('a[data-bid="' + bid + '"]').remove();
                 }
-            },
-            error: function () {
-                _topTip.show('操作失败，请稍候再试');
             }
         });
     }

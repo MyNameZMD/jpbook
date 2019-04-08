@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="../css/style.css" />
     <script src="../js/sweet-alert.js"></script>
     <link rel="stylesheet" href="../css/sweet-alert.css">
-    <link rel="stylesheet" data-ignore="true" href="../css/iconfont.css">
+    <link rel="stylesheet" data-ignore="true" href="../css/icon.css">
     <style type="text/css">
         body{
             background: url("../css/1000.jpg") center 0 no-repeat;
@@ -100,14 +100,14 @@
         };
     </script>
 
-    <link data-ignore="true" rel="shortcut icon" type="image/x-icon" href="https://qidian.gtimg.com/qd/favicon/qd_icon.c443c.ico">
-    <link data-ignore="true" rel="Bookmark" type="image/x-icon" href="https://qidian.gtimg.com/qd/favicon/qd_icon.c443c.ico">
-
-
 
     <link rel="stylesheet" data-ignore="true" href="../css/vote_popup.3844d.css">
 
-    <link charset="utf-8" rel="stylesheet" href="../css/Panel.css"><link charset="utf-8" rel="stylesheet" href="../css/LightTip.css"><link charset="utf-8" rel="stylesheet" href="../css/Popup.css"><link charset="utf-8" rel="stylesheet" href="../css/Drag.css"><style name="lbf-overlay">.lbf-overlay { position:fixed; top:0; left:0;}</style>
+    <link charset="utf-8" rel="stylesheet" href="../css/Panel.css">
+    <link charset="utf-8" rel="stylesheet" href="../css/LightTip.css">
+    <link charset="utf-8" rel="stylesheet" href="../css/Popup.css">
+    <link charset="utf-8" rel="stylesheet" href="../css/Drag.css">
+    <style name="lbf-overlay">.lbf-overlay { position:fixed; top:0; left:0;}</style>
     <script src="../js/jquery-3.3.1.js"></script>
 </head>
 <body class="theme-0 " style="zoom: 1;" oncontextmenu="return false">
@@ -355,7 +355,7 @@
     <div class="left-bar-list" id="j_leftBarList" style="top: 19px;">
         <dl>
             <dd id="j_navCatalogBtn"  data-eid="qd_R42">
-                <a href="javascript:void(0)"  onclick="navigation(this)" id="mulu"><i><em class="iconfont"></em><span>目录</span></i></a>
+                <a href="javascript:void(0)"  onclick="navigation(this)" id="mulu"><i><span class="icon icon-mulu"></span><br><span>目录</span></i></a>
                 <div class="guide-box">
                     <cite></cite>
                     目录
@@ -412,7 +412,7 @@
                                     "\n";
                                 for(var j=0;j<data[i].chapterList.length;j++){
 
-                                    str+="                                        <li id=\"nav-chapter-429592402\" style='font-size: 10px; margin-bottom: -150px; display: inline-block;width: 30%'>\n" +
+                                    str+="                                        <li id=\"nav-chapter-429592402\" style='font-size: 10px; margin-bottom: -100px; display: inline-block;width: 30%'>\n" +
                                         "                                        \n" +
                                         "                                    <a href=\"javascript:read("+data[i].chapterList[j].chapid+")\" style='width: 33%;text-align: center'>"+data[i].chapterList[j].chapname+"</a>\n" +
                                         "                                    </li>\n";
@@ -430,7 +430,7 @@
                 </script>
             </dd>
             <dd id="j_navSettingBtn" >
-                <a href="javascript:void(0)"  onclick="navigation(this)" id="shezhi"><i><em class="iconfont"></em><span>设置</span></i></a>
+                <a href="javascript:void(0)"  onclick="navigation(this)" id="shezhi"><i><em class="icon icon-shezhi"></em><br><span>设置</span></i></a>
                 <div class="guide-box">
                     <cite></cite>
                     设置
@@ -530,7 +530,7 @@
                 </div>
             </dd>
             <dd data-eid="qd_R84">
-                <a class="add-book" th:href="${ibc[0].brid==-1}?'javascript:addBookrack()':'javascript:void(0)'" data-bookid="1012730372"><i><em class="iconfont"></em><span th:text="${ibc[0].brid==-1}?'加入书架':'已在书架'" id="bookrackset">书架</span></i></a>
+                <a class="add-book" th:href="${ibc[0].brid==-1}?'javascript:addBookrack()':'javascript:void(0)'" data-bookid="1012730372"><i><em class="icon icon-book_icon"></em><br><span th:text="${ibc[0].brid==-1}?'加入书架':'已在书架'" id="bookrackset">书架</span></i></a>
                 <div class="guide-box">
                     <cite></cite>
                     加入书架
@@ -593,7 +593,7 @@
                 </script>
             </dd>
             <dd data-eid="qd_R85">
-                <a th:href="|/jpbook/books/queryBookById?bookid=${ibc[0].bookid}|" target="_blank"><i><em class="iconfont"></em><span>书页</span></i></a>
+                <a th:href="|/jpbook/books/queryBookById?bookid=${ibc[0].bookid}|" target="_blank"><i><em class="icon icon-yemian"></em><br><span>书页</span></i></a>
                 <div class="guide-box">
                     <cite></cite>
                     返回书页
@@ -605,14 +605,14 @@
     <div class="right-bar-list" id="j_rightBarList" style="bottom: 0px;">
         <dl>
             <dd id="navReward" data-showtype="3" data-aid="qd_R87">
-                <a href="javascript:rewardClick()"><i><em class="iconfont"></em><span>打赏</span></i></a>
+                <a href="javascript:rewardClick()"><i><em class="icon icon-dashang"></em><br><span>打赏</span></i></a>
                 <div class="guide-box">
                     <cite></cite>
                     打赏
                 </div>
             </dd>
             <dd id="navTicket" data-showtype="2" data-aid="qd_R88">
-                <a href="javascript:recClick()"><i><em class="iconfont"></em><span>投票</span></i></a>
+                <a href="javascript:recClick()"><i><em class="icon icon-toupiao"></em><br><span>投票</span></i></a>
                 <div class="guide-box">
                     <cite></cite>
                     投票
@@ -623,9 +623,6 @@
             </dd>
 
         </dl>
-    </div>
-    <div class="guide-btn-wrap">
-        <a class="guide-btn" id="j_guideBtn" href="javascript:" data-eid="qd_R41">指南</a>
     </div>
 </div>
 <div id="userLevel" class="hidden">0</div>

@@ -358,7 +358,6 @@
 				</div>
 				<div class="nav-list min-user fr">
 					<ul>
-
 						<li class="line"></li>
 						<li th:class="${session.users} ? 'sign-out hidden' : 'sign-out'">
 							<a id="pin-login" href="../login.html" target="_blank">登录</a>
@@ -1224,7 +1223,7 @@
                                                                 <span class="gray">发表了帖子</span>
                                                             </p>
                                                             <h5 class="text">
-                                                                <a class="" href="https://forum.qidian.com/post/12073675103859503/1244484136"
+                                                                <a class=""  th:href="@{/reviewbook/queryById(bookid=${queryBookById[0].bookid},revid=${qr.revid})}"
                                                                    target="_blank" data-eid="qd_G37" th:utext="${qr.revvlue}">
                                                                     <i class="icon icon-topfix"></i>
                                                                     <i class="icon icon-jinghua"></i>
