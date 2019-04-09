@@ -130,8 +130,9 @@
             </div>
             <div class="nav-list min-user fr">
                 <ul>
+                    <li class="line"></li>
                     <li th:class="${session.users} ? 'sign-out hidden' : 'sign-out'">
-                        <a id="pin-login" href="../login.html"  target="_blank">登录</a>
+                        <a id="pin-login" href="../login.html" target="_blank">登录</a>
                         <a class="reg" href="../register.html" target="_blank">注册</a>
                     </li>
                     <th:block th:if="${session}">
@@ -143,9 +144,8 @@
                                     <span></span>
                                 </a>
                                 <div class="dropdown">
-                                    <a href="https://www.qidian.com/charge/meRedirect" target="_blank">充值</a>
+                                    <a href="/jpbook/topup" target="_blank">充值</a>
                                     <a href="../personal.html" target="_blank">个人中心</a>
-                                    <a href="https://www.qidian.com/help/kf" target="_blank">客服中心</a>
                                     <a id="exit" href="javascript:void(0);" onclick="removeu()">退出</a>
                                 </div>
                             </li>
@@ -186,7 +186,7 @@
                     </div>
                     <div class="select-wrap fl sort-switcher" data-sort="">
                         <a th:class="${sort} eq 'chaptime' ? 'act' : 's'" href="javascript:" id = "chaptime">最近更新</a>
-                        <a class="s" href="javascript:">总收藏</a>
+
                         <a th:class="${sort} eq 'chapcount' ? 'act' : 's'" href="javascript:" id = "chapcount">总字数</a>
                         <a th:class="${sort} eq 'cnum' ? 'act' : 's'" href="javascript:" id = "cnum">点击量</a>
                         <!--<div id="vipClicks" class="lbf-combobox vipClicks">

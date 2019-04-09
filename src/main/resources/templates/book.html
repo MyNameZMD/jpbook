@@ -463,9 +463,14 @@
                 <p>
                     <input type="hidden" id="atbookid" th:value="${queryBookById.get(0).get('bookid')}">
 
+					<th:block th:if="${queryChapters.size()} eq 0">
+						<a class="red-btn J-getJumpUrl">暂无章节</a>
+					</th:block>
+					<th:block th:if="${queryChapters.size()} ne 0">
 						<a class="red-btn J-getJumpUrl "
 						   th:href="@{/chapter/getInformationByChapid?chapid={filename}(filename=${queryChapters[0].chapid})}"
 						   id="readBtn">免费试读</a>
+					</th:block>
 
                     <script type="text/javascript">
                         $(function () {
@@ -692,21 +697,21 @@
 										</em>
 									</h3>
 									<ul class="cf">
-										<th:block  th:each="qc : ${queryChapters}">
-											<th:block  th:if="${qr.rollid} eq ${qc.rollid}">
-												<li>
-													<!--title="首发时间：2018-12-07 12:08:13 章节字数：2514"-->
-													<a href="https://vipreader.qidian.com/chapter/1013432619/436665179" target="_blank"
-													   th:title="|首发时间：${qc.chaptime} 章节字数:${qc.chapcount}|" th:text="${qc.chapname}">
-														第七十三章没架打真的好无聊啊（求订阅，求支持，拜谢各位）
-													</a>
-													<th:block th:if="${qc.vip} eq '收费'">
-														<span th:text="${qc.uuid} eq 0 ? '收费':'已购买'" style = "float:right;background: linear-gradient(to right, red, blue);-webkit-background-clip: text;color: transparent;"></span>
-													</th:block>
-													<!--<em class="iconfont icon-jiesuo"></em>-->
-												</li>
+											<th:block  th:each="qc : ${queryChapters}">
+												<th:block  th:if="${qr.rollid} eq ${qc.rollid}">
+													<li>
+														<!--title="首发时间：2018-12-07 12:08:13 章节字数：2514"-->
+														<a href="https://vipreader.qidian.com/chapter/1013432619/436665179" target="_blank"
+														   th:title="|首发时间：${qc.chaptime} 章节字数:${qc.chapcount}|" th:text="${qc.chapname}">
+															第七十三章没架打真的好无聊啊（求订阅，求支持，拜谢各位）
+														</a>
+														<th:block th:if="${qc.vip} eq '收费'">
+															<span th:text="${qc.uuid} eq 0 ? '收费':'已购买'" style = "float:right;background: linear-gradient(to right, red, blue);-webkit-background-clip: text;color: transparent;"></span>
+														</th:block>
+														<!--<em class="iconfont icon-jiesuo"></em>-->
+													</li>
+												</th:block>
 											</th:block>
-										</th:block>
 									</ul>
 								</div>
 							</th:block>
@@ -973,7 +978,7 @@
                                                 for (var i = 0; i < data.length; i++) {
                                                     if (data[i].type == 1) {
                                                         str += "<li data-rid=\"" + (i + 1) + "\" class=\"\"><em class=\"rec\"></em><a\n" +
-                                                            "\t\t\t\t\t\t\t\t\t\t\t\t\t\thref=\"https://me.qidian.com/friendIndex.aspx?id=301346563\"\n" +
+                                                            "\t\t\t\t\t\t\t\t\t\t\t\t\t\thref=\"javascript:void(0)\"\n" +
                                                             "\t\t\t\t\t\t\t\t\t\t\t\t\t\ttarget=\"_blank\" data-eid=\"\" title=\"" + data[i].uname + "\">" + data[i].uname + "</a><span>投了</span>" + data[i].num + "张" + data[i].name + "票\n" +
                                                             "\t\t\t\t\t\t\t\t\t\t\t\t\t</li>";
                                                     } else {
@@ -1319,7 +1324,7 @@
 													</div>
 													<div class="top-name-box">
 														<h4>
-															<a href="https://me.qidian.com/friendIndex.aspx?id=209502100"
+															<a th:href="|/jpbook/pc/home?uuid=${q.uuid}|"
 															   class="name" target="_blank"
 															   th:title="${q.uname}" th:text="${q.uname}">独走一匹猫</a>
 														</h4>

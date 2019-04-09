@@ -25,7 +25,7 @@
     </select>
 
     <select id="rack" resultType="map">
-        select b.bookid,br.brid,bt.btname,b.bookname,b.bookstate,c.chaptime,u.pen,u.uuid,
+        select b.bookid,bt.btid,bt.btname,b.bookname,b.bookstate,c.chaptime,u.pen,u.uuid,
         (select count(uuid) from bookrack where uuid=#{param1}) num
         from bookrack br inner join books b
         on br.bookid = b.bookid inner join booktype bt

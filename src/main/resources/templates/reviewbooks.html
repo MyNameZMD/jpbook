@@ -145,8 +145,8 @@
                             /*var len = $(".comment-list li").length+1;*/
                             var s = "<li class=\"comment-wrap cf\">" +
                                 "                        <div class=\"card-wrap fl\">" +
-                                "                            <a target=\"_blank\" href=\"https://my.qidian.com/user/229632611\">" +
-                                "                                <img class=\"head-img\" src=\"./书籍评论详情_files/100\">" +
+                                "                            <a target=\"_blank\" href=\"/jpbook/pc/home?uuid="+data[0].to_uuid+"\">" +
+                                "                                <img class=\"head-img\" src=\"../images/default_user.0.2.png\">" +
                                 "                            </a>" +
                                 "                        </div>" +
                                 "                        <div class=\"post\">" +
@@ -244,13 +244,13 @@
                     for(var i = 0;i<data.length;i++){
                         s +="<li class=\"reply-wrap cf\">" +
                             "<div class=\"card-wrap fl\">" +
-                            "<a target=\"_blank\" href=\"//my.qidian.com/user/328704748\">" +
-                            "<img class=\"head-img\" src=\"//qidian.qpic.cn/qd_face/349573/6470653/100\" alt=\"+data[i].from_uname+\">" +
+                            "<a target=\"_blank\" href=\"/jpbook/pc/home?uuid="+data[0].to_uuid+"\">" +
+                            "<img class=\"head-img\" src=\"../images/default_user.0.2.png\" alt=\"+data[i].from_uname+\">" +
                             "</a>" +
                             "</div>" +
                             "<div class=\"reply\">" +
                             "<p class=\"auther\">" +
-                            "<a target=\"_blank\" href=\"//my.qidian.com/user/328704748\" class=\"blue b\">"+data[i].from_uname+"</a>" +
+                            "<a target=\"_blank\" href=\"/jpbook/pc/home?uuid="+data[0].from_uuid+"\" class=\"blue b\">"+data[i].from_uname+"</a>" +
                             "</p>" +
                             "<p class=\"post-body\"><span>回复<a target='_blank' class='blue b'>"+data[i].to_uname+"</a>：</span>"+data[i].repcontent+"</p>" +
                             "<p class=\"post-info dib-wrap cf\">" +
@@ -420,7 +420,7 @@
     <div class="bg">
         <div class="main-wrap">
             <p class="breadcrumb">
-                <a href="https://forum.qidian.com/index/12991448603371803" th:utext="|${queryByRevid[0].uname}的讨论区|">寻唐的讨论区</a>
+                <a href="javascript:void(0)" th:utext="|${queryByRevid[0].uname}的讨论区|">寻唐的讨论区</a>
                 <span class="iconfont icon-xiayige"></span>帖子详情
             </p>
         </div>
@@ -430,7 +430,7 @@
             
             <div class="post-wrap cf">
                 <div class="card-wrap fl" th:id="${books[0].bookid}">
-                    <a target="_blank" href="https://my.qidian.com/user/229632611">
+                    <a target="_blank" th:href="|/jpbook/pc/home?uuid=${queryByRevid[0].uuid}|" >
                         <img class="head-img" th:src="|../images/${queryByRevid[0].icon}|"th:alt="${queryByRevid[0].uname}"></a>
                 </div>
                 <div class="post">
@@ -532,7 +532,7 @@
                 <th:block th:if="${session.users}">
                     <div class="comment-input-box">
                         <div class="user-info cf bg">
-                            <img src="./书籍评论详情_files/default_user.0.2.png" class="head-img" alt="书友20190303160502500">
+                            <img th:src="@{/images/{filename}(filename=${session.users[0].icon})}" class="head-img" alt="书友20190303160502500">
                             <b th:text="${session.users[0].uname}"></b>
                         </div><!-- th:action="@{/rbreply/add(bookid=${books[0].bookid})}"-->
                         <form id = "ff" class="send-commont" th:onsubmit="|return fabiao(${books[0].bookid})|" target="_blank">

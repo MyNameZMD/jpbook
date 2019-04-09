@@ -148,6 +148,8 @@
                 <div class="qdp-button" data-l2="1">
                     <input type="hidden" th:value="${h.uuid}" id="buuid">
                     <input type="hidden" th:value="${fansState}" id="fansState">
+                    <input type="hidden" th:value="${session.users.get(0).getUuid()}" id="uuid">
+
 
                     <a href="javascript:;" class="ui-button ui-button-small" id="elToFollow">关注</a>
                     <a href="javascript:;" class="ui-button ui-button-small" id="elFollowing">已关注</a>
@@ -274,6 +276,14 @@
                 $("#elFollowing").show();
                 $("#elToFollow").hide();
             }
+
+            var uuid = $("#uuid").val();
+            var buuid = $("#buuid").val();
+            if (uuid == buuid) {
+                $("#elToFollow").hide();
+                $("#elFollowing").hide();
+            }
+
         })
 
         $("#elFollowing").hover(function () {

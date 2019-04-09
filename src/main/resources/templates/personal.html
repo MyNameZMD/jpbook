@@ -1687,10 +1687,10 @@
 						r1 += "<tr class='qdp-operate-wrapper'>"+
 							"<td class='col1'>"+
 							"<span class='shelf-table-name'><b>"+
-							"<a href='?btid="+data[j].btid+"' target='_blank' class='fen-category' style='color: grey'>「"+data[j].btname+"」</a>"+
+							"<a href='/jpbook/showAllBook.html?btid="+data[j].btid+"' target='_blank' class='fen-category' style='color: grey'>「"+data[j].btname+"」</a>"+
 							"<a href='/jpbook/books/queryBookById?bookid="+data[j].bookid+"' target='_blank' title=''>"+data[j].bookname+"</a>"+
 							"</b>&nbsp;&nbsp;"+
-							"<a href='/jpbook/chapter/getInformationByChapid/?chapid="+data[j].chapid+"' class='shelf-table-chapter blue' target='_blank' title=''>"+data[j].chapname+"</a>"+
+							"<a href='/jpbook/chapter/getInformationByChapid?chapid="+data[j].chapid+"' class='shelf-table-chapter blue' target='_blank' title=''>"+data[j].chapname+"</a>"+
 							"</span></td>"+
 							"<td class='col2 font12'>"+renderTime(data[j].chaptime).substring(0,16)+"</td>"+
 							"<td class='col3'>"+
@@ -1748,7 +1748,7 @@
                             "<td class='col2'>"+
                             "<span class='shelf-table-name'>"+
                             "<b>"+
-                            "<a href='javascript:;' target='_blank' class='fen-category' style='color: grey'>「"+data[i].btname+"」</a>"+
+                            "<a href='/jpbook/showAllBook.html?btid="+data[i].btid+"' target='_blank' class='fen-category' style='color: grey'>「"+data[i].btname+"」</a>"+
                             "<a href='/jpbook/books/queryBookById?bookid="+data[i].bookid+"' target='_blank' title='' data-bid='1013406185' data-eid='qd_M198'>"+data[i].bookname+"</a>"+
                             "</b></span></td>"+
                             "<td class='col3 font12' >"+renderTime(data[i].chaptime).substring(0,16)+"</td>"+

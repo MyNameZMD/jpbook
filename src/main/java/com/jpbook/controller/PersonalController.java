@@ -134,7 +134,7 @@ public class PersonalController {
             // 文件上传,重命名
             //String fileName = realPath + "/" + UUID.randomUUID() + "_"+ originalFilename;
             String fileName = UUID.randomUUID() + "_"+ originalFilename;
-            File newFile = new File("E:\\icon\\"+fileName);
+            File newFile = new File("F:\\ideajava\\jpbook\\src\\main\\resources\\static\\images\\"+fileName);
             // 另存为
             try {
                 photo.transferTo(newFile);

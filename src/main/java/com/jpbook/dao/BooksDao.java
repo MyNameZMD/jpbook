@@ -270,7 +270,7 @@ public interface BooksDao {
     List<Map<String,Object>> queryMonthAndRec(Integer bookid);
     @Select("select r.rewatime time,r.bookid,u.uname,2 type,r.rewanum num,'起点币' name from reward r,users u where r.uuid=u.uuid and r.bookid=#{bookid};")
     List<Map<String,Object>> queryReward(Integer bookid);
-    @Update("update books set bookstate=1 where bookid=#{bookid}\n")
+    @Update("update books set bookstate=1,endtime=now() where bookid=#{bookid}\n")
     Integer bookEnd(Integer bookid);
     @Select("select  bs.bookname,c.* from books bs,roll r,chapter c where (bs.bookid=r.bookid and r.rollid=c.rollid and bs.bookid=#{param1} and rollmoney=1 and c.chapstate=1) or (bs.bookid=r.bookid and r.rollid=c.rollid and bs.bookid=#{param1} and rollmoney=2 and c.chapstate=1 and c.chapid in(\n" +
             "select chapid from buyrecord where uuid=#{param2}))")

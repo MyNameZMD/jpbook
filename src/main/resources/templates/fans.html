@@ -213,7 +213,7 @@
                                             <em class="number">
                                                 <span th:class="|rank-tag no${status.index+1}|" th:text="${status.index+1}">1<cite></cite></span>
                                             </em>
-                                            <a href="https://me.qidian.com/friendIndex.aspx?id=304047091" target="_blank"
+                                            <a th:href="|/jpbook/pc/home?uuid=${f.uuid}|"  target="_blank"
                                                th:title="${f.uname}" th:text="${f.uname}"></a>
                                             <i th:text="${f.rewanum}">3000000</i>
                                         </li>
@@ -231,7 +231,7 @@
                                             <em class="number">
                                                 <span th:class="|rank-tag no${status.index+1}|" th:text="${status.index+1}">1<cite></cite></span>
                                             </em>
-                                            <a href="https://me.qidian.com/friendIndex.aspx?id=304047091" target="_blank"
+                                            <a th:href="|/jpbook/pc/home?uuid=${f.uuid}|"  target="_blank"
                                                th:title="${f.uname}" th:text="${f.uname}"></a>
                                             <i th:text="${f.rewanum}">3000000</i>
                                         </li>
@@ -249,7 +249,7 @@
                                             <em class="number">
                                                 <span th:class="|rank-tag no${status.index+1}|" th:text="${status.index+1}">1<cite></cite></span>
                                             </em>
-                                            <a href="https://me.qidian.com/friendIndex.aspx?id=304047091" target="_blank"
+                                            <a th:href="|/jpbook/pc/home?uuid=${f.uuid}|" target="_blank"
                                                th:title="${f.uname}" th:text="${f.uname}"></a>
                                             <i th:text="${f.rewanum}">3000000</i>
                                         </li>
@@ -257,7 +257,7 @@
                                 </th:block>
                             </ul>
                         </div>
-
+<!--
                         <div class="fans-list mr0">
                             <h3><b class="col-1">排名</b><b class="col-2">粉丝昵称</b><b class="col-3">累计打赏(起点币)</b></h3>
                             <ul>
@@ -274,7 +274,7 @@
                                     </th:block>
                                 </th:block>
                             </ul>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="rank-data-total cf"></div>
                 </div>
