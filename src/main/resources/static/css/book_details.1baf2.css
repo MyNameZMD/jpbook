@@ -2783,12 +2783,12 @@ h3.wrap-title a .iconfont {
   color: #a6a6a6;
   border-bottom: 1px solid #e6e6e6
 }
-input[type=checkbox] {
+/*input[type=checkbox] {
   position: absolute;
   top: 14px;
   clip: rect(0,0,0,0);
   opacity: 0
-}
+}*/
 input[type=checkbox]:hover {
   cursor: pointer
 }

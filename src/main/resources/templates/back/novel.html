@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>小说列表</title>
+    <link rel="stylesheet" href="../layui/layui.css"  media="all">
+
+    <script src="../js/jquery-3.3.1.js"  th:inline="none"></script>
+    <script src="../layui/layui.js" charset="utf-8"  th:inline="none"></script>
+
+</head>
+<body style="margin-left: 10px;margin-right: 10px">
+
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto" style="margin-left: -125px;margin-top: 5px">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-inline">
+                    <input type="text" name="searchContent" id="companyName" placeholder="请输入书名或作者名" autocomplete="off" class="layui-input">
+                </div>
+                <button class="layui-btn" style="margin-top: -6px;" id="searchCompany" data-type="reload">
+                    <i class="layuiadmin-button-btn">查找</i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <table class="layui-hide" id="novel"></table>
+
+</body>
+
+<script type="text/javascript" th:inline="none">
+    layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#novel'
+            ,url:'/jpbook/back/novelquery'
+            ,cols: [[
+                {field:'icon',align:'center', title: '封面',templet:function(d) { return '<img src="/jpbook/imgicon/'+d.icon+'">'}}
+                ,{field:'bookname',  title: '书名'}
+                ,{field:'btname',  title: '类型',align:'center'}
+                ,{field:'pen', title: '作者'}
+                ,{field:'chapcount',title: '字数(万)',align:'center',sort: true}
+                ,{field:'recsum',  title: '获得推荐票(张)',align:'center',sort: true}
+                ,{field:'monthsum',  title: '获得月票(张)',align:'center',sort: true}
+                ,{field:'state', title: '更新进度',align:'center'}
+            ]]
+            ,page: true
+            ,done:function(res,curr,count){
+                hoverOpenImg();//显示大图
+                $('table tr').on('click',function(){
+                    $('table tr').css('background','');
+                    $(this).css('background','<%=PropKit.use("config.properties").get("table_color")%>');
+                });
+            }
+        });
+
+        //搜索加载--数据表格重载
+        var active = {
+            reload: function () {
+                var searchContent = $("#companyName").val();//搜索框内容
+                //执行重载
+                table.reload('novel', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        searchContent: searchContent//作为参数传递给后端
+                    }
+                });
+            }
+        };
+
+        $('#searchCompany').on('click', function () {
+            var type = $(this).data('type');//自定义type属性，这里即为reload
+            active[type] ? active[type].call(this) : ''; //如果存在active[type]，则调用改函数
+        });
+    });
+
+    function hoverOpenImg(){
+        var img_show = null; // tips提示
+        $('td img').hover(function(){
+            var img = "<img class='img_msg' src='"+$(this).attr('src')+"' style='width:130px;' />";
+            img_show = layer.tips(img, this,{
+                tips:[2, 'rgba(41,41,41,.5)']
+                ,area: ['160px']
+            });
+        },function(){
+            layer.close(img_show);
+        });
+        $('td img').attr('style','max-width:70px');
+    }
+
+
+</script>
+</html>

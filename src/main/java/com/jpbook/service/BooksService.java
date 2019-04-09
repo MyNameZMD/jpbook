@@ -87,6 +87,13 @@ public class BooksService {
     public List<Map<String,Object>> likeBooks(String kw,Integer page,Integer limit,String sort){
         return bd.likeBooks(kw,page,limit,sort);
     }
+    public List<Map<String,Object>> queryBookByState(Integer startIndex,Integer endIndex,Integer btid,Integer bookstate,Integer rollmoney,Integer updatetime,Integer startSum,Integer endSum,String order){
+        return bd.queryBookByState(startIndex,endIndex,btid,bookstate,rollmoney,updatetime,startSum,endSum,order);
+    }
+    public List<Map<String,Object>> getMonthAndRecAndReward(Integer bookid){return bd.getMonthAndRecAndReward(bookid);}
+    public List<Map<String,Object>> queryMonthAndRec(Integer bookid){return bd.queryMonthAndRec(bookid);}
+    public List<Map<String,Object>> queryReward(Integer bookid){return bd.queryReward(bookid);}
+    public Integer bookEnd(Integer bookid){return bd.bookEnd(bookid);}
 
     public List<Map<String,Object>> cankNewBook(Integer page,Integer btid){
         return bd.cankNewBook(page,btid);
@@ -125,6 +132,7 @@ public class BooksService {
     public List<Map<String,Object>> recentUpdates(){
         return bd.recentUpdates();
     }
+    public List<Map<String,Object>> download(Integer bookid,Integer uuid){return bd.download(bookid,uuid);}
     public List<Map<String,Object>> queryFansByBookid(Integer bookid){
         return bd.queryFansByBookid(bookid);
     }

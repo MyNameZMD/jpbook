@@ -30,4 +30,7 @@ public class ChapterService {
     public Integer del(Integer chapid){return cd.del(chapid);}
     public Integer upurl(Integer bookid){return cd.upurl(bookid);}
     public List<Map<String,Object>> getInformationByChapid(Integer chapid,Integer uuid){return cd.getInformationByChapid(chapid,uuid);}
+    public List<Map<String,Object>> getInformationByChapidNoUuid(Integer chapid){return cd.getInformationByChapidNoUuid(chapid);}
+    public Map<String,Object> getBookAllMoney(Integer bookid,Integer uuid){return cd.getBookAllMoney(bookid,uuid);}
+    public Integer getChapMoney(Integer chapid){return cd.getChapMoney(chapid);}
 }

@@ -1,5 +1,6 @@
 package com.jpbook.dao;
 
+import org.apache.ibatis.annotations.*;
 import com.jpbook.entity.Bookrack;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,6 +23,9 @@ public interface BookrackDao {
 
     @Insert("INSERT INTO bookrack VALUES(null,#{param1},#{param2})\n")
     Integer addBookrack(Integer uuid, Integer bookid);
+    @Select("select * from bookrack where uuid=#{param1} and bookid=#{param2}")
+    List<Map<String,Object>> ckBookrackExist(Integer uuid, Integer bookid);
+
 
     /**
      * 查询用户对某本书是否已经添加进书架

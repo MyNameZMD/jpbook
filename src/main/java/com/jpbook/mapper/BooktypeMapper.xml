@@ -7,4 +7,17 @@
         group by bt.btid,bt.btname,bt.btico order by btid
     </select>
 
+    <resultMap id="typeAndBooks" type="Map">
+        <id column="btid" property="btid"></id>
+        <result column="btname" property="btname"></result>
+        <result column="bticon" property="bticon"></result>
+        <collection property="books" javaType="List" column="btid" select="queryBooksByBtid">
+        </collection>
+    </resultMap>
+    <select id="queryBooksByBtid" parameterType="Integer" resultType="Map">
+        select * from books where btid=#{btid}
+    </select>
+    <select id="queryTypeAndBooks" resultMap="typeAndBooks" parameterType="Map">
+        select * from booktype
+    </select>
 </mapper>

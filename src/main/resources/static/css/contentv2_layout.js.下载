@@ -17,7 +17,7 @@ if(!repeatNewPwd||$.trim(repeatNewPwd).length===0){_dialog.alert('请再次输�
 if(newPwd!==repeatNewPwd){_dialog.alert('两次输入的新密码必须一致');return;}
 if(_isRequesting){return;}
 _isRequesting=1;_util.updateBtnText($btn,'loading');_util.request({url:_ajaxUrls.modifyPwd,type:'post',dataType:'json',data:{'old_password':originalPwd,'new_password':newPwd,'repeat_password':repeatNewPwd},success:function(json){if(!json){_dialog.alert('返回数据格式异常，请稍后再试');return;}
-if(json.status){_closeModifyPwdPopup();_dialog.alert(json.info||'更改成功');}else{_dialog.alert(json.info||'操作失败，请稍后再试');}},error:function(){_dialog.alert('操作失败，请稍后再试');},complete:function(){_util.updateBtnText($btn,'default');_isRequesting=0;}});}
+if(json.status){_closeModifyPwdPopup();_dialog.alert(json.info||'更改成功');}},complete:function(){_util.updateBtnText($btn,'default');_isRequesting=0;}});}
 function _openModifyPwdPopup(){if(!_maskByModifyPwd){_maskByModifyPwd=new _mask(_nodes.$modifyPwdPopup);}
 if(_maskByModifyPwd){_nodes.$modifyPwdPopup.find('input[type="password"]').val('');_maskByModifyPwd.open();}}
 function _closeModifyPwdPopup(){if(_maskByModifyPwd){_maskByModifyPwd.close();}}

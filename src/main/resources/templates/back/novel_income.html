@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+
+    <link rel="stylesheet" href="../layui/layui-v2.4.5/layui/css/layui.css"  media="all">
+
+</head>
+<body style="margin-left: 100px;margin-right: 100px">
+
+    <!--<blockquote class="layui-elem-quote layui-text">
+        尽管本示例中的原始数据：<a href="https://www.layui.com/test/table/demo3.json" target="_blank">/test/table/demo3.json</a>，并不符合 table 组件默认规定的数据格式，但从 layui 2.4.0 开始，新增的 parseData 回调可以将原始的任意格式的数据重新解析成 table 组件规定的数据格式。具体可以点击上方查看代码。
+    </blockquote>-->
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+
+<script src="../layui/layui-v2.4.5/layui/layui.js" charset="utf-8" th:inline="none"></script>
+
+<script th:inline="none">
+    layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#test'
+            ,url:'/jpbook/back/booksincome'
+            ,toolbar: true
+            ,title: '小说数据统计'
+            ,totalRow: true
+            ,cols: [[
+                {field:'bookid', title:'ID',  fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
+                //,{field:'bookid', title:'ID', width:120, edit: 'text'}
+                ,{field:'bookname', title:'小说', }
+                ,{field:'remuneration', title:'订阅(币)', sort: true, totalRow: true}
+                ,{field:'rewardsum', title:'打赏(币)', sort: true, totalRow: true}
+                ,{field:'recsum', title:'推荐票(张)',  sort: true, totalRow: true}
+                ,{field:'monthsum', title:'月票(张)' , sort: true, totalRow: true}
+            ]]
+            //,page: true
+            ,response: {
+                statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
+            }
+            ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.total, //解析数据长度
+                    "data": res.rows.item //解析数据列表
+                };
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

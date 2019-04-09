@@ -29,16 +29,15 @@ public class ShiroConfig {
          */
         Map<String,String> filterMap = new LinkedHashMap<String, String>();
 
-        //filterMap.put("/login/landing", "anon");
+        filterMap.put("/Emp/login", "anon");
 
-        //filterMap.put("/*","authc");
-
+        filterMap.put("/back/*","authc");
 
         //调整修改页面
-        //shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setLoginUrl("/back/login.html");
 
         //success
-        //shiroFilterFactoryBean.setSuccessUrl("/index");
+        shiroFilterFactoryBean.setSuccessUrl("/jpbook/back/index.html");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 

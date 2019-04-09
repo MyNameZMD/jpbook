@@ -30,4 +30,5 @@ public class BookrackService {
     public Bookrack bookidExits(Integer uuid, Integer bookid){
         return bd.bookidExits(uuid,bookid);
     }
+    public List<Map<String,Object>> ckBookrackExist(Integer uuid, Integer bookid){return bd.ckBookrackExist(uuid,bookid);}
 }

@@ -3,21 +3,30 @@
 <mapper namespace="com.jpbook.dao.BookrackDao">
 
     <select id="read" resultType="map">
-        select a.* from (select c.chapid,c.chapname,br.btime,b.bookid,b.bookname,bt.btname,u.uname,u.uuid from browse br inner join chapter c on br.chapid=c.chapid
-        inner join roll r on c.rollid=r.rollid
-        inner join books b on r.bookid=b.bookid
-        inner join booktype bt on b.btid=bt.btid
-        inner join users u on b.uuid=u.uuid) a where a.chapid in
-        (select b.cid from (select max(c.chapid) cid,b.bookid,b.bookname,bt.btname,u.uname from browse br inner join chapter c on br.chapid=c.chapid
-        inner join roll r on c.rollid=r.rollid
-        inner join books b on r.bookid=b.bookid
-        inner join booktype bt on b.btid=bt.btid
-        inner join users u on b.uuid=u.uuid group by b.bookid,b.bookname,bt.btname,u.uname) b) and a.uuid = #{uuid}
+        select b.*,ifnull(br.bookid,-1) brid from
+        (select u.pen,b.*,bt.btname,c.chapid,chaptime,c.chapname
+        from users u,books b,booktype bt,roll r,chapter c,
+        (select b.bookid from browse br,books b,roll r,chapter c
+        where br.chapid=c.chapid and c.rollid=r.rollid and b.bookid=r.bookid
+        and br.uuid=#{uuid} group by b.bookid)be
+        where u.uuid=b.uuid and bt.btid=b.btid and b.bookid=r.bookid
+        and r.rollid=c.rollid and be.bookid=b.bookid) b
+        right join
+        (select b.chapid,b.bookid,max(b.chaptime)time from
+        (select b.bookid,c.chapname,c.chaptime,c.chapid
+        from books b,roll r,chapter c,browse br
+        where b.bookid=r.bookid and r.rollid=c.rollid and br.chapid=c.chapid
+        and br.uuid=#{uuid} and c.chapstate=1 order by c.chaptime desc)b
+        group by b.bookid) bb
+        on bb.time = b.chaptime
+        left join
+        (select bookid from bookrack where uuid = #{uuid})br
+        on br.bookid=b.bookid
     </select>
 
     <select id="rack" resultType="map">
-        select br.brid,bt.btname,b.bookname,b.bookstate,c.chaptime,u.uname,
-        (select count(uuid) from bookrack) num
+        select b.bookid,br.brid,bt.btname,b.bookname,b.bookstate,c.chaptime,u.pen,u.uuid,
+        (select count(uuid) from bookrack where uuid=#{param1}) num
         from bookrack br inner join books b
         on br.bookid = b.bookid inner join booktype bt
         on bt.btid = b.btid inner join users u
@@ -25,7 +34,7 @@
         on r.bookid = b.bookid inner join chapter c
         on c.rollid = r.rollid
         where br.uuid = #{param1}
-        and (b.bookname like concat('%',#{param2},'%') or u.uname like concat('%',#{param2},'%'))
+        and (b.bookname like concat('%',#{param2},'%') or u.pen like concat('%',#{param2},'%'))
         group by b.bookid order by c.chaptime desc
     </select>
     <select id="bookidExits" resultType="com.jpbook.entity.Bookrack" parameterType="Integer">

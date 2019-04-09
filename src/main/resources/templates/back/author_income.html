@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../layui/layui.css"  media="all">
+
+    <script src="../js/jquery-3.3.1.js"  th:inline="none"></script>
+    <script src="../layui/layui.js" charset="utf-8"  th:inline="none"></script>
+</head>
+<body>
+    <div>
+        <table class="layui-hide" id="author" style="margin-left: 50px;"></table>
+    </div>
+
+</body>
+<script type="text/javascript" th:inline="none">
+    layui.use('table', function() {
+        var table = layui.table;
+
+        table.render({
+            elem: '#author'
+            , url: '/jpbook/back/getAllAuthorMoney'
+            , cols: [[
+                {field: 'pen', align:'center', title: '笔名'}
+                , {field: 'rewmoney', align:'center',title: '打赏收入(书币)'}
+                , {field: 'buymoney', align:'center', title: '版权收入(书币)'}
+                , {field: 'allmoney', align:'center', title: '总收入(书币)'}
+                , {field: 'duemoney', align:'center', title: '应得收入(书币)'}
+                , {field: 'actualmoney',align:'center',  title: '实得金额(人民币)'}
+                , {field: 'withdrawmoney',align:'center',  title: '提现金额(人民币)'}
+                , {field: 'residuemoney',align:'center', title: '剩余金额(人民币)'}
+            ]]
+            , page: true
+        });
+    });
+</script>
+</html>

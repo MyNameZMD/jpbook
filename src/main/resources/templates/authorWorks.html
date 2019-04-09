@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <!-- saved from url=(0043)https://write.qq.com/booknovels/novels.html -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html xmlns:th="http://www.thymeleaf.org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <!-- 360安全游览器使用webkit极速核 -->
     <meta name="renderer" content="webkit">
@@ -11,10 +11,13 @@
     <meta name="keywords" content="小说,小说网,言情小说,职场小说,玄幻小说,武侠小说,都市小说,历史小说,网络小说,小说下载,小说txt,小说全文阅读,原创网络文学">
     <link rel="shortcut icon" type="image/x-icon" href="https://img1.write.qq.com/writer/p1/contentv2/aa_ico.ico">
     <title>作品管理-江派作家专区</title>
-    <link rel="stylesheet" type="text/css" href="./css/contentv2_base.css"><script src="./css/stats.js.下载" name="MTAH5" sid="500659219"></script><script type="text/javascript" src="./css/contentv2_base.js.下载"></script>    <!-- prevent dom xss -->
+    <link rel="stylesheet" type="text/css" href="./css/contentv2_base.css"><script src="./css/stats.js.下载" name="MTAH5" sid="500659219"></script>
+    <script type="text/javascript" src="./css/contentv2_base.js.下载"></script>    <!-- prevent dom xss -->
     <script type="text/javascript" src="./css/aq_common.js.下载"></script>
     <meta name="__hash__" content="e2e8202b96a21790ba859e82a5be8bd2_50020a00bf1907cee316c91be7ed4f4d">
     <script src="./js/jquery-3.3.1.js"></script>
+    <script src="./js/sweet-alert.js"></script>
+    <link rel="stylesheet" href="./css/sweet-alert.css">
 </head>
 <body>
 <div class="wrap">
@@ -25,31 +28,22 @@
             </a>
             <div class="headUser fr">
                 <ul class="cf">
-                    <li id="msgBox" class="bell">
-                        <a href="https://write.qq.com/authors/authorconsultlist.html">
-              <span class="icon">
-                <cite id="msgCount" class="icon" style="display:none;"></cite>
-              </span></a><a href="https://write.qq.com/authors/authorconsultlist.html">通知</a>
-
-                        <dl id="msgList" class="msgBox" style="display:none;"></dl>
-                    </li>
                     <li class="line"></li>
                     <li id="headPhotoBox" class="headPhoto">
-                        <p><em><img src="./css/photo_default.png" width="36" height="36" alt=""></em><a class="userName" href="javascript:">爱色鬼</a></p>
+                        <p><em><img th:src="${session.users[0].getIcon()}" width="36" height="36" alt=""></em><a class="userName" href="javascript:" th:text="${session.users[0].getPen()}">爱色鬼</a></p>
                         <dl class="userBox">
                             <cite class="icon whiteSj"></cite>
                             <dd class="userInfo hidden">
                                 <!-- 增加身份标识"ico-level",silver为白金作家，dashen为大神作家 -->
-                                <p class="name" title="爱色鬼">鬼
+                                <p class="name" th:title="${session.users[0].getPen()}" th:text="${session.users[0].getPen()}">爱色鬼
 
                                 </p>
                                 <p class="level">
 
                                     <span><em style="width:70%">0/0</em></span></p>
                             </dd>
-                            <dd class="link"><a href="https://write.qq.com/authors/person.html"><i>完整度75%</i>作家资料</a></dd>
-                            <dd class="link"><a id="openModifyPwdPopupBtn" href="javascript:">更改密码</a></dd>
-                            <dd class="link end"><a href="https://write.qq.com/public/logout.html">退出登录</a></dd>
+                            <dd class="link"><a href="writerdata.html">作家资料</a></dd>
+                            <dd class="link end"><a href="/jbook/login/emptySession">退出登录</a></dd>
                         </dl>
                     </li>
                 </ul>
@@ -95,9 +89,6 @@
         <div id="leftNav" class="mainLeft fl" style="visibility: visible;">
             <div class="sideBar" id="main-bar">
                 <ul>
-                    <li>
-                        <a href="https://write.qq.com/index.html"><span class="home"></span>专区首页</a>
-                    </li>
                     <li class="act">
                         <a href="authorWorks"><span class="works"></span>作品管理</a>
                     </li>
@@ -108,27 +99,12 @@
                     <li>
                         <a href="income"><span class="income"></span>稿酬收入</a>
                     </li>
-                    <li>
-                        <a href="https://write.qq.com/labor.html"><span class="labour"></span>劳务收入</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/authors/authorconsultlist.html"><span class="counsel"></span>作家咨询</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/integral_exchange/exchange.html"><span class="exchange"></span>积分兑换</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/interactivechapter/index.html"><span class="active"></span>互动管理</a>
-                    </li>                                    </ul>
+                </ul>
             </div>
 
             <!-- start 小屏下的列表-->
             <div class="sideBar min-bar" id="min-bar">
                 <ul>
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/index.html"><span class="icon home"></span></a>
-                        <a class="expand" href="https://write.qq.com/index.html">专区首页</a>
-                    </li>
                     <li class="act">
                         <a class="min-link" href="authorWorks"><span class="icon works"></span></a>
                         <a class="expand" href="authorWorks">作品管理</a>
@@ -144,25 +120,6 @@
                         <a class="min-link" href="income"><span class="icon income"></span></a>
                         <a class="expand" href="income">稿酬收入</a>
                     </li>
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/labor.html"><span class="icon labour"></span></a>
-                        <a class="expand" href="https://write.qq.com/labor.html">劳务收入</a>
-                    </li>
-
-
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/authors/authorconsultlist.html"><span class="icon counsel"></span></a>
-                        <a class="expand" href="https://write.qq.com/authors/authorconsultlist.html">作家咨询</a>
-                    </li>
-
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/integral_exchange/exchange.html"><span class="icon exchange"></span></a>
-                        <a class="expand" href="https://write.qq.com/integral_exchange/exchange.html">积分兑换</a>
-                    </li>
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/interactivechapter/index.html"><span class="icon active"></span></a>
-                        <a class="expand" href="https://write.qq.com/interactivechapter/index.html">互动管理</a>
-                    </li>
 
                     <!--微信管理-->
                 </ul>
@@ -175,10 +132,10 @@
         <div class="crumbsWrap">
             <i><span>作品管理</span></i>
         </div>
-        <div class="msgBoxTitle">
-            <p class="f12 c555">当前作品总数<span id="bookCount" class="blue Num">2</span>本</p>
+        <div class="msgBoxTitle"><!--
+            <p class="f12 c555">当前作品总数<span id="bookCount" class="blue Num">2</span>本</p>-->
             <a  href="authorCreation" class="create button"><em class="icon"></em>创建作品</a>
-            <a class="zwhd button border-btn" href="https://write.qq.com/article/index.html"><em class="icon"></em>征文活动（15）</a>     </div>
+                 </div>
         <!-- 存在作品 -->
         <div id="bookManageExist" class="worksCtrlWrap">
             <div class="worksListWrap mb20">
@@ -196,11 +153,11 @@
                     <tr>
                         <th></th>
                         <th class="tl">书名</th>
-                        <th class="tl">最新章节</th>
+                        <th class="tl" width="100px;">最新章节</th>
                         <th class="center">编辑分组</th>
                         <th>收藏</th>
                         <th>状态</th>
-                        <th class="center">操作</th>
+                        <th class="center" width="200px;">操作</th>
                     </tr>
                     </thead>
                     <tbody id="novelList">
@@ -336,7 +293,7 @@
                 str+="<td class=\"tl\">";
                 str+="<div class=\"work-photo\">";
                 str+="<a href=\"http://chat.yuewen.com/book/13129224804944103\" target=\"_blank\">";
-                str+="<img src=\"./css/default_5c7779d838a94.png\" width=\"83\" height=\"108\" alt=\"作品封面\">";
+                str+="<img src=\"./img/"+data[i].icon+"\" width=\"83\" height=\"108\" alt=\"作品封面\">";
                 str+="</a>";
                 str+="</div>";
                 str+="<p class=\"work-name\">";
@@ -349,21 +306,27 @@
                 }else{
                     str+="<a href=\"javascript:void(0);\">"+data[i].chapname+"</a>"
                     str+="<br>"
-                    str+="<em class=\"time\">"+data[i].updatetime+"</em>"
+                    str+="<em class=\"time\">"+jsonDateFormat(data[i].updatetime)+"</em>"
                 }
                 str+="</td>";
                 str+="<td>";
                 str+="<em>"+data[i].btname+"分组</em>";
                 str+="</td>";
                 str+="<td>";
-                str+="<em class=\"Num\">0</em>"
+                str+="<em class=\"Num\">"+data[i].count+"</em>"
                 str+="</td>";
                 var state=data[i].bookstate==0?'连载中':'完结';
-                str+="<td>"+state+"</td>";
+                str+="<td>"+state+"";
+                str+="</td>";
                 str+="<td>";
                 str+="<div class=\"dib-wrap\">";
                 str+="<a class=\"button blue\" href=\"javascript:void(0);\" onclick=\"skip("+data[i].bookid+",'chapteradd')\"><span class=\"icon\"></span><i>写新章节</i></a>"
                 str+="<a class=\"button white\" href=\"javascript:void(0);\" onclick=\"skip("+data[i].bookid+",'chaptersent')\"><span class=\"icon\"></span><i>已发布章节</i></a>";
+                if(data[i].bookstate==0){
+                    str+="<a class=\"button blue\" href=\"javascript:void(0);\" onclick=\"bookEnd("+data[i].bookid+")\"><span class=\"icon\"></span><i>完结</i></a>"
+                }else{
+                    str+="<a class=\"button white\" href=\"javascript:void(0);\"><span class=\"icon\"></span><i>已完结</i></a>";
+                }
                 str+="</div>";
                 str+="</td>";
                 str+="</tr>";
@@ -371,9 +334,32 @@
             $("#novelList").html(str);
         }
     })
+    function jsonDateFormat(date) {//json日期格式转换为正常格式
+        var dateee = new Date(date).toJSON();
+        return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+    }
+    function bookEnd(bookid) {
+        swal({
+                title: "确定操作吗?",
+                text: "您确定这本书要完结吗!",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:"取消",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定!"
+            },
+            function(){
+                $.ajax({
+                    url: "books/bookEnd",
+                    data:{"bookid":bookid},
+                    success: function (data) {
+                        window.location.reload();
+                    }
+                })
+            });
+
+    }
     function skip(bookid, url) {
-        alert(bookid);
-        alert(url);
         $.ajax({
             url: "books/workstoaddandsend",
             data:{"bookid":bookid},

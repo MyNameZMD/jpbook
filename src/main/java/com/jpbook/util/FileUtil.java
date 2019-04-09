@@ -115,4 +115,26 @@ public class FileUtil {
         }
         return uuid+".png";
     }
+    public static void delPaper(String oldName){
+        File file = new File(oldName);
+        System.out.println(file);
+        file.delete();
+    }
+    public  void upPaperName(String oldName,String newName){
+        System.out.println(oldName+"\n"+newName);
+        System.out.println(222);
+        System.out.println(oldName+"\n"+newName);
+        File f=new File("f:\\\\books\\\\"+oldName+".txt");
+        String c=f.getParent();
+        System.out.println(c);
+        File mm=new File("f:\\\\books\\\\"+newName+".txt");
+        if(f.renameTo(mm))
+        {
+            System.out.println("修改成功!");
+        }
+        else
+        {
+            System.out.println("修改失败");
+        }
+    }
 }

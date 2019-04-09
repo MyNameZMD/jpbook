@@ -8,6 +8,7 @@ public class Wallet {
 	private Integer wtid;
 	private Integer walnum;
 	private Date waltime;
+
 	public Integer getWalid() {
 		return walid;
 	}

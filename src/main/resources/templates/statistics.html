@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <!-- saved from url=(0049)https://write.qq.com/booknovelsvip/takeindex.html -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html xmlns:th="http://www.thymeleaf.org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <!-- 360安全游览器使用webkit极速核 -->
     <meta name="renderer" content="webkit">
     <!-- IE使用它支持的最高模式 -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="shortcut icon" type="image/x-icon" href="https://img1.write.qq.com/writer/p1/contentv2/aa_ico.ico">
-    <title>订阅管理-阅文作家专区</title>
+    <title>数据统计-江派作家专区</title>
     <link rel="stylesheet" type="text/css" href="./css/contentv2_base.css"><script src="./css/stats.js.下载" name="MTAH5" sid="500659219"></script><script type="text/javascript" src="./css/contentv2_base.js.下载"></script>    <!-- prevent dom xss -->
     <script type="text/javascript" src="./css/aq_common.js.下载"></script>
     <meta name="__hash__" content="8059a4d934094f3b0445d577c309de4f_804f2b5277930d395c04dabd8b59fd0c">
@@ -26,31 +26,22 @@
             </a>
             <div class="headUser fr">
                 <ul class="cf">
-                    <li id="msgBox" class="bell">
-                        <a href="https://write.qq.com/authors/authorconsultlist.html">
-              <span class="icon">
-                <cite id="msgCount" class="icon" style="display:none;"></cite>
-              </span></a><a href="https://write.qq.com/authors/authorconsultlist.html">通知</a>
-
-                        <dl id="msgList" class="msgBox" style="display:none;"></dl>
-                    </li>
                     <li class="line"></li>
                     <li id="headPhotoBox" class="headPhoto">
-                        <p><em><img src="./css/photo_default.png" width="36" height="36" alt=""></em><a class="userName" href="javascript:">爱色鬼</a></p>
+                        <p><em><img th:src="${session.users[0].getIcon()}" width="36" height="36" alt=""></em><a class="userName" href="javascript:" th:text="${session.users[0].getPen()}">爱色鬼</a></p>
                         <dl class="userBox">
                             <cite class="icon whiteSj"></cite>
                             <dd class="userInfo hidden">
                                 <!-- 增加身份标识"ico-level",silver为白金作家，dashen为大神作家 -->
-                                <p class="name" title="爱色鬼">爱色鬼
+                                <p class="name" th:title="${session.users[0].getPen()}" th:text="${session.users[0].getPen()}">爱色鬼
 
                                 </p>
                                 <p class="level">
 
                                     <span><em style="width:70%">0/0</em></span></p>
                             </dd>
-                            <dd class="link"><a href="https://write.qq.com/authors/person.html"><i>完整度75%</i>作家资料</a></dd>
-                            <dd class="link"><a id="openModifyPwdPopupBtn" href="javascript:">更改密码</a></dd>
-                            <dd class="link end"><a href="https://write.qq.com/public/logout.html">退出登录</a></dd>
+                            <dd class="link"><a href="writerdata.html">作家资料</a></dd>
+                            <dd class="link end"><a href="/jbook/login/emptySession">退出登录</a></dd>
                         </dl>
                     </li>
                 </ul>
@@ -97,9 +88,6 @@
             <div class="sideBar" id="main-bar">
                 <ul>
                     <li>
-                        <a href="https://write.qq.com/index.html"><span class="home"></span>专区首页</a>
-                    </li>
-                    <li>
                         <a href="authorWorks"><span class="works"></span>作品管理</a>
                     </li>
                     <li class="act"><a href="statistics"><span class="data-icon"></span>数据统计</a>
@@ -109,27 +97,12 @@
                     <li>
                         <a href="income"><span class="income"></span>稿酬收入</a>
                     </li>
-                    <li>
-                        <a href="https://write.qq.com/labor.html"><span class="labour"></span>劳务收入</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/authors/authorconsultlist.html"><span class="counsel"></span>作家咨询</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/integral_exchange/exchange.html"><span class="exchange"></span>积分兑换</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/interactivechapter/index.html"><span class="active"></span>互动管理</a>
-                    </li>                                    </ul>
+                </ul>
             </div>
 
             <!-- start 小屏下的列表-->
             <div class="sideBar min-bar" id="min-bar">
                 <ul>
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/index.html"><span class="icon home"></span></a>
-                        <a class="expand" href="https://write.qq.com/index.html">专区首页</a>
-                    </li>
                     <li>
                         <a class="min-link" href="authorWorks"><span class="icon works"></span></a>
                         <a class="expand" href="authorWorks">作品管理</a>
@@ -144,25 +117,6 @@
                     <li>
                         <a class="min-link" href="income"><span class="icon income"></span></a>
                         <a class="expand" href="income">稿酬收入</a>
-                    </li>
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/labor.html"><span class="icon labour"></span></a>
-                        <a class="expand" href="https://write.qq.com/labor.html">劳务收入</a>
-                    </li>
-
-
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/authors/authorconsultlist.html"><span class="icon counsel"></span></a>
-                        <a class="expand" href="https://write.qq.com/authors/authorconsultlist.html">作家咨询</a>
-                    </li>
-
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/integral_exchange/exchange.html"><span class="icon exchange"></span></a>
-                        <a class="expand" href="https://write.qq.com/integral_exchange/exchange.html">积分兑换</a>
-                    </li>
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/interactivechapter/index.html"><span class="icon active"></span></a>
-                        <a class="expand" href="https://write.qq.com/interactivechapter/index.html">互动管理</a>
                     </li>
 
                     <!--微信管理-->
@@ -179,12 +133,13 @@
             <span class="act"><a href="javascript:void(0)">订阅统计</a></span>   </div>
         <div id="sehui">
             <em>选择作品：</em>
+
             <select name="CBID" id="CBID" class="form-control">
                 <option value="0">暂无可选作品</option>
             </select>
 
 
-            <a id="searchTakeList" class="button" href="javascript:">查看</a>
+            <a id="searchTakeList" class="button" href="javascript:" style="width: 80px;height: 35px">查看</a>
         </div>
         <input type="hidden" id="bookid" name="bookid">
         <div class="incomeWrap">
@@ -215,7 +170,7 @@
                         str+="</select>\n" +
                             "            \n" +
                             "\n" +
-                            "            <a class=\"button\" href=\"javascript:void(0)\" onclick='queryStatistics()'>查看</a></div>";
+                            "            <a class=\"button\" href=\"javascript:void(0)\" onclick='queryStatistics()' style=\"display:inline-block;line-height:30px;width: 50px;height: 30px;\">查看</a></div>";
                         $("#sehui").html(str);
                         queryStatistics();
                     }
@@ -246,13 +201,11 @@
             </div>
             <script type="text/javascript">
                 function queryStatistics() {
-                    alert($("#CBID").val());
                     if($("#CBID").val()==""){return;}
                     $.ajax({
                         url:"buyrecord/queryStatistics",
                         data:{"bookid":$("#CBID").val()},
                         success:function (data) {
-                            alert(JSON.stringify(data));
                             if(data==""){
                                 $("#Totalsubscription").html(0);
                                 $("#yesterdaysubscription").html(0);
@@ -280,7 +233,7 @@
                             <th lay-data="{field:'bookname'}">书名</th>
                             <th lay-data="{field:'btname'}">类型</th>
                             <th lay-data="{field:'sum', sort: true}">订阅次数</th>
-                            <th lay-data="{field:'createtime', sort: true}">创建时间</th>
+                            <th lay-data="{field:'createtime', sort: true,templet:function (d) { return jsonDateFormat(d.createtime)}}">创建时间</th>
                         </tr>
                         </thead>
                     </table>
@@ -290,6 +243,10 @@
             </div>
         </div>
         <script type="text/javascript">
+            function jsonDateFormat(date) {//json日期格式转换为正常格式
+                var dateee = new Date(date).toJSON();
+                return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+            }
             layui.use('table', function(){
                 var laydate = layui.laydate //日期
                     ,laypage = layui.laypage //分页

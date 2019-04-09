@@ -150,43 +150,36 @@
     <div class="box-center cf">
         <div class="nav-list site-nav fl">
             <ul>
-                <li class="site">
-                    <a class="pin-logo" href="booktype/queryAll" style = "font-size: 18px;font-family: 'Courier New', Courier, monospace">江派中文网
-
-                    </a>
+                <li class="site"><a class="pin-logo"
+                                    href="/jpbook/booktype/queryAll" style = "font-size: 18px;font-family: 'Courier New', Courier, monospace">江派中文网</a>
                 </li>
-                <li><a href="https://www.qidian.com/xuanhuan" target="" data-eid="qd_A47">玄幻</a></li>
-                <li><a href="https://www.qidian.com/dushi" target="" data-eid="qd_A48">都市</a></li>
-                <li><a href="https://www.qidian.com/xianxia" target="" data-eid="qd_A49">仙侠</a></li>
-                <li><a href="https://www.qidian.com/kehuan" target="" data-eid="qd_A50">科幻</a></li>
-                <li><a href="https://www.qidian.com/youxi" target="" data-eid="qd_A56">游戏</a></li>
-                <li><a href="https://www.qidian.com/lishi" target="" data-eid="qd_A52">历史</a></li>
-                <li><a href="https://www.qidian.com/rank" target="_blank" data-eid="qd_A53">排行</a></li>
-                <li class="more"><a href="javascript:" id="top-nav-more" target="" data-eid="qd_A54">更多<span></span></a>
+                <li><a href="/jpbook/showAllBook.html?btid=1" target="">玄幻</a></li>
+                <li><a href="/jpbook/showAllBook.html?btid=5" target="">都市</a></li>
+                <li><a href="/jpbook/showAllBook.html?btid=4" target="">仙侠</a></li>
+                <li><a href="/jpbook/showAllBook.html?btid=11" target="">科幻</a></li>
+                <li><a href="/jpbook/showAllBook.html?btid=9" target="">游戏</a></li>
+                <li><a href="/jpbook/showAllBook.html?btid=8" target="">历史</a></li>
+                <li><a href="/jpbook/books/rank" target="_blank">排行</a></li>
+                <li class="more">
+                    <a href="javascript:" id="top-nav-more" target="">
+                        更多<span></span>
+                    </a>
                     <div class="dropdown">
-                        <a href="https://www.qidian.com/all" target="_blank" data-eid="qd_A169">全部作品</a>
-                        <a href="https://www.qidian.com/2cy" target="" data-eid="qd_A55">二次元</a>
-                        <a href="https://www.qidian.com/qihuan" target="" data-eid="qd_A51">奇幻</a>
-                        <a href="https://www.qidian.com/wuxia" target="" data-eid="qd_A57">武侠</a>
-                        <a href="https://www.qidian.com/lingyi" target="" data-eid="qd_A58">悬疑灵异</a>
-                        <a href="https://www.qidian.com/junshi" target="" data-eid="qd_A59">军事</a>
-                        <a href="https://www.qidian.com/xianshi" target="" data-eid="qd_A60">现实</a>
-                        <a href="https://www.qidian.com/tiyu" target="" data-eid="qd_A61">体育</a>
-                        <a href="https://www.qidian.com/duanpian" target="" data-eid="qd_A196">短篇</a>
+                        <a href="/jpbook/showAllBook.html" target="_blank">全部作品</a>
+                        <a href="/jpbook/showAllBook.html?btid=13" target="">二次元</a>
+                        <a href="/jpbook/showAllBook.html?btid=2" target="">奇幻</a>
+                        <a href="/jpbook/showAllBook.html?btid=3" target="">武侠</a>
+                        <a href="/jpbook/showAllBook.html?btid=12" target="">灵异</a>
+                        <a href="/jpbook/showAllBook.html?btid=7" target="">军事</a>
+                        <a href="/jpbook/showAllBook.html?btid=6" target="">现实</a>
+                        <a href="/jpbook/showAllBook.html?btid=10" target="">体育</a>
+                        <a href="/jpbook/showAllBook.html?btid=14" target="">短篇</a>
                     </div>
                 </li>
             </ul>
         </div>
         <div class="nav-list min-user fr">
             <ul>
-                <li id="min-search">
-                    <form id="formUrl" action="https://www.qidian.com/search" method="get" target="_blank">
-                        <label id="pin-search" for="topSearchSubmit" data-eid="qd_A62"><em class="iconfont"></em>
-                        </label>
-                        <input id="pin-input" class="pin-input hide" type="text" name="kw" placeholder="请输入作者名或书名">
-                        <input class="submit-input" type="submit" id="topSearchSubmit" data-eid="qd_A62">
-                    </form>
-                </li>
                 <li class="line"></li>
                 <li th:class="${session.users} ? 'sign-out hidden' : 'sign-out'">
                     <a id="pin-login" href="../login.html" target="_blank">登录</a>
@@ -206,7 +199,6 @@
                                 </a>
                                 <a href="https://www.qidian.com/charge/meRedirect" target="_blank">充值</a>
                                 <a href="../personal.html" target="_blank">个人中心</a>
-                                <a href="https://www.qidian.com/help/kf" target="_blank">客服中心</a>
                                 <a id="exit" href="javascript:void(0);" onclick="removeu()">退出</a>
                             </div>
                         </li>
@@ -252,13 +244,13 @@
         <ul class="all-post">
                 <li class="post-wrap" th:each="q : ${queryAll}">
                 <div class="card-wrap fl">
-                    <a target="_blank" href="https://my.qidian.com/user/202620694">
-                        <img class="head-img" src="../images/1.jpg" alt="无人拾得我">
+                    <a target="_blank" th:href="|/jpbook/pc/home?uuid=${q.uuid}|">
+                        <img class="head-img" th:src="|../images/${q.icon}|" alt="无人拾得我">
                     </a>
                 </div>
                 <div class="post">
                     <p class="post-auther">
-                        <a target="_blank" href="https://my.qidian.com/user/202620694" class="blue mr4 b" th:text="${q.uname}">无人拾得我</a>
+                        <a target="_blank" th:href="|/jpbook/pc/home?uuid=${q.uuid}|" class="blue mr4 b" th:text="${q.uname}">无人拾得我</a>
                         <span class="gray">发表了帖子</span>
                     </p>
                     

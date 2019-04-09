@@ -59,4 +59,5 @@ public class Vote {
 				", votenum=" + votenum +
 				'}';
 	}
+	
 }

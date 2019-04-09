@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../layui/layui.css"  media="all">
+    <script src="../js/jquery-3.3.1.js"  th:inline="none"></script>
+    <script src="../layui/layui.js" charset="utf-8"  th:inline="none"></script>
+</head>
+<body>
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add" onclick="add()">添加</button>
+    </div>
+    <table class="layui-hide" id="novel" lay-filter="novel"></table>
+    <div style="display: none;" id="div">
+        <form class="layui-form" action="" id="frm">
+            <div class="layui-form-item">
+                <label class="layui-form-label">标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="notTitle" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">内容</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入内容" lay-verify="required" name="notvalue" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="demo1" id="sub">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<script type="text/javascript" th:inline="none">
+    function add() {
+        layui.use('layer', function() { //独立版的layer无需执行这一句
+            var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+            layer.open({
+                type: 1,
+                title: '添加公告',
+                skin:'layui-layer-rim',
+                area: ['700px', '400px'],
+                content: $("#div")
+            });
+        });
+    }
+    layui.use(['table','form', 'layedit', 'laydate','upload'], function(){
+        var table = layui.table
+            ,upload = layui.upload
+            ,form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+        form.verify({
+            title: function(value){
+                if(value.length < 5 && value.length>10){
+                    return '标题5-10个字符啊';
+                }
+            }
+            ,pass: [
+                /^[\S]{6,12}$/
+                ,'密码必须6到12位，且不能出现空格'
+            ]
+            ,content: function(value){
+                layedit.sync(editIndex);
+            }
+        });
+        var tab=table.render({
+            elem: '#novel'
+            ,url:'/jpbook/notice/queryAll'
+            ,cols: [[
+                {field:'notTitle',  title: '标题'}
+                ,{field:'notvalue',  title: '内容',align:'center'}
+                ,{field:'ename',  title: '操作人员',align:'center'}
+                ,{field:'notTime', title: '上传时间',templet:function (d) { return jsonDateFormat(d.notTime)}}
+            ]]
+            ,page: true
+        });
+        form.on('submit(demo1)', function(data){
+            if (data.field.bookid==''||data.field.file==''){
+                layer.msg('请选择信息。。', {icon: 5});
+            }else {
+                var $ = layui.$;
+                $.ajax({
+                    url: "/jpbook/notice/addNotice",
+                    type: 'post',
+                    data: data.field,
+                    success: function (date) {
+                        layer.msg('添加成功');
+                        tab.reload();
+                        window.parent.layer.closeAll();
+                    }
+                })
+            }
+            return false;
+        });
+    });
+    function jsonDateFormat(date) {//json日期格式转换为正常格式
+        var dateee = new Date(date).toJSON();
+        return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+    }
+
+
+</script>
+</html>

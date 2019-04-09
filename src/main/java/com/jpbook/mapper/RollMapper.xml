@@ -17,4 +17,20 @@
     <select id="queryChapter" resultType="com.jpbook.entity.Chapter" parameterType="Integer">
         select * from chapter where rollid=#{rollid} and chapstate=1
     </select>
+    
+    <resultMap id="money" type="Map">
+        <id column="rollid" property="rollid"></id>
+        <result column="rollname" property="rollname"></result>
+        <result column="count" property="count"></result>
+        <result column="sum" property="sum"></result>
+        <result column="uuid" property="uuid"></result>
+        <collection property="chaps" javaType="List" column="{rollid=rollid, uuid=uuid}" select="queryMoneyChaerByRollid">
+        </collection>
+    </resultMap>
+    <select id="queryMoneyChaerByRollid" parameterType="Map" resultType="Map">
+        select c.chapid,c.chapname,c.chaptime,c.chapcount,left((c.chapcount/200),LOCATE('.',(c.chapcount/200))-1) money,IFNULL(b.buyid,0) buyid from chapter c LEFT JOIN (select * from buyrecord where uuid=#{uuid}) b on c.chapid=b.chapid where chapstate=1 and rollid=#{rollid}
+    </select>
+    <select id="queryMoneyRoll" resultMap="money" parameterType="Map">
+        select r.rollid,r.rollname,count(c.chapid) count,IFNULL(sum(c.chapcount),0) sum,${param2} uuid from roll r LEFT JOIN chapter c on r.rollid=c.rollid where r.bookid=#{param1} and c.chapstate=1 and r.rollmoney=2 GROUP BY r.rollid
+    </select>
 </mapper>

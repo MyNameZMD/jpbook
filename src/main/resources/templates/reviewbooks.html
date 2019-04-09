@@ -145,14 +145,14 @@
                             /*var len = $(".comment-list li").length+1;*/
                             var s = "<li class=\"comment-wrap cf\">" +
                                 "                        <div class=\"card-wrap fl\">" +
-                                "                            <a target=\"_blank\" href=\"https://my.qidian.com/user/229632611\">" +
-                                "                                <img class=\"head-img\" src=\"./书籍评论详情_files/100\">" +
+                                "                            <a target=\"_blank\" href=\"/jpbook/pc/home?uuid="+data[0].to_uuid+"\">" +
+                                "                                <img class=\"head-img\" src=\"../images/default_user.0.2.png\">" +
                                 "                            </a>" +
                                 "                        </div>" +
                                 "                        <div class=\"post\">" +
                                 "                            <div class=\"post-hover\">" +
                                 "                                <p class=\"auther\">" +
-                                "                                    <a target=\"_blank\" href=\"https://my.qidian.com/user/229632611\" class=\"blue b\">"+data[0].from_uname+"</a>" +
+                                "                                    <a target=\"_blank\" href=\"/jpbook/pc/home?uuid="+data[0].from_uuid+"\" class=\"blue b\">"+data[0].from_uname+"</a>" +
                                 "                                </p>" +
                                 "                                <p class=\"post-body\">"+data[0].repcontent+"</p>" +
                                 "                                <div class=\"post-info dib-wrap cf\">" +
@@ -244,13 +244,13 @@
                     for(var i = 0;i<data.length;i++){
                         s +="<li class=\"reply-wrap cf\">" +
                             "<div class=\"card-wrap fl\">" +
-                            "<a target=\"_blank\" href=\"//my.qidian.com/user/328704748\">" +
-                            "<img class=\"head-img\" src=\"//qidian.qpic.cn/qd_face/349573/6470653/100\" alt=\"+data[i].from_uname+\">" +
+                            "<a target=\"_blank\" href=\"/jpbook/pc/home?uuid="+data[0].to_uuid+"\">" +
+                            "<img class=\"head-img\" src=\"../images/default_user.0.2.png\">" +
                             "</a>" +
                             "</div>" +
                             "<div class=\"reply\">" +
                             "<p class=\"auther\">" +
-                            "<a target=\"_blank\" href=\"//my.qidian.com/user/328704748\" class=\"blue b\">"+data[i].from_uname+"</a>" +
+                            "<a target=\"_blank\" href=\"/jpbook/pc/home?uuid="+data[0].from_uuid+"\" class=\"blue b\">"+data[i].from_uname+"</a>" +
                             "</p>" +
                             "<p class=\"post-body\"><span>回复<a target='_blank' class='blue b'>"+data[i].to_uname+"</a>：</span>"+data[i].repcontent+"</p>" +
                             "<p class=\"post-info dib-wrap cf\">" +
@@ -355,27 +355,30 @@
     <div class="box-center cf">
         <div class="nav-list site-nav fl">
             <ul>
-                <li class="site"><a class="pin-logo" href="booktype/queryAll" style = "font-size: 18px;font-family: 'Courier New', Courier, monospace" data-eid="qd_A43">江派中文网<span></span></a>
-
+                <li class="site"><a class="pin-logo"
+                                    href="/jpbook/booktype/queryAll" style = "font-size: 18px;font-family: 'Courier New', Courier, monospace">江派中文网</a>
                 </li>
-                <li><a href="https://www.qidian.com/xuanhuan" target="" data-eid="qd_A47">玄幻</a></li>
-                <li><a href="https://www.qidian.com/dushi" target="" data-eid="qd_A48">都市</a></li>
-                <li><a href="https://www.qidian.com/xianxia" target="" data-eid="qd_A49">仙侠</a></li>
-                <li><a href="https://www.qidian.com/kehuan" target="" data-eid="qd_A50">科幻</a></li>
-                <li><a href="https://www.qidian.com/youxi" target="" data-eid="qd_A56">游戏</a></li>
-                <li><a href="https://www.qidian.com/lishi" target="" data-eid="qd_A52">历史</a></li>
-                <li><a href="https://www.qidian.com/rank" target="_blank" data-eid="qd_A53">排行</a></li>
-                <li class="more"><a href="javascript:" id="top-nav-more" target="" data-eid="qd_A54">更多<span></span></a>
+                <li><a href="/jpbook/showAllBook.html?btid=1" target="">玄幻</a></li>
+                <li><a href="/jpbook/showAllBook.html?btid=5" target="">都市</a></li>
+                <li><a href="/jpbook/showAllBook.html?btid=4" target="">仙侠</a></li>
+                <li><a href="/jpbook/showAllBook.html?btid=11" target="">科幻</a></li>
+                <li><a href="/jpbook/showAllBook.html?btid=9" target="">游戏</a></li>
+                <li><a href="/jpbook/showAllBook.html?btid=8" target="">历史</a></li>
+                <li><a href="/jpbook/books/rank" target="_blank">排行</a></li>
+                <li class="more">
+                    <a href="javascript:" id="top-nav-more" target="">
+                        更多<span></span>
+                    </a>
                     <div class="dropdown">
-                        <a href="https://www.qidian.com/all" target="_blank" data-eid="qd_A169">全部作品</a>
-                        <a href="https://www.qidian.com/2cy" target="" data-eid="qd_A55">二次元</a>
-                        <a href="https://www.qidian.com/qihuan" target="" data-eid="qd_A51">奇幻</a>
-                        <a href="https://www.qidian.com/wuxia" target="" data-eid="qd_A57">武侠</a>
-                        <a href="https://www.qidian.com/lingyi" target="" data-eid="qd_A58">悬疑灵异</a>
-                        <a href="https://www.qidian.com/junshi" target="" data-eid="qd_A59">军事</a>
-                        <a href="https://www.qidian.com/xianshi" target="" data-eid="qd_A60">现实</a>
-                        <a href="https://www.qidian.com/tiyu" target="" data-eid="qd_A61">体育</a>
-                        <a href="https://www.qidian.com/duanpian" target="" data-eid="qd_A196">短篇</a>
+                        <a href="/jpbook/showAllBook.html" target="_blank">全部作品</a>
+                        <a href="/jpbook/showAllBook.html?btid=13" target="_blank">二次元</a>
+                        <a href="/jpbook/showAllBook.html?btid=2" target="_blank">奇幻</a>
+                        <a href="/jpbook/showAllBook.html?btid=3" target="_blank">武侠</a>
+                        <a href="/jpbook/showAllBook.html?btid=12" target="_blank">灵异</a>
+                        <a href="/jpbook/showAllBook.html?btid=7" target="_blank">军事</a>
+                        <a href="/jpbook/showAllBook.html?btid=6" target="_blank">现实</a>
+                        <a href="/jpbook/showAllBook.html?btid=10" target="_blank">体育</a>
+                        <a href="/jpbook/showAllBook.html?btid=14" target="_blank">短篇</a>
                     </div>
                 </li>
             </ul>
@@ -404,9 +407,6 @@
                                 <span></span>
                             </a>
                             <div class="dropdown">
-                                <a href="https://me.qidian.com/msg/lists.aspx?page=1" target="_blank" data-eid="qd_A66">
-                                    消息(<i id="top-msg">0</i>)
-                                </a>
                                 <a href="https://www.qidian.com/charge/meRedirect" target="_blank">充值</a>
                                 <a href="../personal.html" target="_blank">个人中心</a>
                                 <a href="https://www.qidian.com/help/kf" target="_blank">客服中心</a>
@@ -417,7 +417,7 @@
                 </th:block>
                 <li class="line"></li>
                 <li class="book-shelf" id="top-book-shelf">
-                    <a href="https://me.qidian.com/bookCase/bookCase.aspx" target="_blank" data-eid="qd_A63"><em class="iconfont"></em><i>我的书架
+                    <a th:href="${session.users} ? '../personal.html?key=i' : '../login.html'" target="_blank"><em class="iconfont"></em><i>我的书架
                     </i></a></li>
             </ul>
         </div>
@@ -427,7 +427,7 @@
     <div class="bg">
         <div class="main-wrap">
             <p class="breadcrumb">
-                <a href="https://forum.qidian.com/index/12991448603371803" th:utext="|${queryByRevid[0].uname}的讨论区|">寻唐的讨论区</a>
+                <a th:utext="|${queryByRevid[0].uname}的讨论区|">寻唐的讨论区</a>
                 <span class="iconfont icon-xiayige"></span>帖子详情
             </p>
         </div>
@@ -437,17 +437,17 @@
             
             <div class="post-wrap cf">
                 <div class="card-wrap fl" th:id="${books[0].bookid}">
-                    <a target="_blank" href="https://my.qidian.com/user/229632611">
-                        <img class="head-img" src="./书籍评论详情_files/100" th:alt="${queryByRevid[0].uname}"></a>
+                    <a target="_blank">
+                        <img class="head-img" th:src="|../images/${queryByRevid[0].icon}|"></a>
                 </div>
                 <div class="post">
                 <div class="post-hover">
                     <p class="auther">
-                        <a target="_blank" href="https://my.qidian.com/user/229632611" class="blue b" th:text="${queryByRevid[0].uname}">高依弟粉丝</a>
+                        <a target="_blank" th:href="@{/pc/home(uuid=${queryByRevid[0].uuid})}" class="blue b" th:text="${queryByRevid[0].uname}">高依弟粉丝</a>
                     </p>
                     <p class="post-body" th:text="${queryByRevid[0].revvlue}">
                     </p>
-                    <div class="post-info dib-wrap cf" data-id="1249679363" data-t="topic">
+                    <div class="post-info dib-wrap cf">
                         <span class="mr20" th:text="${queryByRevid[0].commenttime}"></span>
                             <a href="javascript:;" th:onclick="|faties(${books[0].bookid})|" class="info-tab mr20" th:id="${queryByRevid[0].revid}">
                                 <i class="iconfont icon-xiaoxi"></i>
@@ -467,14 +467,14 @@
                 <!--循环遍历回复该评论的回复-->
                     <li class="comment-wrap cf" th:each="q,status : ${queryById}">
                         <div class="card-wrap fl">
-                            <a target="_blank" href="https://my.qidian.com/user/229632611">
-                                <img class="head-img" src="./书籍评论详情_files/100" th:alt="${q.from_uname}">
+                            <a target="_blank" th:href="@{/pc/home(uuid=${q.uuid})}">
+                                <img class="head-img" th:src="|../images/${q.icon}|" th:alt="${q.from_uname}">
                             </a>
                         </div>
                         <div class="post">
                             <div class="post-hover">
                                 <p class="auther">
-                                    <a target="_blank" href="https://my.qidian.com/user/229632611" class="blue b" th:text="${q.from_uname}">高依弟粉丝</a>
+                                    <a target="_blank" th:href="@{/pc/home(uuid=${q.uuid})}" class="blue b" th:text="${q.from_uname}">高依弟粉丝</a>
                                 </p>
                                 <p class="post-body" th:text="${q.repcontent}"></p>
                                 <div class="post-info dib-wrap cf">
@@ -539,7 +539,7 @@
                 <th:block th:if="${session.users}">
                     <div class="comment-input-box">
                         <div class="user-info cf bg">
-                            <img src="./书籍评论详情_files/default_user.0.2.png" class="head-img" alt="书友20190303160502500">
+                            <img th:src="|../images/${queryByRevid[0].icon}|" class="head-img">
                             <b th:text="${session.users[0].uname}"></b>
                         </div><!-- th:action="@{/rbreply/add(bookid=${books[0].bookid})}"-->
                         <form id = "ff" class="send-commont" th:onsubmit="|return fabiao(${books[0].bookid})|" target="_blank">

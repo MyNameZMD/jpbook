@@ -64,11 +64,11 @@
 											<div class="error-tip hidden" id="error-tip"></div>
 											<dl>
 												<dd id="dd1">
-													<em class="iconfont icon-haoyou"></em><input type="text" tabindex="1"
+													<em class="icon icon-zhanghu"></em><input type="text" tabindex="1"
 														placeholder="手机/邮箱/用户名" id="username">
 												</dd>
 												<dd id="dd2">
-													<em class="iconfont"></em><input type="password"
+													<em class="icon icon-mima"></em><input type="password"
 														tabindex="2" placeholder="密码" id="password">
 												</dd>
 												<dd class="code-input" style="display:none;" id="dvCode">
@@ -140,8 +140,6 @@
 												</dd>
 											</dl>
 											<div class="slide-checks hidden" id="j-slideChecks-phone">
-												<!--如果是http域名使用&#45;&#45;captcha.qq.com，https使用ssl.captcha.qq.com-->
-												<!-- http://captcha.qq.com/template/TCapIframeApi.js?aid=1600000770&amp;rand=0.7595169853884727&amp;clientype=2&amp;apptype=1&amp;captype=7&amp;disturblevel=1-->
 												<div id="cap_iframe_phone"
 													style="width:324px; padding-top: 8px; position: absolute; z-index:10; background: #FFF;left:38px;top:16px;box-shadow: 0 2px 10px #999; border-radius: 5px"></div>
 											</div>
@@ -214,15 +212,12 @@
 
 								<!-- end webPC登录容器 -->
 
-
-
 							</div>
 							<!-- end 阅文通行证 -->
 
 
 							<!-- start 快速注册  -->
 							<!-- end 快速注册 -->
-
 
 						</div>
 					</div>
@@ -263,15 +258,11 @@
                             $("#et").attr("class","error-tip");
                             $("#et").text("传递参数错误");
                             return false;
-                        }else if($("#rp").val() != temp ){
-                            $("#et").attr("class","error-tip");
-                            $("#et").text("验证码输入错误");
-                            return false;
                         }
 
                         $.ajax({
                             url: "login/landing",
-                            data: {"phone":mobilephone},
+                            data: {"phone":mobilephone,"yzm":$("#rp").val()},
                             success: function (data) {
                                 if (data == 2) {
                                     var f = document.referrer;
@@ -285,7 +276,11 @@
                                     }
 
                                 }
-
+                                if(data == -1){
+                                    $("#et").attr("class","error-tip");
+                                    $("#et").text("验证码输入错误");
+                                    return false;
+								}
                             }
                         });
 
@@ -312,7 +307,6 @@
 				</script>
 
 				<script>
-					var temp="";
                     $(function () {
                         //禁止后退按钮
                         if (window.history && window.history.pushState) {
@@ -340,7 +334,7 @@
                                             type: "post",
                                             dataType: "json",
                                             success: function (data) {
-												temp = data;
+												console.log(data);
                                             }
                                         });
                                         countdown(this);
@@ -410,25 +404,38 @@
                                 width: "380px",
 
                                 onVerify: function (err, data) {
-                                    if (data && falg ) {
-                                         $("#successToken").val(data.validate);
-                                        var f = document.referrer;
-                                        var fs = window.location.href.substr(0,window.location.href.lastIndexOf("#")) ;
-                                        if(f === fs){
-                                            window.location.href='./booktype/queryAll';
-										}else{
-                                            window.location.href = f;
-                                            window.opener.location.reload();
-                                            window.close()
-										}
+                                    if(null == err){
+                                        $.ajax({
+                                            url: "login/landing",
+                                            data: {"username":$("#username").val(),"password":$("#password").val()},
+                                            type: "post",
+                                            dataType: "json",
+                                            success: function (d) {
+                                                if(d == 1){
+                                                    falg = true;
+                                                }
+                                                if (data && falg ) {
+                                                    $("#successToken").val(data.validate);
+                                                    var f = document.referrer;
+                                                    var fs = window.location.href.substr(0,window.location.href.lastIndexOf("#")) ;
+                                                    if(f === fs){
+                                                        window.location.href='./booktype/queryAll';
+                                                    }else{
+                                                        window.location.href = f;
+                                                        window.opener.location.reload();
+                                                        window.close()
+                                                    }
+                                                }else if(falg == false && data){
+                                                    $("#error-tip").attr("class","error-tip");
+                                                    $("#error-tip").text("您输入的账号或密码不正确，请重新输入");
+                                                }else{
+                                                    return false;
+                                                }
+                                            }
+                                        });
 
-                                     }else if(falg == false && data){
-                                         $("#error-tip").attr("class","error-tip");
-                                         $("#error-tip").text("您输入的账号或密码不正确，请重新输入");
-                                     }else{
-                                         return false;
-                                     }
-
+									}
+									//***
                                 }
                             },
 
@@ -462,18 +469,6 @@
                             }else{
                                 $("#dd2").attr("class","");
                             }
-
-                            $.ajax({
-                                url: "login/landing",
-                                data: {"username":username,"password":password},
-                                type: "post",
-                                dataType: "json",
-                                success: function (data) {
-                                    if(data == 1){
-                                        falg = true;
-                                    }
-                                }
-                            });
 
                             captchaIns && captchaIns.refresh();
                             captchaIns && captchaIns.popUp();

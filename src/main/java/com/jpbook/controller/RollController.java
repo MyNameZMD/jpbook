@@ -2,6 +2,7 @@ package com.jpbook.controller;
 
 import com.jpbook.entity.Books;
 import com.jpbook.entity.Roll;
+import com.jpbook.entity.Users;
 import com.jpbook.service.BooksService;
 import com.jpbook.service.RollService;
 import com.jpbook.util.FileUtil;
@@ -24,12 +25,12 @@ public class RollController {
     BooksService bs;
     @RequestMapping("addRoll")
     @ResponseBody
-    public int addRoll(Roll roll, HttpSession session){
-        List<Map<String, Object>> byRollname = rs.getByRollname(roll.getRollname());
+    public int addRoll(Roll roll,HttpSession session){
+        Map<String,Object>  bookpresent = (Map<String,Object> )session.getAttribute("bookpresent");
+        List<Map<String, Object>> byRollname = rs.getByRollname(roll.getRollname(),Integer.parseInt(bookpresent.get("bookid").toString()));
         if (byRollname.size()>0){
             return 0;
         }
-        Map<String,Object>  bookpresent = (Map<String,Object> )session.getAttribute("bookpresent");
         String url = bs.geturl(Integer.parseInt(bookpresent.get("bookid").toString())).get(0).get("url").toString();
         FileUtil.File(url+"\\"+roll.getRollname());
         roll.setRollnum(rs.getRollnum(Integer.parseInt(bookpresent.get("bookid").toString()))+1);
@@ -58,5 +59,11 @@ public class RollController {
     public List<Roll> queryAllCatalog(Integer bookid){
         List<Roll> catalog = rs.queryAllAndChapter(bookid);
         return catalog;
+    }
+    @RequestMapping("queryMoneyRoll")
+    @ResponseBody
+    public List<Map<String,Object>> queryMoneyRoll(Integer bookid,HttpSession session){
+        List<Users> users1 = (List<Users>)session.getAttribute("users");
+        return rs.queryMoneyRoll(bookid,users1.get(0).getUuid());
     }
 }

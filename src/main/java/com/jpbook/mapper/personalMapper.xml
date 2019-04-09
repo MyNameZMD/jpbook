@@ -22,15 +22,6 @@
         where bo.bookid not in(select bookid from bookrack where uuid=#{uuid})
     </select>
 
-    <select id="monthlyquery" resultType="map">
-        select v.voteid,v.votetime,b.bookname,v.bookid,d.cbk
-        from vote v left join books b
-        on v.bookid = b.bookid left join writtype w
-        on w.wtid = v.wtid inner join
-        (select count(bookid) cbk,voteid from vote where uuid = #{uuid} and wtid = 2 group by bookid) d
-        where v.uuid = #{uuid} and v.voteid=d.voteid
-    </select>
-
     <select id="findsigne" resultType="com.jpbook.entity.Signexp">
         select * from signexp where uuid = #{uuid};
     </select>
@@ -44,14 +35,14 @@
     </update>
 
     <update id="editexp">
-        update users set grade=(exp+#{param1})/100+1, exp=exp+#{param1} where uuid = #{param2};
+        update users set grade=FLOOR(((exp+#{param1})/100+1)),exp=exp+#{param1} where uuid = #{param2};
     </update>
 
     <update id="upnum" parameterType="Integer">
         update signexp set num=num+1,signlong=0 where uuid = #{uuid}
     </update>
 
-    <select id="queryusers" resultType="map">
+    <select id="queryusers" resultType="com.jpbook.entity.Users">
         select * from users where uuid=#{uuid}
     </select>
 
@@ -62,5 +53,92 @@
     <update id="editicon">
         update users set icon=#{param1} where uuid=#{param2}
     </update>
+
+    <insert id="buy">
+        insert into recharge values(null,#{param1},#{param2},now(),'书币充值')
+    </insert>
+
+    <update id="editmoney">
+        update users set money=money+#{param1} where uuid=#{param2}
+    </update>
+
+    <select id="record1" resultType="com.jpbook.entity.Recharge">
+        select * from recharge where uuid = #{uuid}
+    </select>
+
+    <select id="record2" resultType="map">
+        select r.*,b.bookname from reward r left join books b
+        on r.bookid = b.bookid where r.uuid = #{uuid}
+    </select>
+
+    <select id="record3" resultType="map">
+        select count(b.buyid) count,b.uuid,bs.bookid,bs.bookname,(sum(c.chapcount)/1000*5) sum
+        from buyrecord b,chapter c,roll r,books bs
+        where b.chapid=c.chapid and c.rollid=r.rollid and r.bookid=bs.bookid and b.uuid=#{uuid}
+        group by bs.bookid , bs.bookname
+    </select>
+
+    <select id="wtid1" resultType="Integer">
+        select walnum from wallet where uuid = #{uuid} and wtid = 1;
+    </select>
+
+    <select id="wtid2" resultType="map">
+        select walnum,
+        (select sum(votenum) from vote where wtid = 2 and uuid = #{uuid}) employ
+        from wallet where wtid = 2 and uuid = #{uuid}
+    </select>
+
+    <select id="monthlyquery" resultType="map">
+        select v.voteid,b.bookname,b.bookid,v.votetime,v.votenum,
+        (select count(voteid) from vote where wtid=2 and uuid=#{uuid}
+        and date_format(votetime, '%Y%m') = date_format(curdate() , '%Y%m')) num
+        from books b,vote v
+        where v.bookid = b.bookid and v.wtid = 2 and v.uuid = #{uuid}
+        and date_format(v.votetime, '%Y%m') = date_format(curdate() , '%Y%m')
+    </select>
+
+    <select id="reviewquery" resultType="map">
+        select rb.revid,rb.revvlue,rb.commenttime,b.bookname,b.bookid
+        from reviewbook rb,books b
+        where rb.bookid=b.bookid and rb.uuid = #{uuid}
+    </select>
+
+    <select id="replyquery" resultType="map">
+        select r.repid,r.reptime,r.repcontent,rb.revvlue,rb.revid,b.bookname,b.bookid
+        from rbreply r,reviewbook rb,books b
+        where r.revid=rb.revid and rb.bookid=b.bookid and from_uuid = #{uuid}
+    </select>
+
+    <select id="mutualquery" resultType="map">
+        select u.* from
+        (select f.uuid from users u,fans f
+        where u.uuid=f.fanuuid and u.uuid=#{uuid}) e
+        inner join
+        (select f.fanuuid from users u,fans f
+        where u.uuid=f.uuid and u.uuid=#{uuid}) fen
+        on e.uuid = fen.fanuuid
+        left join users u
+        on u.uuid=fen.fanuuid
+    </select>
+
+    <select id="eyequery" resultType="map">
+        select u.* from
+        (select f.uuid from users u,fans f
+        where u.uuid=f.fanuuid and u.uuid=#{uuid}) g
+        left join users u
+        on u.uuid=g.uuid
+    </select>
+
+    <select id="fansquery" resultType="map">
+        select u.*,ifnull(g.uuid,-1) sta from
+        (select f.fanuuid from users u,fans f
+        where u.uuid=f.uuid and u.uuid=#{uuid}) f
+        left join users u
+        on u.uuid=f.fanuuid
+        left join
+        (select f.uuid from users u,fans f
+        where u.uuid=f.fanuuid and u.uuid=#{uuid}) g
+        on f.fanuuid=g.uuid
+    </select>
 
 </mapper>

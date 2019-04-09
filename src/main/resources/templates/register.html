@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
-	<title>账号注册 | 江派书城</title>
+	<title>账号注册 | 起点书城</title>
 	<link rel="shortcut icon" type="image/x-icon" href="./images/jp_iocn.ico">
 	<link rel="Bookmark" type="image/x-icon" href="./images/jp_iocn.ico">
 
@@ -146,7 +146,6 @@
         });
     });
 
-    var yzm = "";
     $("#btnPhoneRegister").click(function(){
         var txtphonenumber = $("#txtphonenumber").val();
         var regPhone = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
@@ -174,7 +173,7 @@
             $("#etip").hide();
         }
 
-        if($("#txtphonecode").val() != yzm || $("#txtphonecode").val() == ""){
+        if($("#txtphonecode").val() == ""){
             $("#txtphonecode").focus();
             $("#phonecode").prop("class","error");
             $("#er").show();
@@ -214,7 +213,7 @@
 
         $.ajax({
             url: "login/landing",
-            data: {"pwd":txtphonepwd,"phone":txtphonenumber},
+            data: {"pwd":txtphonepwd,"phone":txtphonenumber,"yzm":$("#txtphonecode").val()},
             type: "post",
             dataType: "json",
             success: function (data) {
@@ -224,6 +223,15 @@
                     $("#su2").show();
                     $("#xian").text(txtphonenumber);
                     jumpBackUrl();
+                }
+                if (data == -1){
+                    $("#txtphonecode").focus();
+                    $("#phonecode").prop("class","error");
+                    $("#er").show();
+                    return false;
+                }else {
+                    $("#phonecode").prop("class","");
+                    $("#er").hide();
                 }
             }
         });
@@ -318,7 +326,7 @@
                 type: "post",
                     dataType: "json",
                     success: function (data) {
-                    yzm = data;
+                    console.log(data);
                 }
             });
         }
@@ -343,7 +351,7 @@
             count--;
             if (count <= 0) {
                 clearInterval(interval);
-                window.location.href = './booktype/queryAll';
+                window.location.href = 'booktype/queryAll';
             }
             else {
                 $("#jumpTime").html(count);

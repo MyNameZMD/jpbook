@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>作者列表</title>
+    <link rel="stylesheet" href="../layui/layui.css"  media="all">
+
+    <script src="../js/jquery-3.3.1.js"  th:inline="none"></script>
+    <script src="../layui/layui.js" charset="utf-8" th:inline="none"></script>
+</head>
+<body style="margin-left: 10px;margin-right: 10px">
+
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto" style="margin-left: -125px;margin-top: 5px">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-inline">
+                    <input type="text" name="searchContent" id="companyName" placeholder="请输入作者名或真实姓名" autocomplete="off" class="layui-input">
+                </div>
+                <button class="layui-btn" style="margin-top: -6px;" id="searchCompany" data-type="reload">
+                    <i class="layuiadmin-button-btn">查找</i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <table class="layui-hide" id="author"></table>
+</body>
+
+<!-- <script type="text/html" id="barDemo">
+    <a href="/jpbook/back/author_details.html" class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看详情</a>
+</script>
+, {fixed: 'right', width: 120, title: '操作',align:'center',toolbar: '#barDemo'} -->
+
+<script type="text/javascript" th:inline="none">
+    layui.use('table', function() {
+            var table = layui.table;
+
+            table.render({
+                elem: '#author'
+                , url: '/jpbook/back/authorquery'
+
+                , cols: [[
+                    {field: 'pen', title: '笔名'}
+                    , {field: 'realname', title: '真实姓名'}
+                    , {field: 'gender',  title: '性别'}
+                    , {field: 'num', align:'center', title: '共作品(本)',sort: true}
+                    , {field: 'phone',  title: '电话'}
+                    , {field: 'qqid', title: 'QQ'}
+                    , {field: 'email', title: 'email'}
+                    , {field: 'idcard',  title: '身份证号'}
+
+                ]]
+                , page: true
+            });
+
+            //搜索加载--数据表格重载
+            var active = {
+                reload: function () {
+                    var searchContent = $("#companyName").val();//搜索框内容
+                    //执行重载
+                    table.reload('author', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: {
+                            searchContent: searchContent//作为参数传递给后端
+                        }
+                    });
+                }
+            };
+
+            $('#searchCompany').on('click', function () {
+                var type = $(this).data('type');//自定义type属性，这里即为reload
+                active[type] ? active[type].call(this) : ''; //如果存在active[type]，则调用改函数
+            });
+
+        });
+    </script>
+</html>

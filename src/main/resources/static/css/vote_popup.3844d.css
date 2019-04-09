@@ -4353,7 +4353,7 @@ body {
 .fans-interact dd .icon-box.month span {
   width: 36px;
   height: 52px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -299px 0;
   background-size: 335px
@@ -4364,7 +4364,7 @@ body {
 .fans-interact dd .icon-box.rec span {
   width: 36px;
   height: 52px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -299px -54px;
   background-size: 335px
@@ -4377,7 +4377,7 @@ body {
   width: 40px;
   height: 40px;
   margin-left: -20px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -146px -222px;
   background-size: 335px
@@ -4417,7 +4417,7 @@ body {
 .fans-dynamic .fans-slide-wrap li b.money em {
   width: 14px;
   height: 14px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -320px -188px;
   background-size: 335px
@@ -4428,7 +4428,7 @@ body {
 .fans-dynamic .fans-slide-wrap li b.month em {
   width: 10px;
   height: 14px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -323px -164px;
   background-size: 335px
@@ -4439,7 +4439,7 @@ body {
 .fans-dynamic .fans-slide-wrap li b.rec em {
   width: 10px;
   height: 14px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -325px -138px;
   background-size: 335px
@@ -4484,7 +4484,7 @@ body {
   width: 85px;
   height: 80px;
   margin: 80px auto 20px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: 0 0;
   background-size: 335px
@@ -4519,7 +4519,7 @@ body {
   width: 45px;
   height: 44px;
   height: 45px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -100px -222px;
   background-size: 335px
@@ -4613,7 +4613,7 @@ body {
 .discuss-list .text i.month {
   width: 10px;
   height: 14px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -323px -164px;
   background-size: 335px
@@ -4621,7 +4621,7 @@ body {
 .discuss-list .text i.money {
   width: 14px;
   height: 14px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -320px -188px;
   background-size: 335px
@@ -4629,7 +4629,7 @@ body {
 .discuss-list .text i.rec {
   width: 10px;
   height: 14px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -325px -138px;
   background-size: 335px
@@ -5425,7 +5425,7 @@ body {
   width: 30px;
   height: 28px;
   margin: 2px 10px 0 0;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -299px -108px;
   background-size: 335px
@@ -6996,7 +6996,7 @@ body.theme-6 .left-nav li.act.quick-nav cite .iconfont {
   color: #a6a6a6
 }
 input[type=checkbox] {
-  position: absolute;
+  /*position: absolute;*/
   clip: rect(0,0,0,0)
 }
 .ui-checkbox {
@@ -7165,7 +7165,7 @@ body .left-bar-guide .guide-btn-wrap {
   .fans-dynamic .fans-slide-wrap li b.money em {
     width: 14px;
     height: 14px;
-    background-image: url(/qd/images/book_details/sprite_2x.558e8.png);
+    background-image: url(../images/sprite_2x.558e8.png);
     background-repeat: no-repeat;
     background-position: -320px -188px;
     background-size: 335px
@@ -7176,7 +7176,7 @@ body .left-bar-guide .guide-btn-wrap {
   .fans-dynamic .fans-slide-wrap li b.month em {
     width: 10px;
     height: 14px;
-    background-image: url(/qd/images/book_details/sprite_2x.558e8.png);
+    background-image: url(../images/sprite_2x.558e8.png);
     background-repeat: no-repeat;
     background-position: -323px -164px;
     background-size: 335px
@@ -7187,7 +7187,7 @@ body .left-bar-guide .guide-btn-wrap {
   .fans-dynamic .fans-slide-wrap li b.rec em {
     width: 10px;
     height: 14px;
-    background-image: url(/qd/images/book_details/sprite_2x.558e8.png);
+    background-image: url(../images/sprite_2x.558e8.png);
     background-repeat: no-repeat;
     background-position: -325px -138px;
     background-size: 335px
@@ -7201,7 +7201,7 @@ body .left-bar-guide .guide-btn-wrap {
     background-size: 340px
   }
   .icon-box span {
-    background-image: url(/qd/images/book_details/sprite_2x.558e8.png)!important
+    background-image: url(../images/sprite_2x.558e8.png)!important
   }
   .user-level {
     background-image: url(/qd/images/common/common_sprite_2x.af3ed.png)!important
@@ -7823,7 +7823,7 @@ body .left-bar-guide .guide-btn-wrap {
 .tip-state span.ok {
   width: 48px;
   height: 48px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -249px -100px;
   background-size: 335px
@@ -7831,7 +7831,7 @@ body .left-bar-guide .guide-btn-wrap {
 .tip-state span.error {
   width: 48px;
   height: 48px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -249px 0;
   background-size: 335px
@@ -7839,7 +7839,7 @@ body .left-bar-guide .guide-btn-wrap {
 .tip-state span.wait {
   width: 48px;
   height: 48px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: 0 -222px;
   background-size: 335px
@@ -8004,7 +8004,7 @@ body .left-bar-guide .guide-btn-wrap {
   width: 48px;
   height: 48px;
   margin: 32px auto 20px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -249px -50px;
   background-size: 335px
@@ -8162,7 +8162,7 @@ body .left-bar-guide .guide-btn-wrap {
   width: 30px;
   height: 28px;
   margin: 2px 10px 0 0;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -299px -108px;
   background-size: 335px
@@ -8304,7 +8304,7 @@ body .left-bar-guide .guide-btn-wrap {
 .vote-popup-wrap .popup-content .limit-wrap .null.no-ticket {
   width: 54px;
   height: 78px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -193px 0;
   background-size: 335px
@@ -8312,7 +8312,7 @@ body .left-bar-guide .guide-btn-wrap {
 .vote-popup-wrap .popup-content .limit-wrap .null.no-money {
   width: 64px;
   height: 64px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: 0 -156px;
   background-size: 335px
@@ -8325,7 +8325,7 @@ body .left-bar-guide .guide-btn-wrap {
   width: 48px;
   height: 48px;
   margin: 32px auto 20px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -249px -50px;
   background-size: 335px
@@ -8607,7 +8607,7 @@ body .left-bar-guide .guide-btn-wrap {
 .vote-form-wrap .vote-wrap .ticket-num span.month-ticket b {
   width: 36px;
   height: 52px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -299px 0;
   background-size: 335px
@@ -8618,7 +8618,7 @@ body .left-bar-guide .guide-btn-wrap {
 .vote-form-wrap .vote-wrap .ticket-num span.rec-ticket b {
   width: 36px;
   height: 52px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -299px -54px;
   background-size: 335px
@@ -8709,7 +8709,7 @@ body .left-bar-guide .guide-btn-wrap {
   right: 0;
   width: 22px;
   height: 22px;
-  background-image: url(/qd/images/book_details/sprite.385d7.png);
+  background-image: url(../images/sprite.385d7.png);
   background-repeat: no-repeat;
   background-position: -299px -164px;
   background-size: 335px
@@ -8737,7 +8737,7 @@ body .left-bar-guide .guide-btn-wrap {
 (min-device-pixel-ratio:1.3),
 (min-resolution:1.3dppx) {
   .vote-form-wrap .vote-wrap .ticket-num span b {
-    background-image: url(/qd/images/book_details/sprite_2x.558e8.png)!important
+    background-image: url(../images/sprite_2x.558e8.png)!important
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) {

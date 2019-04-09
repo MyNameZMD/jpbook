@@ -27,7 +27,7 @@ public class LoginController {
 
     @RequestMapping("landing")
     @ResponseBody
-    public Integer login(String username,String password,String phone,String pwd,Users u, HttpSession session){
+    public Integer login(String username,String password,String phone,String pwd,Users u,String yzm,HttpSession session){
 
         Integer rs = 0;
        if (null != username && null != password){
@@ -39,33 +39,58 @@ public class LoginController {
        }
        if (null != phone && pwd == null){
            List<Users> list = ls.userInfo(phone);
-           if (list.size() > 0){
-               session.setAttribute("users",list);
-               rs = 2;
+           if (yzm.equals(session.getAttribute("yzm"))){
+               if (list.size() > 0){
+                   session.setAttribute("users",list);
+                   rs = 2;
+               }else {
+                   u.setPhone(phone);
+                   ls.addUser(u);
+                   re.def1(re.seluser(u.getPhone()));
+                   re.def2(re.seluser(u.getPhone()));
+                   session.setAttribute("users",ls.userInfo(phone));
+                   rs = 2;
+               }
            }else {
-               u.setPhone(phone);
-               ls.addUser(u);
-               session.setAttribute("users",ls.userInfo(phone));
-               rs = 2;
+               rs = -1;
            }
        }
        if(null != u.getPhone() && null != u.getPwd()){
-           re.adduser(u);
-           re.def1(re.seluser(u.getPhone()));
-           re.def2(re.seluser(u.getPhone()));
-           session.setAttribute("users",ls.userInfo(u.getPhone()));
-           rs = 3;
+           if (yzm.equals(session.getAttribute("yzm"))){
+               re.adduser(u);
+               re.def1(re.seluser(u.getPhone()));
+               re.def2(re.seluser(u.getPhone()));
+               session.setAttribute("users",ls.userInfo(u.getPhone()));
+               rs = 3;
+           }else {
+               rs = -1;
+           }
        }
 
        session.setAttribute("newdate",new Date());
+
+       //赠送推荐票
+        List<Users> usergrade = (List<Users>)session.getAttribute("users");
+        if(null != usergrade && usergrade.size() > 0){
+            if(usergrade.get(0).getGrade() >=3 && usergrade.get(0).getGrade() < 13){
+                ls.editwallet(1,usergrade.get(0).getUuid());
+            }else if(usergrade.get(0).getGrade() >=13 && usergrade.get(0).getGrade() < 23){
+                ls.editwallet(2,usergrade.get(0).getUuid());
+            }else if(usergrade.get(0).getGrade() >=23){
+                ls.editwallet(3,usergrade.get(0).getUuid());
+            }
+        }
+
        return rs;
     }
 
     //获取验证码
     @RequestMapping("phoneLogin")
     @ResponseBody
-    public String phoneLogin(String phone){
-        return ls.phongMessage(phone);
+    public Integer phoneLogin(String phone,HttpSession session){
+        session.setAttribute("yzm",ls.phongMessage(phone));
+        session.setMaxInactiveInterval(60*2);
+        return 1;
     }
 
     @RequestMapping("emptySession")

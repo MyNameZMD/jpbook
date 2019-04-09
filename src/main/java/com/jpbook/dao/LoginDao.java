@@ -8,12 +8,14 @@ import java.util.List;
 @Mapper
 public interface LoginDao {
 
-    List<Users> landing(String username,String password,String phone,String password2);
+    public List<Users> landing(String username,String password,String phone,String password2);
 
     public void addUser(Users u);
 
     public List<Users> userInfo(String phone);
 
     public Integer editsignlong(Integer signlong,Integer uuid);
+
+    public Integer editwallet(Integer walnum,Integer uuid);
 
 }

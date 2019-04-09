@@ -1,8 +1,11 @@
 package com.jpbook.controller;
 
+import com.alipay.api.domain.SsdataFindataOperatorUserinfoCertifyModel;
 import com.jpbook.entity.Users;
 import com.jpbook.entity.Zan;
 import com.jpbook.service.*;
+import com.jpbook.util.FileDown;
+import com.jpbook.util.Gs;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,6 +70,15 @@ public class BooksController {
         m.addAttribute("queryAllByBookid",evaluateService.queryAllByBookid(bookid,0));
         m.addAttribute("pagecount",evaluateService.queryAllByBookid(bookid,null));
         return "book";
+    }
+    @RequestMapping("getMoneyBookByBookid")
+    public String getMoneyBookByBookid(Model m, Integer bookid,HttpSession session){
+        List<Users> users = (List<Users>)session.getAttribute("users");
+        if(null == users){
+            return "redirect:/login";
+        }
+        m.addAttribute("queryBookById",bs.queryBookById(bookid));
+        return "take";
     }
     @RequestMapping("userExist")
     @ResponseBody
@@ -339,22 +356,24 @@ public class BooksController {
 
     @RequestMapping("queryByUuid")
     @ResponseBody
-    public  List<Map<String, Object>> queryByUuid(){
+    public  List<Map<String, Object>> queryByUuid(HttpSession session){
+        List<Users> users1 = (List<Users>)session.getAttribute("users");
         Users u=new Users();
-        u.setUuid(10000);
+        u.setUuid(users1.get(0).getUuid());
         List<Map<String, Object>> bks = bs.queryByUuid(u);
         return bks;
     }
     @RequestMapping("add")
     @ResponseBody
     public int add(Books books, HttpSession session){
+        List<Users> users1 = (List<Users>)session.getAttribute("users");
         int i = bs.queryByBookname(books.getBookname()).size();
         if (i>0){
             return 0;
         }
         FileUtil.File(books.getBookname()+"\\第一卷");
         books.setUrl(books.getBookname());
-        books.setUuid(10000);
+        books.setUuid(users1.get(0).getUuid());
         String image = FileUtil.createImage(books.getBookname());
         books.setIcon(image);
         bs.add(books);
@@ -372,10 +391,10 @@ public class BooksController {
     }
     @RequestMapping("up")
     @ResponseBody
-    public Integer up(Books books,HttpSession session){
+    public Integer up(Books books,String oldBookname,HttpSession session){
         System.out.println("books"+books);
         int i = bs.queryByBookname(books.getBookname()).size();
-        if (i>0){
+        if (i>0 && !books.getBookname().equals(oldBookname)){
             return 0;
         }
         books.setUrl(books.getBookname());
@@ -390,5 +409,69 @@ public class BooksController {
         session.setAttribute("bookpresent",newbookpresent);
         return 1;
     }
+    @RequestMapping("queryBookByState")
+    @ResponseBody
+    public List<Map<String,Object>> queryBookByState(Integer Index,Integer btid,Integer bookstate,Integer rollmoney,Integer updatetime,Integer startSum,Integer endSum,String order){
+        Integer startIndex=(Index-1)*8;
+        System.out.println(startIndex+" "+btid+" "+bookstate+" "+rollmoney+" "+updatetime+" "+startSum+" "+endSum+" "+order);
+        return bs.queryBookByState(startIndex,8,btid,bookstate,rollmoney,updatetime,startSum,endSum,order);
+    }
+    @RequestMapping("getMonthAndRecAndReward")
+    @ResponseBody
+    public Map<String,Object> getMonthAndRecAndReward(Integer bookid){
+        return bs.getMonthAndRecAndReward(bookid).get(0);
+    }
+    @RequestMapping("queryMonthAndRecAndReward")
+    @ResponseBody
+    public List<Map<String,Object>> queryMonthAndRecAndReward(Integer bookid){
+        List<Map<String, Object>> maps = bs.queryMonthAndRec(bookid);
+        List<Map<String, Object>> maps1 = bs.queryReward(bookid);
+        maps.addAll(maps1);
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Collections.sort(maps, new Comparator<Map<String, Object>>() {
+            @Override
+            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+                Date time=null;
+                Date time1 =null;
+                try{
+                    time= sdf.parse(o1.get("time").toString());
+                    time1=sdf.parse(o2.get("time").toString());
+                }catch (Exception e){
 
+                }
+                if (time.compareTo(time1)>0){
+                    return 1;
+                }
+                if (time.compareTo(time1)==0){
+                    return 0;
+                }
+                return -1;
+            }
+        });
+        return maps;
+    }
+    @RequestMapping("bookEnd")
+    @ResponseBody
+    public Integer bookEnd(Integer bookid){
+        return bs.bookEnd(bookid);
+    }
+    @RequestMapping("download")
+    public void download(Integer bookid,HttpSession session,HttpServletResponse resp, HttpServletRequest req){
+        System.out.println(111);
+        List<Map<String, Object>> download = bs.download(bookid, Gs.getsession(session));
+        String bookname ="你没有权限下载";
+        if (download.size()>0){
+            bookname = download.get(0).get("bookname").toString();
+        }
+
+        String[] picname=new String[download.size()];
+        for (int i=0;i<download.size();i++){
+            picname[i]=download.get(i).get("url").toString();
+        }
+        FileDown fileDown=new FileDown();
+        fileDown.createZIP(bookname,picname,resp,req);
+
+    }
 }
+
+

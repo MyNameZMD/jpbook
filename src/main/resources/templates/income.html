@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)income?tab=month -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html  xmlns:th="http://www.thymeleaf.org">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <!-- 360安全游览器使用webkit极速核 -->
     <meta name="renderer" content="webkit">
@@ -15,6 +15,8 @@
     <meta name="__hash__" content="a456e0e2d67950aa08444c630ef906e9_f48777b92183314fbbc574cc4a37ff19">
 
     <link rel="stylesheet" href="./js/bootstrap/css/bootstrap.css">
+    <script src="./js/sweet-alert.js"></script>
+    <link rel="stylesheet" href="./css/sweet-alert.css">
 </head>
 <body>
 <div class="wrap">
@@ -25,31 +27,22 @@
             </a>
             <div class="headUser fr">
                 <ul class="cf">
-                    <li id="msgBox" class="bell">
-                        <a href="https://write.qq.com/authors/authorconsultlist.html">
-              <span class="icon">
-                <cite id="msgCount" class="icon" style="display:none;"></cite>
-              </span></a><a href="https://write.qq.com/authors/authorconsultlist.html">通知</a>
-
-                        <dl id="msgList" class="msgBox" style="display:none;"></dl>
-                    </li>
                     <li class="line"></li>
                     <li id="headPhotoBox" class="headPhoto">
-                        <p><em><img src="./css/photo_default.png" width="36" height="36" alt=""></em><a class="userName" href="javascript:">爱色鬼</a></p>
+                        <p><em><img th:src="${session.users[0].getIcon()}" width="36" height="36" alt=""></em><a class="userName" href="javascript:" th:text="${session.users[0].getPen()}">爱色鬼</a></p>
                         <dl class="userBox">
                             <cite class="icon whiteSj"></cite>
                             <dd class="userInfo hidden">
                                 <!-- 增加身份标识"ico-level",silver为白金作家，dashen为大神作家 -->
-                                <p class="name" title="爱色鬼">爱色鬼
+                                <p class="name" th:title="${session.users[0].getPen()}" th:text="${session.users[0].getPen()}">爱色鬼
 
                                 </p>
                                 <p class="level">
 
                                     <span><em style="width:70%">0/0</em></span></p>
                             </dd>
-                            <dd class="link"><a href="https://write.qq.com/authors/person.html"><i>完整度75%</i>作家资料</a></dd>
-                            <dd class="link"><a id="openModifyPwdPopupBtn" href="javascript:">更改密码</a></dd>
-                            <dd class="link end"><a href="https://write.qq.com/public/logout.html">退出登录</a></dd>
+                            <dd class="link"><a href="writerdata.html">作家资料</a></dd>
+                            <dd class="link end"><a href="/jbook/login/emptySession">退出登录</a></dd>
                         </dl>
                     </li>
                 </ul>
@@ -96,9 +89,6 @@
             <div class="sideBar" id="main-bar">
                 <ul>
                     <li>
-                        <a href="https://write.qq.com/index.html"><span class="home"></span>专区首页</a>
-                    </li>
-                    <li>
                         <a href="authorWorks.html"><span class="works"></span>作品管理</a>
                     </li>
                     <li><a href="statistics.html"><span class="data-icon"></span>数据统计</a>
@@ -108,27 +98,12 @@
                     <li class="act">
                         <a href="income"><span class="income"></span>稿酬收入</a>
                     </li>
-                    <li>
-                        <a href="https://write.qq.com/labor.html"><span class="labour"></span>劳务收入</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/authors/authorconsultlist.html"><span class="counsel"></span>作家咨询</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/integral_exchange/exchange.html"><span class="exchange"></span>积分兑换</a>
-                    </li>
-                    <li>
-                        <a href="https://write.qq.com/interactivechapter/index.html"><span class="active"></span>互动管理</a>
-                    </li>                                    </ul>
+                </ul>
             </div>
 
             <!-- start 小屏下的列表-->
             <div class="sideBar min-bar" id="min-bar">
                 <ul>
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/index.html"><span class="icon home"></span></a>
-                        <a class="expand" href="https://write.qq.com/index.html">专区首页</a>
-                    </li>
                     <li>
                         <a class="min-link" href="authorWorks.html"><span class="icon works"></span></a>
                         <a class="expand" href="authorWorks.html">作品管理</a>
@@ -144,26 +119,6 @@
                         <a class="min-link" href="income.html"><span class="icon income"></span></a>
                         <a class="expand" href="income.html">稿酬收入</a>
                     </li>
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/labor.html"><span class="icon labour"></span></a>
-                        <a class="expand" href="https://write.qq.com/labor.html">劳务收入</a>
-                    </li>
-
-
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/authors/authorconsultlist.html"><span class="icon counsel"></span></a>
-                        <a class="expand" href="https://write.qq.com/authors/authorconsultlist.html">作家咨询</a>
-                    </li>
-
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/integral_exchange/exchange.html"><span class="icon exchange"></span></a>
-                        <a class="expand" href="https://write.qq.com/integral_exchange/exchange.html">积分兑换</a>
-                    </li>
-                    <li>
-                        <a class="min-link" href="https://write.qq.com/interactivechapter/index.html"><span class="icon active"></span></a>
-                        <a class="expand" href="https://write.qq.com/interactivechapter/index.html">互动管理</a>
-                    </li>
-
                     <!--微信管理-->
                 </ul>
             </div>
@@ -173,58 +128,131 @@
 
         <link rel="stylesheet" type="text/css" href="./css/contentv2_income.css"><div class="mainRight pb260 fl">
         <div class="crumbsWrap"> <i><span>收入管理</span></i> </div>
-        <div class="tabSwitch cf">
+        <div class="tabSwitch cf" id="toptab">
     <span class="act">
-        <a href="income?tab=month">总收入</a>
+        <a href="javascript:void(0)" onclick="toptab(this,'income')">总收入</a>
     </span>
             <span>
-        <a href="income?tab=welfar">奖励保障</a>
+        <a href="javascript:void(0)" onclick="toptab(this,'copyright')">版权收入</a>
     </span>
             <span>
-        <a href="income?tab=copyright">版权收入</a>
-    </span>
-            <span>
-        <a href="income?tab=rewards">打赏明细</a>
+        <a href="javascript:void(0)" onclick="toptab(this,'reward')">打赏明细</a>
     </span>
         </div>
+        <script type="text/javascript">
+            function toptab(obj,id) {
+                $("#toptab").find("span").prop("class","");
+                $(obj).parent("span").prop("class","act");
+                $(".div").css("display","none");
+                $("#"+id+"div").css("display","block");
+            }
+        </script>
         <form  class="layui-form">
         <div class="incomeWrap">
                 <div class="layui-input-inline" style="float: left">
                     <select name="year" id="year"  style="visibility: visible;">
 
-                    <option value="2013">2013</option>
-                    <option value="2014">2014</option>
-                    <option value="2015">2015</option>
-                    <option value="2016">2016</option>
-                    <option value="2017">2017</option>
-                    <option value="2018">2018</option><option value="2019" selected="selected">2019</option>
-
                 </select>
+                    <script type="text/javascript">
+                        $(function () {
+                            var myDate = new Date();
+                            //获取当前年
+                            var year=myDate.getFullYear();
+                            var str="";
+                            for(var i=2013;i<=year;i++){
+                                if (i==year){
+                                    str+="<option value=\""+i+"\" selected>"+i+"</option>"
+                                }else {
+                                    str+="<option value=\""+i+"\">"+i+"</option>"
+                                }
+                            }
+                            $("#year").html(str);
+                        })
+                    </script>
             </div>
                 <div class="layui-input-inline" style="float: left">
               <select name="month" id="month"  style="visibility: visible;">
 
-                    <option value="1">1</option><option value="2" selected="selected">2</option>
-
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
                 </select>
+                    <script type="text/javascript">
+                        $(function () {
+                            var myDate = new Date();
+                            //获取当前年
+                            var month=myDate.getMonth()+1;
+                            var str="";
+                            for(var i=1;i<=12;i++){
+                                if (i==month){
+                                    str+="<option value=\""+i+"\" selected>"+i+"</option>"
+                                }else {
+                                    str+="<option value=\""+i+"\">"+i+"</option>"
+                                }
+                            }
+                            $("#month").html(str);
+                        })
+                    </script>
                 </div>
-                <a class="button" href="javascript:look();" id="searchBtn">查看</a>
+                <a class="button" href="javascript:look();" style="display:inline-block;line-height:30px;width: 50px;height: 30px;" id="searchBtn">查看</a>
             </div>
         </form>
-            <div class="reserveChart mb30">
-                <h3 class="reserveTitle"> <em class="icon pie"></em>收入分布</h3>
+
+        <div id="incomediv" class="incomeWrap div"  style="display:block;">
+            <h3 class="reserveTitle"> <em class="icon pie"></em>收入分布</h3>
+
+            <div class="chartWrap">
+                <h2 id="bookTitle">2019年2月稿酬收入<br></h2>
+
+                <div  style="margin-top: 50px;margin: auto;" class="chartWrap">
+            <table class="totalData" width="100%" border="0" cellspacing="0">
+                <tbody>
+                <tr>
+                    <td style="text-align: center"><h3>总收入(元)</h3>
+                        <p data-node="sum" id="incomesum">0</p>
+                        <h4>（元）</h4>
+                        <h3>已提现(元)</h3>
+                        <p data-node="sum" id="withdrawmoney" th:text="${session.users.get(0).getWithdrawmoney()}">0</p>
+                        <h4>（元）</h4>
+                        <input type="button" onclick="withdraw()" style="border-radius: 5px;width: 100px;height: 40px;background-color: #00ACF5 " th:value="提现">
+                    </td>
+                    <script type="text/javascript">
+                        function withdraw() {
+                            var money=$("#incomesum").html();
+                            if(money<=0){
+                                swal("操作失败!", "无收入，无法提现！", "warning");
+                            }else{
+                                swal({
+                                    title: "确定操作吗？",
+                                    text: "你确定要把所有收入提现吗？",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    cancelButtonText:'取消',
+                                    confirmButtonColor: '#DD6B55',
+                                    confirmButtonText: '确定'
+                                },
+                                function(){
+                                    $.ajax({
+                                        url:"/jpbook/users/withdraw",
+                                        data:{"money":money},
+                                        success:function (data) {
+                                            $("#incomesum").html(0);
+                                            swal("提现成功!", "请注意查收！", "success");
+                                        }
+                                    })
+                                });
+                            }
+                        }
+                    </script>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+            </div>
+        </div>
+            <div class="reserveChart mb30 div" id="copyrightdiv" style="display: none">
+                <h3 class="reserveTitle">
+                    <em class="icon reward"></em>版权收入明细
+                </h3>
                 <div class="chartWrap">
-                    <h2 id="bookTitle">2019年2月稿酬收入<br></h2>
+                    <h2 id="bookTitle2">2019年2月版权收入<br></h2>
                     <div id="incomeSumBox"  style="margin-top: 50px;margin-left: 50px;">
 
                     </div>
@@ -237,10 +265,10 @@
                 </div>
             </div>
 
-        <div class="reserveListWrap">
+        <div class="reserveListWrap div" id="rewarddiv" style="display: none;">
             <h3 class="reserveTitle">
                 <em class="icon reward"></em>打赏明细
-                <span class="fr exc-rewards" style="display: none;">合计打赏金额<i id="rewardCount"></i>元</span>
+                <span class="fr exc-rewards" >合计打赏金额<i id="rewardCount"></i>元</span>
             </h3>
             <div class="detailWrap mb10">
                 <table class="detailTable" width="100%" border="0" cellspacing="0">
@@ -266,21 +294,25 @@
             <div id="pager" class="pageBox pr0 fr"></div>
         </div>
         <script type="text/javascript">
+            var copyrightsum=0;
+            var rewardsum=0;
             $(function () {
-                getRemuneration();
-                getReward();
+                look();
             });
             function look() {
+                $("#incomesum").html(0);
+                copyrightsum=0;
+                rewardsum=0;
                 getRemuneration();
                 getReward();
             }
             function getRemuneration() {
-                $("#bookTitle").html($("#year").val()+"年"+$("#month").val()+"月稿酬收入")
+                $("#bookTitle").html($("#year").val()+"年"+$("#month").val()+"月稿酬收入");
+                $("#bookTitle2").html($("#year").val()+"年"+$("#month").val()+"月版权收入");
                 $.ajax({
                     url:"users/getRemuneration",
                     data:{"year":$("#year").val(),"month":$("#month").val()},
                     success:function (data) {
-                        alert(JSON.stringify(data));
                         if(data==""){
                             $("#noDataBox").css("display",'block');
                             $("#incomeSumBox").css("display",'none');
@@ -296,6 +328,7 @@
                                 "                                    <td>收入</td>\n" +
                                 "                                    </tr>\n" +
                                 "                                    </thead><tbody>";
+
                             for (var i=0;i<data.length;i++){
                                 str+="<tr style='height: 50px;'>\n" +
                                     "                                        <td>"+data[i].bookname+"</td>\n" +
@@ -303,9 +336,10 @@
                                     "                                        <td>"+data[i].chapname+"</td>\n" +
                                     "                                        <td>"+data[i].remuneration+"元</td>\n" +
                                     "                                        </tr>"
-
+                                copyrightsum+=data[i].remuneration;
                             }
                             str+="</tbody></table>";
+                            $("#incomesum").html(($("#incomesum").html()-1+1)+copyrightsum-($("#withdrawmoney").html()/2));
                             $("#incomeSumBox").html(str);
                             $("#noDataBox").css("display",'none');
                             $("#incomeSumBox").css("display",'block');
@@ -318,6 +352,7 @@
                     url: "reward/getReward",
                     data: {"year": $("#year").val(), "month": $("#month").val()},
                     success: function (data) {
+
                         if(data==""){
                             $("#incomeList").html("<tr>\n" +
                                 "                        <td colspan=\"3\">暂无任何数据</td>\n" +
@@ -327,14 +362,20 @@
                             var str="";
                             for(var i=0;i<data.length;i++){
                                 str+="<tr>\n" +
-                                    "                        <td>"+data[i].rewatime+"</td><td>"+data[i].rewanum+"</td><td>"+data[i].uname+"打赏"+data[i].bookname+"</td>\n" +
+                                    "                        <td>"+jsonDateFormat(data[i].rewatime)+"</td><td>"+data[i].rewanum/200+"</td><td>"+data[i].uname+"打赏"+data[i].bookname+"</td>\n" +
                                     "                    </tr>"
-
+                                rewardsum+=data[i].rewanum;
                             }
+                            $("#incomesum").html(($("#incomesum").html()-1+1)+(rewardsum/200)-($("#withdrawmoney").html()/2));
+                            $("#rewardCount").html(rewardsum/200+"元");
                             $("#incomeList").html(str);
                         }
                     }
                 })
+            }
+            function jsonDateFormat(date) {//json日期格式转换为正常格式
+                var dateee = new Date(date).toJSON();
+                return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
             }
         </script>
             <!--<div class="reserveListWrap">
