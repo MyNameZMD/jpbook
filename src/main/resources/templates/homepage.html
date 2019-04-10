@@ -129,7 +129,7 @@
     <div class="user-header" data-l1="2">
         <div class="user-header-wrapper">
             <div class="header-avatar">
-                <a th:href="@{/pc/home?uuid={uuid}(uuid=${h.uuid})}"><img class="header-avatar-img" th:src="@{/imgicon/{icon}(icon = ${h.icon})}"  th:alt="|${h.uname}的头像|"></a>
+                <a th:href="@{/pc/home?uuid={uuid}(uuid=${h.uuid})}"><img class="header-avatar-img" th:src="@{/images/{icon}(icon = ${h.icon})}"  th:alt="|${h.uname}的头像|"></a>
             </div>
             <div class="header-msg">
                 <h3 id="elUidWrap" data-id="265554">
@@ -148,7 +148,7 @@
                 <div class="qdp-button" data-l2="1">
                     <input type="hidden" th:value="${h.uuid}" id="buuid">
                     <input type="hidden" th:value="${fansState}" id="fansState">
-                    <input type="hidden" th:value="${session.users.get(0).getUuid()}" id="uuid">
+                    <input type="hidden" th:value="${session.users==null}?'-1':${session.users.get(0).getUuid()}" id="uuid">
 
 
                     <a href="javascript:;" class="ui-button ui-button-small" id="elToFollow">关注</a>
@@ -173,7 +173,7 @@
             <div class="user-sidebar-wrapper">
                 <h3 class="user-sidebar-title">足迹</h3>
                 <ul class="user-sidebar-list ui-loading ui-loading-animation" id="elHistoryWrap" style="height: 150px; transition: height 200ms ease 0s;">
-                    <li class="user-sidebar-item">书架藏书: <span th:text="${q1.brnum}"></span>本</li>
+                    <li class="user-sidebar-item">书架藏书: <span th:text="${userbooks.size()}"></span>本</li>
                     <li class="user-sidebar-item">订阅过作品: <span th:text="${q2}"></span>本</li>
                     <li class="user-sidebar-item">打赏作品: <span th:text="${q3}"></span>本</li>
                     <li class="user-sidebar-item">投月票: <span th:text="${q1.num2}"></span>张</li>
@@ -200,7 +200,7 @@
                             <span>至今</span>
                         </th:block>
                     </div>
-                    <a th:href="'/jpbook/books/queryBookById?bookid='+${q.bookid}" target="_blank" class='author-item-book' data-eid="qd_M268"><img th:src="@{/imgicon/{icon}(icon = ${q.icon})}" class='author-item-img'></a>
+                    <a th:href="'/jpbook/books/queryBookById?bookid='+${q.bookid}" target="_blank" class='author-item-book' data-eid="qd_M268"><img th:src="@{/img/{icon}(icon = ${q.icon})}" class='author-item-img'></a>
                     <div class="author-item-msg">
                         <div class="author-item-title"><a th:href="'/jpbook/books/queryBookById?bookid='+${q.bookid}" target="_blank" data-eid="qd_M269" data-bid="8361" th:text="${q.bookname}">书名</a></div>
                         <div class="author-item-exp"><a th:href="'/jpbook/showAllBook.html?btid='+${q.btid}" target="_blank"><span th:text="${q.btname}">类型</span></a><i class="author-item-line"></i><a target="_blank"><span th:text="${q.bookstate == 0 ? '连载':'完本'}">状态</span></a><i class="author-item-line"></i><span th:text="${q.num}">0</span>万字</div>

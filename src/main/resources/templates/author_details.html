@@ -126,7 +126,7 @@
     <div class="author-header" data-l1="2">
         <div class="author-header-wrapper">
             <div class="header-avatar">
-                <img class="header-avatar-img" th:src="@{/imgicon/{icon}(icon = ${author.icon})}"  th:alt="|${author.pen}的头像|">
+                <img class="header-avatar-img" th:src="@{/images/{icon}(icon = ${author.icon})}"  th:alt="|${author.pen}的头像|">
                 <span class="header-avatar-vip "></span>
             </div>
             <div class="header-msg">
@@ -150,7 +150,7 @@
             <h2 class="author-title">火热连载</h2>
             <ul class="author-hot" data-l2="9">
                 <li class="author-item">
-                    <a th:href="'/jpbook/books/queryBookById?bookid='+${hot.bookid}" target="_blank" class='author-item-book' data-eid="qd_M268"><img th:src="@{/imgicon/{icon}(icon = ${hot.icon})}" class='author-item-img'></a>
+                    <a th:href="'/jpbook/books/queryBookById?bookid='+${hot.bookid}" target="_blank" class='author-item-book' data-eid="qd_M268"><img th:src="@{/img/{icon}(icon = ${hot.icon})}" class='author-item-img'></a>
                     <div class="author-item-msg">
                         <div class="author-item-title"><a th:href="'/jpbook/books/queryBookById?bookid='+${hot.bookid}" target="_blank" data-eid="qd_M269" data-bid="1013406185" th:text="${hot.bookname}">书名</a></div>
                         <div class="author-item-exp">
@@ -194,7 +194,7 @@
                             <span>至今</span>
                         </th:block>
                     </div>
-                    <a th:href="'/jpbook/books/queryBookById?bookid='+${q.bookid}" target="_blank" class='author-item-book' data-eid="qd_M268"><img th:src="@{/imgicon/{icon}(icon = ${q.icon})}" class='author-item-img'></a>
+                    <a th:href="'/jpbook/books/queryBookById?bookid='+${q.bookid}" target="_blank" class='author-item-book' data-eid="qd_M268"><img th:src="@{/img/{icon}(icon = ${q.icon})}" class='author-item-img'></a>
                     <div class="author-item-msg">
                         <div class="author-item-title"><a th:href="'/jpbook/books/queryBookById?bookid='+${q.bookid}" target="_blank" data-eid="qd_M269" data-bid="8361" th:text="${q.bookname}">书名</a></div>
                         <div class="author-item-exp"><a th:href="'/jpbook/showAllBook.html?btid='+${q.bid}" target="_blank"><span th:text="${q.btname}">类型</span></a><i class="author-item-line"></i><a target="_blank"><span th:text="${q.bookstate == 0 ? '连载':'完本'}">状态</span></a><i class="author-item-line"></i><span th:text="${q.num}">0</span>万字</div>

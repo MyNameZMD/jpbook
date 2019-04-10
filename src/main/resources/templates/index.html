@@ -282,7 +282,7 @@
             </script>
             <div class="notice-banner" id="tr-banner" data-l1="30">
                 <div class="op-tag"></div>
-                <a href="http://cpgame.qd.game.qidian.com/Home/Index/directLogin/name/jsxw/way/1?qd_game_key=jsxw216x150&amp;qd_dd_p1=2864"
+                <a href="javascript:;"
                    target="_blank" data-eid="qd_A101" data-qd_dd_p1="1" style="display: inline;"><img
                         src="//qidian.qpic.cn/qidian_common/349573/40602638e951fe3051e2a195d22287e8/0"></a><a
                     href="javascript:" target="_blank" data-eid="qd_A101" data-qd_dd_p1="1"></a></div>
@@ -304,7 +304,7 @@
                 <ul>
                     <li class="" th:each="pr : ${queryRecommend}">
                         <!--玄幻类型书籍显示-->
-                        <a class="channel" th:href="@{query(btid=${pr.btid})}" style="margin-left: 2px;"
+                        <a class="channel" th:href="@{/showAllBook.html(btid=${pr.btid})}" style="margin-left: 2px;"
                            href="//www.qidian.com/xuanhuan" target="_blank" th:text="|[${pr.btname}]|"></a>
                         <!--作品详细信息显示-->
                         <strong>
@@ -388,14 +388,12 @@
         </div>
         <div class="book-list-wrap fr" data-l1="10">
             <h3 class="wrap-title lang">
-                江派<i>&#183;</i>网文新风<a class="more"
-                                      href="//www.qidian.com/book/sanjiang" data-eid="qd_A114"
-                                      target="_blank">更多<em class="iconfont">&#xe553;</em></a>
+                江派<i>&#183;</i>网文新风
             </h3>
             <div class="book-list">
                 <ul>
                     <li class="" data-rid="1" th:each="qr : ${queryRecommend2}">
-                        <a class="channel" th:href="@{query(btid=${qr.btid})}" th:text="|「${qr.btname}」|"
+                        <a class="channel" th:href="@{/showAllBook.html(btid=${qr.btid})}" th:text="|「${qr.btname}」|"
                            target="_blank">
                         </a>
                         <strong>
@@ -658,7 +656,7 @@
                             <li data-rid="1">
                                 <div class="book-img">
                                     <a  th:href="@{/books/queryBookById(bookid=${qn.bookid})}" target="_blank">
-                                        <img class="lazy" src="|../img/${qn.icon}|"
+                                        <img class="lazy" th:src="|../img/${qn.icon}|"
                                              th:alt="${qn.bookname}">
                                     </a>
                                 </div>
@@ -714,7 +712,7 @@
                                         <div class="book-cover">
                                             <a class="link" th:href="@{/books/queryBookById(bookid=${cp.bookid})}"
                                                target="_blank">
-                                                <img th:src="|../images/${cp.icon}|">
+                                                <img th:src="|../img/${cp.icon}|">
                                             </a>
                                             <span></span>
                                         </div>

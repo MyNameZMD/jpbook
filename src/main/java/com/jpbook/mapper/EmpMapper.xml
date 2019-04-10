@@ -3,7 +3,7 @@
 <mapper namespace="com.jpbook.dao.EmpDao">
 
     <select id="Hlogin" resultType="Emp" >
-        select * from emp  where ename=#{param1} and epwd=#{param2};
+        select * from emp  where ename=#{param1} and epwd=#{param2} and state=1;
     </select>
 
 </mapper>

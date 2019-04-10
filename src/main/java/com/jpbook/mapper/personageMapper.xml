@@ -52,7 +52,7 @@
         left join
         (select b.bookid brid from books b,bookrack br
         where b.bookid=br.bookid and br.uuid = #{param2}) c
-        on a.bookid=c.brid order by a.createtime
+        on a.bookid=c.brid GROUP BY a.bookid order by a.createtime
     </select>
 
     <select id="homeInfo" resultType="map">

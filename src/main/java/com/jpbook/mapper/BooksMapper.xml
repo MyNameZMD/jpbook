@@ -23,10 +23,11 @@
         group by b.bookid order by bt.btname limit 0,37
     </select>
     <select id = "queryNewBooks" resultType="map">
-        select b.bookname,b.bookid,b.icon,b.bookreferral,u.pen,u.uname,u.uuid,bt.btid,rpad(SUBSTRING(c.chapcount,1,1),CHAR_LENGTH(SUBSTRING(c.chapcount,1)),0) chapcount
-        from books b inner join booktype bt on b.btid = bt.btid inner join users u on u.uuid = b.uuid inner join roll r on r.bookid = b.bookid
-        inner join (select c.chapid,r.rollid,sum(c.chapcount) chapcount from chapter c,roll r where c.rollid=r.rollid GROUP BY r.bookid
+        select b.bookname,b.bookid,b.icon,b.bookreferral,u.pen,u.uname,u.uuid,bt.btid,ifnull(rpad(SUBSTRING(c.chapcount,1,1),CHAR_LENGTH(SUBSTRING(c.chapcount,1)),0),0) chapcount
+        from books b inner join booktype bt on b.btid = bt.btid inner join users u on u.uuid = b.uuid left join roll r on r.bookid = b.bookid
+        left join (select c.chapid,r.rollid,sum(c.chapcount) chapcount from chapter c,roll r where c.rollid=r.rollid GROUP BY r.bookid
         ) c on c.rollid = r.rollid WHERE b.bookstate=0 and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(b.createtime) GROUP BY b.bookid ORDER BY c.chapid desc
+
     </select>
     <select id = "queryQianli" resultType="map">
         select b.bookname,b.bookid,bt.btid,bt.btname,u.pen,u.uname,u.uuid,b.icon,sum(c.cnum*5) qianli from books b inner join booktype bt on b.btid = bt.btid inner join users u on b.uuid = u.uuid right join click c on c.bookid = b.bookid
@@ -48,15 +49,15 @@
     </select>
     <select id ="queryJingwan" resultType="map">
         select b.bookid,b.bookname,b.icon,b.bookreferral,u.uname,u.uuid,u.pen,bt.btname,bt.btid,
-        case CHAR_LENGTH(SUBSTRING(sum(c.chapcount),2))
+        case IFNULL(CHAR_LENGTH(SUBSTRING(sum(c.chapcount),2)),0)
         when 0 then 0
         when 3 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'千')
         when 2 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'百')
         when 4 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'万')
         when 5 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'十万')
         when 6 then CONCAT(cast(SUBSTRING(sum(c.chapcount),1,1) as CHAR),'百万') end chapcount
-        from books b inner join booktype bt on b.btid = bt.btid inner join users u on u.uuid = b.uuid inner join roll r on r.bookid = b.bookid
-        inner join chapter c on c.rollid = r.rollid WHERE b.bookstate = 1 and DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= date(b.endtime)
+        from books b inner join booktype bt on b.btid = bt.btid inner join users u on u.uuid = b.uuid left join roll r on r.bookid = b.bookid
+        left join chapter c on c.rollid = r.rollid WHERE b.bookstate = 1 and DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= date(b.endtime)
         group by b.bookid order by chapcount desc
     </select>
     <select id="queryBookById" parameterType="Integer" resultType="map">

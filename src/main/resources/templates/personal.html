@@ -94,7 +94,7 @@
 			<div class="home-user-wrapper qdp-border" data-l2="1">
 				<div class="home-user-avatar" data-l3="1">
 					<a href="javascript:u8()" class="user-avatar-a">
-						<img class="user-avatar-img" id="icon" src="/jpbook/imgicon/default_user.0.2.png" alt="" data-eid="qd_M24">
+						<img class="user-avatar-img" id="icon" src="/jpbook/images/default_user.0.2.png" alt="" data-eid="qd_M24">
 					</a>
 				</div>
 				<div class="home-user" data-l3="1">
@@ -593,7 +593,7 @@
 							<input type="file" id="fileAvatar" name="photo" class="clip" onchange="checkicon(this)" accept="image/png, image/jpeg, image/gif, image/jpg">
 						</form>
 						<div id="avatarXChoose" class="avatar-x-choose">  <!--//facepic.qidian.com/qd_face/349573/6495553/100-->
-							<img id="usersicon" class="avatar-show" th:src="@{/imgicon/{icon}(icon = ${session.users.get(0).getIcon()})}" alt="">
+							<img id="usersicon" class="avatar-show" th:src="@{/images/{icon}(icon = ${session.users.get(0).getIcon()})}" alt="">
 							<div class="avatar-text">
 								<p class="gray">支持jpg、gif、png格式图片</p>
 							</div>
@@ -797,7 +797,7 @@
             success: function (data) {
                 $("#homeurl").prop("href","pc/home?uuid="+data[0].uuid);
 
-				$("#icon").prop("src","/jpbook/imgicon/"+data[0].icon);
+				$("#icon").prop("src","/jpbook/images/"+data[0].icon);
 
 				$("#headerLog").text(data[0].uname);
                 $("#uname").text(data[0].uname);
@@ -825,7 +825,7 @@
                         yemian+="<li class='recmd-list-item' style='margin-left: 15px'>"+
                             "<a href='/jpbook/books/queryBookById?bookid="+data[i].bookid+"' target='_blank' class='recmd-list-a' data-eid='qd_M42' data-bid='1004895204'>" +
                             "<div class='recmd-commet'>"+data[i].bookreferral.substring(0,30)+"</div>" +
-                            "<img src='/jpbook/imgicon/"+data[i].icon+"' alt='' class='recmd-list-img'>" +
+                            "<img src='/jpbook/img/"+data[i].icon+"' alt='' class='recmd-list-img'>" +
                             "<div class='recmd-list-title' data-eid='qd_M42' data-bid='1004895204'>"+data[i].bookname+"</div>" +
                             "</a><div class='recmd-list-data' title='猜你喜欢'>猜你喜欢</div></li>";
                     }
@@ -877,7 +877,7 @@
 					   t1+="<tr class='qdp-operate-wrapper'>"+
                        "<td width='300'>"+
                        "<a href='pc/home?uuid="+data[i].uuid+"' class='friend-avatar' target='_blank' data-eid='qd_M162'>"+
-                       "<img src='/jpbook/imgicon/"+data[i].icon+"'>"+
+                       "<img src='/jpbook/images/"+data[i].icon+"'>"+
                        "</a>"+
                        "<div class='friend-wrapper'>"+
                        "<div class='friend-name'><a href='pc/home?uuid="+data[i].uuid+"' target='_blank'>"+data[i].uname+"</a>"+
@@ -919,7 +919,7 @@
                         t2+="<tr class='qdp-operate-wrapper'>"+
                             "<td width='300'>"+
                             "<a href='pc/home?uuid="+data[i].uuid+"' class='friend-avatar' target='_blank' data-eid='qd_M162'>"+
-                            "<img src='/jpbook/imgicon/"+data[i].icon+"'>"+
+                            "<img src='/jpbook/images/"+data[i].icon+"'>"+
                             "</a>"+
                             "<div class='friend-wrapper'>"+
                             "<div class='friend-name'><a href='pc/home?uuid="+data[i].uuid+"' target='_blank'>"+data[i].uname+"</a>"+
@@ -961,7 +961,7 @@
                         t3+="<tr class='qdp-operate-wrapper'>"+
                             "<td width='300'>"+
                             "<a href='pc/home?uuid="+data[i].uuid+"' class='friend-avatar' target='_blank' data-eid='qd_M162'>"+
-                            "<img src='/jpbook/imgicon/"+data[i].icon+"'>"+
+                            "<img src='/jpbook/images/"+data[i].icon+"'>"+
                             "</a>"+
                             "<div class='friend-wrapper'>"+
                             "<div class='friend-name'><a href='pc/home?uuid="+data[i].uuid+"' target='_blank'>"+data[i].uname+"</a>"+
@@ -1049,9 +1049,9 @@
                 if(data.length>0){
                     for (var i=0; i<data.length; i++){
                         tbom1 += "<tr>"+
-                        "<td class='col1 wbba'><a href='/jpbook/reviewbook/queryById?revid="+data[i].revid+"' class='blue' target='_blank' data-eid='qd_M76'>"+data[i].revvlue.substring(0,10)+"</a></td>"+
+                        "<td class='col1 wbba'><a href='/jpbook/reviewbook/queryAll?bookid="+data[i].bookid+"' class='blue' target='_blank' data-eid='qd_M76'>"+data[i].revvlue.substring(0,10)+"</a></td>"+
                         "<td class='col4'>"+renderTime(data[i].commenttime).substring(0,10)+"</td>"+
-                        "<td class='col5 wbba'><a href='/jpbook/reviewbook/queryById?revid="+data[i].revid+"' class='blue' target='_blank' data-eid='qd_M77'>"+data[i].bookname+"</a></td>"+
+                        "<td class='col5 wbba'><a href='/jpbook/reviewbook/queryAll?bookid="+data[i].bookid+"' class='blue' target='_blank' data-eid='qd_M77'>"+data[i].bookname+"</a></td>"+
                         "</tr>";
 					}
 					$("#tbom1").html(tbom1);
@@ -1073,9 +1073,9 @@
                 if(data.length>0){
                     for (var i=0; i<data.length; i++){
                         tbom2 += "<tr>"+
-                            "<td class='col1 wbba'><a href='/jpbook/reviewbook/queryById?revid="+data[i].revid+"' class='blue' target='_blank' data-eid='qd_M76'>"+data[i].revvlue.substring(0,10)+"</a></td>"+
+                            "<td class='col1 wbba'><a href='/jpbook/reviewbook/queryAll?bookid="+data[i].bookid+"' class='blue' target='_blank' data-eid='qd_M76'>"+data[i].revvlue.substring(0,10)+"</a></td>"+
                             "<td class='col2 wbba'>"+data[i].repcontent.substring(0,10)+"</td>"+
-                            "<td class='col3 wbba'><a href='/jpbook/reviewbook/queryById?revid="+data[i].revid+"' class='blue' target='_blank' data-eid='qd_M77'>"+data[i].bookname+"</a></td>"+
+                            "<td class='col3 wbba'><a href='/jpbook/reviewbook/queryAll?bookid="+data[i].bookid+"' class='blue' target='_blank' data-eid='qd_M77'>"+data[i].bookname+"</a></td>"+
                             "</tr>";
                     }
                     $("#tbom2").html(tbom2);
@@ -1511,11 +1511,11 @@
 				$("#exp2").text(data[0].exp);
 				$("#expnext").text(100 - data[0].exp%100 == 100 ? 100:100 - data[0].exp%100);
 				if (data[0].grade >= 3 && data[0].grade < 13){
-                    $("#mr12").text("每日赠送推荐票 1张");
+                    $("#mr12").text("每日赠送推荐票 1张(每天清除不积累)");
 				}else if(data[0].grade >= 13 && data[0].grade < 23) {
-                    $("#mr12").text("每日赠送推荐票 2张");
+                    $("#mr12").text("每日赠送推荐票 2张(每天清除不积累)");
 				}else if(data[0].grade >=23) {
-                    $("#mr12").text("每日赠送推荐票 3张");
+                    $("#mr12").text("每日赠送推荐票 3张(每天清除不积累)");
                 }else {
                     $("#mr12").text("暂无");
 				}

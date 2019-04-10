@@ -1,6 +1,7 @@
 package com.jpbook.controller;
 
 import com.jpbook.entity.Advertising;
+import com.jpbook.entity.Emp;
 import com.jpbook.entity.LayuiPage;
 import com.jpbook.service.AdvertisingService;
 import com.jpbook.util.DateUtil;
@@ -30,7 +31,8 @@ public class AdvertisingController {
     @RequestMapping("addAdvertising")
     @ResponseBody
     public Integer addAdvertising(String file, Advertising advertising, HttpSession session){
-            advertising.setEid(1);
+        Emp emp =(Emp)session.getAttribute("emp");
+        advertising.setEid(emp.getEid());
             advertising.setPic(file.substring(file.lastIndexOf('\\')+1));
         return as.addAdvertising(advertising);
     }

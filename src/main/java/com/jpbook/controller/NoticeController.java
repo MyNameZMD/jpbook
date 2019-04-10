@@ -1,5 +1,6 @@
 package com.jpbook.controller;
 
+import com.jpbook.entity.Emp;
 import com.jpbook.entity.LayuiPage;
 import com.jpbook.entity.Notice;
 import com.jpbook.service.NoticeService;
@@ -25,7 +26,8 @@ public class NoticeController {
     @RequestMapping("addNotice")
     @ResponseBody
     public Integer addNotice(Notice notice, HttpSession session){
-        notice.setEid(1);
+        Emp emp =(Emp)session.getAttribute("emp");
+        notice.setEid(emp.getEid());
         return ns.addNotice(notice);
     }
     @RequestMapping("queryAllTopEntity")
